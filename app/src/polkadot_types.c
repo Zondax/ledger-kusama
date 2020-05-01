@@ -304,7 +304,9 @@ parser_error_t _readTupleAccountIdData(parser_context_t *c, pd_TupleAccountIdDat
 }
 
 parser_error_t _readTupleAccountIdu32(parser_context_t *c, pd_TupleAccountIdu32_t *v) {   
-    return parser_not_supported;
+    CHECK_ERROR(_readAccountId(c, &v->accountId))
+    CHECK_ERROR(_readu32(c, &v->num))
+    return parser_ok;
 }
 
 parser_error_t _readTupleBalanceOfBalanceOfBlockNumber(parser_context_t *c, pd_TupleBalanceOfBalanceOfBlockNumber_t *v) {   
@@ -1180,9 +1182,28 @@ parser_error_t _toStringTupleAccountIdu32(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {   
-    CLEAN_AND_CHECK()
-    
-    return parser_print_not_supported;
+    // Get all pages first
+    uint8_t pages[2];
+    CHECK_ERROR(_toStringAccountId(&v->accountId, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringu32(&v->num, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = pages[0] + pages[1];
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringAccountId(&v->accountId, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringu32(&v->num, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
 }
 
 parser_error_t _toStringTupleBalanceOfBalanceOfBlockNumber(

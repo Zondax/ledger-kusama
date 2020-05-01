@@ -342,8 +342,8 @@ typedef struct {
 } pd_TupleAccountIdData_t;
 
 typedef struct { 
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+  	pd_AccountId_t accountId;
+    pd_u32_t num;
 } pd_TupleAccountIdu32_t;
 
 typedef struct { 
