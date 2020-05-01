@@ -372,8 +372,8 @@ typedef struct {
 } pd_ValidatorPrefs_t;
 
 typedef struct { 
-    pd_CompactBalance_t locked;
-    pd_CompactBalance_t per_block;
+    pd_BalanceOf_t locked;
+    pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_t;
 

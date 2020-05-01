@@ -337,8 +337,8 @@ parser_error_t _readValidatorPrefs(parser_context_t *c, pd_ValidatorPrefs_t *v) 
 }
 
 parser_error_t _readVestingInfo(parser_context_t *c, pd_VestingInfo_t *v) {   
-    CHECK_ERROR(_readCompactBalance(c, &v->locked))
-    CHECK_ERROR(_readCompactBalance(c, &v->per_block))
+    CHECK_ERROR(_readBalanceOf(c, &v->locked))
+    CHECK_ERROR(_readBalanceOf(c, &v->per_block))
     CHECK_ERROR(_readBlockNumber(c, &v->starting_block))
 }
 
@@ -1327,8 +1327,8 @@ parser_error_t _toStringVestingInfo(
 
   // Index + count pages
   uint8_t pages[3];
-  CHECK_ERROR(_toStringCompactBalance(&v->locked, outValue, outValueLen, 0, &pages[0]))
-  CHECK_ERROR(_toStringCompactBalance(&v->per_block, outValue, outValueLen, 0, &pages[1]))
+  CHECK_ERROR(_toStringBalanceOf(&v->locked, outValue, outValueLen, 0, &pages[0]))
+  CHECK_ERROR(_toStringBalanceOf(&v->per_block, outValue, outValueLen, 0, &pages[1]))
   CHECK_ERROR(_toStringBlockNumber(&v->starting_block, outValue, outValueLen, 0, &pages[2]))
 
   *pageCount = pages[0] + pages[1] + pages[2];
@@ -1337,14 +1337,14 @@ parser_error_t _toStringVestingInfo(
   }
 
   if (pageIdx < pages[0]) {
-    CHECK_ERROR(_toStringCompactBalance(&v->locked, outValue, outValueLen, pageIdx, &pages[0]))
+    CHECK_ERROR(_toStringBalanceOf(&v->locked, outValue, outValueLen, pageIdx, &pages[0]))
     return parser_ok;
   }
   pageIdx -= pages[0];
 
   //////
   if (pageIdx < pages[1]) {
-    CHECK_ERROR(_toStringCompactBalance(&v->per_block, outValue, outValueLen, pageIdx, &pages[1]))
+    CHECK_ERROR(_toStringBalanceOf(&v->per_block, outValue, outValueLen, pageIdx, &pages[1]))
     return parser_ok;
   }
   pageIdx -= pages[1];
