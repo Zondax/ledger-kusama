@@ -287,8 +287,7 @@ typedef struct {
 } pd_Key_t;
 
 typedef struct { 
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+  const uint8_t *_ptr;
 } pd_LookupSource_t;
 
 typedef struct { 

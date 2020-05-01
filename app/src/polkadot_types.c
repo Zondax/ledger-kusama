@@ -247,7 +247,7 @@ parser_error_t _readKey(parser_context_t *c, pd_Key_t *v) {
 }
 
 parser_error_t _readLookupSource(parser_context_t *c, pd_LookupSource_t *v) {   
-    return parser_not_supported;
+    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readMoreAttestations(parser_context_t *c, pd_MoreAttestations_t *v) {   
@@ -1031,7 +1031,7 @@ parser_error_t _toStringLookupSource(
         uint8_t *pageCount) {   
     CLEAN_AND_CHECK()
     
-    return parser_print_not_supported;
+    return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringMoreAttestations(
