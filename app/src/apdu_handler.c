@@ -293,6 +293,26 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 }
 #endif
 
+#if defined(APP_TESTING)
+#include "rslib.h"
+
+void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    uint8_t input[64];
+    MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
+
+//     You can add anything that helps testing here.
+    zemu_log_stack("handleTest");
+
+    get_sr25519_pk(input, G_io_apdu_buffer);
+
+    zemu_log("get_sr25519_pk back\n");
+    CHECK_APP_CANARY();
+
+    *tx = 32;
+    THROW(APDU_CODE_OK);
+}
+#endif
+
 void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     uint16_t sw = 0;
 
@@ -364,7 +384,13 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                         break;
                     }
 #endif
-
+#if defined(APP_TESTING)
+                    case INS_TEST: {
+                    handleTest(flags, tx, rx);
+                    THROW(APDU_CODE_OK);
+                    break;
+                }
+#endif
                 default:
                     THROW(APDU_CODE_INS_NOT_SUPPORTED);
             }

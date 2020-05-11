@@ -39,6 +39,10 @@
 #define INS_ALLOWLIST_GET_HASH          0x92
 #define INS_ALLOWLIST_UPLOAD            0x93
 
+#if defined(APP_TESTING)
+#define INS_TEST                        0xFF
+#endif
+
 void app_init();
 
 void app_main();

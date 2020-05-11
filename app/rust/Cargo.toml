@@ -10,10 +10,19 @@ name = "rslib"
 crate-type = ["staticlib"]
 
 [dependencies]
-sha2 = { version = "0.8.1", default-features = false }
+rand={ version = "0.7.3", default-features = false}
+
+[dependencies.schnorrkel]
+version = "0.9.1"
+default-features = false
+features=["u32_backend"]
+path = "../../deps/schnorrkel"
 
 [dev-dependencies]
 hex-literal = "0.2.1"
+hex = "0.4.2"
+env_logger = "0.7.1"
+log = "0.4.8"
 
 [target.thumbv6m-none-eabi.dev-dependencies]
 panic-halt = "0.2.0"

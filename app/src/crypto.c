@@ -72,6 +72,12 @@ void crypto_extractPublicKey(const uint32_t path[HDPATH_LEN_DEFAULT], uint8_t *p
     if ((cx_publicKey.W[32] & 1) != 0) {
         pubKey[31] |= 0x80;
     }
+
+    // FIXME: Let's try using this for sr25519
+
+    uint8_t buffer[64];
+    MEMZERO(buffer, sizeof(buffer));
+    get_sr25519_pk(buffer, pubKey);
 }
 
 uint16_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen) {
