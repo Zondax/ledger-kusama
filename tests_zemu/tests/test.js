@@ -93,7 +93,7 @@ describe('Basic checks', function () {
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
 
             // We need to wait until the app responds to the APDU
-            await Zemu.sleep(2000);
+            await Zemu.sleep(3500);
 
             // Now navigate the address / path
             await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
