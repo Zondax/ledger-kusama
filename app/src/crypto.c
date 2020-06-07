@@ -89,7 +89,7 @@ uint16_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t
 
     cx_ecfp_private_key_t cx_privateKey;
     uint8_t privateKeyData[32];
-    int signatureLength;
+    int signatureLength = 0;
     unsigned int info = 0;
 
     BEGIN_TRY
@@ -121,6 +121,9 @@ uint16_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t
                                             signatureMaxlen-1,
                                             &info);
         }
+        CATCH_ALL {
+            return 0;
+        };
         FINALLY {
             MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
             MEMZERO(privateKeyData, 32);
