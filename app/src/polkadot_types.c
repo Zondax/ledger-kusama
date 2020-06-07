@@ -127,8 +127,9 @@ parser_error_t _readBytes(parser_context_t *c, pd_Bytes_t *v) {
     compactInt_t clen;
     CHECK_ERROR(_readCompactInt(c, &clen))
     CHECK_ERROR(_getValue(&clen, &v->_len))
+
     v->_ptr = c->buffer + c->offset;
-    c->offset += v->_len;
+    CTX_CHECK_ADVANCE(c, v->_len);
     return parser_ok;
 }
 
@@ -166,7 +167,7 @@ parser_error_t _readData(parser_context_t *c, pd_Data_t *v) {
         const uint8_t bufferSize = ((uint8_t) v->type - 1);
         v->_ptr = c->buffer + c->offset;
         v->_len = bufferSize;
-        c->offset += v->_len;
+        CTX_CHECK_ADVANCE(c, v->_len);
         return parser_ok;
     }
 

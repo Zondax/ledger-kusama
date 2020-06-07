@@ -30,17 +30,16 @@ parser_error_t parser_init_context(parser_context_t *ctx,
                                    const uint8_t *buffer,
                                    uint16_t bufferSize) {
     ctx->offset = 0;
+    ctx->buffer = NULL;
+    ctx->bufferLen = 0;
 
     if (bufferSize == 0 || buffer == NULL) {
         // Not available, use defaults
-        ctx->buffer = NULL;
-        ctx->bufferLen = 0;
         return parser_init_context_empty;
     }
 
     ctx->buffer = buffer;
     ctx->bufferLen = bufferSize;
-
     return parser_ok;
 }
 
@@ -99,14 +98,16 @@ GEN_DEF_READFIX_UNSIGNED(64)
 parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     CHECK_INPUT();
 
-    switch (*(c->buffer + c->offset)) {
+    CTX_CHECK_AVAIL(c, 1)
+    const uint8_t p = *(c->buffer + c->offset);
+    CTX_CHECK_ADVANCE(c, 1)
+
+    switch (p) {
         case 0x00:
             *v = bool_false;
-            c->offset++;
             break;
         case 0x01:
             *v = bool_true;
-            c->offset++;
             break;
         default:
             return parser_unexpected_value;
@@ -117,37 +118,33 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
 parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     CHECK_INPUT();
 
-    // get mode from two least significant bits
+    CTX_CHECK_AVAIL(c, 1)
     v->ptr = c->buffer + c->offset;
-    const uint8_t mode = *v->ptr & 0x03u;
-    uint64_t tmp;
+    const uint8_t mode = *v->ptr & 0x03u;      // get mode from two least significant bits
 
+    uint64_t tmp;
     switch (mode) {
         case 0:         // single byte
             v->len = 1;
-            c->offset += v->len;
+            CTX_CHECK_ADVANCE(c, v->len)
             break;
         case 1:         // 2-byte
             v->len = 2;
-            c->offset += v->len;
+            CTX_CHECK_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 2:         // 4-byte
             v->len = 4;
-            c->offset += v->len;
+            CTX_CHECK_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 3:         // bitint
             v->len = (*v->ptr >> 2u) + 4 + 1;
-            c->offset += v->len;
+            CTX_CHECK_ADVANCE(c, v->len)
             break;
         default:
             // this is actually impossible
             return parser_unexpected_value;
-    }
-
-    if (c->bufferLen < c->offset) {
-        return parser_unexpected_buffer_end;
     }
 
     return parser_ok;
@@ -189,9 +186,8 @@ parser_error_t _toStringCompactInt(const compactInt_t *c,
                                    char *outValue, uint16_t outValueLen,
                                    uint8_t pageIdx, uint8_t *pageCount) {
     MEMZERO(outValue, outValueLen);
-    *pageCount = 1;
-
     MEMZERO(bufferUI, sizeof(bufferUI));
+    *pageCount = 1;
 
     if (c->len <= 4) {
         uint64_t v;
@@ -392,8 +388,8 @@ parser_error_t _readAddress(parser_context_t *c, pd_Address_t *v) {
     switch (tmp) {
         case 0xFF: {
             v->type = eAddressId;
-            v->idPtr = (c->buffer + c->offset);
-            c->offset += 32;
+            v->idPtr = c->buffer + c->offset;
+            CTX_CHECK_ADVANCE(c, 32);
             break;
         }
         case 0xFE: {
@@ -478,8 +474,9 @@ parser_error_t _toStringAddress(const pd_Address_t *v,
                                 char *outValue, uint16_t outValueLen,
                                 uint8_t pageIdx, uint8_t *pageCount) {
     MEMZERO(outValue, outValueLen);
-    if (v == NULL)
+    if (v == NULL) {
         return parser_ok;
+    }
 
     *pageCount = 1;
     switch (v->type) {
