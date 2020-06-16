@@ -129,7 +129,7 @@ parser_error_t _readBytes(parser_context_t *c, pd_Bytes_t *v) {
     CHECK_ERROR(_getValue(&clen, &v->_len))
 
     v->_ptr = c->buffer + c->offset;
-    CTX_CHECK_ADVANCE(c, v->_len);
+    CTX_CHECK_CAN_ADVANCE(c, v->_len);
     return parser_ok;
 }
 
@@ -167,7 +167,7 @@ parser_error_t _readData(parser_context_t *c, pd_Data_t *v) {
         const uint8_t bufferSize = ((uint8_t) v->type - 1);
         v->_ptr = c->buffer + c->offset;
         v->_len = bufferSize;
-        CTX_CHECK_ADVANCE(c, v->_len);
+        CTX_CHECK_CAN_ADVANCE(c, v->_len);
         return parser_ok;
     }
 
@@ -600,8 +600,7 @@ parser_error_t _toStringAccountVoteSplit(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
-
-    *pageCount = 0;
+    CLEAN_AND_CHECK()
     // First measure number of pages
     uint8_t pages[3];
 
@@ -649,8 +648,7 @@ parser_error_t _toStringAccountVoteStandard(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
-
-    *pageCount = 0;
+    CLEAN_AND_CHECK()
     // First measure number of pages
     uint8_t pages[3];
 
@@ -734,6 +732,8 @@ parser_error_t _toStringBalanceOf(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
     MEMSET(outValue, 0, outValueLen);
     MEMSET(bufferUI, 0, sizeof(bufferUI));
     *pageCount = 1;
@@ -831,6 +831,8 @@ parser_error_t _toStringData(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
     if (v->type > Data_e_NONE && v->type <= Data_e_RAW_VECU8) {
         const uint8_t bufferSize = ((uint8_t) v->type - 1);
         // FIXME: page+print utf8
@@ -945,7 +947,6 @@ parser_error_t _toStringIdentityInfo(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-    *pageCount = 0;
 
     // First measure number of pages
     uint8_t pages[9];
@@ -1109,6 +1110,7 @@ parser_error_t _toStringParaInfo(
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
 
+    *pageCount = 1;
     switch (v->scheduling) {
         case 0:
             snprintf(outValue, outValueLen, "Scheduling: Always");
@@ -1236,6 +1238,8 @@ parser_error_t _toStringTupleAccountIdu32(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
     // Get all pages first
     uint8_t pages[2];
     CHECK_ERROR(_toStringAccountId(&v->accountId, outValue, outValueLen, 0, &pages[0]))
@@ -1308,7 +1312,6 @@ parser_error_t _toStringTupleDataData(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-    *pageCount = 0;
 
     uint8_t pages[2];
     CHECK_ERROR(_toStringData(&v->data1, outValue, outValueLen, 0, &pages[0]))
@@ -1420,14 +1423,14 @@ parser_error_t _toStringVote(
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
 
-    _toStringbool(&v->aye, outValue, outValueLen, pageIdx, pageCount);
+    CHECK_PARSER_ERR(_toStringbool(&v->aye, outValue, outValueLen, pageIdx, pageCount));
     uint16_t offset = strlen(outValue);
     outValue[offset++] = ' ';
-    _toStringConviction(&v->conviction,
+    CHECK_PARSER_ERR(_toStringConviction(&v->conviction,
                         outValue + offset,
                         outValueLen - offset,
                         pageIdx,
-                        pageCount);
+                        pageCount));
     *pageCount = 1;
     return parser_ok;
 }
@@ -1564,6 +1567,9 @@ parser_error_t _toStringOptionAccountId(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringAccountId(
             &v->contained,
@@ -1582,6 +1588,9 @@ parser_error_t _toStringOptionChangesTrieConfiguration(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringChangesTrieConfiguration(
             &v->contained,
@@ -1600,6 +1609,9 @@ parser_error_t _toStringOptionTimepoint(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringTimepoint(
             &v->contained,
@@ -1618,6 +1630,9 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringTupleBalanceOfBalanceOfBlockNumber(
             &v->contained,
@@ -1636,6 +1651,9 @@ parser_error_t _toStringOptionu8_array_20(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringu8_array_20(
             &v->contained,

@@ -3454,6 +3454,10 @@ parser_error_t _getMethod_ItemValue(
     uint8_t pageIdx, uint8_t *pageCount) {
     uint16_t callPrivIdx = ( (uint16_t) moduleIdx << 8u) + callIdx;
 
+    if (m == NULL) {
+        return parser_unexepected_error;
+    }
+
     switch(callPrivIdx) {
         case 0: /* module 0 call 0 */
         switch(itemIdx) {

@@ -55,24 +55,21 @@ GEN_DEC_READFIX_UNSIGNED(64);
 #define CTX_CHECK_AVAIL(CTX, SIZE) \
     if ( (CTX) == NULL || ((CTX)->offset + SIZE) > (CTX)->bufferLen) { return parser_unexpected_buffer_end; }
 
-// Checks that there is something available in the buffer
-#define CTX_CHECK(CTX) CTX_CHECK_AVAIL(CTX, 1)
-
-#define CTX_CHECK_ADVANCE(CTX, SIZE) \
-    CTX_CHECK_AVAIL((CTX), (SIZE))      \
+#define CTX_CHECK_CAN_ADVANCE(CTX, SIZE) \
+    CTX_CHECK_AVAIL((CTX), (SIZE))   \
     (CTX)->offset += (SIZE);
 
 // Checks function input is valid
 #define CHECK_INPUT() \
     if (v == NULL) { return parser_no_data; } \
-    CTX_CHECK(c)
+    CTX_CHECK_AVAIL(c, 1) // Checks that there is something available in the buffer
 
 #define CLEAN_AND_CHECK() MEMZERO(outValue, outValueLen);  \
     if (v == NULL) { *pageCount = 0; return parser_no_data; }
 
 #define GEN_DEF_READARRAY(SIZE) \
+    CTX_CHECK_CAN_ADVANCE(c, SIZE) \
     v->_ptr = c->buffer + c->offset; \
-    CTX_CHECK_ADVANCE(c, SIZE) \
     return parser_ok;
 
 #define GEN_DEF_TOSTRING_ARRAY(SIZE) \

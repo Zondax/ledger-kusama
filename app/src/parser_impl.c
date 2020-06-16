@@ -98,9 +98,8 @@ GEN_DEF_READFIX_UNSIGNED(64)
 parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     CHECK_INPUT();
 
-    CTX_CHECK_AVAIL(c, 1)
     const uint8_t p = *(c->buffer + c->offset);
-    CTX_CHECK_ADVANCE(c, 1)
+    CTX_CHECK_CAN_ADVANCE(c, 1)
 
     switch (p) {
         case 0x00:
@@ -118,7 +117,6 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
 parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     CHECK_INPUT();
 
-    CTX_CHECK_AVAIL(c, 1)
     v->ptr = c->buffer + c->offset;
     const uint8_t mode = *v->ptr & 0x03u;      // get mode from two least significant bits
 
@@ -126,21 +124,21 @@ parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     switch (mode) {
         case 0:         // single byte
             v->len = 1;
-            CTX_CHECK_ADVANCE(c, v->len)
+            CTX_CHECK_CAN_ADVANCE(c, v->len)
             break;
         case 1:         // 2-byte
             v->len = 2;
-            CTX_CHECK_ADVANCE(c, v->len)
+            CTX_CHECK_CAN_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 2:         // 4-byte
             v->len = 4;
-            CTX_CHECK_ADVANCE(c, v->len)
+            CTX_CHECK_CAN_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 3:         // bitint
             v->len = (*v->ptr >> 2u) + 4 + 1;
-            CTX_CHECK_ADVANCE(c, v->len)
+            CTX_CHECK_CAN_ADVANCE(c, v->len)
             break;
         default:
             // this is actually impossible
@@ -151,7 +149,7 @@ parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
 }
 
 parser_error_t _getValue(const compactInt_t *c, uint64_t *v) {
-    if (v == NULL) { return parser_no_data; }
+    CHECK_INPUT();
     *v = 0;
 
     switch (c->len) {
@@ -389,7 +387,7 @@ parser_error_t _readAddress(parser_context_t *c, pd_Address_t *v) {
         case 0xFF: {
             v->type = eAddressId;
             v->idPtr = c->buffer + c->offset;
-            CTX_CHECK_ADVANCE(c, 32);
+            CTX_CHECK_CAN_ADVANCE(c, 32);
             break;
         }
         case 0xFE: {
@@ -462,7 +460,11 @@ parser_error_t _toStringPubkeyAsAddress(const uint8_t *pubkey,
                                         char *outValue, uint16_t outValueLen,
                                         uint8_t pageIdx, uint8_t *pageCount) {
     uint8_t addressType = _detectAddressType();
-    crypto_SS58EncodePubkey((uint8_t *) bufferUI, sizeof(bufferUI), addressType, pubkey);
+
+    if (crypto_SS58EncodePubkey((uint8_t *) bufferUI, sizeof(bufferUI), addressType, pubkey) == 0) {
+        return parser_no_data;
+    }
+
     pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
     if (pageIdx >= *pageCount) {
         return parser_no_data;

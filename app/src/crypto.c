@@ -189,7 +189,10 @@ int ss58hash(const unsigned char *in, unsigned int inLen,
 
 uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
                                 uint8_t addressType, const uint8_t *pubkey) {
-    if (buffer_len < SS58_ADDRESS_MAX_LEN) {
+    if (buffer == NULL || buffer_len < SS58_ADDRESS_MAX_LEN) {
+        return 0;
+    }
+    if (pubkey == NULL) {
         return 0;
     }
     MEMZERO(buffer, buffer_len);
