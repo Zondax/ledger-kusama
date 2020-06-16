@@ -47,10 +47,10 @@ execute_process(
 message(STATUS "LEDGER_MAJOR_VERSION [${MAJOR_RESULT}]: ${MAJOR_VERSION}" )
 message(STATUS "LEDGER_MINOR_VERSION [${MINOR_RESULT}]: ${MINOR_VERSION}" )
 
-add_compile_definitions(
-        APP_STANDARD
-        LEDGER_MAJOR_VERSION=${MAJOR_VERSION}
-        LEDGER_MINOR_VERSION=${MINOR_VERSION}
+add_definitions(
+    -DAPP_STANDARD
+    -DLEDGER_MAJOR_VERSION=${MAJOR_VERSION}
+    -DLEDGER_MINOR_VERSION=${MINOR_VERSION}
 )
 
 ##############################################################
