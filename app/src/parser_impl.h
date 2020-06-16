@@ -55,7 +55,7 @@ GEN_DEC_READFIX_UNSIGNED(64);
 #define CTX_CHECK_AVAIL(CTX, SIZE) \
     if ( (CTX) == NULL || ((CTX)->offset + SIZE) > (CTX)->bufferLen) { return parser_unexpected_buffer_end; }
 
-#define CTX_CHECK_CAN_ADVANCE(CTX, SIZE) \
+#define CTX_CHECK_AND_ADVANCE(CTX, SIZE) \
     CTX_CHECK_AVAIL((CTX), (SIZE))   \
     (CTX)->offset += (SIZE);
 
@@ -68,8 +68,8 @@ GEN_DEC_READFIX_UNSIGNED(64);
     if (v == NULL) { *pageCount = 0; return parser_no_data; }
 
 #define GEN_DEF_READARRAY(SIZE) \
-    CTX_CHECK_CAN_ADVANCE(c, SIZE) \
     v->_ptr = c->buffer + c->offset; \
+    CTX_CHECK_AND_ADVANCE(c, SIZE) \
     return parser_ok;
 
 #define GEN_DEF_TOSTRING_ARRAY(SIZE) \

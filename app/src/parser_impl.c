@@ -99,7 +99,7 @@ parser_error_t _readBool(parser_context_t *c, pd_bool_t *v) {
     CHECK_INPUT();
 
     const uint8_t p = *(c->buffer + c->offset);
-    CTX_CHECK_CAN_ADVANCE(c, 1)
+    CTX_CHECK_AND_ADVANCE(c, 1)
 
     switch (p) {
         case 0x00:
@@ -124,21 +124,21 @@ parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
     switch (mode) {
         case 0:         // single byte
             v->len = 1;
-            CTX_CHECK_CAN_ADVANCE(c, v->len)
+            CTX_CHECK_AND_ADVANCE(c, v->len)
             break;
         case 1:         // 2-byte
             v->len = 2;
-            CTX_CHECK_CAN_ADVANCE(c, v->len)
+            CTX_CHECK_AND_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 2:         // 4-byte
             v->len = 4;
-            CTX_CHECK_CAN_ADVANCE(c, v->len)
+            CTX_CHECK_AND_ADVANCE(c, v->len)
             _getValue(v, &tmp);
             break;
         case 3:         // bitint
             v->len = (*v->ptr >> 2u) + 4 + 1;
-            CTX_CHECK_CAN_ADVANCE(c, v->len)
+            CTX_CHECK_AND_ADVANCE(c, v->len)
             break;
         default:
             // this is actually impossible
@@ -149,7 +149,6 @@ parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
 }
 
 parser_error_t _getValue(const compactInt_t *c, uint64_t *v) {
-    CHECK_INPUT();
     *v = 0;
 
     switch (c->len) {
@@ -315,26 +314,38 @@ parser_error_t _toStringCompactBalance(const pd_CompactBalance_t *v,
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-parser_error_t _checkSpecVersion(parser_context_t *c) {
+parser_error_t _checkVersions(parser_context_t *c) {
     // Methods are not length delimited so in order to retrieve the specVersion
     // it is necessary to parse from the back.
     // The transaction is expect to end in
     // [4 bytes] specVersion
+    // [4 bytes] transactionVersion
     // [32 bytes] genesisHash
     // [32 bytes] blockHash
-    const uint16_t specOffsetFromBack = 4 + 32 + 32;
+    const uint16_t specOffsetFromBack = 4 + 4 + 32 + 32;
     if (c->bufferLen < specOffsetFromBack) {
         return parser_unexpected_buffer_end;
     }
 
     uint8_t *p = (uint8_t *) (c->buffer + c->bufferLen - specOffsetFromBack);
-    uint32_t tmp = 0;
-    tmp += p[0] << 0u;
-    tmp += p[1] << 8u;
-    tmp += p[2] << 16u;
-    tmp += p[3] << 24u;
+    uint32_t specVersion = 0;
+    specVersion += p[0] << 0u;
+    specVersion += p[1] << 8u;
+    specVersion += p[2] << 16u;
+    specVersion += p[3] << 24u;
 
-    if (tmp != (SUPPORTED_SPEC_VERSION)) {
+    p += 4;
+    uint32_t transactionVersion = 0;
+    transactionVersion += p[0] << 0u;
+    transactionVersion += p[1] << 8u;
+    transactionVersion += p[2] << 16u;
+    transactionVersion += p[3] << 24u;
+
+    if (specVersion < SUPPORTED_MINIMUM_SPEC_VERSION) {
+        return parser_spec_not_supported;
+    }
+
+    if (transactionVersion != (SUPPORTED_TX_VERSION)) {
         return parser_spec_not_supported;
     }
 
@@ -345,7 +356,7 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     CHECK_INPUT();
 
     // Reverse parse to retrieve spec before forward parsing
-    CHECK_ERROR(_checkSpecVersion(c));
+    CHECK_ERROR(_checkVersions(c));
 
     // Now forward parse
     CHECK_ERROR(_readCallIndex(c, &v->callIndex));
@@ -354,6 +365,7 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     CHECK_ERROR(_readCompactIndex(c, &v->nonce));
     CHECK_ERROR(_readCompactBalance(c, &v->tip));
     CHECK_ERROR(_readUInt32(c, &v->specVersion));
+    CHECK_ERROR(_readUInt32(c, &v->transactionVersion));
     CHECK_ERROR(_readHash(c, &v->genesisHash));
     CHECK_ERROR(_readHash(c, &v->blockHash));
 
@@ -387,7 +399,7 @@ parser_error_t _readAddress(parser_context_t *c, pd_Address_t *v) {
         case 0xFF: {
             v->type = eAddressId;
             v->idPtr = c->buffer + c->offset;
-            CTX_CHECK_CAN_ADVANCE(c, 32);
+            CTX_CHECK_AND_ADVANCE(c, 32);
             break;
         }
         case 0xFE: {
@@ -448,7 +460,7 @@ uint8_t _detectAddressType() {
 
         // Compare with known genesis hashes
         // KUSAMA
-        if (strcmp(hashstr, "B0A8D493285C2DF73290DFB7E61F870F17B41801197A149CA93654499EA3DAFE") == 0) {
+        if (strcmp(hashstr, COIN_KUSAMA_CC3_GENESIS_HASH) == 0) {
             return 2;
         }
     }
