@@ -31,6 +31,11 @@ extern "C" {
 #define    Data_e_KECCAK256_U8_32   36
 #define    Data_e_SHATHREE256_U8_32 37
 
+typedef uint8_t pd_bool_t;
+typedef uint16_t pd_u16_t;
+typedef uint32_t pd_u32_t;
+typedef uint64_t pd_u64_t;
+
 typedef struct {
     uint8_t moduleIdx;
     uint8_t idx;
@@ -60,7 +65,7 @@ typedef struct {
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextern-c-compat"
-// NOTE: These are large types that cannot be reviewed in the device. 
+// NOTE: These are large types that cannot be reviewed in the device.
 // They will be marked as not supported
 typedef struct {} pd_AttestedCandidate_t;
 typedef struct {} pd_Header_t;
@@ -68,8 +73,7 @@ typedef struct {} pd_Heartbeat_t;
 #pragma clang diagnostic pop
 
 ////////////////////////
-////////////////////////
-////////////////////////
+// Types that require out of order declaration
 ////////////////////////
 
 typedef enum {
@@ -94,6 +98,19 @@ typedef struct {
 typedef struct {
     const uint8_t *_ptr;
 } pd_Hash_t;
+
+typedef struct {
+    const uint8_t *_ptr;
+} pd_BalanceOf_t;
+
+typedef struct {
+    uint8_t value;
+} pd_Conviction_t;
+
+typedef struct {
+    pd_bool_t aye;
+    pd_Conviction_t conviction;
+} pd_Vote_t;
 
 parser_error_t _readAddress(parser_context_t *c, pd_Address_t *v);
 
@@ -133,11 +150,6 @@ typedef struct {
 ////////////////////////
 ////////////////////////
 
-typedef uint8_t pd_bool_t;
-typedef uint16_t pd_u16_t;
-typedef uint32_t pd_u32_t;
-typedef uint64_t pd_u64_t;
-
 typedef compactInt_t pd_Compactu32_t;               // u32
 typedef compactInt_t pd_Compactu64_t;               // u64
 typedef pd_CompactBalance_t pd_CompactBalanceOf_t;
@@ -173,6 +185,7 @@ typedef compactInt_t pd_CompactRegistrarIndex_t;
 typedef compactInt_t pd_CompactSubId_t;
 
 
+
 typedef struct { 
     const uint8_t *_ptr;
 } pd_AccountId_t;
@@ -181,23 +194,10 @@ typedef struct {
     uint32_t value;
 } pd_AccountIndex_t;
 
-typedef struct {
-    const uint8_t *_ptr;
-} pd_BalanceOf_t;
-
 typedef struct { 
     pd_BalanceOf_t aye;
     pd_BalanceOf_t nay;
 } pd_AccountVoteSplit_t;
-
-typedef struct {
-    uint8_t value;
-} pd_Conviction_t;
-
-typedef struct {
-    pd_bool_t aye;
-    pd_Conviction_t conviction;
-} pd_Vote_t;
 
 typedef struct { 
     pd_Vote_t vote;
