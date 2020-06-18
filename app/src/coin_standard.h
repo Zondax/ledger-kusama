@@ -22,6 +22,8 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 
+#define CLA                             0x99
+
 #define HDPATH_LEN_DEFAULT   5
 
 #define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
