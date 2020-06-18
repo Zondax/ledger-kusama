@@ -103,6 +103,19 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
     if (!mainnet) {
         THROW(APDU_CODE_DATA_INVALID);
     }
+
+#if defined(APP_RESTRICTED)
+    if (hdPath[2] != HDPATH_2_STASH && hdPath[2] != HDPATH_2_VALIDATOR ) {
+        THROW(APDU_CODE_DATA_INVALID);
+    }
+    if (hdPath[3] != HDPATH_3_DEFAULT ) {
+        THROW(APDU_CODE_DATA_INVALID);
+    }
+    if (hdPath[4] < 0x80000000 ) {
+        THROW(APDU_CODE_DATA_INVALID);
+    }
+#endif
+
 }
 
 bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
