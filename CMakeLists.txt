@@ -27,6 +27,8 @@ string(APPEND CMAKE_C_FLAGS " -fsanitize=address -fno-omit-frame-pointer -Wno-ex
 string(APPEND CMAKE_CXX_FLAGS " -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat")
 string(APPEND CMAKE_LINKER_FLAGS " -fsanitize=address -fno-omit-frame-pointer")
 
+add_definitions(-DAPP_STANDARD)
+
 set (RETRIEVE_MAJOR_CMD
         "cat ${CMAKE_CURRENT_SOURCE_DIR}/app/Makefile.version | grep APPVERSION_M | cut -b 14- | tr -d '\n'"
 )
@@ -89,12 +91,12 @@ file(GLOB_RECURSE TESTS_SRC
 
 add_executable(unittests ${TESTS_SRC})
 target_include_directories(unittests PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
         ${gtest_SOURCE_DIR}/include
         ${gmock_SOURCE_DIR}/include
         ${CONAN_INCLUDE_DIRS_FMT}
         ${CONAN_INCLUDE_DIRS_JSONCPP}
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
         )
 
 target_link_libraries(unittests PRIVATE

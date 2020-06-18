@@ -43,9 +43,9 @@ typedef enum {
 #define VIEW_ADDRESS_ITEM_COUNT             2
 #define VIEW_ADDRESS_LAST_PAGE_DEFAULT      0
 
-#define MENU_MAIN_APP_LINE1                 "Kusama"
-#define MENU_MAIN_APP_LINE2                 "Ready"
-#define APPVERSION_LINE1                    "Kusama"
+#define MENU_MAIN_APP_LINE1                 "Kusama | sec"
+#define MENU_MAIN_APP_LINE2                 "Ledgeracio"
+#define APPVERSION_LINE1                    "Kusama | sec"
 #define APPVERSION_LINE2                    "v" APPVERSION
 
 // Specific to Kusama
