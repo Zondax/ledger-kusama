@@ -18,7 +18,7 @@
 #include "parser_impl.h"
 #include "parser_txdef.h"
 #include "coin.h"
-#include "polkadot_dispatch.h"
+#include "substrate_dispatch.h"
 #include "crypto.h"
 #include "bignum.h"
 

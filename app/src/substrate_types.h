@@ -1308,7 +1308,7 @@ parser_error_t _toStringu8_array_32(
     uint8_t *pageCount);
 
 
-#include "polkadot_methods.h"
+#include "substrate_methods.h"
 
 #ifdef __cplusplus
 }

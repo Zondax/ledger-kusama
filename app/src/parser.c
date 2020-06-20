@@ -17,12 +17,12 @@
 #include <stdio.h>
 #include <zxmacros.h>
 #include "parser.h"
-#include "polkadot_dispatch.h"
+#include "substrate_dispatch.h"
 
 #if defined(APP_RESTRICTED)
 #include "coin.h"
 #include "crypto.h"
-#include "polkadot_methods.h"
+#include "substrate_methods.h"
 #endif
 
 #define FIELD_FIXED_TOTAL_COUNT 7
