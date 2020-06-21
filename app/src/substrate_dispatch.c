@@ -214,6 +214,18 @@ __Z_INLINE parser_error_t _readMethod_staking_set_validator_count(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_staking_increase_validator_count(
+    parser_context_t *c, pd_staking_increase_validator_count_t *m) {
+    CHECK_ERROR(_readCompactu32(c, &m->additional))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_scale_validator_count(
+    parser_context_t *c, pd_staking_scale_validator_count_t *m) {
+    CHECK_ERROR(_readPercent(c, &m->factor))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_staking_force_no_eras(
     parser_context_t *c, pd_staking_force_no_eras_t *m) {
     return parser_ok;
@@ -1094,6 +1106,14 @@ __Z_INLINE parser_error_t _readMethod_vesting_vested_transfer(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_vesting_force_vested_transfer(
+    parser_context_t *c, pd_vesting_force_vested_transfer_t *m) {
+    CHECK_ERROR(_readLookupSource(c, &m->source))
+    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readVestingInfo(c, &m->schedule))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_scheduler_schedule(
     parser_context_t *c, pd_scheduler_schedule_t *m) {
     CHECK_ERROR(_readBlockNumber(c, &m->when))
@@ -1170,12 +1190,21 @@ __Z_INLINE parser_error_t _readMethod_proxy_kill_anonymous(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1(
+    parser_context_t *c, pd_multisig_as_multi_threshold_1_t *m) {
+    CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
+    CHECK_ERROR(_readCall(c, &m->call))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_multisig_as_multi(
     parser_context_t *c, pd_multisig_as_multi_t *m) {
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
     CHECK_ERROR(_readOptionTimepoint(c, &m->maybe_timepoint))
-    CHECK_ERROR(_readCall(c, &m->call))
+    CHECK_ERROR(_readBytes(c, &m->call))
+    CHECK_ERROR(_readbool(c, &m->store_call))
+    CHECK_ERROR(_readWeight(c, &m->max_weight))
     return parser_ok;
 }
 
@@ -1185,6 +1214,7 @@ __Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi(
     CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
     CHECK_ERROR(_readOptionTimepoint(c, &m->maybe_timepoint))
     CHECK_ERROR(_readu8_array_32(c, &m->call_hash))
+    CHECK_ERROR(_readWeight(c, &m->max_weight))
     return parser_ok;
 }
 
@@ -1300,39 +1330,45 @@ parser_error_t _readMethodBasic(
             CHECK_ERROR(_readMethod_staking_set_validator_count(c, &method->staking_set_validator_count))
             break;
         case 1546: /* module 6 call 10 */
-            CHECK_ERROR(_readMethod_staking_force_no_eras(c, &method->staking_force_no_eras))
+            CHECK_ERROR(_readMethod_staking_increase_validator_count(c, &method->staking_increase_validator_count))
             break;
         case 1547: /* module 6 call 11 */
-            CHECK_ERROR(_readMethod_staking_force_new_era(c, &method->staking_force_new_era))
+            CHECK_ERROR(_readMethod_staking_scale_validator_count(c, &method->staking_scale_validator_count))
             break;
         case 1548: /* module 6 call 12 */
-            CHECK_ERROR(_readMethod_staking_set_invulnerables(c, &method->staking_set_invulnerables))
+            CHECK_ERROR(_readMethod_staking_force_no_eras(c, &method->staking_force_no_eras))
             break;
         case 1549: /* module 6 call 13 */
-            CHECK_ERROR(_readMethod_staking_force_unstake(c, &method->staking_force_unstake))
+            CHECK_ERROR(_readMethod_staking_force_new_era(c, &method->staking_force_new_era))
             break;
         case 1550: /* module 6 call 14 */
-            CHECK_ERROR(_readMethod_staking_force_new_era_always(c, &method->staking_force_new_era_always))
+            CHECK_ERROR(_readMethod_staking_set_invulnerables(c, &method->staking_set_invulnerables))
             break;
         case 1551: /* module 6 call 15 */
-            CHECK_ERROR(_readMethod_staking_cancel_deferred_slash(c, &method->staking_cancel_deferred_slash))
+            CHECK_ERROR(_readMethod_staking_force_unstake(c, &method->staking_force_unstake))
             break;
         case 1552: /* module 6 call 16 */
-            CHECK_ERROR(_readMethod_staking_payout_stakers(c, &method->staking_payout_stakers))
+            CHECK_ERROR(_readMethod_staking_force_new_era_always(c, &method->staking_force_new_era_always))
             break;
         case 1553: /* module 6 call 17 */
-            CHECK_ERROR(_readMethod_staking_rebond(c, &method->staking_rebond))
+            CHECK_ERROR(_readMethod_staking_cancel_deferred_slash(c, &method->staking_cancel_deferred_slash))
             break;
         case 1554: /* module 6 call 18 */
-            CHECK_ERROR(_readMethod_staking_set_history_depth(c, &method->staking_set_history_depth))
+            CHECK_ERROR(_readMethod_staking_payout_stakers(c, &method->staking_payout_stakers))
             break;
         case 1555: /* module 6 call 19 */
-            CHECK_ERROR(_readMethod_staking_reap_stash(c, &method->staking_reap_stash))
+            CHECK_ERROR(_readMethod_staking_rebond(c, &method->staking_rebond))
             break;
         case 1556: /* module 6 call 20 */
-            CHECK_ERROR(_readMethod_staking_submit_election_solution(c, &method->staking_submit_election_solution))
+            CHECK_ERROR(_readMethod_staking_set_history_depth(c, &method->staking_set_history_depth))
             break;
         case 1557: /* module 6 call 21 */
+            CHECK_ERROR(_readMethod_staking_reap_stash(c, &method->staking_reap_stash))
+            break;
+        case 1558: /* module 6 call 22 */
+            CHECK_ERROR(_readMethod_staking_submit_election_solution(c, &method->staking_submit_election_solution))
+            break;
+        case 1559: /* module 6 call 23 */
             CHECK_ERROR(_readMethod_staking_submit_election_solution_unsigned(c, &method->staking_submit_election_solution_unsigned))
             break;
         case 2048: /* module 8 call 0 */
@@ -1683,6 +1719,9 @@ parser_error_t _readMethodBasic(
         case 7170: /* module 28 call 2 */
             CHECK_ERROR(_readMethod_vesting_vested_transfer(c, &method->vesting_vested_transfer))
             break;
+        case 7171: /* module 28 call 3 */
+            CHECK_ERROR(_readMethod_vesting_force_vested_transfer(c, &method->vesting_force_vested_transfer))
+            break;
         case 7424: /* module 29 call 0 */
             CHECK_ERROR(_readMethod_scheduler_schedule(c, &method->scheduler_schedule))
             break;
@@ -1714,12 +1753,15 @@ parser_error_t _readMethodBasic(
             CHECK_ERROR(_readMethod_proxy_kill_anonymous(c, &method->proxy_kill_anonymous))
             break;
         case 7936: /* module 31 call 0 */
-            CHECK_ERROR(_readMethod_multisig_as_multi(c, &method->multisig_as_multi))
+            CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1(c, &method->multisig_as_multi_threshold_1))
             break;
         case 7937: /* module 31 call 1 */
-            CHECK_ERROR(_readMethod_multisig_approve_as_multi(c, &method->multisig_approve_as_multi))
+            CHECK_ERROR(_readMethod_multisig_as_multi(c, &method->multisig_as_multi))
             break;
         case 7938: /* module 31 call 2 */
+            CHECK_ERROR(_readMethod_multisig_approve_as_multi(c, &method->multisig_approve_as_multi))
+            break;
+        case 7939: /* module 31 call 3 */
             CHECK_ERROR(_readMethod_multisig_cancel_as_multi(c, &method->multisig_cancel_as_multi))
             break;
     default:
@@ -1831,39 +1873,45 @@ parser_error_t _readMethod(
             CHECK_ERROR(_readMethod_staking_set_validator_count(c, &method->basic.staking_set_validator_count))
             break;
         case 1546: /* module 6 call 10 */
-            CHECK_ERROR(_readMethod_staking_force_no_eras(c, &method->basic.staking_force_no_eras))
+            CHECK_ERROR(_readMethod_staking_increase_validator_count(c, &method->basic.staking_increase_validator_count))
             break;
         case 1547: /* module 6 call 11 */
-            CHECK_ERROR(_readMethod_staking_force_new_era(c, &method->basic.staking_force_new_era))
+            CHECK_ERROR(_readMethod_staking_scale_validator_count(c, &method->basic.staking_scale_validator_count))
             break;
         case 1548: /* module 6 call 12 */
-            CHECK_ERROR(_readMethod_staking_set_invulnerables(c, &method->basic.staking_set_invulnerables))
+            CHECK_ERROR(_readMethod_staking_force_no_eras(c, &method->basic.staking_force_no_eras))
             break;
         case 1549: /* module 6 call 13 */
-            CHECK_ERROR(_readMethod_staking_force_unstake(c, &method->basic.staking_force_unstake))
+            CHECK_ERROR(_readMethod_staking_force_new_era(c, &method->basic.staking_force_new_era))
             break;
         case 1550: /* module 6 call 14 */
-            CHECK_ERROR(_readMethod_staking_force_new_era_always(c, &method->basic.staking_force_new_era_always))
+            CHECK_ERROR(_readMethod_staking_set_invulnerables(c, &method->basic.staking_set_invulnerables))
             break;
         case 1551: /* module 6 call 15 */
-            CHECK_ERROR(_readMethod_staking_cancel_deferred_slash(c, &method->basic.staking_cancel_deferred_slash))
+            CHECK_ERROR(_readMethod_staking_force_unstake(c, &method->basic.staking_force_unstake))
             break;
         case 1552: /* module 6 call 16 */
-            CHECK_ERROR(_readMethod_staking_payout_stakers(c, &method->basic.staking_payout_stakers))
+            CHECK_ERROR(_readMethod_staking_force_new_era_always(c, &method->basic.staking_force_new_era_always))
             break;
         case 1553: /* module 6 call 17 */
-            CHECK_ERROR(_readMethod_staking_rebond(c, &method->basic.staking_rebond))
+            CHECK_ERROR(_readMethod_staking_cancel_deferred_slash(c, &method->basic.staking_cancel_deferred_slash))
             break;
         case 1554: /* module 6 call 18 */
-            CHECK_ERROR(_readMethod_staking_set_history_depth(c, &method->basic.staking_set_history_depth))
+            CHECK_ERROR(_readMethod_staking_payout_stakers(c, &method->basic.staking_payout_stakers))
             break;
         case 1555: /* module 6 call 19 */
-            CHECK_ERROR(_readMethod_staking_reap_stash(c, &method->basic.staking_reap_stash))
+            CHECK_ERROR(_readMethod_staking_rebond(c, &method->basic.staking_rebond))
             break;
         case 1556: /* module 6 call 20 */
-            CHECK_ERROR(_readMethod_staking_submit_election_solution(c, &method->basic.staking_submit_election_solution))
+            CHECK_ERROR(_readMethod_staking_set_history_depth(c, &method->basic.staking_set_history_depth))
             break;
         case 1557: /* module 6 call 21 */
+            CHECK_ERROR(_readMethod_staking_reap_stash(c, &method->basic.staking_reap_stash))
+            break;
+        case 1558: /* module 6 call 22 */
+            CHECK_ERROR(_readMethod_staking_submit_election_solution(c, &method->basic.staking_submit_election_solution))
+            break;
+        case 1559: /* module 6 call 23 */
             CHECK_ERROR(_readMethod_staking_submit_election_solution_unsigned(c, &method->basic.staking_submit_election_solution_unsigned))
             break;
         case 2048: /* module 8 call 0 */
@@ -2226,6 +2274,9 @@ parser_error_t _readMethod(
         case 7170: /* module 28 call 2 */
             CHECK_ERROR(_readMethod_vesting_vested_transfer(c, &method->basic.vesting_vested_transfer))
             break;
+        case 7171: /* module 28 call 3 */
+            CHECK_ERROR(_readMethod_vesting_force_vested_transfer(c, &method->basic.vesting_force_vested_transfer))
+            break;
         case 7424: /* module 29 call 0 */
             CHECK_ERROR(_readMethod_scheduler_schedule(c, &method->basic.scheduler_schedule))
             break;
@@ -2257,12 +2308,15 @@ parser_error_t _readMethod(
             CHECK_ERROR(_readMethod_proxy_kill_anonymous(c, &method->basic.proxy_kill_anonymous))
             break;
         case 7936: /* module 31 call 0 */
-            CHECK_ERROR(_readMethod_multisig_as_multi(c, &method->basic.multisig_as_multi))
+            CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1(c, &method->basic.multisig_as_multi_threshold_1))
             break;
         case 7937: /* module 31 call 1 */
-            CHECK_ERROR(_readMethod_multisig_approve_as_multi(c, &method->basic.multisig_approve_as_multi))
+            CHECK_ERROR(_readMethod_multisig_as_multi(c, &method->basic.multisig_as_multi))
             break;
         case 7938: /* module 31 call 2 */
+            CHECK_ERROR(_readMethod_multisig_approve_as_multi(c, &method->basic.multisig_approve_as_multi))
+            break;
+        case 7939: /* module 31 call 3 */
             CHECK_ERROR(_readMethod_multisig_cancel_as_multi(c, &method->basic.multisig_cancel_as_multi))
             break;
         default:
@@ -2354,18 +2408,20 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 1543: /* module 6 call 7 */   return "Set payee";
         case 1544: /* module 6 call 8 */   return "Set controller";
         case 1545: /* module 6 call 9 */   return "Set validator count";
-        case 1546: /* module 6 call 10 */   return "Force no eras";
-        case 1547: /* module 6 call 11 */   return "Force new era";
-        case 1548: /* module 6 call 12 */   return "Set invulnerables";
-        case 1549: /* module 6 call 13 */   return "Force unstake";
-        case 1550: /* module 6 call 14 */   return "Force new era always";
-        case 1551: /* module 6 call 15 */   return "Cancel deferred slash";
-        case 1552: /* module 6 call 16 */   return "Payout stakers";
-        case 1553: /* module 6 call 17 */   return "Rebond";
-        case 1554: /* module 6 call 18 */   return "Set history depth";
-        case 1555: /* module 6 call 19 */   return "Reap stash";
-        case 1556: /* module 6 call 20 */   return "Submit election solution";
-        case 1557: /* module 6 call 21 */   return "Submit election solution unsigned";
+        case 1546: /* module 6 call 10 */   return "Increase validator count";
+        case 1547: /* module 6 call 11 */   return "Scale validator count";
+        case 1548: /* module 6 call 12 */   return "Force no eras";
+        case 1549: /* module 6 call 13 */   return "Force new era";
+        case 1550: /* module 6 call 14 */   return "Set invulnerables";
+        case 1551: /* module 6 call 15 */   return "Force unstake";
+        case 1552: /* module 6 call 16 */   return "Force new era always";
+        case 1553: /* module 6 call 17 */   return "Cancel deferred slash";
+        case 1554: /* module 6 call 18 */   return "Payout stakers";
+        case 1555: /* module 6 call 19 */   return "Rebond";
+        case 1556: /* module 6 call 20 */   return "Set history depth";
+        case 1557: /* module 6 call 21 */   return "Reap stash";
+        case 1558: /* module 6 call 22 */   return "Submit election solution";
+        case 1559: /* module 6 call 23 */   return "Submit election solution unsigned";
         case 2048: /* module 8 call 0 */   return "Set keys";
         case 2049: /* module 8 call 1 */   return "Purge keys";
         case 2304: /* module 9 call 0 */   return "Final hint";
@@ -2486,6 +2542,7 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 7168: /* module 28 call 0 */   return "Vest";
         case 7169: /* module 28 call 1 */   return "Vest other";
         case 7170: /* module 28 call 2 */   return "Vested transfer";
+        case 7171: /* module 28 call 3 */   return "Force vested transfer";
         case 7424: /* module 29 call 0 */   return "Schedule";
         case 7425: /* module 29 call 1 */   return "Cancel";
         case 7426: /* module 29 call 2 */   return "Schedule named";
@@ -2496,9 +2553,10 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 7683: /* module 30 call 3 */   return "Remove proxies";
         case 7684: /* module 30 call 4 */   return "Anonymous";
         case 7685: /* module 30 call 5 */   return "Kill anonymous";
-        case 7936: /* module 31 call 0 */   return "As multi";
-        case 7937: /* module 31 call 1 */   return "Approve as multi";
-        case 7938: /* module 31 call 2 */   return "Cancel as multi";
+        case 7936: /* module 31 call 0 */   return "As multi threshold 1";
+        case 7937: /* module 31 call 1 */   return "As multi";
+        case 7938: /* module 31 call 2 */   return "Approve as multi";
+        case 7939: /* module 31 call 3 */   return "Cancel as multi";
     default:
         return NULL;
     }
@@ -2541,18 +2599,20 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 1543: /* module 6 call 7 */ return 1;
         case 1544: /* module 6 call 8 */ return 1;
         case 1545: /* module 6 call 9 */ return 1;
-        case 1546: /* module 6 call 10 */ return 0;
-        case 1547: /* module 6 call 11 */ return 0;
-        case 1548: /* module 6 call 12 */ return 1;
-        case 1549: /* module 6 call 13 */ return 2;
-        case 1550: /* module 6 call 14 */ return 0;
+        case 1546: /* module 6 call 10 */ return 1;
+        case 1547: /* module 6 call 11 */ return 1;
+        case 1548: /* module 6 call 12 */ return 0;
+        case 1549: /* module 6 call 13 */ return 0;
+        case 1550: /* module 6 call 14 */ return 1;
         case 1551: /* module 6 call 15 */ return 2;
-        case 1552: /* module 6 call 16 */ return 2;
-        case 1553: /* module 6 call 17 */ return 1;
+        case 1552: /* module 6 call 16 */ return 0;
+        case 1553: /* module 6 call 17 */ return 2;
         case 1554: /* module 6 call 18 */ return 2;
-        case 1555: /* module 6 call 19 */ return 2;
-        case 1556: /* module 6 call 20 */ return 5;
-        case 1557: /* module 6 call 21 */ return 5;
+        case 1555: /* module 6 call 19 */ return 1;
+        case 1556: /* module 6 call 20 */ return 2;
+        case 1557: /* module 6 call 21 */ return 2;
+        case 1558: /* module 6 call 22 */ return 5;
+        case 1559: /* module 6 call 23 */ return 5;
         case 2048: /* module 8 call 0 */ return 2;
         case 2049: /* module 8 call 1 */ return 0;
         case 2304: /* module 9 call 0 */ return 1;
@@ -2673,6 +2733,7 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 7168: /* module 28 call 0 */ return 0;
         case 7169: /* module 28 call 1 */ return 1;
         case 7170: /* module 28 call 2 */ return 2;
+        case 7171: /* module 28 call 3 */ return 3;
         case 7424: /* module 29 call 0 */ return 4;
         case 7425: /* module 29 call 1 */ return 2;
         case 7426: /* module 29 call 2 */ return 5;
@@ -2683,9 +2744,10 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 7683: /* module 30 call 3 */ return 0;
         case 7684: /* module 30 call 4 */ return 2;
         case 7685: /* module 30 call 5 */ return 5;
-        case 7936: /* module 31 call 0 */ return 4;
-        case 7937: /* module 31 call 1 */ return 4;
-        case 7938: /* module 31 call 2 */ return 4;
+        case 7936: /* module 31 call 0 */ return 2;
+        case 7937: /* module 31 call 1 */ return 6;
+        case 7938: /* module 31 call 2 */ return 5;
+        case 7939: /* module 31 call 3 */ return 4;
     default:
     return 0;
     }
@@ -2865,57 +2927,67 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
             }
         case 1546: /* module 6 call 10 */
             switch(itemIdx) {
+                case 0: return "Additional";
                 default: return NULL;
             }
         case 1547: /* module 6 call 11 */
             switch(itemIdx) {
+                case 0: return "Factor";
                 default: return NULL;
             }
         case 1548: /* module 6 call 12 */
             switch(itemIdx) {
-                case 0: return "Validators";
                 default: return NULL;
             }
         case 1549: /* module 6 call 13 */
+            switch(itemIdx) {
+                default: return NULL;
+            }
+        case 1550: /* module 6 call 14 */
+            switch(itemIdx) {
+                case 0: return "Validators";
+                default: return NULL;
+            }
+        case 1551: /* module 6 call 15 */
             switch(itemIdx) {
                 case 0: return "Stash";
                 case 1: return "Num slashing spans";
                 default: return NULL;
             }
-        case 1550: /* module 6 call 14 */
+        case 1552: /* module 6 call 16 */
             switch(itemIdx) {
                 default: return NULL;
             }
-        case 1551: /* module 6 call 15 */
+        case 1553: /* module 6 call 17 */
             switch(itemIdx) {
                 case 0: return "Era";
                 case 1: return "Slash indices";
                 default: return NULL;
             }
-        case 1552: /* module 6 call 16 */
+        case 1554: /* module 6 call 18 */
             switch(itemIdx) {
                 case 0: return "Validator stash";
                 case 1: return "Era";
                 default: return NULL;
             }
-        case 1553: /* module 6 call 17 */
+        case 1555: /* module 6 call 19 */
             switch(itemIdx) {
                 case 0: return "Value";
                 default: return NULL;
             }
-        case 1554: /* module 6 call 18 */
+        case 1556: /* module 6 call 20 */
             switch(itemIdx) {
                 case 0: return "New history depth";
                 case 1: return "Era items deleted";
                 default: return NULL;
             }
-        case 1555: /* module 6 call 19 */
+        case 1557: /* module 6 call 21 */
             switch(itemIdx) {
                 case 0: return "Stash";
                 case 1: return "Num slashing spans";
                 default: return NULL;
             }
-        case 1556: /* module 6 call 20 */
+        case 1558: /* module 6 call 22 */
             switch(itemIdx) {
                 case 0: return "Winners";
                 case 1: return "Compact";
@@ -2924,7 +2996,7 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 case 4: return "Size";
                 default: return NULL;
             }
-        case 1557: /* module 6 call 21 */
+        case 1559: /* module 6 call 23 */
             switch(itemIdx) {
                 case 0: return "Winners";
                 case 1: return "Compact";
@@ -3611,6 +3683,13 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 case 1: return "Schedule";
                 default: return NULL;
             }
+        case 7171: /* module 28 call 3 */
+            switch(itemIdx) {
+                case 0: return "Source";
+                case 1: return "Target";
+                case 2: return "Schedule";
+                default: return NULL;
+            }
         case 7424: /* module 29 call 0 */
             switch(itemIdx) {
                 case 0: return "When";
@@ -3679,10 +3758,8 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
             }
         case 7936: /* module 31 call 0 */
             switch(itemIdx) {
-                case 0: return "Threshold";
-                case 1: return "Other signatories";
-                case 2: return "Maybe timepoint";
-                case 3: return "Call";
+                case 0: return "Other signatories";
+                case 1: return "Call";
                 default: return NULL;
             }
         case 7937: /* module 31 call 1 */
@@ -3690,10 +3767,21 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 case 0: return "Threshold";
                 case 1: return "Other signatories";
                 case 2: return "Maybe timepoint";
-                case 3: return "Call hash";
+                case 3: return "Call";
+                case 4: return "Store call";
+                case 5: return "Max weight";
                 default: return NULL;
             }
         case 7938: /* module 31 call 2 */
+            switch(itemIdx) {
+                case 0: return "Threshold";
+                case 1: return "Other signatories";
+                case 2: return "Maybe timepoint";
+                case 3: return "Call hash";
+                case 4: return "Max weight";
+                default: return NULL;
+            }
+        case 7939: /* module 31 call 3 */
             switch(itemIdx) {
                 case 0: return "Threshold";
                 case 1: return "Other signatories";
@@ -4078,15 +4166,35 @@ parser_error_t _getMethod_ItemValue(
         }
         case 1546: /* module 6 call 10 */
         switch(itemIdx) {
+            case 0: /* staking_increase_validator_count - additional */;
+                return _toStringCompactu32(
+                    &m->basic.staking_increase_validator_count.additional,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
             default:
                 return parser_no_data;
         }
         case 1547: /* module 6 call 11 */
         switch(itemIdx) {
+            case 0: /* staking_scale_validator_count - factor */;
+                return _toStringPercent(
+                    &m->basic.staking_scale_validator_count.factor,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
             default:
                 return parser_no_data;
         }
         case 1548: /* module 6 call 12 */
+        switch(itemIdx) {
+            default:
+                return parser_no_data;
+        }
+        case 1549: /* module 6 call 13 */
+        switch(itemIdx) {
+            default:
+                return parser_no_data;
+        }
+        case 1550: /* module 6 call 14 */
         switch(itemIdx) {
             case 0: /* staking_set_invulnerables - validators */;
                 return _toStringVecAccountId(
@@ -4096,7 +4204,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1549: /* module 6 call 13 */
+        case 1551: /* module 6 call 15 */
         switch(itemIdx) {
             case 0: /* staking_force_unstake - stash */;
                 return _toStringAccountId(
@@ -4111,12 +4219,12 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1550: /* module 6 call 14 */
+        case 1552: /* module 6 call 16 */
         switch(itemIdx) {
             default:
                 return parser_no_data;
         }
-        case 1551: /* module 6 call 15 */
+        case 1553: /* module 6 call 17 */
         switch(itemIdx) {
             case 0: /* staking_cancel_deferred_slash - era */;
                 return _toStringEraIndex(
@@ -4131,7 +4239,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1552: /* module 6 call 16 */
+        case 1554: /* module 6 call 18 */
         switch(itemIdx) {
             case 0: /* staking_payout_stakers - validator_stash */;
                 return _toStringAccountId(
@@ -4146,7 +4254,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1553: /* module 6 call 17 */
+        case 1555: /* module 6 call 19 */
         switch(itemIdx) {
             case 0: /* staking_rebond - value */;
                 return _toStringCompactBalanceOf(
@@ -4156,7 +4264,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1554: /* module 6 call 18 */
+        case 1556: /* module 6 call 20 */
         switch(itemIdx) {
             case 0: /* staking_set_history_depth - new_history_depth */;
                 return _toStringCompactEraIndex(
@@ -4171,7 +4279,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1555: /* module 6 call 19 */
+        case 1557: /* module 6 call 21 */
         switch(itemIdx) {
             case 0: /* staking_reap_stash - stash */;
                 return _toStringAccountId(
@@ -4186,7 +4294,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1556: /* module 6 call 20 */
+        case 1558: /* module 6 call 22 */
         switch(itemIdx) {
             case 0: /* staking_submit_election_solution - winners */;
                 return _toStringVecValidatorIndex(
@@ -4216,7 +4324,7 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
-        case 1557: /* module 6 call 21 */
+        case 1559: /* module 6 call 23 */
         switch(itemIdx) {
             case 0: /* staking_submit_election_solution_unsigned - winners */;
                 return _toStringVecValidatorIndex(
@@ -5836,6 +5944,26 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
+        case 7171: /* module 28 call 3 */
+        switch(itemIdx) {
+            case 0: /* vesting_force_vested_transfer - source */;
+                return _toStringLookupSource(
+                    &m->basic.vesting_force_vested_transfer.source,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* vesting_force_vested_transfer - target */;
+                return _toStringLookupSource(
+                    &m->basic.vesting_force_vested_transfer.target,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 2: /* vesting_force_vested_transfer - schedule */;
+                return _toStringVestingInfo(
+                    &m->basic.vesting_force_vested_transfer.schedule,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
         case 7424: /* module 29 call 0 */
         switch(itemIdx) {
             case 0: /* scheduler_schedule - when */;
@@ -6018,6 +6146,21 @@ parser_error_t _getMethod_ItemValue(
         }
         case 7936: /* module 31 call 0 */
         switch(itemIdx) {
+            case 0: /* multisig_as_multi_threshold_1 - other_signatories */;
+                return _toStringVecAccountId(
+                    &m->basic.multisig_as_multi_threshold_1.other_signatories,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* multisig_as_multi_threshold_1 - call */;
+                return _toStringCall(
+                    &m->basic.multisig_as_multi_threshold_1.call,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 7937: /* module 31 call 1 */
+        switch(itemIdx) {
             case 0: /* multisig_as_multi - threshold */;
                 return _toStringu16(
                     &m->basic.multisig_as_multi.threshold,
@@ -6034,14 +6177,24 @@ parser_error_t _getMethod_ItemValue(
                     outValue, outValueLen,
                     pageIdx, pageCount);
             case 3: /* multisig_as_multi - call */;
-                return _toStringCall(
+                return _toStringBytes(
                     &m->basic.multisig_as_multi.call,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 4: /* multisig_as_multi - store_call */;
+                return _toStringbool(
+                    &m->basic.multisig_as_multi.store_call,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 5: /* multisig_as_multi - max_weight */;
+                return _toStringWeight(
+                    &m->basic.multisig_as_multi.max_weight,
                     outValue, outValueLen,
                     pageIdx, pageCount);
             default:
                 return parser_no_data;
         }
-        case 7937: /* module 31 call 1 */
+        case 7938: /* module 31 call 2 */
         switch(itemIdx) {
             case 0: /* multisig_approve_as_multi - threshold */;
                 return _toStringu16(
@@ -6063,10 +6216,15 @@ parser_error_t _getMethod_ItemValue(
                     &m->basic.multisig_approve_as_multi.call_hash,
                     outValue, outValueLen,
                     pageIdx, pageCount);
+            case 4: /* multisig_approve_as_multi - max_weight */;
+                return _toStringWeight(
+                    &m->basic.multisig_approve_as_multi.max_weight,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
             default:
                 return parser_no_data;
         }
-        case 7938: /* module 31 call 2 */
+        case 7939: /* module 31 call 3 */
         switch(itemIdx) {
             case 0: /* multisig_cancel_as_multi - threshold */;
                 return _toStringu16(

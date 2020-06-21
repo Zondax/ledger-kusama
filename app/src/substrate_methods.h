@@ -221,59 +221,69 @@ typedef struct {
     pd_Compactu32_t new_;
 } pd_staking_set_validator_count_t;
 
-#define PD_CALL_STAKING_FORCE_NO_ERAS 10
+#define PD_CALL_STAKING_INCREASE_VALIDATOR_COUNT 10
+typedef struct {
+    pd_Compactu32_t additional;
+} pd_staking_increase_validator_count_t;
+
+#define PD_CALL_STAKING_SCALE_VALIDATOR_COUNT 11
+typedef struct {
+    pd_Percent_t factor;
+} pd_staking_scale_validator_count_t;
+
+#define PD_CALL_STAKING_FORCE_NO_ERAS 12
 typedef struct {
 } pd_staking_force_no_eras_t;
 
-#define PD_CALL_STAKING_FORCE_NEW_ERA 11
+#define PD_CALL_STAKING_FORCE_NEW_ERA 13
 typedef struct {
 } pd_staking_force_new_era_t;
 
-#define PD_CALL_STAKING_SET_INVULNERABLES 12
+#define PD_CALL_STAKING_SET_INVULNERABLES 14
 typedef struct {
     pd_VecAccountId_t validators;
 } pd_staking_set_invulnerables_t;
 
-#define PD_CALL_STAKING_FORCE_UNSTAKE 13
+#define PD_CALL_STAKING_FORCE_UNSTAKE 15
 typedef struct {
     pd_AccountId_t stash;
     pd_u32_t num_slashing_spans;
 } pd_staking_force_unstake_t;
 
-#define PD_CALL_STAKING_FORCE_NEW_ERA_ALWAYS 14
+#define PD_CALL_STAKING_FORCE_NEW_ERA_ALWAYS 16
 typedef struct {
 } pd_staking_force_new_era_always_t;
 
-#define PD_CALL_STAKING_CANCEL_DEFERRED_SLASH 15
+#define PD_CALL_STAKING_CANCEL_DEFERRED_SLASH 17
 typedef struct {
     pd_EraIndex_t era;
     pd_Vecu32_t slash_indices;
 } pd_staking_cancel_deferred_slash_t;
 
-#define PD_CALL_STAKING_PAYOUT_STAKERS 16
+#define PD_CALL_STAKING_PAYOUT_STAKERS 18
 typedef struct {
     pd_AccountId_t validator_stash;
     pd_EraIndex_t era;
 } pd_staking_payout_stakers_t;
 
-#define PD_CALL_STAKING_REBOND 17
+#define PD_CALL_STAKING_REBOND 19
 typedef struct {
     pd_CompactBalanceOf_t value;
 } pd_staking_rebond_t;
 
-#define PD_CALL_STAKING_SET_HISTORY_DEPTH 18
+#define PD_CALL_STAKING_SET_HISTORY_DEPTH 20
 typedef struct {
     pd_CompactEraIndex_t new_history_depth;
     pd_Compactu32_t _era_items_deleted;
 } pd_staking_set_history_depth_t;
 
-#define PD_CALL_STAKING_REAP_STASH 19
+#define PD_CALL_STAKING_REAP_STASH 21
 typedef struct {
     pd_AccountId_t stash;
     pd_u32_t num_slashing_spans;
 } pd_staking_reap_stash_t;
 
-#define PD_CALL_STAKING_SUBMIT_ELECTION_SOLUTION 20
+#define PD_CALL_STAKING_SUBMIT_ELECTION_SOLUTION 22
 typedef struct {
     pd_VecValidatorIndex_t winners;
     pd_CompactAssignments_t compact;
@@ -282,7 +292,7 @@ typedef struct {
     pd_ElectionSize_t size;
 } pd_staking_submit_election_solution_t;
 
-#define PD_CALL_STAKING_SUBMIT_ELECTION_SOLUTION_UNSIGNED 21
+#define PD_CALL_STAKING_SUBMIT_ELECTION_SOLUTION_UNSIGNED 23
 typedef struct {
     pd_VecValidatorIndex_t winners;
     pd_CompactAssignments_t compact;
@@ -943,6 +953,13 @@ typedef struct {
     pd_VestingInfo_t schedule;
 } pd_vesting_vested_transfer_t;
 
+#define PD_CALL_VESTING_FORCE_VESTED_TRANSFER 3
+typedef struct {
+    pd_LookupSource_t source;
+    pd_LookupSource_t target;
+    pd_VestingInfo_t schedule;
+} pd_vesting_force_vested_transfer_t;
+
 #define PD_CALL_SCHEDULER_SCHEDULE 0
 typedef struct {
     pd_BlockNumber_t when;
@@ -1009,23 +1026,32 @@ typedef struct {
     pd_Compactu32_t ext_index;
 } pd_proxy_kill_anonymous_t;
 
-#define PD_CALL_MULTISIG_AS_MULTI 0
+#define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1 0
+typedef struct {
+    pd_VecAccountId_t other_signatories;
+    pd_Call_t call;
+} pd_multisig_as_multi_threshold_1_t;
+
+#define PD_CALL_MULTISIG_AS_MULTI 1
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_t other_signatories;
     pd_OptionTimepoint_t maybe_timepoint;
-    pd_Call_t call;
+    pd_Bytes_t call;
+    pd_bool_t store_call;
+    pd_Weight_t max_weight;
 } pd_multisig_as_multi_t;
 
-#define PD_CALL_MULTISIG_APPROVE_AS_MULTI 1
+#define PD_CALL_MULTISIG_APPROVE_AS_MULTI 2
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_t other_signatories;
     pd_OptionTimepoint_t maybe_timepoint;
     pd_u8_array_32_t call_hash;
+    pd_Weight_t max_weight;
 } pd_multisig_approve_as_multi_t;
 
-#define PD_CALL_MULTISIG_CANCEL_AS_MULTI 2
+#define PD_CALL_MULTISIG_CANCEL_AS_MULTI 3
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_t other_signatories;
@@ -1066,6 +1092,8 @@ typedef union {
     pd_staking_set_payee_t staking_set_payee;
     pd_staking_set_controller_t staking_set_controller;
     pd_staking_set_validator_count_t staking_set_validator_count;
+    pd_staking_increase_validator_count_t staking_increase_validator_count;
+    pd_staking_scale_validator_count_t staking_scale_validator_count;
     pd_staking_force_no_eras_t staking_force_no_eras;
     pd_staking_force_new_era_t staking_force_new_era;
     pd_staking_set_invulnerables_t staking_set_invulnerables;
@@ -1194,6 +1222,7 @@ typedef union {
     pd_vesting_vest_t vesting_vest;
     pd_vesting_vest_other_t vesting_vest_other;
     pd_vesting_vested_transfer_t vesting_vested_transfer;
+    pd_vesting_force_vested_transfer_t vesting_force_vested_transfer;
     pd_scheduler_schedule_t scheduler_schedule;
     pd_scheduler_cancel_t scheduler_cancel;
     pd_scheduler_schedule_named_t scheduler_schedule_named;
@@ -1204,6 +1233,7 @@ typedef union {
     pd_proxy_remove_proxies_t proxy_remove_proxies;
     pd_proxy_anonymous_t proxy_anonymous;
     pd_proxy_kill_anonymous_t proxy_kill_anonymous;
+    pd_multisig_as_multi_threshold_1_t multisig_as_multi_threshold_1;
     pd_multisig_as_multi_t multisig_as_multi;
     pd_multisig_approve_as_multi_t multisig_approve_as_multi;
     pd_multisig_cancel_as_multi_t multisig_cancel_as_multi;

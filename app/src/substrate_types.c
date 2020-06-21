@@ -293,6 +293,10 @@ parser_error_t _readPerbill(parser_context_t *c, pd_Perbill_t *v) {
     return _readUInt32(c, &v->value);
 }
 
+parser_error_t _readPercent(parser_context_t *c, pd_Percent_t *v) {
+    return parser_not_supported;
+}
+
 parser_error_t _readPeriod(parser_context_t *c, pd_Period_t *v) {
     return parser_not_supported;
 }
@@ -395,6 +399,10 @@ parser_error_t _readVote(parser_context_t *c, pd_Vote_t *v) {
     }
 
     return parser_ok;
+}
+
+parser_error_t _readWeight(parser_context_t *c, pd_Weight_t *v) {
+    return parser_not_supported;
 }
 
 parser_error_t _readu8_array_20(parser_context_t *c, pd_u8_array_20_t *v) {
@@ -723,7 +731,7 @@ parser_error_t _toStringAccountVoteStandard(
     pages[0] = 1;
     CHECK_ERROR(_toStringVote(&v->vote, outValue, outValueLen, 0, &pages[1]))
     CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, 0, &pages[2]));
-
+    
     *pageCount = 0;
     for (uint8_t i = 0; i < (uint8_t) sizeof(pages); i++) {
         *pageCount += pages[i];
@@ -791,7 +799,7 @@ parser_error_t _toStringAttestedCandidate(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -835,7 +843,7 @@ parser_error_t _toStringCall(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -846,7 +854,7 @@ parser_error_t _toStringChangesTrieConfiguration(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -934,7 +942,7 @@ parser_error_t _toStringDefunctVoter(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -945,7 +953,7 @@ parser_error_t _toStringDoubleVoteReport(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -965,7 +973,7 @@ parser_error_t _toStringElectionScore(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -976,7 +984,7 @@ parser_error_t _toStringElectionSize(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -987,7 +995,7 @@ parser_error_t _toStringEquivocationProof(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1016,7 +1024,7 @@ parser_error_t _toStringHeadData(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1027,7 +1035,7 @@ parser_error_t _toStringHeader(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1038,7 +1046,7 @@ parser_error_t _toStringHeartbeat(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1049,7 +1057,7 @@ parser_error_t _toStringIdentityFields(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1072,7 +1080,7 @@ parser_error_t _toStringIdentityInfo(
     CHECK_ERROR(_toStringOptionu8_array_20(&v->pgp_fingerprint, outValue, outValueLen, 0, &pages[6]))
     CHECK_ERROR(_toStringData(&v->image, outValue, outValueLen, 0, &pages[7]))
     CHECK_ERROR(_toStringData(&v->twitter, outValue, outValueLen, 0, &pages[8]))
-
+    
     *pageCount = 0;
     for (uint8_t i = 0; i < (uint8_t) sizeof(pages); i++) {
         *pageCount += pages[i];
@@ -1170,7 +1178,7 @@ parser_error_t _toStringIdentityJudgement(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1181,7 +1189,7 @@ parser_error_t _toStringKeyOwnerProof(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1192,7 +1200,7 @@ parser_error_t _toStringKeyValue(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1203,7 +1211,7 @@ parser_error_t _toStringKey(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1222,7 +1230,7 @@ parser_error_t _toStringMemberCount(
         uint16_t outValueLen,
         uint8_t pageIdx,
         uint8_t *pageCount) {
-    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+      return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringMoreAttestations(
@@ -1232,7 +1240,7 @@ parser_error_t _toStringMoreAttestations(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1268,6 +1276,17 @@ parser_error_t _toStringPerbill(
     return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringPercent(
+        const pd_Percent_t *v,
+        char *outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+    
+    return parser_print_not_supported;
+}
+
 parser_error_t _toStringPeriod(
         const pd_Period_t *v,
         char *outValue,
@@ -1275,7 +1294,7 @@ parser_error_t _toStringPeriod(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1286,7 +1305,7 @@ parser_error_t _toStringPriority(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1297,7 +1316,7 @@ parser_error_t _toStringProxyType(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1326,7 +1345,7 @@ parser_error_t _toStringRenouncing(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1372,7 +1391,7 @@ parser_error_t _toStringSocietyJudgement(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1383,7 +1402,7 @@ parser_error_t _toStringStatementKind(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1394,7 +1413,7 @@ parser_error_t _toStringTimepoint(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1405,7 +1424,7 @@ parser_error_t _toStringTupleAccountIdData(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1496,7 +1515,7 @@ parser_error_t _toStringValidationCode(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1507,7 +1526,7 @@ parser_error_t _toStringValidatorIndex(
         uint8_t pageIdx,
         uint8_t *pageCount) {
     CLEAN_AND_CHECK()
-
+    
     return parser_print_not_supported;
 }
 
@@ -1551,7 +1570,7 @@ parser_error_t _toStringVestingInfo(
     return parser_ok;
   }
   pageIdx -= pages[1];
-
+  
   //////
   if (pageIdx < pages[2]) {
     CHECK_ERROR(_toStringBlockNumber(&v->starting_block, outValue, outValueLen, pageIdx, &pages[2]))
@@ -1579,6 +1598,17 @@ parser_error_t _toStringVote(
                         pageCount));
     *pageCount = 1;
     return parser_ok;
+}
+
+parser_error_t _toStringWeight(
+        const pd_Weight_t *v,
+        char *outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t *pageCount) {
+    CLEAN_AND_CHECK()
+    
+    return parser_print_not_supported;
 }
 
 parser_error_t _toStringu8_array_20(
