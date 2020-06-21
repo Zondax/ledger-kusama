@@ -107,30 +107,3 @@ target_link_libraries(unittests PRIVATE
 
 add_test(unittests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unittests)
 set_tests_properties(unittests PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-
-##############################################################
-##############################################################
-#  Fuzzing
-file(GLOB FUZZING_SRC
-        ${CMAKE_CURRENT_SOURCE_DIR}/fuzzing/fuzzingMain.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests/utils/common.cpp)
-
-add_executable(fuzzing_stub ${FUZZING_SRC})
-target_include_directories(fuzzing_stub PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests
-        )
-
-add_library(app_lib32 STATIC ${LIB_SRC})
-target_include_directories(app_lib32 PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/deps/BLAKE2/ref
-        ${CMAKE_CURRENT_SOURCE_DIR}/deps/ledger-zxlib/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/common
-        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
-        )
-#set_target_properties(app_lib32 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
-
-target_link_libraries(fuzzing_stub app_lib32)
-#set_target_properties(fuzzing_stub PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
