@@ -15,10 +15,47 @@
 ********************************************************************************/
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define CLA                             0x99
+
+#define HDPATH_LEN_DEFAULT   5
+#define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
+#define HDPATH_1_DEFAULT     (0x80000000 | 0x1b2)       // 434
+
+#define PK_LEN_ED25519       32u
+
+typedef enum {
+    addr_ed22519     = 0,
+    addr_sr25519     = 1
+} address_kind_e;
+
+#define VIEW_ADDRESS_OFFSET_ED25519         (PK_LEN_ED25519)
+#define VIEW_ADDRESS_ITEM_COUNT             2
+#define VIEW_ADDRESS_LAST_PAGE_DEFAULT      0
+
+// Coin Specific
+#define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_KUSAMA
+#define SUPPORTED_TX_VERSION                LEDGER_MAJOR_VERSION
+#define SUPPORTED_SPEC_VERSION              LEDGER_MINOR_VERSION
+#define SUPPORTED_MINIMUM_SPEC_VERSION      2008
+
+#define COIN_AMOUNT_DECIMAL_PLACES          12
+#define CRYPTO_BLOB_SKIP_BYTES              0
+
+#define COIN_GENESIS_HASH                   "B0A8D493285C2DF73290DFB7E61F870F17B41801197A149CA93654499EA3DAFE"
+#define COIN_NAME                           "Kusama"
+
 #if defined(APP_STANDARD)
 #include "coin_standard.h"
 #elif defined(APP_RESTRICTED)
 #include "coin_restricted.h"
 #else
 #error "APP VARIANT IS NOT SUPPORTED"
+#endif
+
+#ifdef __cplusplus
+}
 #endif

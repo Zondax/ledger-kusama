@@ -18,6 +18,8 @@
 #include <zxmacros.h>
 #include "parser.h"
 #include "substrate_dispatch.h"
+#include "coin.h"
+#include "coin_ss58.h"
 
 #if defined(APP_RESTRICTED)
 #include "coin.h"
@@ -135,9 +137,9 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
         displayIdx -= methodArgCount;
         switch (displayIdx) {
             case FIELD_NETWORK:
-                if (_detectAddressType() == 2) {
+                if (_detectAddressType() == PK_ADDRESS_TYPE) {
                     snprintf(outKey, outKeyLen, "Chain");
-                    snprintf(outValue, outValueLen, "KUSAMA CC3");
+                    snprintf(outValue, outValueLen, COIN_NAME);
                     break;
                 }
                 snprintf(outKey, outKeyLen, "Genesis Hash");
