@@ -52,13 +52,16 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
                 return parser_ok;
             }
             if (parser_tx_obj.callIndex.idx==PD_CALL_STAKING_NOMINATE) {
-                // FIXME: Check whitelist
+                // FIXME: Check allowlist
                 return parser_ok;
             }
         }
     }
     if (hdPath[2] == HDPATH_2_VALIDATOR) {
         if (parser_tx_obj.callIndex.moduleIdx == PD_CALL_STAKING) {
+            if (parser_tx_obj.callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
+                return parser_ok;
+            }
             if (parser_tx_obj.callIndex.idx==PD_CALL_STAKING_VALIDATE) {
                 return parser_ok;
             }
