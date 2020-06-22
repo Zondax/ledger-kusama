@@ -45,7 +45,7 @@ typedef enum {
 #define COIN_AMOUNT_DECIMAL_PLACES          12
 #define CRYPTO_BLOB_SKIP_BYTES              0
 
-#define COIN_GENESIS_HASH                   "B0A8D493285C2DF73290DFB7E61F870F17B41801197A149CA93654499EA3DAFE"
+#define COIN_GENESIS_HASH                   "b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe"
 #define COIN_NAME                           "Kusama"
 
 #if defined(APP_STANDARD)
