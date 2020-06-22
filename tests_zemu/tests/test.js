@@ -1,8 +1,9 @@
-import { expect, test } from "jest";
+import {expect, test} from "jest";
 import Zemu from "@zondax/zemu";
-import LedgerApp from "@zondax/ledger-polkadot";
-import { blake2bInit, blake2bUpdate, blake2bFinal } from "blakejs";
+import {blake2bInit, blake2bUpdate, blake2bFinal} from "blakejs";
+
 const ed25519 = require("ed25519-supercop");
+const {newKusamaApp} = require("@zondax/ledger-polkadot");
 
 const Resolve = require("path").resolve;
 const APP_PATH = Resolve("../app/bin/app.elf");
@@ -39,7 +40,7 @@ describe('Basic checks', function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
-            const app = new LedgerApp(sim.getTransport());
+            const app = newKusamaApp(sim.getTransport());
             const resp = await app.getVersion();
 
             console.log(resp);
@@ -59,7 +60,7 @@ describe('Basic checks', function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
-            const app = new LedgerApp(sim.getTransport());
+            const app = newKusamaApp(sim.getTransport());
 
             // FIXME: Zemu/Speculos are enforcing fully hardened paths
             const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000);
@@ -88,7 +89,7 @@ describe('Basic checks', function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
-            const app = new LedgerApp(sim.getTransport());
+            const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
 
@@ -130,7 +131,7 @@ describe('Basic checks', function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
-            const app = new LedgerApp(sim.getTransport());
+            const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
