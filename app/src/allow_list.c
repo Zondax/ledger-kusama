@@ -14,19 +14,15 @@
 *  limitations under the License.
 ********************************************************************************/
 
-#include "app_mode.h"
-
-typedef struct {
-    uint8_t expert;
-} app_mode_t;
+#include "allow_list.h"
 
 #if defined(TARGET_NANOS)
-app_mode_t N_appmode_impl __attribute__ ((aligned(64)));
-#define N_appmode (*(app_mode_t *)PIC(&N_appmode_impl))
+allow_list_t N_allowlist_impl __attribute__ ((aligned(64)));
+#define N_allowlist (*(allow_list_t *)PIC(&N_allowlist_impl))
 
 #elif defined(TARGET_NANOX)
-app_mode_t const N_appmode_impl __attribute__ ((aligned(64)));
-#define N_appmode (*(volatile app_mode_t *)PIC(&N_appmode_impl))
+allow_list_t const N_allowlist_impl __attribute__ ((aligned(64)));
+#define N_allowlist (*(volatile allow_list_t *)PIC(&N_allowlist_impl))
 #endif
 
 
@@ -35,20 +31,35 @@ app_mode_t const N_appmode_impl __attribute__ ((aligned(64)));
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
-app_mode_t NV_CONST N_appmode_impl __attribute__ ((aligned(64)));
-#define N_appmode (*(NV_VOLATILE app_mode_t *)PIC(&N_appmode_impl))
 
-void app_mode_reset(){
+bool allowlist_is_active() {
+    // TODO: check there is a master key
+    if (N_allowlist.len == 0) {
+        return false;
+    }
+    return true;
 }
 
-bool app_mode_expert() {
-    return N_appmode.expert;
+bool allowlist_validate(uint8_t *address) {
+    if (!allowlist_is_active()) {
+        return false;
+    }
+
+    for (size_t i=0; i<N_allowlist.len && i<ALLOW_LIST_SIZE; i++) {
+        uint8_t *p = (uint8_t *)PIC(N_allowlist.items[i].address);
+        if ( MEMCMP(p, address, 32) == 0 ) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
-void app_mode_set_expert(uint8_t val) {
-    app_mode_t mode;
-    mode.expert = val;
-    MEMCPY_NV( (void*) PIC(&N_appmode_impl), (void*) &mode, sizeof(app_mode_t));
+void allowlist_update(allow_list_t *new) {
+    // TODO: check there is a master key
+    // TODO: confirm signature is valid
+    // TODO: restrict len to ALLOW_LIST_SIZE
+    // TODO: overwrite current allow list
 }
 
 #else
@@ -57,19 +68,15 @@ void app_mode_set_expert(uint8_t val) {
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 
-app_mode_t app_mode;
-
-void app_mode_reset() {
-    app_mode.expert = 0;
+bool allowlist_is_active() {
+    return false;
 }
 
-bool app_mode_expert() {
-    return app_mode.expert;
+bool allowlist_validate(uint8_t *address) {
+    return false;
 }
 
-void app_mode_set_expert(uint8_t val) {
-    app_mode.expert = val;
-}
+void allowlist_update(allow_list_t *new) { }
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
