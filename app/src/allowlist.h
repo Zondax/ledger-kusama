@@ -18,20 +18,20 @@
 #include "zxmacros.h"
 #include <stdbool.h>
 
-#define ALLOW_LIST_SIZE         50
-#define ALLOW_LIST_ITEM_SIZE    32
+#define ALLOW_LIST_SIZE         128
+#define ALLOW_LIST_ITEM_PUBKEY_SIZE    32
 
 typedef struct {
-    uint8_t address[ALLOW_LIST_ITEM_SIZE];
-} allow_list_item_t;
+    uint8_t pubkey[ALLOW_LIST_ITEM_PUBKEY_SIZE];
+} allowlist_item_t;
 
 // TODO: master pubkey
 
 typedef struct {
     uint8_t signature[64];  // Ed25519
-    uint8_t len;
-    allow_list_item_t items[ALLOW_LIST_SIZE];
-} allow_list_t;
+    uint32_t len;
+    allowlist_item_t items[ALLOW_LIST_SIZE];
+} allowlist_t;
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,7 +41,7 @@ bool allowlist_is_active();
 
 bool allowlist_validate(uint8_t *address);
 
-void allowlist_update(allow_list_t *new);
+bool allowlist_upgrade(uint8_t *new_list_buffer, size_t new_list_buffer_len);
 
 #ifdef __cplusplus
 }
