@@ -26,6 +26,7 @@
 #include "coin.h"
 #include "crypto.h"
 #include "substrate_methods.h"
+#include "allowlist.h"
 #endif
 
 #if defined(TARGET_NANOX)

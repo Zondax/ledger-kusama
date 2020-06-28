@@ -28,6 +28,10 @@
 #include "coin.h"
 #include "zxmacros.h"
 
+#if defined(APP_RESTRICTED)
+#include "allowlist.h"
+#endif
+
 void extractHDPath(uint32_t rx, uint32_t offset) {
     if ((rx - offset) < sizeof(uint32_t) * HDPATH_LEN_DEFAULT) {
         THROW(APDU_CODE_WRONG_LENGTH);
@@ -120,6 +124,41 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     *flags |= IO_ASYNCH_REPLY;
 }
 
+#if defined(APP_RESTRICTED)
+__Z_INLINE void handleAllowlistGetMasterkey(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    if (!allowlist_masterkey_is_set()) {
+        // has not been set yet
+        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+    }
+
+    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+}
+
+__Z_INLINE void handleAllowlistSetMasterkey(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    if (allowlist_masterkey_is_set()) {
+        // Can only be set once
+        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+    }
+
+    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+}
+
+__Z_INLINE void handleAllowlistGetHash(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    if (!allowlist_is_active()) {
+        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+    }
+
+    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+}
+
+__Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    if (!allowlist_is_active()) {
+        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+    }
+    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+}
+#endif
+
 void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     uint16_t sw = 0;
 
@@ -150,6 +189,29 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     handleSign(flags, tx, rx);
                     break;
                 }
+
+#if defined(APP_RESTRICTED)
+                // Allow list commands
+                case INS_ALLOWLIST_GET_MASTERKEY: {
+                    handleAllowlistGetMasterkey(flags, tx, rx);
+                    break;
+                }
+
+                case INS_ALLOWLIST_SET_MASTERKEY: {
+                    handleAllowlistSetMasterkey(flags, tx, rx);
+                    break;
+                }
+
+                case INS_ALLOWLIST_GET_HASH: {
+                    handleAllowlistGetHash(flags, tx, rx);
+                    break;
+                }
+
+                case INS_ALLOWLIST_UPLOAD: {
+                    handleAllowlistUpload(flags, tx, rx);
+                    break;
+                }
+#endif
 
                 default:
                     THROW(APDU_CODE_INS_NOT_SUPPORTED);

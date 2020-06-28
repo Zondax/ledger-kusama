@@ -14,8 +14,11 @@
 *  limitations under the License.
 ********************************************************************************/
 
-#include "allowlist.h"
+#if defined(APP_RESTRICTED)
+
+#include "os.h"
 #include "cx.h"
+#include "allowlist.h"
 
 typedef struct {
     uint8_t has_been_set;
@@ -37,6 +40,17 @@ N_allowlist_internal_impl __attribute__ ((aligned(64)));
 
 bool allowlist_masterkey_is_set() {
     return N_allowlist_internal.has_been_set;
+}
+
+bool allowlist_masterkey_get(uint8_t *out, size_t outLen) {
+    if (!allowlist_masterkey_is_set()) {
+        return false;
+    }
+    return false;
+}
+
+bool allowlist_masterkey_set(uint8_t *in, size_t inLen) {
+    return false;
 }
 
 bool allowlist_is_active() {
@@ -98,16 +112,17 @@ bool allowlist_check_valid(uint8_t *new_list_buffer, size_t new_list_buffer_len)
     cx_hash(&ctx.header, CX_LAST, (uint8_t *) &new_list->len, sizeof(new_list->len), NULL, 0);
     cx_hash(&ctx.header, 0, (uint8_t *) new_list->items, sizeof(allowlist_item_t) * new_list->len, digest, sizeof(digest));
 
-    // TODO: confirm Ed25519 signature is valid
-    cx_ecfp_public_key_t cx_publicKey;
-//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, rawkey, rawkey_len, &cx_publicKey);
-    cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
-
-    return cx_eddsa_verify(&cx_publicKey,
-                           0, CX_SHA512,
-                           digest, sizeof(digest),
-                           NULL, 0,
-                           new_list->signature, sizeof(new_list->signature)) != 0;
+//    // TODO: confirm Ed25519 signature is valid
+//    cx_ecfp_public_key_t cx_publicKey;
+////    cx_ecfp_init_public_key(CX_CURVE_Ed25519, rawkey, rawkey_len, &cx_publicKey);
+//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
+//
+//    return cx_eddsa_verify(&cx_publicKey,
+//                           0, CX_SHA512,
+//                           digest, sizeof(digest),
+//                           NULL, 0,
+//                           new_list->signature, sizeof(new_list->signature)) != 0;
+    return false;
 }
 
 bool allowlist_upgrade(uint8_t *new_list_buffer, size_t new_list_buffer_len) {
@@ -119,3 +134,5 @@ bool allowlist_upgrade(uint8_t *new_list_buffer, size_t new_list_buffer_len) {
     // TODO: overwrite current allow list
     return true;
 }
+
+#endif

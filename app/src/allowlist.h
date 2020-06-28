@@ -37,6 +37,12 @@ typedef struct {
 extern "C" {
 #endif
 
+bool allowlist_masterkey_is_set();
+
+bool allowlist_masterkey_get(uint8_t *out, size_t outLen);
+
+bool allowlist_masterkey_set(uint8_t *in, size_t inLen);
+
 bool allowlist_is_active();
 
 bool allowlist_validate(uint8_t *address);
