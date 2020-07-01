@@ -13,7 +13,7 @@ const sim_options = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`
-//    ,X11: true
+    ,X11: true
 };
 
 jest.setTimeout(30000)
@@ -98,8 +98,6 @@ describe('Basic checks', function () {
 
             // Now navigate the address / path
             await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
