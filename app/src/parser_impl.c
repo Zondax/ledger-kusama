@@ -62,9 +62,11 @@ const char *parser_getErrorDescription(parser_error_t err) {
         case parser_display_page_out_of_range:
             return "display_page_out_of_range";
 
-            // Coin specific
+        // Coin specific
         case parser_spec_not_supported:
             return "Spec version not supported";
+        case parser_not_allowed:
+            return "Not allowed";
         case parser_not_supported:
             return "Not supported";
         case parser_unexpected_buffer_end:

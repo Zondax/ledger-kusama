@@ -90,34 +90,6 @@ unsigned short io_exchange_al(unsigned char channel, unsigned short tx_len) {
     return 0;
 }
 
-void extractHDPath(uint32_t rx, uint32_t offset) {
-    if ((rx - offset) < sizeof(uint32_t) * HDPATH_LEN_DEFAULT) {
-        THROW(APDU_CODE_WRONG_LENGTH);
-    }
-
-    MEMCPY(hdPath, G_io_apdu_buffer + offset, sizeof(uint32_t) * HDPATH_LEN_DEFAULT);
-
-    const bool mainnet = hdPath[0] == HDPATH_0_DEFAULT &&
-                         hdPath[1] == HDPATH_1_DEFAULT;
-
-    if (!mainnet) {
-        THROW(APDU_CODE_DATA_INVALID);
-    }
-
-#if defined(APP_RESTRICTED)
-    if (hdPath[2] != HDPATH_2_STASH && hdPath[2] != HDPATH_2_VALIDATOR ) {
-        THROW(APDU_CODE_DATA_INVALID);
-    }
-    if (hdPath[3] != HDPATH_3_DEFAULT ) {
-        THROW(APDU_CODE_DATA_INVALID);
-    }
-    if (hdPath[4] < 0x80000000 ) {
-        THROW(APDU_CODE_DATA_INVALID);
-    }
-#endif
-
-}
-
 bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
     const uint8_t payloadType = G_io_apdu_buffer[OFFSET_PAYLOAD_TYPE];
 

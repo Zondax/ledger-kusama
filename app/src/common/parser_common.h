@@ -37,6 +37,7 @@ typedef enum {
     parser_unexepected_error,
     // Coin specific
     parser_spec_not_supported,
+    parser_not_allowed,
     parser_not_supported,
     parser_unexpected_buffer_end,
     parser_unexpected_value,
