@@ -1247,14 +1247,6 @@ typedef struct {
     uint16_t _len;
 } pd_Proposal_t;
 
-parser_error_t _readProposal(parser_context_t *c, pd_Proposal_t *v);
-parser_error_t _toStringProposal(
-    const pd_Proposal_t *v,
-    char *outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t *pageCount);
-
 #define PD_CALL_COUNCIL_EXECUTE 1
 typedef struct {
     pd_Proposal_t proposal;
