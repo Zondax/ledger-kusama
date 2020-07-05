@@ -55,8 +55,6 @@ typedef struct {
     uint16_t offset;
 } parser_context_t;
 
-extern char bufferUI[300];
-
 #ifdef __cplusplus
 }
 #endif

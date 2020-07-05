@@ -50,10 +50,10 @@ parser_context_t ctx_parsed_tx;
 
 void tx_initialize() {
     buffering_init(
-        ram_buffer,
-        sizeof(ram_buffer),
-        N_appdata.buffer,
-        sizeof(N_appdata.buffer)
+            ram_buffer,
+            sizeof(ram_buffer),
+            N_appdata.buffer,
+            sizeof(N_appdata.buffer)
     );
 }
 
@@ -93,46 +93,42 @@ const char *tx_parse() {
     return NULL;
 }
 
-tx_error_t tx_getNumItems(uint8_t *num_items) {
+zxerr_t tx_getNumItems(uint8_t *num_items) {
     parser_error_t err = parser_getNumItems(&ctx_parsed_tx, num_items);
 
     if (err != parser_ok) {
-        return tx_no_data;
+        return zxerr_no_data;
     }
 
-    return tx_no_error;
+    return zxerr_ok;
 }
 
-tx_error_t tx_getItem(int8_t displayIdx,
+zxerr_t tx_getItem(int8_t displayIdx,
                       char *outKey, uint16_t outKeyLen,
                       char *outVal, uint16_t outValLen,
                       uint8_t pageIdx, uint8_t *pageCount) {
-    tx_error_t err = tx_no_error;
-
     uint8_t numItems = 0;
-    err = tx_getNumItems(&numItems);
-    if (err != tx_no_error) {
-        return err;
-    }
+
+    CHECK_ZXERR(tx_getNumItems(&numItems))
 
     if (displayIdx < 0 || displayIdx > numItems) {
-        return tx_no_data;
+        return zxerr_no_data;
     }
 
-    err = (tx_error_t) parser_getItem(&ctx_parsed_tx,
-                                      displayIdx,
-                                      outKey, outKeyLen,
-                                      outVal, outValLen,
-                                      pageIdx, pageCount);
+    parser_error_t err = parser_getItem(&ctx_parsed_tx,
+                                        displayIdx,
+                                        outKey, outKeyLen,
+                                        outVal, outValLen,
+                                        pageIdx, pageCount);
 
     // Convert error codes
     if (err == parser_no_data ||
         err == parser_display_idx_out_of_range ||
         err == parser_display_page_out_of_range)
-        return tx_no_data;
+        return zxerr_no_data;
 
-    if (err == parser_ok)
-        return tx_no_error;
+    if (err != parser_ok)
+        return zxerr_unknown;
 
-    return err;
+    return zxerr_ok;
 }

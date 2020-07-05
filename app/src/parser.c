@@ -113,7 +113,7 @@ parser_error_t parser_getNumItems(const parser_context_t *ctx, uint8_t *num_item
 }
 
 parser_error_t parser_getItem(const parser_context_t *ctx,
-                              uint16_t displayIdx,
+                              uint8_t displayIdx,
                               char *outKey, uint16_t outKeyLen,
                               char *outValue, uint16_t outValueLen,
                               uint8_t pageIdx, uint8_t *pageCount) {
@@ -202,13 +202,6 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
             default:
                 *pageCount = 0;
                 return parser_no_data;
-        }
-    }
-
-    if (*pageCount > 1) {
-        uint8_t keyLen = strlen(outKey);
-        if (keyLen < outKeyLen) {
-            snprintf(outKey + keyLen, outKeyLen - keyLen, " [%d/%d]", pageIdx + 1, *pageCount);
         }
     }
 
