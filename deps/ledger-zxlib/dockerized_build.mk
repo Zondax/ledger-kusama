@@ -191,21 +191,17 @@ zemu_install: zemu_install_js_link
 
 .PHONY: zemu
 zemu:
-	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs
-
-.PHONY: zemu_val
-zemu_val:
-	cd $(TESTS_ZEMU_DIR)/tools && node debug_val.mjs
+	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs $(COIN)
 
 .PHONY: zemu_debug
 zemu_debug:
-	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs debug
-
-########################## TEST Section ###############################
+	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs $(COIN) debug
 
 .PHONY: zemu_test
 zemu_test:
-	cd $(TESTS_ZEMU_DIR) && yarn test
+	cd $(TESTS_ZEMU_DIR) && yarn test$(COIN)
+
+########################## TEST Section ###############################
 
 .PHONY: rust_test
 rust_test:

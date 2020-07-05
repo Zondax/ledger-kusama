@@ -1,5 +1,4 @@
 /*******************************************************************************
-*   (c) 2016 Ledger
 *   (c) 2018 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,13 +40,13 @@ bool allowlist_masterkey_is_set();
 
 bool allowlist_masterkey_get(uint8_t *out, size_t outLen);
 
-bool allowlist_masterkey_set(uint8_t *in, size_t inLen);
+bool allowlist_masterkey_set(const uint8_t *in, size_t inLen);
 
 bool allowlist_is_active();
 
-bool allowlist_validate(uint8_t *address);
+bool allowlist_validate(const uint8_t *address);
 
-bool allowlist_upgrade(uint8_t *new_list_buffer, size_t new_list_buffer_len);
+bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len);
 
 #ifdef __cplusplus
 }

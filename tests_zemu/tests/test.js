@@ -168,8 +168,7 @@ describe('Basic checks', function () {
                 prehash = Buffer.from(blake2bFinal(context));
             }
             const valid = ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
-            // FIXME: Zemu/Speculos cannot yet emulate Ed25519 HD
-//            expect(valid).toEqual(true);
+           expect(valid).toEqual(true);
         } finally {
             await sim.close();
         }

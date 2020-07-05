@@ -49,7 +49,7 @@ bool allowlist_masterkey_get(uint8_t *out, size_t outLen) {
     return false;
 }
 
-bool allowlist_masterkey_set(uint8_t *in, size_t inLen) {
+bool allowlist_masterkey_set(const uint8_t *in, size_t inLen) {
     return false;
 }
 
@@ -57,7 +57,7 @@ bool allowlist_is_active() {
     return allowlist_masterkey_is_set() && N_allowlist.len > 0;
 }
 
-bool allowlist_validate(uint8_t *address) {
+bool allowlist_validate(const uint8_t *address) {
     if (!allowlist_is_active()) {
         return false;
     }
@@ -76,7 +76,7 @@ bool allowlist_validate(uint8_t *address) {
     return false;
 }
 
-bool allowlist_check_valid(uint8_t *new_list_buffer, size_t new_list_buffer_len) {
+bool allowlist_check_valid(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
     if (!allowlist_masterkey_is_set()) {
         return false;
     }
@@ -125,7 +125,7 @@ bool allowlist_check_valid(uint8_t *new_list_buffer, size_t new_list_buffer_len)
     return false;
 }
 
-bool allowlist_upgrade(uint8_t *new_list_buffer, size_t new_list_buffer_len) {
+bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
     if (!allowlist_check_valid(new_list_buffer, new_list_buffer_len)) {
         // conditions to update allowlist are not satisfied
         return false;

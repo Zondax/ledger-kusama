@@ -57,24 +57,23 @@ parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t d
 }
 
 #if defined(APP_RESTRICTED)
-// FIXME: Re-enable
-//parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
-//    if (!allowlist_is_active()) {
-//        return parser_not_allowed;
-//    }
-//
-//    parser_context_t ctx;
-//    // each look up source is 32 bytes
-//    pd_LookupSource_t lookupSource;
-//
-//    parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
-//    for (uint16_t i = 0; i < targets->_len; i++) {
-//        CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
-//        allowlist_validate(lookupSource->_ptr);
-//    }
-//
-//    return parser_ok;
-//}
+parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
+    if (!allowlist_is_active()) {
+        return parser_not_allowed;
+    }
+
+    parser_context_t ctx;
+    // each look up source is 32 bytes
+    pd_LookupSource_t lookupSource;
+
+    parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
+    for (uint16_t i = 0; i < targets->_len; i++) {
+        CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
+        allowlist_validate(lookupSource._ptr);
+    }
+
+    return parser_ok;
+}
 #endif
 
 parser_error_t parser_validate(const parser_context_t *ctx) {
@@ -85,9 +84,8 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
                 return parser_ok;
             }
             if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_NOMINATE) {
-// FIXME: Reenable
-//                pd_VecLookupSource_t *targets = ctx->tx_obj->method.basic.staking_nominate.targets;
-//                CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
+                pd_VecLookupSource_t *targets = &ctx->tx_obj->method.basic.staking_nominate.targets;
+                CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
                 return parser_ok;
             }
         }

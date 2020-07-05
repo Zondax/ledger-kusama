@@ -6,7 +6,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest -f ./tests/test.js --detectOpenHandles",
+    "testLedgeracio": "jest -f ./tests/ledgeracio.test.js --detectOpenHandles"
   },
   "repository": {
     "type": "git",
