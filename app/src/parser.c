@@ -69,7 +69,7 @@ parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
     parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
     for (uint16_t i = 0; i < targets->_len; i++) {
         CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
-        allowlist_validate(lookupSource._ptr);
+        allowlist_item_validate(lookupSource._ptr);
     }
 
     return parser_ok;

@@ -126,21 +126,37 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
 
 #if defined(APP_RESTRICTED)
 __Z_INLINE void handleAllowlistGetMasterkey(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    if (!allowlist_masterkey_is_set()) {
+    if (!allowlist_pubkey_is_set()) {
         // has not been set yet
         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
     }
 
-    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+    if (!allowlist_pubkey_get(G_io_apdu_buffer, 32)) {
+        THROW(APDU_CODE_EXECUTION_ERROR);
+    }
+
+    *tx = 32;
+    THROW(APDU_CODE_OK);
 }
 
 __Z_INLINE void handleAllowlistSetMasterkey(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    if (allowlist_masterkey_is_set()) {
+    if (allowlist_pubkey_is_set()) {
         // Can only be set once
         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
     }
 
-    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+    if (rx != OFFSET_DATA + 32) {
+        THROW(APDU_CODE_WRONG_LENGTH);
+    }
+
+    zemu_log_stack("allowlist: try update pubkey");
+
+    if (!allowlist_pubkey_set(G_io_apdu_buffer + OFFSET_DATA, 32)) {
+        THROW(APDU_CODE_EXECUTION_ERROR);
+    }
+
+    zemu_log_stack("allowlist: pubkey updated");
+    THROW(APDU_CODE_OK);
 }
 
 __Z_INLINE void handleAllowlistGetHash(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
@@ -148,14 +164,27 @@ __Z_INLINE void handleAllowlistGetHash(volatile uint32_t *flags, volatile uint32
         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
     }
 
-    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+    allowlist_hash(G_io_apdu_buffer);
+    THROW(APDU_CODE_OK);
 }
 
 __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     if (!allowlist_is_active()) {
         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
     }
-    THROW(APDU_CODE_INS_NOT_SUPPORTED);
+
+    if (!process_chunk(tx, rx)) {
+        THROW(APDU_CODE_OK);
+    }
+    CHECK_APP_CANARY()
+
+    zemu_log_stack("allowlist: try update");
+    if (!allowlist_upgrade(tx_get_buffer(), tx_get_buffer_length())) {
+        THROW(APDU_CODE_EXECUTION_ERROR);
+    }
+
+    zemu_log_stack("allowlist: updated");
+    THROW(APDU_CODE_OK);
 }
 #endif
 
@@ -191,26 +220,26 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                 }
 
 #if defined(APP_RESTRICTED)
-                // Allow list commands
-                case INS_ALLOWLIST_GET_MASTERKEY: {
-                    handleAllowlistGetMasterkey(flags, tx, rx);
-                    break;
-                }
+                    // Allow list commands
+                    case INS_ALLOWLIST_GET_MASTERKEY: {
+                        handleAllowlistGetMasterkey(flags, tx, rx);
+                        break;
+                    }
 
-                case INS_ALLOWLIST_SET_MASTERKEY: {
-                    handleAllowlistSetMasterkey(flags, tx, rx);
-                    break;
-                }
+                    case INS_ALLOWLIST_SET_MASTERKEY: {
+                        handleAllowlistSetMasterkey(flags, tx, rx);
+                        break;
+                    }
 
-                case INS_ALLOWLIST_GET_HASH: {
-                    handleAllowlistGetHash(flags, tx, rx);
-                    break;
-                }
+                    case INS_ALLOWLIST_GET_HASH: {
+                        handleAllowlistGetHash(flags, tx, rx);
+                        break;
+                    }
 
-                case INS_ALLOWLIST_UPLOAD: {
-                    handleAllowlistUpload(flags, tx, rx);
-                    break;
-                }
+                    case INS_ALLOWLIST_UPLOAD: {
+                        handleAllowlistUpload(flags, tx, rx);
+                        break;
+                    }
 #endif
 
                 default:

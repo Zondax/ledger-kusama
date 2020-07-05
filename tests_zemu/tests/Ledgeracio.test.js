@@ -1,9 +1,8 @@
 import {expect, test} from "jest";
 import Zemu from "@zondax/zemu";
 import {blake2bInit, blake2bUpdate, blake2bFinal} from "blakejs";
-
-const ed25519 = require("ed25519-supercop");
-const {newKusamaApp} = require("@zondax/ledger-polkadot");
+import {newKusamaApp} from "@zondax/ledger-polkadot";
+import ed25519 from "ed25519-supercop";
 
 const Resolve = require("path").resolve;
 const APP_PATH = Resolve("../app/bin/app_ledgeracio.elf");
@@ -51,6 +50,83 @@ describe('Basic checks', function () {
             expect(resp).toHaveProperty("major");
             expect(resp).toHaveProperty("minor");
             expect(resp).toHaveProperty("patch");
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test('get allowlist pubkey | unset', async function () {
+        const sim = new Zemu(APP_PATH);
+        try {
+            await sim.start(sim_options);
+            const app = newKusamaApp(sim.getTransport());
+            const resp = await app.getAllowListPubKey();
+
+            console.log(resp);
+
+            expect(resp.return_code).toEqual(0x6986);
+            expect(resp.error_message).toEqual("Transaction rejected");
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test('set allowlist pubkey', async function () {
+        const sim = new Zemu(APP_PATH);
+        try {
+            await sim.start(sim_options);
+            const app = newKusamaApp(sim.getTransport());
+
+            const pk = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
+
+            let resp = await app.setAllowListPubKey(pk);
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
+
+            // Try setting again
+            resp = await app.setAllowListPubKey(pk);
+            expect(resp.return_code).toEqual(0x6986);
+            expect(resp.error_message).toEqual("Transaction rejected");
+
+            resp = await app.getAllowListPubKey();
+            console.log(resp);
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
+
+            expect(resp.pubkey).toEqual(pk);
+
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test('get allowlist hash | not set yet', async function () {
+        const sim = new Zemu(APP_PATH);
+        try {
+            await sim.start(sim_options);
+            const app = newKusamaApp(sim.getTransport());
+            const resp = await app.getAllowListHash();
+
+            console.log(resp);
+
+            expect(resp.return_code).toEqual(0x6986);
+            expect(resp.error_message).toEqual("Transaction rejected");
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test('upload allowlist', async function () {
+        const sim = new Zemu(APP_PATH);
+        try {
+            await sim.start(sim_options);
+            const app = newKusamaApp(sim.getTransport());
+            const resp = await app.getAllowListHash();
+
+            console.log(resp);
+
+            expect(resp.return_code).toEqual(0x6986);
+            expect(resp.error_message).toEqual("Transaction rejected");
         } finally {
             await sim.close();
         }

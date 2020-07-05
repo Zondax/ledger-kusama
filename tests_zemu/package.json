@@ -17,7 +17,7 @@
     "zondax"
   ],
   "dependencies": {
-    "@zondax/ledger-polkadot": "^0.10.4",
+    "@zondax/ledger-polkadot": "file:///home/lenij/zondax/ledger-polkadot-js",
     "@zondax/zemu": "^0.2"
   },
   "devDependencies": {

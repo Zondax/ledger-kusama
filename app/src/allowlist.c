@@ -22,42 +22,53 @@
 
 typedef struct {
     uint8_t has_been_set;
-    uint8_t master_publickey[32];
-} allowlist_internal_t;
+    uint8_t pubkey[32];
+} allowlist_metadata_t;
 
 allowlist_t NV_CONST
 N_allowlist_impl __attribute__ ((aligned(64)));
-allowlist_internal_t NV_CONST
-N_allowlist_internal_impl __attribute__ ((aligned(64)));
+allowlist_metadata_t NV_CONST
+N_allowlist_metadata_impl __attribute__ ((aligned(64)));
 
 #define N_allowlist (*(NV_VOLATILE allowlist_t *)PIC(&N_allowlist_impl))
-#define N_allowlist_internal (*(NV_VOLATILE allowlist_internal_t *)PIC(&N_allowlist_internal_impl))
+#define N_allowlist_metadata (*(NV_VOLATILE allowlist_metadata_t *)PIC(&N_allowlist_metadata_impl))
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 
-bool allowlist_masterkey_is_set() {
-    return N_allowlist_internal.has_been_set;
+bool allowlist_pubkey_is_set() {
+    return N_allowlist_metadata.has_been_set;
 }
 
-bool allowlist_masterkey_get(uint8_t *out, size_t outLen) {
-    if (!allowlist_masterkey_is_set()) {
+bool allowlist_pubkey_get(uint8_t *out, size_t outLen) {
+    if (!allowlist_pubkey_is_set()) {
         return false;
     }
-    return false;
+    if (outLen < 32) {
+        return false;
+    }
+
+    MEMCPY(out, N_allowlist_metadata.pubkey, 32);
+    return true;
 }
 
-bool allowlist_masterkey_set(const uint8_t *in, size_t inLen) {
-    return false;
+bool allowlist_pubkey_set(const uint8_t *in, size_t inLen) {
+    allowlist_metadata_t metadata;
+
+    metadata.has_been_set = 1;
+    MEMCPY(&metadata.pubkey, in, inLen);
+    MEMCPY_NV( (void*) &N_allowlist_metadata, (void*) &metadata, sizeof(allowlist_metadata_t));
+
+    return true;
 }
 
 bool allowlist_is_active() {
-    return allowlist_masterkey_is_set() && N_allowlist.len > 0;
+    return allowlist_pubkey_is_set() && N_allowlist.len > 0;
 }
 
-bool allowlist_validate(const uint8_t *address) {
+bool allowlist_item_validate(const uint8_t *address) {
     if (!allowlist_is_active()) {
         return false;
     }
@@ -76,8 +87,19 @@ bool allowlist_validate(const uint8_t *address) {
     return false;
 }
 
-bool allowlist_check_valid(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
-    if (!allowlist_masterkey_is_set()) {
+void allowlist_calculate_digest(uint8_t *digest, const allowlist_t *list) {
+    cx_blake2b_t ctx;
+    cx_blake2b_init(&ctx, 256);
+    cx_hash(&ctx.header, CX_LAST, (uint8_t *) list->len, sizeof(list->len), NULL, 0);
+    cx_hash(&ctx.header, 0, (uint8_t *) list->items, sizeof(allowlist_item_t) * list->len, digest, sizeof(digest));
+}
+
+void allowlist_hash(uint8_t *digest) {
+    allowlist_calculate_digest(digest, &N_allowlist);
+}
+
+bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
+    if (!allowlist_pubkey_is_set()) {
         return false;
     }
 
@@ -106,11 +128,7 @@ bool allowlist_check_valid(const uint8_t *new_list_buffer, size_t new_list_buffe
 
     // Hash allowlist (len + items)
     uint8_t digest[32];
-
-    cx_blake2b_t ctx;
-    cx_blake2b_init(&ctx, 256);
-    cx_hash(&ctx.header, CX_LAST, (uint8_t *) &new_list->len, sizeof(new_list->len), NULL, 0);
-    cx_hash(&ctx.header, 0, (uint8_t *) new_list->items, sizeof(allowlist_item_t) * new_list->len, digest, sizeof(digest));
+    allowlist_get_digest(digest, new_list);
 
 //    // TODO: confirm Ed25519 signature is valid
 //    cx_ecfp_public_key_t cx_publicKey;
@@ -126,12 +144,12 @@ bool allowlist_check_valid(const uint8_t *new_list_buffer, size_t new_list_buffe
 }
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
-    if (!allowlist_check_valid(new_list_buffer, new_list_buffer_len)) {
+    if (!allowlist_list_validate(new_list_buffer, new_list_buffer_len)) {
         // conditions to update allowlist are not satisfied
         return false;
     }
 
-    // TODO: overwrite current allow list
+    MEMCPY_NV( (void*) &N_allowlist, (void*) &new_list_buffer, new_list_buffer_len);
     return true;
 }
 
