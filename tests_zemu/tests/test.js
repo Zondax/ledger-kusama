@@ -100,7 +100,6 @@ describe('Basic checks', function () {
             await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
             await sim.clickBoth(`${snapshotPrefixTmp}${snapshotCount++}.png`);
 
             const resp = await respRequest;

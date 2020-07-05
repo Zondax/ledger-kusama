@@ -23,8 +23,6 @@
 #include "bignum.h"
 #include "coin_ss58.h"
 
-parser_tx_t parser_tx_obj;
-
 parser_error_t parser_init_context(parser_context_t *ctx,
                                    const uint8_t *buffer,
                                    uint16_t bufferSize) {
@@ -354,6 +352,27 @@ parser_error_t _checkVersions(parser_context_t *c) {
     return parser_ok;
 }
 
+uint8_t __address_type;
+uint8_t _getAddressType() {
+    return __address_type;
+}
+
+uint8_t _detectAddressType(const parser_context_t *c) {
+    char hashstr[65];
+    uint8_t pc;
+
+    if (c->tx_obj->genesisHash._ptr != NULL) {
+        _toStringHash(&c->tx_obj->genesisHash, hashstr, 65, 0, &pc);
+
+        // Compare with known genesis hashes
+        if (strcmp(hashstr, COIN_GENESIS_HASH) == 0) {
+            return PK_ADDRESS_TYPE;
+        }
+    }
+
+    return 42;
+}
+
 parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     CHECK_INPUT();
 
@@ -378,6 +397,8 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     if (c->offset > c->bufferLen) {
         return parser_unexpected_buffer_end;
     }
+
+    __address_type = _detectAddressType(c);
 
     return parser_ok;
 }
@@ -453,29 +474,12 @@ parser_error_t _readHash(parser_context_t *c, pd_Hash_t *v) {
     GEN_DEF_READARRAY(32);
 }
 
-uint8_t _detectAddressType() {
-    char hashstr[65];
-    uint8_t pc;
-
-    if (parser_tx_obj.genesisHash._ptr != NULL) {
-        _toStringHash(&parser_tx_obj.genesisHash, hashstr, 65, 0, &pc);
-
-        // Compare with known genesis hashes
-        if (strcmp(hashstr, COIN_GENESIS_HASH) == 0) {
-            return PK_ADDRESS_TYPE;
-        }
-    }
-
-    return 42;
-}
-
 parser_error_t _toStringPubkeyAsAddress(const uint8_t *pubkey,
                                         char *outValue, uint16_t outValueLen,
                                         uint8_t pageIdx, uint8_t *pageCount) {
-    uint8_t addressType = _detectAddressType();
     char bufferUI[200];
 
-    if (crypto_SS58EncodePubkey((uint8_t *) bufferUI, sizeof(bufferUI), addressType, pubkey) == 0) {
+    if (crypto_SS58EncodePubkey((uint8_t *) bufferUI, sizeof(bufferUI), __address_type, pubkey) == 0) {
         return parser_no_data;
     }
 

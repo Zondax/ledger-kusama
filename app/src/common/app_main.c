@@ -152,9 +152,21 @@ void handle_generic_apdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32
 
 void app_init() {
     io_seproxyhal_init();
+
+#ifdef TARGET_NANOX
+    // grab the current plane mode setting
+    G_io_app.plane_mode = os_setting_get(OS_SETTING_PLANEMODE, NULL, 0);
+#endif // TARGET_NANOX
+
     USB_power(0);
     USB_power(1);
     view_idle_show(0);
+
+#ifdef HAVE_BLE
+    // Enable Bluetooth
+    BLE_power(0, NULL);
+    BLE_power(1, "Nano X");
+#endif // HAVE_BLE
 }
 
 #pragma clang diagnostic push

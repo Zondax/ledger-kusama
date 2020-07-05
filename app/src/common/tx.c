@@ -20,12 +20,13 @@
 #include "parser.h"
 #include <string.h>
 #include "zxmacros.h"
+#include "zbuffer.h"
 
 #if defined(TARGET_NANOX)
 #define RAM_BUFFER_SIZE 8192
 #define FLASH_BUFFER_SIZE 16384
 #elif defined(TARGET_NANOS)
-#define RAM_BUFFER_SIZE 416
+#define RAM_BUFFER_SIZE 0
 #define FLASH_BUFFER_SIZE 8192
 #endif
 
@@ -74,10 +75,16 @@ uint8_t *tx_get_buffer() {
 }
 
 const char *tx_parse() {
+    parser_tx_t *tx_obj;
+
+    zb_allocate(sizeof(parser_tx_t));
+    zb_get((uint8_t **) &tx_obj);
+
     uint8_t err = parser_parse(
-        &ctx_parsed_tx,
-        tx_get_buffer(),
-        tx_get_buffer_length());
+            &ctx_parsed_tx,
+            tx_get_buffer(),
+            tx_get_buffer_length(),
+            tx_obj);
 
     if (err != parser_ok) {
         return parser_getErrorDescription(err);
@@ -93,6 +100,10 @@ const char *tx_parse() {
     return NULL;
 }
 
+void tx_parse_reset() {
+    zb_deallocate();
+}
+
 zxerr_t tx_getNumItems(uint8_t *num_items) {
     parser_error_t err = parser_getNumItems(&ctx_parsed_tx, num_items);
 
@@ -104,9 +115,9 @@ zxerr_t tx_getNumItems(uint8_t *num_items) {
 }
 
 zxerr_t tx_getItem(int8_t displayIdx,
-                      char *outKey, uint16_t outKeyLen,
-                      char *outVal, uint16_t outValLen,
-                      uint8_t pageIdx, uint8_t *pageCount) {
+                   char *outKey, uint16_t outKeyLen,
+                   char *outVal, uint16_t outValLen,
+                   uint8_t pageIdx, uint8_t *pageCount) {
     uint8_t numItems = 0;
 
     CHECK_ZXERR(tx_getNumItems(&numItems))

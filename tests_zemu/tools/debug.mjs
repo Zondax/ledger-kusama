@@ -1,7 +1,6 @@
 import Zemu from "@zondax/zemu";
 import path from "path";
-
-const {newKusamaApp} = require("@zondax/ledger-polkadot");
+import newKusamaApp from "@zondax/ledger-polkadot";
 
 const APP_PATH = path.resolve(`./../../app/bin/app.elf`);
 
@@ -32,35 +31,12 @@ async function debugScenario(sim, app) {
     const pathChange = 0x80000000;
     const pathIndex = 0x80000000;
 
-    let txBlobStr = "04002756865871cd8e8c2e27b5c5254a8ab6933a5c3081bdcbdc78751fb9c8af12f200d503008ed73e0d26040000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+    let txBlobStr = "0400f68ad810c8070fdacded5e85661439ab61010c2da28b645797d45d22a2af837800d503008ed73e0dd807000001000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
     const txBlob = Buffer.from(txBlobStr, "hex");
-
-    const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
-    await Zemu.default.sleep(1000);
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickBoth();
-    let addr = await respRequest;
 
     // do not wait here.. we need to navigate
     const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-    await Zemu.default.sleep(1000);
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickRight();
-    await sim.clickBoth();
+    await Zemu.default.sleep(10000);
 
     let signature = await signatureRequest;
     console.log(signature);
@@ -77,7 +53,7 @@ async function main() {
 
     try {
         await sim.start(SIM_OPTIONS);
-        const app = newKusamaApp(sim.getTransport());
+        const app = newKusamaApp.newKusamaApp(sim.getTransport());
 
         ////////////
         /// TIP you can use zemu commands here to take the app to the point where you trigger a breakpoint

@@ -19,6 +19,7 @@
 extern "C" {
 #endif
 
+#include "parser_txdef.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -53,6 +54,7 @@ typedef struct {
     const uint8_t *buffer;
     uint16_t bufferLen;
     uint16_t offset;
+    parser_tx_t *tx_obj;
 } parser_context_t;
 
 #ifdef __cplusplus

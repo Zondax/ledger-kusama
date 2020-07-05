@@ -25,9 +25,7 @@ extern "C" {
 const char *parser_getErrorDescription(parser_error_t err);
 
 //// parses a tx buffer
-parser_error_t parser_parse(parser_context_t *ctx,
-                            const uint8_t *data,
-                            size_t dataLen);
+parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t dataLen, parser_tx_t *tx_obj);
 
 //// verifies tx fields
 parser_error_t parser_validate(const parser_context_t *ctx);
