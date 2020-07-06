@@ -128,7 +128,7 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
 
     // Hash allowlist (len + items)
     uint8_t digest[32];
-    allowlist_get_digest(digest, new_list);
+    allowlist_calculate_digest(digest, new_list);
 
 //    // TODO: confirm Ed25519 signature is valid
 //    cx_ecfp_public_key_t cx_publicKey;
