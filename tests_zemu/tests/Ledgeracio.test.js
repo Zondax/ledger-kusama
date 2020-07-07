@@ -12,7 +12,7 @@ const sim_options = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`
-    ,X11: true
+//    ,X11: true
 };
 
 jest.setTimeout(30000)
@@ -60,7 +60,7 @@ describe('Basic checks', function () {
         try {
             await sim.start(sim_options);
             const app = newKusamaApp(sim.getTransport());
-            const resp = await app.getAllowListPubKey();
+            const resp = await app.getAllowlistPubKey();
 
             console.log(resp);
 
@@ -79,16 +79,16 @@ describe('Basic checks', function () {
 
             const pk = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
 
-            let resp = await app.setAllowListPubKey(pk);
+            let resp = await app.setAllowlistPubKey(pk);
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
             // Try setting again
-            resp = await app.setAllowListPubKey(pk);
+            resp = await app.setAllowlistPubKey(pk);
             expect(resp.return_code).toEqual(0x6986);
             expect(resp.error_message).toEqual("Transaction rejected");
 
-            resp = await app.getAllowListPubKey();
+            resp = await app.getAllowlistPubKey();
             console.log(resp);
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
@@ -105,7 +105,7 @@ describe('Basic checks', function () {
         try {
             await sim.start(sim_options);
             const app = newKusamaApp(sim.getTransport());
-            const resp = await app.getAllowListHash();
+            const resp = await app.getAllowlistHash();
 
             console.log(resp);
 
@@ -116,17 +116,49 @@ describe('Basic checks', function () {
         }
     });
 
-    test('upload allowlist', async function () {
+    function dummyAllowlist() {
+        const allowlist_signature = Buffer.from("12340000000000000000000000000000000000000000000000000000000000001234000000000000000000000000000000000000000000000000000000000000", "hex")
+        const allowlist_len = Buffer.alloc(4);
+        allowlist_len.writeUInt32LE(2);
+        const pk1 = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
+        const pk2 = Buffer.from("5678000000000000000000000000000000000000000000000000000000000000", "hex")
+        return Buffer.concat([allowlist_signature, allowlist_len, pk1, pk2])
+    }
+
+    test('upload allowlist | no pubkey', async function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
             const app = newKusamaApp(sim.getTransport());
-            const resp = await app.getAllowListHash();
 
+            const allowlist = dummyAllowlist();
+            const resp = await app.uploadAllowlist(allowlist);
             console.log(resp);
 
             expect(resp.return_code).toEqual(0x6986);
             expect(resp.error_message).toEqual("Transaction rejected");
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test('upload allowlist | with pubkey set before', async function () {
+        const sim = new Zemu(APP_PATH);
+        try {
+            await sim.start(sim_options);
+            const app = newKusamaApp(sim.getTransport());
+
+            const signing_pubkey = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
+            let resp = await app.setAllowlistPubKey(signing_pubkey);
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
+
+            const allowlist = dummyAllowlist();
+            resp = await app.uploadAllowlist(allowlist);
+            console.log(resp);
+
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
         } finally {
             await sim.close();
         }
