@@ -17,18 +17,20 @@
 #include "zxmacros.h"
 #include <stdbool.h>
 
-#define ALLOW_LIST_SIZE         128
-#define ALLOW_LIST_ITEM_PUBKEY_SIZE    32
+#define ALLOW_LIST_SIZE                 128
+#define ALLOW_LIST_ITEM_PUBKEY_SIZE     32
 
 typedef struct {
     uint8_t pubkey[ALLOW_LIST_ITEM_PUBKEY_SIZE];
 } allowlist_item_t;
 
-// TODO: master pubkey
+typedef struct {
+    uint32_t len;
+    uint8_t signature[64];  // Ed25519
+} allowlist_header_t;
 
 typedef struct {
-    uint8_t signature[64];  // Ed25519
-    uint32_t len;
+    allowlist_header_t header;
     allowlist_item_t items[ALLOW_LIST_SIZE];
 } allowlist_t;
 

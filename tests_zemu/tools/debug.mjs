@@ -25,21 +25,28 @@ async function beforeEnd() {
     await Zemu.default.stopAllEmuContainers();
 }
 
+function dummyAllowlist() {
+    const allowlist_signature = Buffer.from("12340000000000000000000000000000000000000000000000000000000000001234000000000000000000000000000000000000000000000000000000000000", "hex")
+    const allowlist_len = Buffer.alloc(4);
+    allowlist_len.writeUInt32LE(2);
+    const pk1 = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
+    const pk2 = Buffer.from("5678000000000000000000000000000000000000000000000000000000000000", "hex")
+    return Buffer.concat([allowlist_len, allowlist_signature, pk1, pk2])
+}
+
 async function debugScenario(sim, app) {
-    // Here you can customize what you want to do :)
-    const pathAccount = 0x80000000;
-    const pathChange = 0x80000000;
-    const pathIndex = 0x80000000;
+    const signing_pubkey = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
+    let resp = await app.setAllowlistPubKey(signing_pubkey);
+    console.log(resp)
 
-    let txBlobStr = "0400f68ad810c8070fdacded5e85661439ab61010c2da28b645797d45d22a2af837800d503008ed73e0dd807000001000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
-    const txBlob = Buffer.from(txBlobStr, "hex");
+    const allowlist = dummyAllowlist();
+    console.log(`\n\n------------ Upload allowlist : ${allowlist.length} bytes`)
+    resp = await app.uploadAllowlist(allowlist);
+    console.log(resp);
 
-    // do not wait here.. we need to navigate
-    const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-    await Zemu.default.sleep(10000);
-
-    let signature = await signatureRequest;
-    console.log(signature);
+    console.log("\n\n------------ Get allowlist hash")
+    resp = await app.getAllowlistHash();
+    console.log(resp);
 }
 
 async function main() {

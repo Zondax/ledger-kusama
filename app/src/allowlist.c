@@ -65,7 +65,7 @@ bool allowlist_pubkey_set(const uint8_t *in, size_t inLen) {
 }
 
 bool allowlist_is_active() {
-    return allowlist_pubkey_is_set() && N_allowlist.len > 0;
+    return allowlist_pubkey_is_set() && N_allowlist.header.len > 0;
 }
 
 bool allowlist_item_validate(const uint8_t *address) {
@@ -73,11 +73,11 @@ bool allowlist_item_validate(const uint8_t *address) {
         return false;
     }
 
-    if (N_allowlist.len >= ALLOW_LIST_SIZE) {
+    if (N_allowlist.header.len >= ALLOW_LIST_SIZE) {
         return false;
     }
 
-    for (size_t i = 0; i < N_allowlist.len; i++) {
+    for (size_t i = 0; i < N_allowlist.header.len; i++) {
         uint8_t * p = (uint8_t *) PIC(N_allowlist.items[i].pubkey);
         if (MEMCMP(p, address, 32) == 0) {
             return true;
@@ -90,8 +90,10 @@ bool allowlist_item_validate(const uint8_t *address) {
 void allowlist_calculate_digest(uint8_t *digest, const allowlist_t *list) {
     cx_blake2b_t ctx;
     cx_blake2b_init(&ctx, 256);
-    cx_hash(&ctx.header, CX_LAST, (uint8_t *) list->len, sizeof(list->len), NULL, 0);
-    cx_hash(&ctx.header, 0, (uint8_t *) list->items, sizeof(allowlist_item_t) * list->len, digest, sizeof(digest));
+    cx_hash(&ctx.header, 0, (uint8_t *) &list->header.len, sizeof(uint32_t), NULL, 0);
+    const uint8_t *data = (uint8_t *) PIC(list->items);
+    const size_t dataLen = sizeof(allowlist_item_t) * list->header.len;
+    cx_hash(&ctx.header, CX_LAST, data, dataLen, digest, 32);
 }
 
 void allowlist_hash(uint8_t *digest) {
@@ -100,47 +102,68 @@ void allowlist_hash(uint8_t *digest) {
 
 bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
     if (!allowlist_pubkey_is_set()) {
+        zemu_log_stack("allowlist: ERR pubkey not set");
         return false;
     }
 
     if (new_list_buffer == NULL) {
+        zemu_log_stack("allowlist: ERR new_list_buffer empty");
         return false;
     }
 
-    const size_t header_size = sizeof(allowlist_t) - sizeof(allowlist_item_t) * ALLOW_LIST_ITEM_PUBKEY_SIZE;
-    if (new_list_buffer_len < header_size) {
+    if (new_list_buffer_len < sizeof(uint32_t)) {
         // new list does not have enough data to contain the header
+        zemu_log_stack("allowlist: ERR not enough data");
         return false;
     }
 
     // Let's check number of items
     allowlist_t *new_list = (allowlist_t *) new_list_buffer;
-    if (new_list->len >= ALLOW_LIST_SIZE) {
+    if (new_list->header.len >= ALLOW_LIST_SIZE) {
+        char buffer[30];
+        snprintf(buffer, sizeof(buffer), "%d", new_list->header.len);
+        zemu_log_stack(buffer);
+        zemu_log_stack("allowlist: ERR Too many elements");
         return false;
     }
 
     // Check size is correct. Header (signature+len) + items * len
-    const size_t expected_size = header_size + sizeof(allowlist_item_t) * new_list->len;
+    const size_t expected_size = sizeof(allowlist_header_t) + sizeof(allowlist_item_t) * new_list->header.len;
     if (new_list_buffer_len != expected_size) {
         // Invalid size
+        zemu_log_stack("allowlist: ERR unexpected size");
         return false;
     }
 
+    zemu_log_stack("\n\n\n\n\n");
     // Hash allowlist (len + items)
     uint8_t digest[32];
     allowlist_calculate_digest(digest, new_list);
 
-//    // TODO: confirm Ed25519 signature is valid
+    zemu_log_stack("Digest ready");
+
+    // TODO: Enable signature verification
+//    // Confirm Ed25519 signature is valid
 //    cx_ecfp_public_key_t cx_publicKey;
-////    cx_ecfp_init_public_key(CX_CURVE_Ed25519, rawkey, rawkey_len, &cx_publicKey);
-//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
+//    cx_ecfp_init_public_key(CX_CURVE_Ed25519,
+//            N_allowlist_metadata.pubkey,
+//            sizeof_field(allowlist_metadata_t, pubkey),
+//            &cx_publicKey);
+//    zemu_log_stack("Got pubkey");
 //
-//    return cx_eddsa_verify(&cx_publicKey,
+//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
+//    zemu_log_stack("init pubkey");
+//
+//    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
 //                           0, CX_SHA512,
 //                           digest, sizeof(digest),
 //                           NULL, 0,
-//                           new_list->signature, sizeof(new_list->signature)) != 0;
-    return false;
+//                           new_list->header.signature, sizeof_field(allowlist_header_t, signature)) != 0;
+//    zemu_log_stack("verified");
+//
+//    zemu_log_stack("\n\n\n\n\n");
+//    return valid_signature;
+    return true;
 }
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {
@@ -148,8 +171,7 @@ bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_le
         // conditions to update allowlist are not satisfied
         return false;
     }
-
-    MEMCPY_NV( (void*) &N_allowlist, (void*) &new_list_buffer, new_list_buffer_len);
+    MEMCPY_NV( (void*) PIC(&N_allowlist), (void*) PIC(new_list_buffer), new_list_buffer_len);
     return true;
 }
 

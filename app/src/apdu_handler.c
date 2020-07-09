@@ -229,11 +229,13 @@ __Z_INLINE void handleAllowlistGetHash(volatile uint32_t *flags, volatile uint32
     }
 
     allowlist_hash(G_io_apdu_buffer);
+    *tx = 32;
     THROW(APDU_CODE_OK);
 }
 
 __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    if (!allowlist_is_active()) {
+    if (!allowlist_pubkey_is_set()) {
+        zemu_log_stack("allowlist: pubkey has not been set");
         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
     }
 

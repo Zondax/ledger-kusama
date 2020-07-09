@@ -18,7 +18,7 @@
 # BOLOS_SDK IS  DEFINED	 	We use the plain Makefile for Ledger
 # BOLOS_SDK NOT DEFINED		We use a containerized build approach
 
-TESTS_ZEMU_JS_PACKAGE = "@zondax/ledger-oasis"
+TESTS_ZEMU_JS_PACKAGE = "@zondax/ledger-polkadot"
 TESTS_ZEMU_JS_DIR = $(CURDIR)/../ledger-polkadot-js
 
 ifeq ($(BOLOS_SDK),)

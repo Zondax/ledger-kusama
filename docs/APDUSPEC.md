@@ -209,6 +209,8 @@ Packets/chunks contain data chunks that are described below
 
 ##### Chunks/Packets
 
+* Chunk idx = 0 (init is expected to be empty)
+
 | Field | Type     | Content    | Expected |
 | ----- | -------- | ---------- | -------- |
 | Chunk | byte (?) | Allow List | ...      |
