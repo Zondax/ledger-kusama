@@ -34,8 +34,8 @@
 #define INS_GET_ADDR_ED25519            0x01
 #define INS_SIGN_ED25519                0x02
 
-#define INS_ALLOWLIST_GET_MASTERKEY     0x90
-#define INS_ALLOWLIST_SET_MASTERKEY     0x91
+#define INS_ALLOWLIST_GET_PUBKEY        0x90
+#define INS_ALLOWLIST_SET_PUBKEY        0x91
 #define INS_ALLOWLIST_GET_HASH          0x92
 #define INS_ALLOWLIST_UPLOAD            0x93
 

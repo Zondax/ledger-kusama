@@ -134,7 +134,7 @@ All other packets/chunks contain data chunks that are described below
 
 ---
 
-### INS_ALLOWLIST_GET_MASTERKEY
+### INS_ALLOWLIST_GET_PUBKEY
 
 #### Command
 
@@ -153,7 +153,7 @@ All other packets/chunks contain data chunks that are described below
 | PUBKEY | byte (32) | Master pubkey             |          |
 | SW1-SW2 | byte (2) | Return code | see list of return codes |
 
-### INS_ALLOWLIST_SET_MASTERKEY
+### INS_ALLOWLIST_SET_PUBKEY
 
 #### Command
 
