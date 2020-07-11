@@ -144,14 +144,14 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
         return false;
     }
 
-    zemu_log_stack("\n\n\n\n\n");
+    zemu_log_stack("\n");
     // Hash allowlist (len + items)
     uint8_t digest[32];
     allowlist_calculate_digest(digest, new_list);
 
     zemu_log_stack("Digest ready");
 
-//    // Confirm Ed25519 signature is valid
+    // Confirm Ed25519 signature is valid
     cx_ecfp_public_key_t cx_publicKey;
     cx_ecfp_init_public_key(CX_CURVE_Ed25519, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33, &cx_publicKey);
     zemu_log_stack("Key imported");
@@ -184,8 +184,7 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
         zemu_log_stack("verified ERR");
     }
 
-//    return valid_signature;
-    return true;
+    return valid_signature;
 }
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {

@@ -146,14 +146,15 @@ describe('Basic checks', function () {
         blake2bUpdate(context, pk1);
         blake2bUpdate(context, pk2);
         const digest = Buffer.from(blake2bFinal(context));
+        console.log(`-------------------- ${digest.toString("hex")}`)
 
         // sign
         const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
-        console.log(keypair)
+        console.log(`PK : ${keypair.publicKey.toString("hex")}`)
+        console.log(`SK : ${keypair.secretKey.toString("hex")}`)
 
         const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
-        console.log(allowlist_signature.length)
-        console.log(allowlist_signature)
+        console.log(`SIG: ${allowlist_signature.toString("hex")}`)
 
         return Buffer.concat([allowlist_len, allowlist_signature, pk1, pk2])
     }
@@ -191,8 +192,8 @@ describe('Basic checks', function () {
             const app = newKusamaApp(sim.getTransport());
 
             console.log("\n\n------------ Set pubkey")
-            const signing_pubkey = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
-            let resp = await app.setAllowlistPubKey(signing_pubkey);
+            const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
+            let resp = await app.setAllowlistPubKey(keypair.publicKey);
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
@@ -208,8 +209,8 @@ describe('Basic checks', function () {
             console.log("\n\n------------ Get allowlist hash")
             resp = await app.getAllowlistHash();
             console.log(resp);
-            // expect(resp.return_code).toEqual(0x9000);
-            // expect(resp.error_message).toEqual("No errors");
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
         } finally {
             await sim.close();
         }
