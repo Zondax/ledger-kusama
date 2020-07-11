@@ -288,12 +288,12 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
 
 #if defined(APP_RESTRICTED)
                     // Allow list commands
-                    case INS_ALLOWLIST_GET_MASTERKEY: {
+                    case INS_ALLOWLIST_GET_PUBKEY: {
                         handleAllowlistGetMasterkey(flags, tx, rx);
                         break;
                     }
 
-                    case INS_ALLOWLIST_SET_MASTERKEY: {
+                    case INS_ALLOWLIST_SET_PUBKEY: {
                         handleAllowlistSetMasterkey(flags, tx, rx);
                         break;
                     }
