@@ -22,7 +22,15 @@
 
 typedef struct {
     uint8_t has_been_set;
-    uint8_t pubkey[32];
+    union {
+        struct {
+            uint8_t dummy;
+            uint8_t pubkey[32];
+        };
+        struct {
+            uint8_t ledger_pubkey[33];
+        };
+    };
 } allowlist_metadata_t;
 
 allowlist_t NV_CONST
@@ -58,6 +66,7 @@ bool allowlist_pubkey_set(const uint8_t *in, size_t inLen) {
     allowlist_metadata_t metadata;
 
     metadata.has_been_set = 1;
+    metadata.dummy = 0x02;          // Required by Ledger's SDK
     MEMCPY(&metadata.pubkey, in, inLen);
     MEMCPY_NV( (void*) &N_allowlist_metadata, (void*) &metadata, sizeof(allowlist_metadata_t));
 
@@ -142,26 +151,39 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
 
     zemu_log_stack("Digest ready");
 
-    // TODO: Enable signature verification
 //    // Confirm Ed25519 signature is valid
-//    cx_ecfp_public_key_t cx_publicKey;
-//    cx_ecfp_init_public_key(CX_CURVE_Ed25519,
-//            N_allowlist_metadata.pubkey,
-//            sizeof_field(allowlist_metadata_t, pubkey),
-//            &cx_publicKey);
-//    zemu_log_stack("Got pubkey");
-//
-//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
-//    zemu_log_stack("init pubkey");
-//
-//    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
-//                           0, CX_SHA512,
-//                           digest, sizeof(digest),
-//                           NULL, 0,
-//                           new_list->header.signature, sizeof_field(allowlist_header_t, signature)) != 0;
-//    zemu_log_stack("verified");
-//
-//    zemu_log_stack("\n\n\n\n\n");
+    cx_ecfp_public_key_t cx_publicKey;
+    cx_ecfp_init_public_key(CX_CURVE_Ed25519, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33, &cx_publicKey);
+    zemu_log_stack("Key imported");
+
+    zemu_log("********************** \n\n");
+
+    char buf[140];
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) digest, 32);
+    zemu_log("dig :"); zemu_log(buf); zemu_log("\n");
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
+    zemu_log("pk  :"); zemu_log(buf); zemu_log("\n");
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) new_list->header.signature, 64);
+    zemu_log("sig :"); zemu_log(buf); zemu_log("\n");
+
+    snprintf(buf, sizeof(buf), "w    %d\n", cx_publicKey.W[0]);
+    zemu_log(buf);
+    snprintf(buf, sizeof(buf), "wlen %d\n", cx_publicKey.W_len);
+    zemu_log(buf);
+
+    zemu_log("\n\n********************** \n");
+
+    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
+                           0, CX_SHA512,
+                           digest, sizeof(digest), NULL, 0,
+                           new_list->header.signature, 64) == 1;
+
+    if (valid_signature) {
+        zemu_log_stack("verified OK");
+    } else {
+        zemu_log_stack("verified ERR");
+    }
+
 //    return valid_signature;
     return true;
 }
