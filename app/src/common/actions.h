@@ -27,10 +27,15 @@ extern uint8_t action_addr_len;
 __Z_INLINE void app_sign() {
     uint8_t *signature = G_io_apdu_buffer;
 
+    CHECK_APP_CANARY()
+
     const uint8_t *message = tx_get_buffer() + CRYPTO_BLOB_SKIP_BYTES;
     const uint16_t messageLength = tx_get_buffer_length() - CRYPTO_BLOB_SKIP_BYTES;
 
     const uint8_t replyLen = crypto_sign(signature, IO_APDU_BUFFER_SIZE - 3, message, messageLength);
+
+    CHECK_APP_CANARY()
+
     if (replyLen > 0) {
         set_code(G_io_apdu_buffer, replyLen, APDU_CODE_OK);
         io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, replyLen + 2);

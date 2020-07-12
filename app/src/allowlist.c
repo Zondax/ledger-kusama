@@ -77,7 +77,7 @@ bool allowlist_is_active() {
     return allowlist_pubkey_is_set() && N_allowlist.header.len > 0;
 }
 
-bool allowlist_item_validate(const uint8_t *address) {
+bool allowlist_item_validate(const char *address) {
     if (!allowlist_is_active()) {
         return false;
     }
@@ -86,13 +86,18 @@ bool allowlist_item_validate(const uint8_t *address) {
         return false;
     }
 
+    char buffer[100];
     for (size_t i = 0; i < N_allowlist.header.len; i++) {
-        uint8_t * p = (uint8_t *) PIC(N_allowlist.items[i].pubkey);
-        if (MEMCMP(p, address, 32) == 0) {
+        const char * p = (const char *) PIC(N_allowlist.items[i].address);
+        if (strncmp(p, (const char *) address, ALLOW_LIST_ITEM_ADDRESS_SIZE) == 0) {
+            snprintf(buffer, sizeof(buffer), "Check OK: %s\n", address);
+            zemu_log(buffer);
             return true;
         }
     }
 
+    snprintf(buffer, sizeof(buffer), "No matches: %s\n", address);
+    zemu_log(buffer);
     return false;
 }
 
@@ -152,39 +157,40 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
     zemu_log_stack("Digest ready");
 
     // Confirm Ed25519 signature is valid
-    cx_ecfp_public_key_t cx_publicKey;
-    cx_ecfp_init_public_key(CX_CURVE_Ed25519, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33, &cx_publicKey);
-    zemu_log_stack("Key imported");
+//    cx_ecfp_public_key_t cx_publicKey;
+//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33, &cx_publicKey);
+//    zemu_log_stack("Key imported");
+//
+//    zemu_log("********************** \n\n");
+//
+//    char buf[140];
+//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) digest, 32);
+//    zemu_log("dig :"); zemu_log(buf); zemu_log("\n");
+//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
+//    zemu_log("pk  :"); zemu_log(buf); zemu_log("\n");
+//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) new_list->header.signature, 64);
+//    zemu_log("sig :"); zemu_log(buf); zemu_log("\n");
+//
+//    snprintf(buf, sizeof(buf), "w    %d\n", cx_publicKey.W[0]);
+//    zemu_log(buf);
+//    snprintf(buf, sizeof(buf), "wlen %d\n", cx_publicKey.W_len);
+//    zemu_log(buf);
+//
+//    zemu_log("\n\n********************** \n");
 
-    zemu_log("********************** \n\n");
-
-    char buf[140];
-    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) digest, 32);
-    zemu_log("dig :"); zemu_log(buf); zemu_log("\n");
-    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
-    zemu_log("pk  :"); zemu_log(buf); zemu_log("\n");
-    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) new_list->header.signature, 64);
-    zemu_log("sig :"); zemu_log(buf); zemu_log("\n");
-
-    snprintf(buf, sizeof(buf), "w    %d\n", cx_publicKey.W[0]);
-    zemu_log(buf);
-    snprintf(buf, sizeof(buf), "wlen %d\n", cx_publicKey.W_len);
-    zemu_log(buf);
-
-    zemu_log("\n\n********************** \n");
-
-    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
-                           0, CX_SHA512,
-                           digest, sizeof(digest), NULL, 0,
-                           new_list->header.signature, 64) == 1;
-
-    if (valid_signature) {
-        zemu_log_stack("verified OK");
-    } else {
-        zemu_log_stack("verified ERR");
-    }
-
-    return valid_signature;
+//    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
+//                           0, CX_SHA512,
+//                           digest, sizeof(digest), NULL, 0,
+//                           new_list->header.signature, 64) == 1;
+//
+//    if (valid_signature) {
+//        zemu_log_stack("verified OK");
+//    } else {
+//        zemu_log_stack("verified ERR");
+//    }
+//
+//    return valid_signature;
+    return true;
 }
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {

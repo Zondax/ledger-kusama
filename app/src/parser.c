@@ -69,7 +69,14 @@ parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
     parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
     for (uint16_t i = 0; i < targets->_len; i++) {
         CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
-        allowlist_item_validate(lookupSource._ptr);
+        char buffer[100];
+        uint8_t dummy;
+        CHECK_ERROR(
+                _toStringLookupSource(&lookupSource, buffer, sizeof(buffer), 0, &dummy));
+
+        if (!allowlist_item_validate(buffer)) {
+            return parser_not_allowed;
+        }
     }
 
     return parser_ok;
@@ -166,6 +173,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                                    pageIdx, pageCount);
     } else {
         // CONTINUE WITH FIXED ARGUMENTS
+        // FIXME: Review. We can probably show this only in expert mode
         displayIdx -= methodArgCount;
         switch (displayIdx) {
             case FIELD_NETWORK:

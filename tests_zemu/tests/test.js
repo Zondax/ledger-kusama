@@ -1,9 +1,26 @@
-import {expect, test} from "jest";
+/** ******************************************************************************
+ *  (c) 2020 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ******************************************************************************* */
+
+import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
-import {blake2bInit, blake2bUpdate, blake2bFinal} from "blakejs";
+const {newKusamaApp} = require("@zondax/ledger-polkadot");
+import {compareSnapshots} from "./common";
 
 const ed25519 = require("ed25519-supercop");
-const {newKusamaApp} = require("@zondax/ledger-polkadot");
+import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 
 const Resolve = require("path").resolve;
 const APP_PATH = Resolve("../app/bin/app.elf");
@@ -13,18 +30,10 @@ const sim_options = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`
-    ,X11: true
+    , X11: true
 };
 
 jest.setTimeout(30000)
-
-function compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapshotCount) {
-    for (let i = 0; i < snapshotCount; i++) {
-        const img1 = Zemu.LoadPng2RGB(`${snapshotPrefixTmp}${i}.png`);
-        const img2 = Zemu.LoadPng2RGB(`${snapshotPrefixGolden}${i}.png`);
-        expect(img1).toEqual(img2);
-    }
-}
 
 describe('Basic checks', function () {
     test('can start and stop container', async function () {
@@ -62,7 +71,6 @@ describe('Basic checks', function () {
             await sim.start(sim_options);
             const app = newKusamaApp(sim.getTransport());
 
-            // FIXME: Zemu/Speculos are enforcing fully hardened paths
             const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000);
 
             console.log(resp)
@@ -92,9 +100,8 @@ describe('Basic checks', function () {
             const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
-
-            // We need to wait until the app responds to the APDU
-            await Zemu.sleep(3500);
+            // Wait until we are not in the main menu
+            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
             // Now navigate the address / path
             await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
@@ -142,8 +149,8 @@ describe('Basic checks', function () {
 
             // do not wait here.. we need to navigate
             const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-
-            await Zemu.sleep(2000);
+            // Wait until we are not in the main menu
+            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
             // Reference window
             await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);

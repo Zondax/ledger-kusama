@@ -197,11 +197,11 @@ zemu:
 zemu_debug:
 	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs $(COIN) debug
 
+########################## TEST Section ###############################
+
 .PHONY: zemu_test
 zemu_test:
 	cd $(TESTS_ZEMU_DIR) && yarn test$(COIN)
-
-########################## TEST Section ###############################
 
 .PHONY: rust_test
 rust_test:

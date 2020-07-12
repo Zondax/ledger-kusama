@@ -14,11 +14,11 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import jest, {expect} from "jest";
+import jest, {expect, test} from "jest";
 import Zemu from "@zondax/zemu";
-import {blake2bInit, blake2bUpdate, blake2bFinal} from "blakejs";
 import {newKusamaApp} from "@zondax/ledger-polkadot";
 import ed25519 from "ed25519-supercop";
+import {dummyAllowlist, TESTING_ALLOWLIST_SEED} from "./common";
 
 const Resolve = require("path").resolve;
 const APP_PATH = Resolve("../app/bin/app_ledgeracio.elf");
@@ -28,18 +28,10 @@ const sim_options = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`
-//    ,X11: true
+    ,X11: true
 };
 
 jest.setTimeout(30000)
-
-function compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapshotCount) {
-    for (let i = 0; i < snapshotCount; i++) {
-        const img1 = Zemu.LoadPng2RGB(`${snapshotPrefixTmp}${i}.png`);
-        const img2 = Zemu.LoadPng2RGB(`${snapshotPrefixGolden}${i}.png`);
-        expect(img1).toEqual(img2);
-    }
-}
 
 describe('Basic checks', function () {
     test('can start and stop container', async function () {
@@ -132,39 +124,12 @@ describe('Basic checks', function () {
         }
     });
 
-    const TESTING_ALLOWLIST_SEED="0000000000000000000000000000000000000000000000000000000000000000"
-
-    function dummyAllowlist() {
-        const allowlist_len = Buffer.alloc(4);
-        allowlist_len.writeUInt32LE(2);
-        const pk1 = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
-        const pk2 = Buffer.from("5678000000000000000000000000000000000000000000000000000000000000", "hex")
-
-        // calculate digest
-        const context = blake2bInit(32, null);
-        blake2bUpdate(context, allowlist_len);
-        blake2bUpdate(context, pk1);
-        blake2bUpdate(context, pk2);
-        const digest = Buffer.from(blake2bFinal(context));
-        console.log(`-------------------- ${digest.toString("hex")}`)
-
-        // sign
-        const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
-        console.log(`PK : ${keypair.publicKey.toString("hex")}`)
-        console.log(`SK : ${keypair.secretKey.toString("hex")}`)
-
-        const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
-        console.log(`SIG: ${allowlist_signature.toString("hex")}`)
-
-        return Buffer.concat([allowlist_len, allowlist_signature, pk1, pk2])
-    }
-
     test('create signed allowlist', async function () {
         const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
         const allowList = dummyAllowlist()
 
         console.log(allowList)
-        expect(allowList.length).toEqual(132)
+        expect(allowList.length).toEqual(4+64+64*2)
     });
 
     test('upload allowlist | no pubkey', async function () {
@@ -211,9 +176,37 @@ describe('Basic checks', function () {
             console.log(resp);
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
+
+            // Change to expert mode so we can skip fields
+            await sim.clickRight();
+            await sim.clickBoth();
+            await sim.clickLeft();
+
+            // Try to sign a nomination not included in the allowlist
+            // This nomination targets HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96
+            let nominate_tx1 = "060504cef4313d2d72d949a1b35cd6ffd68bd6fcf5524dd0923fb94d23eaf69a01e888d503ae1103008ed73e0ddc07000001000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            const txBlob1 = Buffer.from(nominate_tx1, "hex");
+            const signatureResponse1 = app.sign(0x80000000, 0x80000000, 0x80000000, txBlob1);
+            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
+            await sim.clickBoth();
+            await sim.clickBoth();
+            let signature1 = await signatureResponse1;
+            expect(signature1.return_code).toEqual(0x9000);
+            expect(signature1.error_message).toEqual("No errors");
+            console.log(signature1)
+
+            await Zemu.sleep(3000);
+            console.log("Try an address that is not allowed")
+
+            // Now try a nominations that is not allowed
+            const nominate_tx2 = "0605087d7b347012aa3e104bedc6343f445646d20e50349513d38991689bf4296c27bddac5e3a64a16ca07c9429a8b50f1b3fe5afaa34fdca515a221b7db1e8e78ead6d503ae1103000b63ce64c10c05dc07000001000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            const txBlob2 = Buffer.from(nominate_tx2, "hex");
+            const signature2 = await app.sign(0x80000000, 0x80000000, 0x80000000, txBlob2);
+            expect(signature2.return_code).toEqual(0x6984);
+            expect(signature2.error_message).toEqual("Not allowed");
+
         } finally {
             await sim.close();
         }
     });
-
 });

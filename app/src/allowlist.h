@@ -18,10 +18,11 @@
 #include <stdbool.h>
 
 #define ALLOW_LIST_SIZE                 128
-#define ALLOW_LIST_ITEM_PUBKEY_SIZE     32
+// Length is limited to 63 because it must be zero terminated
+#define ALLOW_LIST_ITEM_ADDRESS_SIZE    64
 
 typedef struct {
-    uint8_t pubkey[ALLOW_LIST_ITEM_PUBKEY_SIZE];
+    uint8_t address[ALLOW_LIST_ITEM_ADDRESS_SIZE];
 } allowlist_item_t;
 
 typedef struct {
@@ -48,7 +49,7 @@ bool allowlist_is_active();
 
 void allowlist_hash(uint8_t *digest);
 
-bool allowlist_item_validate(const uint8_t *address);
+bool allowlist_item_validate(const char *address);
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len);
 
