@@ -17,4 +17,4 @@
 
 #define ZXLIB_MAJOR     3
 #define ZXLIB_MINOR     0
-#define ZXLIB_PATCH     2
+#define ZXLIB_PATCH     4
