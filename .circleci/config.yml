@@ -98,13 +98,13 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            COIN=ledgeracio make
+            COIN=Ledgeracio make
             cp /home/circleci/repo/app/bin/app.elf /home/circleci/repo/app/bin/app_ledgeracio.elf
       - run:
           name: Run zemu tests for Ledgeracio app
           command: |
             nvm use 13.12.0
-            make zemu_test_ledgeracio
+            COIN=Ledgeracio make zemu_test
 
   build_package:
     docker:
