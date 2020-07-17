@@ -52,18 +52,16 @@ void h_error_accept(unsigned int _) {
 
 void h_sign_accept(unsigned int _) {
     UNUSED(_);
-    app_sign();
     view_idle_show(0);
     UX_WAIT();
+    app_sign();
 }
 
 void h_sign_reject(unsigned int _) {
     UNUSED(_);
     view_idle_show(0);
     UX_WAIT();
-
-    set_code(G_io_apdu_buffer, 0, APDU_CODE_COMMAND_NOT_ALLOWED);
-    io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
+    app_reject();
 }
 
 ///////////////////////////////////
@@ -145,7 +143,7 @@ zxerr_t h_review_update_data() {
                                        viewdata.key, MAX_CHARS_PER_KEY_LINE,
                                        viewdata.value, MAX_CHARS_PER_VALUE1_LINE,
                                        0, &viewdata.pageCount))
-                if (viewdata.pageIdx > viewdata.pageCount) {
+                if (viewdata.pageCount != 0 && viewdata.pageIdx > viewdata.pageCount) {
                     // try again and get last page
                     viewdata.pageIdx = viewdata.pageCount - 1;
                 }
@@ -163,7 +161,7 @@ zxerr_t h_review_update_data() {
                                          viewdata.key, MAX_CHARS_PER_KEY_LINE,
                                          viewdata.value, MAX_CHARS_PER_VALUE1_LINE,
                                          0, &viewdata.pageCount))
-                if (viewdata.pageIdx > viewdata.pageCount) {
+                if (viewdata.pageCount != 0 && viewdata.pageIdx > viewdata.pageCount) {
                     // try again and get last page
                     viewdata.pageIdx = viewdata.pageCount - 1;
                 }

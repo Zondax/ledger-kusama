@@ -24,6 +24,8 @@ typedef enum {
     zb_not_allocated
 } zbuffer_error_e;
 
+zbuffer_error_e zb_init();
+
 // allocate a block at the end of the stack
 // maximum size will not be checked
 zbuffer_error_e zb_allocate(uint16_t size);

@@ -193,6 +193,10 @@ zemu_install: zemu_install_js_link
 zemu:
 	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs $(COIN)
 
+.PHONY: zemu_val
+zemu_val:
+	cd $(TESTS_ZEMU_DIR)/tools && node debug_val.mjs
+
 .PHONY: zemu_debug
 zemu_debug:
 	cd $(TESTS_ZEMU_DIR)/tools && node debug.mjs $(COIN) debug
