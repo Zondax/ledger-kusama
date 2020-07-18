@@ -13,11 +13,10 @@ export function compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapsh
 
 export const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
 
-function dummyAllowlist() {
+export function dummyAllowlist() {
     const addresses = [
-        "HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96",
         "FQr6vFmm8zNFV9m4ZMxKzMdUVUbPtrhxxaVkAybHxsDYMCY",
-        "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6"
+        "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6",
     ]
 
     // Prepare len field
@@ -26,9 +25,9 @@ function dummyAllowlist() {
 
     // Prepare items field
     const addressBuffer = Buffer.alloc(64 * addresses.length, 0);
-    for(let i=0; i<addresses.length; i++) {
-        const tmp = Buffer.from( addresses[i] )
-        tmp.copy(addressBuffer, i*64)
+    for (let i = 0; i < addresses.length; i++) {
+        const tmp = Buffer.from(addresses[i])
+        tmp.copy(addressBuffer, i * 64)
     }
 
     // calculate digest
