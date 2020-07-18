@@ -1,8 +1,10 @@
 import Zemu from "@zondax/zemu";
 import path from "path";
 import newKusamaApp from "@zondax/ledger-polkadot";
+
 const APP_PATH = path.resolve(`./../../app/bin/app.elf`);
 import pkg from 'blakejs';
+
 const {blake2bInit, blake2bUpdate, blake2bFinal} = pkg;
 
 import ed25519 from "ed25519-supercop";
@@ -31,16 +33,27 @@ async function beforeEnd() {
 const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
 
 function dummyAllowlist() {
+    const addresses = [
+        "HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96",
+        "FQr6vFmm8zNFV9m4ZMxKzMdUVUbPtrhxxaVkAybHxsDYMCY",
+        "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6"
+    ]
+
+    // Prepare len field
     const allowlist_len = Buffer.alloc(4);
-    allowlist_len.writeUInt32LE(2);
-    const pk1 = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
-    const pk2 = Buffer.from("5678000000000000000000000000000000000000000000000000000000000000", "hex")
+    allowlist_len.writeUInt32LE(addresses.length);
+
+    // Prepare items field
+    const addressBuffer = Buffer.alloc(64 * addresses.length, 0);
+    for(let i=0; i<addresses.length; i++) {
+        const tmp = Buffer.from( addresses[i] )
+        tmp.copy(addressBuffer, i*64)
+    }
 
     // calculate digest
     const context = blake2bInit(32, null);
     blake2bUpdate(context, allowlist_len);
-    blake2bUpdate(context, pk1);
-    blake2bUpdate(context, pk2);
+    blake2bUpdate(context, addressBuffer);
     const digest = Buffer.from(blake2bFinal(context));
     console.log(`-------------------- ${digest.toString("hex")}`)
 
@@ -52,7 +65,7 @@ function dummyAllowlist() {
     const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
     console.log(`SIG: ${allowlist_signature.toString("hex")}`)
 
-    return Buffer.concat([allowlist_len, allowlist_signature, pk1, pk2])
+    return Buffer.concat([allowlist_len, allowlist_signature, addressBuffer])
 }
 
 async function debugScenario(sim, app) {

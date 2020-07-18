@@ -13,19 +13,28 @@ export function compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapsh
 
 export const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
 
-export function dummyAllowlist() {
+function dummyAllowlist() {
+    const addresses = [
+        "HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96",
+        "FQr6vFmm8zNFV9m4ZMxKzMdUVUbPtrhxxaVkAybHxsDYMCY",
+        "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6"
+    ]
+
+    // Prepare len field
     const allowlist_len = Buffer.alloc(4);
-    allowlist_len.writeUInt32LE(2);
-    const addr1 = Buffer.alloc(64).fill(0) // .from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
-    const addr2 = Buffer.alloc(64).fill(0); // .from("5678000000000000000000000000000000000000000000000000000000000000", "hex")
-    addr1.write("HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96")
-    addr2.write("testtesttesttesttesttesttesttesttesttesttesttes")
+    allowlist_len.writeUInt32LE(addresses.length);
+
+    // Prepare items field
+    const addressBuffer = Buffer.alloc(64 * addresses.length, 0);
+    for(let i=0; i<addresses.length; i++) {
+        const tmp = Buffer.from( addresses[i] )
+        tmp.copy(addressBuffer, i*64)
+    }
 
     // calculate digest
     const context = blake2bInit(32, null);
     blake2bUpdate(context, allowlist_len);
-    blake2bUpdate(context, addr1);
-    blake2bUpdate(context, addr2);
+    blake2bUpdate(context, addressBuffer);
     const digest = Buffer.from(blake2bFinal(context));
     console.log(`-------------------- ${digest.toString("hex")}`)
 
@@ -37,5 +46,5 @@ export function dummyAllowlist() {
     const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
     console.log(`SIG: ${allowlist_signature.toString("hex")}`)
 
-    return Buffer.concat([allowlist_len, allowlist_signature, addr1, addr2])
+    return Buffer.concat([allowlist_len, allowlist_signature, addressBuffer])
 }

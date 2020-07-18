@@ -144,7 +144,6 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
     // Check size is correct. Header (signature+len) + items * len
     const size_t expected_size = sizeof(allowlist_header_t) + sizeof(allowlist_item_t) * new_list->header.len;
     if (new_list_buffer_len != expected_size) {
-        // Invalid size
         zemu_log_stack("allowlist: ERR unexpected size");
         return false;
     }
@@ -157,40 +156,45 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
     zemu_log_stack("Digest ready");
 
     // Confirm Ed25519 signature is valid
-//    cx_ecfp_public_key_t cx_publicKey;
-//    cx_ecfp_init_public_key(CX_CURVE_Ed25519, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33, &cx_publicKey);
-//    zemu_log_stack("Key imported");
-//
-//    zemu_log("********************** \n\n");
-//
-//    char buf[140];
-//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) digest, 32);
-//    zemu_log("dig :"); zemu_log(buf); zemu_log("\n");
-//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
-//    zemu_log("pk  :"); zemu_log(buf); zemu_log("\n");
-//    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) new_list->header.signature, 64);
-//    zemu_log("sig :"); zemu_log(buf); zemu_log("\n");
-//
-//    snprintf(buf, sizeof(buf), "w    %d\n", cx_publicKey.W[0]);
-//    zemu_log(buf);
-//    snprintf(buf, sizeof(buf), "wlen %d\n", cx_publicKey.W_len);
-//    zemu_log(buf);
-//
-//    zemu_log("\n\n********************** \n");
+    // *     - '04 x y'  or '02 y' (plus sign) for twisted Edward curves
+    uint8_t pubkey_XY[65];
+    MEMCPY(pubkey_XY, (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
+    cx_edward_decompress_point(CX_CURVE_Ed25519, pubkey_XY, sizeof(pubkey_XY));
 
-//    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
-//                           0, CX_SHA512,
-//                           digest, sizeof(digest), NULL, 0,
-//                           new_list->header.signature, 64) == 1;
-//
-//    if (valid_signature) {
-//        zemu_log_stack("verified OK");
-//    } else {
-//        zemu_log_stack("verified ERR");
-//    }
-//
-//    return valid_signature;
-    return true;
+    cx_ecfp_public_key_t cx_publicKey;
+    cx_ecfp_init_public_key(CX_CURVE_Ed25519, pubkey_XY, 65, &cx_publicKey);
+    zemu_log_stack("Decompressed key imported");
+
+    zemu_log("********************** \n\n");
+
+    char buf[140];
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) digest, 32);
+    zemu_log("dig :"); zemu_log(buf); zemu_log("\n");
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) PIC(N_allowlist_metadata.ledger_pubkey), 33);
+    zemu_log("pk  :"); zemu_log(buf); zemu_log("\n");
+    array_to_hexstr(buf, sizeof(buf), (const uint8_t *) new_list->header.signature, 64);
+    zemu_log("sig :"); zemu_log(buf); zemu_log("\n");
+
+    snprintf(buf, sizeof(buf), "w    %d\n", cx_publicKey.W[0]);
+    zemu_log(buf);
+    snprintf(buf, sizeof(buf), "wlen %d\n", cx_publicKey.W_len);
+    zemu_log(buf);
+
+    zemu_log("\n\n********************** \n");
+
+    bool valid_signature = cx_eddsa_verify(&cx_publicKey,
+                           0, CX_SHA512,
+                           digest, sizeof(digest), NULL, 0,
+                           new_list->header.signature, 64) == 1;
+
+    if (valid_signature) {
+        zemu_log_stack("verified OK");
+    } else {
+        zemu_log_stack("verified ERR");
+    }
+
+    return valid_signature;
+//    return true;
 }
 
 bool allowlist_upgrade(const uint8_t *new_list_buffer, size_t new_list_buffer_len) {

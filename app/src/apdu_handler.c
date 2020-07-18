@@ -129,11 +129,16 @@ __Z_INLINE bool process_chunk_update(volatile uint32_t *tx, uint32_t rx) {
 }
 
 __Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-#ifdef TESTING_ENABLED
-    G_io_apdu_buffer[0] = 0xFF;
-#else
     G_io_apdu_buffer[0] = 0;
+
+#if defined(APP_TESTING)
+    G_io_apdu_buffer[0] = 0x01;
 #endif
+
+    #if defined(APP_RESTRICTED)
+    G_io_apdu_buffer[0] = 0x02;
+#endif
+
     G_io_apdu_buffer[1] = (LEDGER_MAJOR_VERSION >> 8) & 0xFF;;
     G_io_apdu_buffer[2] = (LEDGER_MAJOR_VERSION >> 0) & 0xFF;;
 

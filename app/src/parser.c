@@ -71,8 +71,7 @@ parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
         CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
         char buffer[100];
         uint8_t dummy;
-        CHECK_ERROR(
-                _toStringLookupSource(&lookupSource, buffer, sizeof(buffer), 0, &dummy));
+        CHECK_ERROR(_toStringLookupSource(&lookupSource, buffer, sizeof(buffer), 0, &dummy));
 
         if (!allowlist_item_validate(buffer)) {
             return parser_not_allowed;
@@ -115,7 +114,7 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
             }
         }
     }
-    return parser_not_supported;
+    return parser_not_allowed;
 #endif
     return parser_ok;
 }
