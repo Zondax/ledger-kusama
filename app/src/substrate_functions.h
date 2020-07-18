@@ -849,11 +849,11 @@ parser_error_t _toStringu8_array_32(
 
 parser_error_t _readProposal(parser_context_t *c, pd_Proposal_t *v);
 parser_error_t _toStringProposal(
-        const pd_Proposal_t *v,
-        char *outValue,
-        uint16_t outValueLen,
-        uint8_t pageIdx,
-        uint8_t *pageCount);
+    const pd_Proposal_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
 
 #ifdef __cplusplus
 }

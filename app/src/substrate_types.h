@@ -170,25 +170,25 @@ typedef compactInt_t pd_CompactSubId_t;
 typedef compactInt_t pd_CompactWeight_t;
 
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_AccountId_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_AccountIndex_t;
 
-typedef struct {
+typedef struct { 
     pd_BalanceOf_t aye;
     pd_BalanceOf_t nay;
 } pd_AccountVoteSplit_t;
 
-typedef struct {
+typedef struct { 
     pd_Vote_t vote;
     pd_BalanceOf_t balance;
 } pd_AccountVoteStandard_t;
 
-typedef struct {
+typedef struct { 
     uint8_t value;
      union {
         pd_AccountVoteStandard_t voteStandard;
@@ -196,79 +196,79 @@ typedef struct {
     };
 } pd_AccountVote_t;
 
-typedef struct {
+typedef struct { 
     uint64_t _len;
     const uint8_t *_ptr;
 } pd_Bytes_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Call_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ChangesTrieConfiguration_t;
 
-typedef struct {
+typedef struct { 
     pd_Hash_t value;
 } pd_CollatorId_t;
 
-typedef struct {
+typedef struct { 
     uint8_t type;
     const uint8_t *_ptr;
     uint8_t _len;
 } pd_Data_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_DefunctVoter_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_DoubleVoteReport_t;
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_EcdsaSignature_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ElectionScore_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ElectionSize_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_EraIndex_t;
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_EthereumAddress_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_GrandpaEquivocationProof_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_HeadData_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_IdentityFields_t;
 
-typedef struct {
+typedef struct { 
     // https://github.com/paritytech/substrate/blob/effe489951d1edab9d34846b1eefdfaf9511dab9/frame/identity/src/lib.rs#L276
     pd_VecTupleDataData_t additional;
     pd_Data_t display;
@@ -281,141 +281,141 @@ typedef struct {
     pd_Data_t twitter;
 } pd_IdentityInfo_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_IdentityJudgement_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_KeyOwnerProof_t;
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_Key_t;
 
-typedef struct {
+typedef struct { 
   	const uint8_t *_ptr;
 } pd_LookupSource_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_MemberCount_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_MoreAttestations_t;
 
-typedef struct {
+typedef struct { 
     uint8_t scheduling;     //pd_ParaScheduling_t
     // 0 - Always
     // 1 - Dynamic
 } pd_ParaInfo_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_Perbill_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Percent_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Period_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Priority_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ProxyType_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_ReferendumIndex_t;
 
-typedef struct {
+typedef struct { 
     uint32_t value;
 } pd_RegistrarIndex_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Renouncing_t;
 
-typedef struct {
+typedef struct { 
     uint8_t value;
 } pd_RewardDestination_t;
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_Signature_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_SocietyJudgement_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_StatementKind_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Timepoint_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_TupleAccountIdData_t;
 
-typedef struct {
+typedef struct { 
     pd_BalanceOf_t balance1;
     pd_BalanceOf_t balance2;
     pd_BlockNumber_t blockNumber;
 } pd_TupleBalanceOfBalanceOfBlockNumber_t;
 
-typedef struct {
+typedef struct { 
     pd_Data_t data1;
     pd_Data_t data2;
 } pd_TupleDataData_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ValidationCode_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ValidatorIndex_t;
 
-typedef struct {
+typedef struct { 
     pd_CompactPerBill_t commission;
 } pd_ValidatorPrefs_t;
 
-typedef struct {
+typedef struct { 
     pd_BalanceOf_t locked;
     pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_t;
 
-typedef struct {
+typedef struct { 
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Weight_t;
 
-typedef struct {
+typedef struct { 
     const uint8_t *_ptr;
 } pd_u8_array_32_t;
 
