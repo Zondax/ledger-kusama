@@ -197,6 +197,16 @@ typedef struct {
 } pd_AccountVote_t;
 
 typedef struct { 
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_BabeEquivocationProof_t;
+
+typedef struct { 
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Balance_t;
+
+typedef struct { 
     uint64_t _len;
     const uint8_t *_ptr;
 } pd_Bytes_t;
@@ -309,6 +319,16 @@ typedef struct {
 } pd_MoreAttestations_t;
 
 typedef struct { 
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_OpaqueCall_t;
+
+typedef struct { 
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ParaId_t;
+
+typedef struct { 
     uint8_t scheduling;     //pd_ParaScheduling_t
     // 0 - Always
     // 1 - Dynamic
@@ -345,6 +365,11 @@ typedef struct {
 typedef struct { 
     uint32_t value;
 } pd_RegistrarIndex_t;
+
+typedef struct { 
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Remark_t;
 
 typedef struct { 
     // TODO: Not implemented

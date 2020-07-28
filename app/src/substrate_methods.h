@@ -106,6 +106,18 @@ typedef struct {
 typedef struct {
 } pd_system_suicide_t;
 
+#define PD_CALL_BABE_REPORT_EQUIVOCATION 0
+typedef struct {
+    pd_BabeEquivocationProof_t equivocation_proof;
+    pd_KeyOwnerProof_t key_owner_proof;
+} pd_babe_report_equivocation_t;
+
+#define PD_CALL_BABE_REPORT_EQUIVOCATION_UNSIGNED 1
+typedef struct {
+    pd_BabeEquivocationProof_t equivocation_proof;
+    pd_KeyOwnerProof_t key_owner_proof;
+} pd_babe_report_equivocation_unsigned_t;
+
 #define PD_CALL_TIMESTAMP_SET 0
 typedef struct {
     pd_CompactMoment_t now;
@@ -321,6 +333,12 @@ typedef struct {
     pd_GrandpaEquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_grandpa_report_equivocation_t;
+
+#define PD_CALL_GRANDPA_REPORT_EQUIVOCATION_UNSIGNED 1
+typedef struct {
+    pd_GrandpaEquivocationProof_t equivocation_proof;
+    pd_KeyOwnerProof_t key_owner_proof;
+} pd_grandpa_report_equivocation_unsigned_t;
 
 #define PD_CALL_IMONLINE_HEARTBEAT 0
 typedef struct {
@@ -659,6 +677,19 @@ typedef struct {
     pd_DoubleVoteReport_t report;
 } pd_parachains_report_double_vote_t;
 
+#define PD_CALL_PARACHAINS_TRANSFER_TO_PARACHAIN 2
+typedef struct {
+    pd_ParaId_t to;
+    pd_Balance_t amount;
+    pd_Remark_t remark;
+} pd_parachains_transfer_to_parachain_t;
+
+#define PD_CALL_PARACHAINS_SEND_XCMP_MESSAGE 3
+typedef struct {
+    pd_ParaId_t to;
+    pd_Bytes_t msg;
+} pd_parachains_send_xcmp_message_t;
+
 #define PD_CALL_ATTESTATIONS_MORE_ATTESTATIONS 0
 typedef struct {
     pd_MoreAttestations_t _more;
@@ -752,17 +783,11 @@ typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_t;
 
-#define PD_CALL_UTILITY_AS_SUB 1
+#define PD_CALL_UTILITY_AS_DERIVATIVE 1
 typedef struct {
     pd_u16_t index;
     pd_Call_t call;
-} pd_utility_as_sub_t;
-
-#define PD_CALL_UTILITY_AS_LIMITED_SUB 2
-typedef struct {
-    pd_u16_t index;
-    pd_Call_t call;
-} pd_utility_as_limited_sub_t;
+} pd_utility_as_derivative_t;
 
 #define PD_CALL_IDENTITY_ADD_REGISTRAR 0
 typedef struct {
@@ -823,6 +848,27 @@ typedef struct {
 typedef struct {
     pd_LookupSource_t target;
 } pd_identity_kill_identity_t;
+
+#define PD_CALL_IDENTITY_ADD_SUB 11
+typedef struct {
+    pd_LookupSource_t sub;
+    pd_Data_t data;
+} pd_identity_add_sub_t;
+
+#define PD_CALL_IDENTITY_RENAME_SUB 12
+typedef struct {
+    pd_LookupSource_t sub;
+    pd_Data_t data;
+} pd_identity_rename_sub_t;
+
+#define PD_CALL_IDENTITY_REMOVE_SUB 13
+typedef struct {
+    pd_LookupSource_t sub;
+} pd_identity_remove_sub_t;
+
+#define PD_CALL_IDENTITY_QUIT_SUB 14
+typedef struct {
+} pd_identity_quit_sub_t;
 
 #define PD_CALL_SOCIETY_BID 0
 typedef struct {
@@ -988,6 +1034,23 @@ typedef struct {
     pd_Bytes_t id;
 } pd_scheduler_cancel_named_t;
 
+#define PD_CALL_SCHEDULER_SCHEDULE_AFTER 4
+typedef struct {
+    pd_BlockNumber_t after;
+    pd_OptionPeriod_t maybe_periodic;
+    pd_Priority_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_after_t;
+
+#define PD_CALL_SCHEDULER_SCHEDULE_NAMED_AFTER 5
+typedef struct {
+    pd_Bytes_t id;
+    pd_BlockNumber_t after;
+    pd_OptionPeriod_t maybe_periodic;
+    pd_Priority_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_named_after_t;
+
 #define PD_CALL_PROXY_PROXY 0
 typedef struct {
     pd_AccountId_t real;
@@ -1037,7 +1100,7 @@ typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_t other_signatories;
     pd_OptionTimepoint_t maybe_timepoint;
-    pd_Bytes_t call;
+    pd_OpaqueCall_t call;
     pd_bool_t store_call;
     pd_Weight_t max_weight;
 } pd_multisig_as_multi_t;
@@ -1071,6 +1134,8 @@ typedef union {
     pd_system_kill_storage_t system_kill_storage;
     pd_system_kill_prefix_t system_kill_prefix;
     pd_system_suicide_t system_suicide;
+    pd_babe_report_equivocation_t babe_report_equivocation;
+    pd_babe_report_equivocation_unsigned_t babe_report_equivocation_unsigned;
     pd_timestamp_set_t timestamp_set;
     pd_indices_claim_t indices_claim;
     pd_indices_transfer_t indices_transfer;
@@ -1110,6 +1175,7 @@ typedef union {
     pd_session_purge_keys_t session_purge_keys;
     pd_finalitytracker_final_hint_t finalitytracker_final_hint;
     pd_grandpa_report_equivocation_t grandpa_report_equivocation;
+    pd_grandpa_report_equivocation_unsigned_t grandpa_report_equivocation_unsigned;
     pd_imonline_heartbeat_t imonline_heartbeat;
     pd_democracy_propose_t democracy_propose;
     pd_democracy_second_t democracy_second;
@@ -1170,6 +1236,8 @@ typedef union {
     pd_claims_move_claim_t claims_move_claim;
     pd_parachains_set_heads_t parachains_set_heads;
     pd_parachains_report_double_vote_t parachains_report_double_vote;
+    pd_parachains_transfer_to_parachain_t parachains_transfer_to_parachain;
+    pd_parachains_send_xcmp_message_t parachains_send_xcmp_message;
     pd_attestations_more_attestations_t attestations_more_attestations;
     pd_slots_new_auction_t slots_new_auction;
     pd_slots_bid_t slots_bid;
@@ -1185,8 +1253,7 @@ typedef union {
     pd_registrar_deregister_parathread_t registrar_deregister_parathread;
     pd_registrar_swap_t registrar_swap;
     pd_utility_batch_t utility_batch;
-    pd_utility_as_sub_t utility_as_sub;
-    pd_utility_as_limited_sub_t utility_as_limited_sub;
+    pd_utility_as_derivative_t utility_as_derivative;
     pd_identity_add_registrar_t identity_add_registrar;
     pd_identity_set_identity_t identity_set_identity;
     pd_identity_set_subs_t identity_set_subs;
@@ -1198,6 +1265,10 @@ typedef union {
     pd_identity_set_fields_t identity_set_fields;
     pd_identity_provide_judgement_t identity_provide_judgement;
     pd_identity_kill_identity_t identity_kill_identity;
+    pd_identity_add_sub_t identity_add_sub;
+    pd_identity_rename_sub_t identity_rename_sub;
+    pd_identity_remove_sub_t identity_remove_sub;
+    pd_identity_quit_sub_t identity_quit_sub;
     pd_society_bid_t society_bid;
     pd_society_unbid_t society_unbid;
     pd_society_vouch_t society_vouch;
@@ -1227,6 +1298,8 @@ typedef union {
     pd_scheduler_cancel_t scheduler_cancel;
     pd_scheduler_schedule_named_t scheduler_schedule_named;
     pd_scheduler_cancel_named_t scheduler_cancel_named;
+    pd_scheduler_schedule_after_t scheduler_schedule_after;
+    pd_scheduler_schedule_named_after_t scheduler_schedule_named_after;
     pd_proxy_proxy_t proxy_proxy;
     pd_proxy_add_proxy_t proxy_add_proxy;
     pd_proxy_remove_proxy_t proxy_remove_proxy;
