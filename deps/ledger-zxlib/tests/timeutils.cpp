@@ -29,9 +29,6 @@ namespace {
     }
 
     TEST(TIMEUTILS, yearlookup) {
-        char output[50];
-        char expected_output[50];
-
         struct tm t = {0};  // Initalize to all 0's
         for (uint64_t year = 70; year < 470; year++) {
             t.tm_year = year;  // This is year-1900, so 112 = 2012
