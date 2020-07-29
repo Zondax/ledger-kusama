@@ -17,7 +17,6 @@
 import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
 const {newKusamaApp} = require("@zondax/ledger-polkadot");
-import {compareSnapshots} from "./common";
 
 const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
@@ -33,7 +32,7 @@ const sim_options = {
     , X11: true
 };
 
-jest.setTimeout(30000)
+jest.setTimeout(60000)
 
 describe('Basic checks', function () {
     test('can start and stop container', async function () {
@@ -90,10 +89,6 @@ describe('Basic checks', function () {
     });
 
     test('show address', async function () {
-        const snapshotPrefixGolden = "snapshots/show-address/";
-        const snapshotPrefixTmp = "snapshots-tmp/show-address/";
-        let snapshotCount = 0;
-
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
@@ -103,16 +98,10 @@ describe('Basic checks', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            // Now navigate the address / path
-            await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickRight(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            await sim.clickBoth(`${snapshotPrefixTmp}${snapshotCount++}.png`);
+            await sim.compareSnapshotsAndAccept(".", "show_address", 3);
 
             const resp = await respRequest;
             console.log(resp);
-
-            compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapshotCount);
 
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
@@ -128,10 +117,6 @@ describe('Basic checks', function () {
     });
 
     test('sign basic', async function () {
-        const snapshotPrefixGolden = "snapshots/sign-basic/";
-        const snapshotPrefixTmp = "snapshots-tmp/sign-basic/";
-        let snapshotCount = 0;
-
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
@@ -140,7 +125,7 @@ describe('Basic checks', function () {
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0400f68ad810c8070fdacded5e85661439ab61010c2da28b645797d45d22a2af837800d503008ed73e0dd807000001000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "04001a6146b9d63b0d2dd82106014bc5563271c72bc59730e3f2bb16d9dfd011dea96d0fd503006d0fe307000002000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -152,17 +137,10 @@ describe('Basic checks', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            // Reference window
-            await sim.snapshot(`${snapshotPrefixTmp}${snapshotCount++}.png`);
-            for (let i = 0; i < 11; i++) {
-                await sim.clickRight(Resolve(`${snapshotPrefixTmp}${snapshotCount++}.png`));
-            }
-            await sim.clickBoth();
+            await sim.compareSnapshotsAndAccept(".", "sign_basic", 12);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
-
-            compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapshotCount);
 
             expect(signatureResponse.return_code).toEqual(0x9000);
             expect(signatureResponse.error_message).toEqual("No errors");
