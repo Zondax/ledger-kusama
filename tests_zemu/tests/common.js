@@ -1,22 +1,12 @@
-import Zemu from "@zondax/zemu";
-import {expect} from "jest";
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 import ed25519 from "ed25519-supercop";
-
-export function compareSnapshots(snapshotPrefixTmp, snapshotPrefixGolden, snapshotCount) {
-    for (let i = 0; i < snapshotCount; i++) {
-        const img1 = Zemu.LoadPng2RGB(`${snapshotPrefixTmp}${i}.png`);
-        const img2 = Zemu.LoadPng2RGB(`${snapshotPrefixGolden}${i}.png`);
-        expect(img1).toEqual(img2);
-    }
-}
 
 export const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
 
 export function dummyAllowlist() {
     const addresses = [
-        "FQr6vFmm8zNFV9m4ZMxKzMdUVUbPtrhxxaVkAybHxsDYMCY",
-        "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6",
+        "CyNP3N6Xrg7qMVLBX3bqJry9SENkEnwzYoHCv8E7QcJr4z8",
+        "J7wUqKjcKUu1UbiSR5VR9eB2rMmNpQyBNePAvcNhyXxjoU2",
     ]
 
     // Prepare len field

@@ -49,7 +49,9 @@ parser_error_t _readAccountVoteSplit(parser_context_t *c, pd_AccountVoteSplit_t 
 parser_error_t _readAccountVoteStandard(parser_context_t *c, pd_AccountVoteStandard_t *v);
 parser_error_t _readAccountVote(parser_context_t *c, pd_AccountVote_t *v);
 parser_error_t _readAttestedCandidate(parser_context_t *c, pd_AttestedCandidate_t *v);
+parser_error_t _readBabeEquivocationProof(parser_context_t *c, pd_BabeEquivocationProof_t *v);
 parser_error_t _readBalanceOf(parser_context_t *c, pd_BalanceOf_t *v);
+parser_error_t _readBalance(parser_context_t *c, pd_Balance_t *v);
 parser_error_t _readBlockNumber(parser_context_t *c, pd_BlockNumber_t *v);
 parser_error_t _readBytes(parser_context_t *c, pd_Bytes_t *v);
 parser_error_t _readCall(parser_context_t *c, pd_Call_t *v);
@@ -95,6 +97,7 @@ parser_error_t _readKeys(parser_context_t *c, pd_Keys_t *v);
 parser_error_t _readLookupSource(parser_context_t *c, pd_LookupSource_t *v);
 parser_error_t _readMemberCount(parser_context_t *c, pd_MemberCount_t *v);
 parser_error_t _readMoreAttestations(parser_context_t *c, pd_MoreAttestations_t *v);
+parser_error_t _readOpaqueCall(parser_context_t *c, pd_OpaqueCall_t *v);
 parser_error_t _readOptionAccountId(parser_context_t *c, pd_OptionAccountId_t *v);
 parser_error_t _readOptionChangesTrieConfiguration(parser_context_t *c, pd_OptionChangesTrieConfiguration_t *v);
 parser_error_t _readOptionPeriod(parser_context_t *c, pd_OptionPeriod_t *v);
@@ -103,6 +106,7 @@ parser_error_t _readOptionStatementKind(parser_context_t *c, pd_OptionStatementK
 parser_error_t _readOptionTimepoint(parser_context_t *c, pd_OptionTimepoint_t *v);
 parser_error_t _readOptionTupleBalanceOfBalanceOfBlockNumber(parser_context_t *c, pd_OptionTupleBalanceOfBalanceOfBlockNumber_t *v);
 parser_error_t _readOptionu8_array_20(parser_context_t *c, pd_Optionu8_array_20_t *v);
+parser_error_t _readParaId(parser_context_t *c, pd_ParaId_t *v);
 parser_error_t _readParaInfo(parser_context_t *c, pd_ParaInfo_t *v);
 parser_error_t _readPerbill(parser_context_t *c, pd_Perbill_t *v);
 parser_error_t _readPercent(parser_context_t *c, pd_Percent_t *v);
@@ -111,6 +115,7 @@ parser_error_t _readPriority(parser_context_t *c, pd_Priority_t *v);
 parser_error_t _readProxyType(parser_context_t *c, pd_ProxyType_t *v);
 parser_error_t _readReferendumIndex(parser_context_t *c, pd_ReferendumIndex_t *v);
 parser_error_t _readRegistrarIndex(parser_context_t *c, pd_RegistrarIndex_t *v);
+parser_error_t _readRemark(parser_context_t *c, pd_Remark_t *v);
 parser_error_t _readRenouncing(parser_context_t *c, pd_Renouncing_t *v);
 parser_error_t _readRewardDestination(parser_context_t *c, pd_RewardDestination_t *v);
 parser_error_t _readSignature(parser_context_t *c, pd_Signature_t *v);
@@ -188,8 +193,22 @@ parser_error_t _toStringAttestedCandidate(
     uint8_t pageIdx,
     uint8_t *pageCount);
 
+parser_error_t _toStringBabeEquivocationProof(
+    const pd_BabeEquivocationProof_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
+
 parser_error_t _toStringBalanceOf(
     const pd_BalanceOf_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
+
+parser_error_t _toStringBalance(
+    const pd_Balance_t *v,
     char *outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -510,6 +529,13 @@ parser_error_t _toStringMoreAttestations(
     uint8_t pageIdx,
     uint8_t *pageCount);
 
+parser_error_t _toStringOpaqueCall(
+    const pd_OpaqueCall_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
+
 parser_error_t _toStringOptionAccountId(
     const pd_OptionAccountId_t *v,
     char *outValue,
@@ -566,6 +592,13 @@ parser_error_t _toStringOptionu8_array_20(
     uint8_t pageIdx,
     uint8_t *pageCount);
 
+parser_error_t _toStringParaId(
+    const pd_ParaId_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
+
 parser_error_t _toStringParaInfo(
     const pd_ParaInfo_t *v,
     char *outValue,
@@ -617,6 +650,13 @@ parser_error_t _toStringReferendumIndex(
 
 parser_error_t _toStringRegistrarIndex(
     const pd_RegistrarIndex_t *v,
+    char *outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t *pageCount);
+
+parser_error_t _toStringRemark(
+    const pd_Remark_t *v,
     char *outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

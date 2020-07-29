@@ -78,6 +78,20 @@ __Z_INLINE parser_error_t _readMethod_system_suicide(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_babe_report_equivocation(
+    parser_context_t *c, pd_babe_report_equivocation_t *m) {
+    CHECK_ERROR(_readBabeEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_babe_report_equivocation_unsigned(
+    parser_context_t *c, pd_babe_report_equivocation_unsigned_t *m) {
+    CHECK_ERROR(_readBabeEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_timestamp_set(
     parser_context_t *c, pd_timestamp_set_t *m) {
     CHECK_ERROR(_readCompactMoment(c, &m->now))
@@ -328,6 +342,13 @@ __Z_INLINE parser_error_t _readMethod_finalitytracker_final_hint(
 
 __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation(
     parser_context_t *c, pd_grandpa_report_equivocation_t *m) {
+    CHECK_ERROR(_readGrandpaEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned(
+    parser_context_t *c, pd_grandpa_report_equivocation_unsigned_t *m) {
     CHECK_ERROR(_readGrandpaEquivocationProof(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
     return parser_ok;
@@ -760,6 +781,21 @@ __Z_INLINE parser_error_t _readMethod_parachains_report_double_vote(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_parachains_transfer_to_parachain(
+    parser_context_t *c, pd_parachains_transfer_to_parachain_t *m) {
+    CHECK_ERROR(_readParaId(c, &m->to))
+    CHECK_ERROR(_readBalance(c, &m->amount))
+    CHECK_ERROR(_readRemark(c, &m->remark))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_parachains_send_xcmp_message(
+    parser_context_t *c, pd_parachains_send_xcmp_message_t *m) {
+    CHECK_ERROR(_readParaId(c, &m->to))
+    CHECK_ERROR(_readBytes(c, &m->msg))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_attestations_more_attestations(
     parser_context_t *c, pd_attestations_more_attestations_t *m) {
     CHECK_ERROR(_readMoreAttestations(c, &m->_more))
@@ -868,15 +904,8 @@ __Z_INLINE parser_error_t _readMethod_utility_batch(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_utility_as_sub(
-    parser_context_t *c, pd_utility_as_sub_t *m) {
-    CHECK_ERROR(_readu16(c, &m->index))
-    CHECK_ERROR(_readCall(c, &m->call))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_utility_as_limited_sub(
-    parser_context_t *c, pd_utility_as_limited_sub_t *m) {
+__Z_INLINE parser_error_t _readMethod_utility_as_derivative(
+    parser_context_t *c, pd_utility_as_derivative_t *m) {
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
@@ -950,6 +979,31 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement(
 __Z_INLINE parser_error_t _readMethod_identity_kill_identity(
     parser_context_t *c, pd_identity_kill_identity_t *m) {
     CHECK_ERROR(_readLookupSource(c, &m->target))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_identity_add_sub(
+    parser_context_t *c, pd_identity_add_sub_t *m) {
+    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    CHECK_ERROR(_readData(c, &m->data))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_identity_rename_sub(
+    parser_context_t *c, pd_identity_rename_sub_t *m) {
+    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    CHECK_ERROR(_readData(c, &m->data))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_identity_remove_sub(
+    parser_context_t *c, pd_identity_remove_sub_t *m) {
+    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_identity_quit_sub(
+    parser_context_t *c, pd_identity_quit_sub_t *m) {
     return parser_ok;
 }
 
@@ -1146,6 +1200,25 @@ __Z_INLINE parser_error_t _readMethod_scheduler_cancel_named(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_after(
+    parser_context_t *c, pd_scheduler_schedule_after_t *m) {
+    CHECK_ERROR(_readBlockNumber(c, &m->after))
+    CHECK_ERROR(_readOptionPeriod(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority(c, &m->priority))
+    CHECK_ERROR(_readCall(c, &m->call))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_after(
+    parser_context_t *c, pd_scheduler_schedule_named_after_t *m) {
+    CHECK_ERROR(_readBytes(c, &m->id))
+    CHECK_ERROR(_readBlockNumber(c, &m->after))
+    CHECK_ERROR(_readOptionPeriod(c, &m->maybe_periodic))
+    CHECK_ERROR(_readPriority(c, &m->priority))
+    CHECK_ERROR(_readCall(c, &m->call))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_proxy_proxy(
     parser_context_t *c, pd_proxy_proxy_t *m) {
     CHECK_ERROR(_readAccountId(c, &m->real))
@@ -1202,7 +1275,7 @@ __Z_INLINE parser_error_t _readMethod_multisig_as_multi(
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
     CHECK_ERROR(_readOptionTimepoint(c, &m->maybe_timepoint))
-    CHECK_ERROR(_readBytes(c, &m->call))
+    CHECK_ERROR(_readOpaqueCall(c, &m->call))
     CHECK_ERROR(_readbool(c, &m->store_call))
     CHECK_ERROR(_readWeight(c, &m->max_weight))
     return parser_ok;
@@ -1265,6 +1338,12 @@ parser_error_t _readMethodBasic(
             break;
         case 9: /* module 0 call 9 */
             CHECK_ERROR(_readMethod_system_suicide(c, &method->system_suicide))
+            break;
+        case 256: /* module 1 call 0 */
+            CHECK_ERROR(_readMethod_babe_report_equivocation(c, &method->babe_report_equivocation))
+            break;
+        case 257: /* module 1 call 1 */
+            CHECK_ERROR(_readMethod_babe_report_equivocation_unsigned(c, &method->babe_report_equivocation_unsigned))
             break;
         case 512: /* module 2 call 0 */
             CHECK_ERROR(_readMethod_timestamp_set(c, &method->timestamp_set))
@@ -1382,6 +1461,9 @@ parser_error_t _readMethodBasic(
             break;
         case 2560: /* module 10 call 0 */
             CHECK_ERROR(_readMethod_grandpa_report_equivocation(c, &method->grandpa_report_equivocation))
+            break;
+        case 2561: /* module 10 call 1 */
+            CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned(c, &method->grandpa_report_equivocation_unsigned))
             break;
         case 2816: /* module 11 call 0 */
             CHECK_ERROR(_readMethod_imonline_heartbeat(c, &method->imonline_heartbeat))
@@ -1563,6 +1645,12 @@ parser_error_t _readMethodBasic(
         case 5121: /* module 20 call 1 */
             CHECK_ERROR(_readMethod_parachains_report_double_vote(c, &method->parachains_report_double_vote))
             break;
+        case 5122: /* module 20 call 2 */
+            CHECK_ERROR(_readMethod_parachains_transfer_to_parachain(c, &method->parachains_transfer_to_parachain))
+            break;
+        case 5123: /* module 20 call 3 */
+            CHECK_ERROR(_readMethod_parachains_send_xcmp_message(c, &method->parachains_send_xcmp_message))
+            break;
         case 5376: /* module 21 call 0 */
             CHECK_ERROR(_readMethod_attestations_more_attestations(c, &method->attestations_more_attestations))
             break;
@@ -1609,10 +1697,7 @@ parser_error_t _readMethodBasic(
             CHECK_ERROR(_readMethod_utility_batch(c, &method->utility_batch))
             break;
         case 6145: /* module 24 call 1 */
-            CHECK_ERROR(_readMethod_utility_as_sub(c, &method->utility_as_sub))
-            break;
-        case 6146: /* module 24 call 2 */
-            CHECK_ERROR(_readMethod_utility_as_limited_sub(c, &method->utility_as_limited_sub))
+            CHECK_ERROR(_readMethod_utility_as_derivative(c, &method->utility_as_derivative))
             break;
         case 6400: /* module 25 call 0 */
             CHECK_ERROR(_readMethod_identity_add_registrar(c, &method->identity_add_registrar))
@@ -1646,6 +1731,18 @@ parser_error_t _readMethodBasic(
             break;
         case 6410: /* module 25 call 10 */
             CHECK_ERROR(_readMethod_identity_kill_identity(c, &method->identity_kill_identity))
+            break;
+        case 6411: /* module 25 call 11 */
+            CHECK_ERROR(_readMethod_identity_add_sub(c, &method->identity_add_sub))
+            break;
+        case 6412: /* module 25 call 12 */
+            CHECK_ERROR(_readMethod_identity_rename_sub(c, &method->identity_rename_sub))
+            break;
+        case 6413: /* module 25 call 13 */
+            CHECK_ERROR(_readMethod_identity_remove_sub(c, &method->identity_remove_sub))
+            break;
+        case 6414: /* module 25 call 14 */
+            CHECK_ERROR(_readMethod_identity_quit_sub(c, &method->identity_quit_sub))
             break;
         case 6656: /* module 26 call 0 */
             CHECK_ERROR(_readMethod_society_bid(c, &method->society_bid))
@@ -1734,6 +1831,12 @@ parser_error_t _readMethodBasic(
         case 7427: /* module 29 call 3 */
             CHECK_ERROR(_readMethod_scheduler_cancel_named(c, &method->scheduler_cancel_named))
             break;
+        case 7428: /* module 29 call 4 */
+            CHECK_ERROR(_readMethod_scheduler_schedule_after(c, &method->scheduler_schedule_after))
+            break;
+        case 7429: /* module 29 call 5 */
+            CHECK_ERROR(_readMethod_scheduler_schedule_named_after(c, &method->scheduler_schedule_named_after))
+            break;
         case 7680: /* module 30 call 0 */
             CHECK_ERROR(_readMethod_proxy_proxy(c, &method->proxy_proxy))
             break;
@@ -1808,6 +1911,12 @@ parser_error_t _readMethod(
             break;
         case 9: /* module 0 call 9 */
             CHECK_ERROR(_readMethod_system_suicide(c, &method->basic.system_suicide))
+            break;
+        case 256: /* module 1 call 0 */
+            CHECK_ERROR(_readMethod_babe_report_equivocation(c, &method->basic.babe_report_equivocation))
+            break;
+        case 257: /* module 1 call 1 */
+            CHECK_ERROR(_readMethod_babe_report_equivocation_unsigned(c, &method->basic.babe_report_equivocation_unsigned))
             break;
         case 512: /* module 2 call 0 */
             CHECK_ERROR(_readMethod_timestamp_set(c, &method->basic.timestamp_set))
@@ -1925,6 +2034,9 @@ parser_error_t _readMethod(
             break;
         case 2560: /* module 10 call 0 */
             CHECK_ERROR(_readMethod_grandpa_report_equivocation(c, &method->basic.grandpa_report_equivocation))
+            break;
+        case 2561: /* module 10 call 1 */
+            CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned(c, &method->basic.grandpa_report_equivocation_unsigned))
             break;
         case 2816: /* module 11 call 0 */
             CHECK_ERROR(_readMethod_imonline_heartbeat(c, &method->basic.imonline_heartbeat))
@@ -2118,6 +2230,12 @@ parser_error_t _readMethod(
         case 5121: /* module 20 call 1 */
             CHECK_ERROR(_readMethod_parachains_report_double_vote(c, &method->basic.parachains_report_double_vote))
             break;
+        case 5122: /* module 20 call 2 */
+            CHECK_ERROR(_readMethod_parachains_transfer_to_parachain(c, &method->basic.parachains_transfer_to_parachain))
+            break;
+        case 5123: /* module 20 call 3 */
+            CHECK_ERROR(_readMethod_parachains_send_xcmp_message(c, &method->basic.parachains_send_xcmp_message))
+            break;
         case 5376: /* module 21 call 0 */
             CHECK_ERROR(_readMethod_attestations_more_attestations(c, &method->basic.attestations_more_attestations))
             break;
@@ -2164,10 +2282,7 @@ parser_error_t _readMethod(
             CHECK_ERROR(_readMethod_utility_batch(c, &method->basic.utility_batch))
             break;
         case 6145: /* module 24 call 1 */
-            CHECK_ERROR(_readMethod_utility_as_sub(c, &method->basic.utility_as_sub))
-            break;
-        case 6146: /* module 24 call 2 */
-            CHECK_ERROR(_readMethod_utility_as_limited_sub(c, &method->basic.utility_as_limited_sub))
+            CHECK_ERROR(_readMethod_utility_as_derivative(c, &method->basic.utility_as_derivative))
             break;
         case 6400: /* module 25 call 0 */
             CHECK_ERROR(_readMethod_identity_add_registrar(c, &method->basic.identity_add_registrar))
@@ -2201,6 +2316,18 @@ parser_error_t _readMethod(
             break;
         case 6410: /* module 25 call 10 */
             CHECK_ERROR(_readMethod_identity_kill_identity(c, &method->basic.identity_kill_identity))
+            break;
+        case 6411: /* module 25 call 11 */
+            CHECK_ERROR(_readMethod_identity_add_sub(c, &method->basic.identity_add_sub))
+            break;
+        case 6412: /* module 25 call 12 */
+            CHECK_ERROR(_readMethod_identity_rename_sub(c, &method->basic.identity_rename_sub))
+            break;
+        case 6413: /* module 25 call 13 */
+            CHECK_ERROR(_readMethod_identity_remove_sub(c, &method->basic.identity_remove_sub))
+            break;
+        case 6414: /* module 25 call 14 */
+            CHECK_ERROR(_readMethod_identity_quit_sub(c, &method->basic.identity_quit_sub))
             break;
         case 6656: /* module 26 call 0 */
             CHECK_ERROR(_readMethod_society_bid(c, &method->basic.society_bid))
@@ -2288,6 +2415,12 @@ parser_error_t _readMethod(
             break;
         case 7427: /* module 29 call 3 */
             CHECK_ERROR(_readMethod_scheduler_cancel_named(c, &method->basic.scheduler_cancel_named))
+            break;
+        case 7428: /* module 29 call 4 */
+            CHECK_ERROR(_readMethod_scheduler_schedule_after(c, &method->basic.scheduler_schedule_after))
+            break;
+        case 7429: /* module 29 call 5 */
+            CHECK_ERROR(_readMethod_scheduler_schedule_named_after(c, &method->basic.scheduler_schedule_named_after))
             break;
         case 7680: /* module 30 call 0 */
             CHECK_ERROR(_readMethod_proxy_proxy(c, &method->basic.proxy_proxy))
@@ -2387,6 +2520,8 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 7: /* module 0 call 7 */   return "Kill storage";
         case 8: /* module 0 call 8 */   return "Kill prefix";
         case 9: /* module 0 call 9 */   return "Suicide";
+        case 256: /* module 1 call 0 */   return "Report equivocation";
+        case 257: /* module 1 call 1 */   return "Report equivocation unsigned";
         case 512: /* module 2 call 0 */   return "Set";
         case 768: /* module 3 call 0 */   return "Claim";
         case 769: /* module 3 call 1 */   return "Transfer";
@@ -2426,6 +2561,7 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 2049: /* module 8 call 1 */   return "Purge keys";
         case 2304: /* module 9 call 0 */   return "Final hint";
         case 2560: /* module 10 call 0 */   return "Report equivocation";
+        case 2561: /* module 10 call 1 */   return "Report equivocation unsigned";
         case 2816: /* module 11 call 0 */   return "Heartbeat";
         case 3328: /* module 13 call 0 */   return "Propose";
         case 3329: /* module 13 call 1 */   return "Second";
@@ -2490,6 +2626,8 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 4868: /* module 19 call 4 */   return "Move claim";
         case 5120: /* module 20 call 0 */   return "Set heads";
         case 5121: /* module 20 call 1 */   return "Report double vote";
+        case 5122: /* module 20 call 2 */   return "Transfer to parachain";
+        case 5123: /* module 20 call 3 */   return "Send xcmp message";
         case 5376: /* module 21 call 0 */   return "More attestations";
         case 5632: /* module 22 call 0 */   return "New auction";
         case 5633: /* module 22 call 1 */   return "Bid";
@@ -2505,8 +2643,7 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 5893: /* module 23 call 5 */   return "Deregister parathread";
         case 5894: /* module 23 call 6 */   return "Swap";
         case 6144: /* module 24 call 0 */   return "Batch";
-        case 6145: /* module 24 call 1 */   return "As sub";
-        case 6146: /* module 24 call 2 */   return "As limited sub";
+        case 6145: /* module 24 call 1 */   return "As derivative";
         case 6400: /* module 25 call 0 */   return "Add registrar";
         case 6401: /* module 25 call 1 */   return "Set identity";
         case 6402: /* module 25 call 2 */   return "Set subs";
@@ -2518,6 +2655,10 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 6408: /* module 25 call 8 */   return "Set fields";
         case 6409: /* module 25 call 9 */   return "Provide judgement";
         case 6410: /* module 25 call 10 */   return "Kill identity";
+        case 6411: /* module 25 call 11 */   return "Add sub";
+        case 6412: /* module 25 call 12 */   return "Rename sub";
+        case 6413: /* module 25 call 13 */   return "Remove sub";
+        case 6414: /* module 25 call 14 */   return "Quit sub";
         case 6656: /* module 26 call 0 */   return "Bid";
         case 6657: /* module 26 call 1 */   return "Unbid";
         case 6658: /* module 26 call 2 */   return "Vouch";
@@ -2547,6 +2688,8 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 7425: /* module 29 call 1 */   return "Cancel";
         case 7426: /* module 29 call 2 */   return "Schedule named";
         case 7427: /* module 29 call 3 */   return "Cancel named";
+        case 7428: /* module 29 call 4 */   return "Schedule after";
+        case 7429: /* module 29 call 5 */   return "Schedule named after";
         case 7680: /* module 30 call 0 */   return "Proxy";
         case 7681: /* module 30 call 1 */   return "Add proxy";
         case 7682: /* module 30 call 2 */   return "Remove proxy";
@@ -2578,6 +2721,8 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 7: /* module 0 call 7 */ return 1;
         case 8: /* module 0 call 8 */ return 2;
         case 9: /* module 0 call 9 */ return 0;
+        case 256: /* module 1 call 0 */ return 2;
+        case 257: /* module 1 call 1 */ return 2;
         case 512: /* module 2 call 0 */ return 1;
         case 768: /* module 3 call 0 */ return 1;
         case 769: /* module 3 call 1 */ return 2;
@@ -2617,6 +2762,7 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 2049: /* module 8 call 1 */ return 0;
         case 2304: /* module 9 call 0 */ return 1;
         case 2560: /* module 10 call 0 */ return 2;
+        case 2561: /* module 10 call 1 */ return 2;
         case 2816: /* module 11 call 0 */ return 2;
         case 3328: /* module 13 call 0 */ return 2;
         case 3329: /* module 13 call 1 */ return 2;
@@ -2681,6 +2827,8 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 4868: /* module 19 call 4 */ return 3;
         case 5120: /* module 20 call 0 */ return 1;
         case 5121: /* module 20 call 1 */ return 1;
+        case 5122: /* module 20 call 2 */ return 3;
+        case 5123: /* module 20 call 3 */ return 2;
         case 5376: /* module 21 call 0 */ return 1;
         case 5632: /* module 22 call 0 */ return 2;
         case 5633: /* module 22 call 1 */ return 5;
@@ -2697,7 +2845,6 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 5894: /* module 23 call 6 */ return 1;
         case 6144: /* module 24 call 0 */ return 1;
         case 6145: /* module 24 call 1 */ return 2;
-        case 6146: /* module 24 call 2 */ return 2;
         case 6400: /* module 25 call 0 */ return 1;
         case 6401: /* module 25 call 1 */ return 1;
         case 6402: /* module 25 call 2 */ return 1;
@@ -2709,6 +2856,10 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 6408: /* module 25 call 8 */ return 2;
         case 6409: /* module 25 call 9 */ return 3;
         case 6410: /* module 25 call 10 */ return 1;
+        case 6411: /* module 25 call 11 */ return 2;
+        case 6412: /* module 25 call 12 */ return 2;
+        case 6413: /* module 25 call 13 */ return 1;
+        case 6414: /* module 25 call 14 */ return 0;
         case 6656: /* module 26 call 0 */ return 1;
         case 6657: /* module 26 call 1 */ return 1;
         case 6658: /* module 26 call 2 */ return 3;
@@ -2738,6 +2889,8 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 7425: /* module 29 call 1 */ return 2;
         case 7426: /* module 29 call 2 */ return 5;
         case 7427: /* module 29 call 3 */ return 1;
+        case 7428: /* module 29 call 4 */ return 4;
+        case 7429: /* module 29 call 5 */ return 5;
         case 7680: /* module 30 call 0 */ return 3;
         case 7681: /* module 30 call 1 */ return 2;
         case 7682: /* module 30 call 2 */ return 2;
@@ -2808,6 +2961,18 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
             }
         case 9: /* module 0 call 9 */
             switch(itemIdx) {
+                default: return NULL;
+            }
+        case 256: /* module 1 call 0 */
+            switch(itemIdx) {
+                case 0: return "Equivocation proof";
+                case 1: return "Key owner proof";
+                default: return NULL;
+            }
+        case 257: /* module 1 call 1 */
+            switch(itemIdx) {
+                case 0: return "Equivocation proof";
+                case 1: return "Key owner proof";
                 default: return NULL;
             }
         case 512: /* module 2 call 0 */
@@ -3021,6 +3186,12 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 default: return NULL;
             }
         case 2560: /* module 10 call 0 */
+            switch(itemIdx) {
+                case 0: return "Equivocation proof";
+                case 1: return "Key owner proof";
+                default: return NULL;
+            }
+        case 2561: /* module 10 call 1 */
             switch(itemIdx) {
                 case 0: return "Equivocation proof";
                 case 1: return "Key owner proof";
@@ -3389,6 +3560,19 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 case 0: return "Report";
                 default: return NULL;
             }
+        case 5122: /* module 20 call 2 */
+            switch(itemIdx) {
+                case 0: return "To";
+                case 1: return "Amount";
+                case 2: return "Remark";
+                default: return NULL;
+            }
+        case 5123: /* module 20 call 3 */
+            switch(itemIdx) {
+                case 0: return "To";
+                case 1: return "Msg";
+                default: return NULL;
+            }
         case 5376: /* module 21 call 0 */
             switch(itemIdx) {
                 case 0: return "More";
@@ -3488,12 +3672,6 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
                 case 1: return "Call";
                 default: return NULL;
             }
-        case 6146: /* module 24 call 2 */
-            switch(itemIdx) {
-                case 0: return "Index";
-                case 1: return "Call";
-                default: return NULL;
-            }
         case 6400: /* module 25 call 0 */
             switch(itemIdx) {
                 case 0: return "Account";
@@ -3552,6 +3730,27 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
         case 6410: /* module 25 call 10 */
             switch(itemIdx) {
                 case 0: return "Target";
+                default: return NULL;
+            }
+        case 6411: /* module 25 call 11 */
+            switch(itemIdx) {
+                case 0: return "Sub";
+                case 1: return "Data";
+                default: return NULL;
+            }
+        case 6412: /* module 25 call 12 */
+            switch(itemIdx) {
+                case 0: return "Sub";
+                case 1: return "Data";
+                default: return NULL;
+            }
+        case 6413: /* module 25 call 13 */
+            switch(itemIdx) {
+                case 0: return "Sub";
+                default: return NULL;
+            }
+        case 6414: /* module 25 call 14 */
+            switch(itemIdx) {
                 default: return NULL;
             }
         case 6656: /* module 26 call 0 */
@@ -3716,6 +3915,23 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
         case 7427: /* module 29 call 3 */
             switch(itemIdx) {
                 case 0: return "Id";
+                default: return NULL;
+            }
+        case 7428: /* module 29 call 4 */
+            switch(itemIdx) {
+                case 0: return "After";
+                case 1: return "Maybe periodic";
+                case 2: return "Priority";
+                case 3: return "Call";
+                default: return NULL;
+            }
+        case 7429: /* module 29 call 5 */
+            switch(itemIdx) {
+                case 0: return "Id";
+                case 1: return "After";
+                case 2: return "Maybe periodic";
+                case 3: return "Priority";
+                case 4: return "Call";
                 default: return NULL;
             }
         case 7680: /* module 30 call 0 */
@@ -3901,6 +4117,36 @@ parser_error_t _getMethod_ItemValue(
         }
         case 9: /* module 0 call 9 */
         switch(itemIdx) {
+            default:
+                return parser_no_data;
+        }
+        case 256: /* module 1 call 0 */
+        switch(itemIdx) {
+            case 0: /* babe_report_equivocation - equivocation_proof */;
+                return _toStringBabeEquivocationProof(
+                    &m->basic.babe_report_equivocation.equivocation_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* babe_report_equivocation - key_owner_proof */;
+                return _toStringKeyOwnerProof(
+                    &m->basic.babe_report_equivocation.key_owner_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 257: /* module 1 call 1 */
+        switch(itemIdx) {
+            case 0: /* babe_report_equivocation_unsigned - equivocation_proof */;
+                return _toStringBabeEquivocationProof(
+                    &m->basic.babe_report_equivocation_unsigned.equivocation_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* babe_report_equivocation_unsigned - key_owner_proof */;
+                return _toStringKeyOwnerProof(
+                    &m->basic.babe_report_equivocation_unsigned.key_owner_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
             default:
                 return parser_no_data;
         }
@@ -4394,6 +4640,21 @@ parser_error_t _getMethod_ItemValue(
             case 1: /* grandpa_report_equivocation - key_owner_proof */;
                 return _toStringKeyOwnerProof(
                     &m->basic.grandpa_report_equivocation.key_owner_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 2561: /* module 10 call 1 */
+        switch(itemIdx) {
+            case 0: /* grandpa_report_equivocation_unsigned - equivocation_proof */;
+                return _toStringGrandpaEquivocationProof(
+                    &m->basic.grandpa_report_equivocation_unsigned.equivocation_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* grandpa_report_equivocation_unsigned - key_owner_proof */;
+                return _toStringKeyOwnerProof(
+                    &m->basic.grandpa_report_equivocation_unsigned.key_owner_proof,
                     outValue, outValueLen,
                     pageIdx, pageCount);
             default:
@@ -5254,6 +5515,41 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
+        case 5122: /* module 20 call 2 */
+        switch(itemIdx) {
+            case 0: /* parachains_transfer_to_parachain - to */;
+                return _toStringParaId(
+                    &m->basic.parachains_transfer_to_parachain.to,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* parachains_transfer_to_parachain - amount */;
+                return _toStringBalance(
+                    &m->basic.parachains_transfer_to_parachain.amount,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 2: /* parachains_transfer_to_parachain - remark */;
+                return _toStringRemark(
+                    &m->basic.parachains_transfer_to_parachain.remark,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 5123: /* module 20 call 3 */
+        switch(itemIdx) {
+            case 0: /* parachains_send_xcmp_message - to */;
+                return _toStringParaId(
+                    &m->basic.parachains_send_xcmp_message.to,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* parachains_send_xcmp_message - msg */;
+                return _toStringBytes(
+                    &m->basic.parachains_send_xcmp_message.msg,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
         case 5376: /* module 21 call 0 */
         switch(itemIdx) {
             case 0: /* attestations_more_attestations - _more */;
@@ -5496,29 +5792,14 @@ parser_error_t _getMethod_ItemValue(
         }
         case 6145: /* module 24 call 1 */
         switch(itemIdx) {
-            case 0: /* utility_as_sub - index */;
+            case 0: /* utility_as_derivative - index */;
                 return _toStringu16(
-                    &m->basic.utility_as_sub.index,
+                    &m->basic.utility_as_derivative.index,
                     outValue, outValueLen,
                     pageIdx, pageCount);
-            case 1: /* utility_as_sub - call */;
+            case 1: /* utility_as_derivative - call */;
                 return _toStringCall(
-                    &m->basic.utility_as_sub.call,
-                    outValue, outValueLen,
-                    pageIdx, pageCount);
-            default:
-                return parser_no_data;
-        }
-        case 6146: /* module 24 call 2 */
-        switch(itemIdx) {
-            case 0: /* utility_as_limited_sub - index */;
-                return _toStringu16(
-                    &m->basic.utility_as_limited_sub.index,
-                    outValue, outValueLen,
-                    pageIdx, pageCount);
-            case 1: /* utility_as_limited_sub - call */;
-                return _toStringCall(
-                    &m->basic.utility_as_limited_sub.call,
+                    &m->basic.utility_as_derivative.call,
                     outValue, outValueLen,
                     pageIdx, pageCount);
             default:
@@ -5656,6 +5937,51 @@ parser_error_t _getMethod_ItemValue(
                     &m->basic.identity_kill_identity.target,
                     outValue, outValueLen,
                     pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 6411: /* module 25 call 11 */
+        switch(itemIdx) {
+            case 0: /* identity_add_sub - sub */;
+                return _toStringLookupSource(
+                    &m->basic.identity_add_sub.sub,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* identity_add_sub - data */;
+                return _toStringData(
+                    &m->basic.identity_add_sub.data,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 6412: /* module 25 call 12 */
+        switch(itemIdx) {
+            case 0: /* identity_rename_sub - sub */;
+                return _toStringLookupSource(
+                    &m->basic.identity_rename_sub.sub,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* identity_rename_sub - data */;
+                return _toStringData(
+                    &m->basic.identity_rename_sub.data,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 6413: /* module 25 call 13 */
+        switch(itemIdx) {
+            case 0: /* identity_remove_sub - sub */;
+                return _toStringLookupSource(
+                    &m->basic.identity_remove_sub.sub,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 6414: /* module 25 call 14 */
+        switch(itemIdx) {
             default:
                 return parser_no_data;
         }
@@ -6044,6 +6370,61 @@ parser_error_t _getMethod_ItemValue(
             default:
                 return parser_no_data;
         }
+        case 7428: /* module 29 call 4 */
+        switch(itemIdx) {
+            case 0: /* scheduler_schedule_after - after */;
+                return _toStringBlockNumber(
+                    &m->basic.scheduler_schedule_after.after,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* scheduler_schedule_after - maybe_periodic */;
+                return _toStringOptionPeriod(
+                    &m->basic.scheduler_schedule_after.maybe_periodic,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 2: /* scheduler_schedule_after - priority */;
+                return _toStringPriority(
+                    &m->basic.scheduler_schedule_after.priority,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 3: /* scheduler_schedule_after - call */;
+                return _toStringCall(
+                    &m->basic.scheduler_schedule_after.call,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 7429: /* module 29 call 5 */
+        switch(itemIdx) {
+            case 0: /* scheduler_schedule_named_after - id */;
+                return _toStringBytes(
+                    &m->basic.scheduler_schedule_named_after.id,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* scheduler_schedule_named_after - after */;
+                return _toStringBlockNumber(
+                    &m->basic.scheduler_schedule_named_after.after,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 2: /* scheduler_schedule_named_after - maybe_periodic */;
+                return _toStringOptionPeriod(
+                    &m->basic.scheduler_schedule_named_after.maybe_periodic,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 3: /* scheduler_schedule_named_after - priority */;
+                return _toStringPriority(
+                    &m->basic.scheduler_schedule_named_after.priority,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 4: /* scheduler_schedule_named_after - call */;
+                return _toStringCall(
+                    &m->basic.scheduler_schedule_named_after.call,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
         case 7680: /* module 30 call 0 */
         switch(itemIdx) {
             case 0: /* proxy_proxy - real */;
@@ -6177,7 +6558,7 @@ parser_error_t _getMethod_ItemValue(
                     outValue, outValueLen,
                     pageIdx, pageCount);
             case 3: /* multisig_as_multi - call */;
-                return _toStringBytes(
+                return _toStringOpaqueCall(
                     &m->basic.multisig_as_multi.call,
                     outValue, outValueLen,
                     pageIdx, pageCount);
