@@ -26,6 +26,7 @@ typedef struct {
 } allowlist_item_t;
 
 typedef struct {
+    uint32_t nonce;
     uint32_t len;
     uint8_t signature[64];  // Ed25519
 } allowlist_header_t;
