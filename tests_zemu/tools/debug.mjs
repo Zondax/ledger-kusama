@@ -73,7 +73,7 @@ async function debugScenario(sim, app) {
     let resp = await app.setAllowlistPubKey(keypair.publicKey);
     console.log(resp)
 
-    const allowlist = dummyAllowlist();
+    const allowlist = dummyAllowlist(0);
     console.log(`\n\n------------ Upload allowlist : ${allowlist.length} bytes`)
     resp = await app.uploadAllowlist(allowlist);
     console.log(resp);

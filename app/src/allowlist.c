@@ -104,6 +104,7 @@ bool allowlist_item_validate(const char *address) {
 void allowlist_calculate_digest(uint8_t *digest, const allowlist_t *list) {
     cx_blake2b_t ctx;
     cx_blake2b_init(&ctx, 256);
+    cx_hash(&ctx.header, 0, (uint8_t *) &list->header.nonce, sizeof(uint32_t), NULL, 0);
     cx_hash(&ctx.header, 0, (uint8_t *) &list->header.len, sizeof(uint32_t), NULL, 0);
     const uint8_t *data = (uint8_t *) PIC(list->items);
     const size_t dataLen = sizeof(allowlist_item_t) * list->header.len;
@@ -147,6 +148,13 @@ bool allowlist_list_validate(const uint8_t *new_list_buffer, size_t new_list_buf
         zemu_log_stack("allowlist: ERR unexpected size");
         return false;
     }
+
+    // If there is already a list, check that nonce is moving forward
+    if (allowlist_is_active() && new_list->header.nonce <= N_allowlist.header.nonce) {
+        zemu_log_stack("allowlist: ERR invalid nonce");
+        return false;
+    }
+
 
     zemu_log_stack("\n");
     // Hash allowlist (len + items)
