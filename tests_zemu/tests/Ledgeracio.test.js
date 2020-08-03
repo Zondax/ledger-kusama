@@ -126,10 +126,10 @@ describe('Basic checks', function () {
 
     test('create signed allowlist', async function () {
         const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
-        const allowList = dummyAllowlist()
+        const allowList = dummyAllowlist(0)
 
         console.log(allowList)
-        expect(allowList.length).toEqual(4 + 64 * 3)
+        expect(allowList.length).toEqual(4 + 4 + 64 * 3)
     });
 
     test('upload allowlist | no pubkey', async function () {
@@ -139,7 +139,7 @@ describe('Basic checks', function () {
             const app = newKusamaApp(sim.getTransport());
 
             console.log("\n\n------------ Upload allowlist")
-            const allowlist = dummyAllowlist();
+            const allowlist = dummyAllowlist(0);
             const resp = await app.uploadAllowlist(allowlist);
             console.log(resp);
 
@@ -162,8 +162,7 @@ describe('Basic checks', function () {
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");
 
-            const allowlist = dummyAllowlist();
-
+            let allowlist = dummyAllowlist(10);
             console.log(`\n\n------------ Upload allowlist : ${allowlist.length} bytes`)
             resp = await app.uploadAllowlist(allowlist);
             console.log(resp);
@@ -173,6 +172,19 @@ describe('Basic checks', function () {
 
             console.log("\n\n------------ Get allowlist hash")
             resp = await app.getAllowlistHash();
+            console.log(resp);
+            expect(resp.return_code).toEqual(0x9000);
+            expect(resp.error_message).toEqual("No errors");
+
+            console.log(`\n\n------------ Upload allowlist : Again`)
+            resp = await app.uploadAllowlist(allowlist);
+            console.log(resp);
+            expect(resp.return_code).toEqual(0x6400);
+            expect(resp.error_message).toEqual("Execution Error");
+
+            console.log(`\n\n------------ Upload allowlist : Again but change nonce`)
+            allowlist = dummyAllowlist(11);
+            resp = await app.uploadAllowlist(allowlist);
             console.log(resp);
             expect(resp.return_code).toEqual(0x9000);
             expect(resp.error_message).toEqual("No errors");

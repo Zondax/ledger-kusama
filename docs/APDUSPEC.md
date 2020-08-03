@@ -1,4 +1,4 @@
-# Polkadot App
+# Kusama/Polkadot App
 
 ## General structure
 
@@ -217,11 +217,12 @@ Packets/chunks contain data chunks that are described below
 
 ##### Allow List Structure
 
-| Field          | Type            | Content                     | Expected |
-| -------------- | --------------- | --------------------------- | -------- |
-| Signature      | bytes (64)      | Ed25519 Signature           |          |
-| Item Count (N) | bytes (4)       | Number of items in the list |          |
-| Item x N       | bytes (32) \* N | Pubkeys to allow            |          |
+| Field          | Type            | Content                         | Expected |
+| -------------- | --------------- | ------------------------------- | -------- |
+| Nonce          | bytes (4)       | Monotonically increasing number |          |
+| Item Count (N) | bytes (4)       | Number of items in the list     |          |
+| Signature      | bytes (64)      | Ed25519 Signature               |          |
+| Item x N       | bytes (32) \* N | Pubkeys to allow                |          |
 
 #### Response
 
