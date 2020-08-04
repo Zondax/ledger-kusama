@@ -39,9 +39,9 @@ $(info TESTS_ZEMU_JS_PACKAGE : $(TESTS_ZEMU_JS_PACKAGE))
 
 ifeq ($(USERID),1001)
 # TODO: Use podman inside circleci machines?
-DOCKER_IMAGE=zondax/builder-bolos-1001:latest
+DOCKER_IMAGE=zondax/builder-bolos-1001@sha256:2ce8f16b1e3face5464c538198e57a64340f664d932b3383d019f2636321f342
 else
-DOCKER_IMAGE=zondax/builder-bolos:latest
+DOCKER_IMAGE=zondax/builder-bolos@sha256:2ce8f16b1e3face5464c538198e57a64340f664d932b3383d019f2636321f342
 endif
 
 ifdef INTERACTIVE
