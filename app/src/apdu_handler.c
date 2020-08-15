@@ -24,6 +24,7 @@
 #include "view.h"
 #include "actions.h"
 #include "tx.h"
+#include "addr.h"
 #include "crypto.h"
 #include "coin.h"
 #include "zxmacros.h"
@@ -135,7 +136,7 @@ __Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *t
     G_io_apdu_buffer[0] = 0x01;
 #endif
 
-    #if defined(APP_RESTRICTED)
+#if defined(APP_RESTRICTED)
     G_io_apdu_buffer[0] = 0x02;
 #endif
 
@@ -166,7 +167,10 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
 
     if (requireConfirmation) {
         app_fill_address();
-        view_address_show(addr_ed22519);
+
+        view_review_init(addr_getItem, addr_getNumItems, app_reply_address, app_reject);
+        view_review_show();
+
         *flags |= IO_ASYNCH_REPLY;
         return;
     }
@@ -194,7 +198,8 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     }
 
     CHECK_APP_CANARY()
-    view_sign_show();
+    view_review_init(tx_getItem, tx_getNumItems, app_sign, app_reject);
+    view_review_show();
     *flags |= IO_ASYNCH_REPLY;
 }
 
@@ -225,6 +230,8 @@ __Z_INLINE void handleAllowlistSetMasterkey(volatile uint32_t *flags, volatile u
 
     zemu_log_stack("allowlist: try update pubkey");
 
+    // FIXME: Add user confirmation
+
     if (!allowlist_pubkey_set(G_io_apdu_buffer + OFFSET_DATA, 32)) {
         THROW(APDU_CODE_EXECUTION_ERROR);    // 6400
     }
@@ -254,6 +261,8 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
         THROW(APDU_CODE_OK);
     }
     CHECK_APP_CANARY()
+
+    // FIXME: Add user confirmation
 
     zemu_log_stack("allowlist: try update");
     if (!allowlist_upgrade(tx_get_buffer(), tx_get_buffer_length())) {
