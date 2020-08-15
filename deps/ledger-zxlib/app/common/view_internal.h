@@ -94,7 +94,7 @@ void h_paging_decrease();
 
 void view_review_show_impl();
 
-void h_accept(unsigned int _);
+void h_approve(unsigned int _);
 
 void h_reject(unsigned int _);
 

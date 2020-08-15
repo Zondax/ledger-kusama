@@ -55,7 +55,7 @@ const ux_menu_entry_t menu_main[] = {
 };
 
 const ux_menu_entry_t menu_decision_review[] = {
-    {NULL, h_accept, 0, NULL, "Approve", NULL, 0, 0},
+    {NULL, h_approve, 0, NULL, "Approve", NULL, 0, 0},
     {NULL, h_reject, 0, NULL, "Reject", NULL, 0, 0},
     UX_MENU_END
 };

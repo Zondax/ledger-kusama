@@ -36,7 +36,7 @@
 
 view_t viewdata;
 
-void h_accept(unsigned int _) {
+void h_approve(unsigned int _) {
     UNUSED(_);
     view_idle_show(0);
     UX_WAIT();
