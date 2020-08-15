@@ -40,14 +40,18 @@ void h_accept(unsigned int _) {
     UNUSED(_);
     view_idle_show(0);
     UX_WAIT();
-    viewdata.viewfuncAccept();
+    if (viewdata.viewfuncAccept != NULL) {
+        viewdata.viewfuncAccept();
+    }
 }
 
 void h_reject(unsigned int _) {
     UNUSED(_);
     view_idle_show(0);
     UX_WAIT();
-    viewdata.viewfuncReject();
+    if (viewdata.viewfuncReject != NULL) {
+        viewdata.viewfuncReject();
+    }
 }
 
 void h_error_accept(unsigned int _) {

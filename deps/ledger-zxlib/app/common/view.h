@@ -35,9 +35,9 @@ typedef zxerr_t (*viewfunc_getItem_t)(int8_t displayIdx,
                                       char *outVal, uint16_t outValLen,
                                       uint8_t pageIdx, uint8_t *pageCount);
 
-typedef zxerr_t (*viewfunc_accept_t)();
+typedef void (*viewfunc_accept_t)();
 
-typedef zxerr_t (*viewfunc_reject_t)();
+typedef void (*viewfunc_reject_t)();
 
 /// view_init (initializes UI)
 void view_init();
