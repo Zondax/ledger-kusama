@@ -13,6 +13,8 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 ********************************************************************************/
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
 
 #ifdef __cplusplus
@@ -339,6 +341,12 @@ typedef struct {
     pd_GrandpaEquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_grandpa_report_equivocation_unsigned_t;
+
+#define PD_CALL_GRANDPA_NOTE_STALLED 2
+typedef struct {
+    pd_BlockNumber_t delay;
+    pd_BlockNumber_t best_finalized_block_number;
+} pd_grandpa_note_stalled_t;
 
 #define PD_CALL_IMONLINE_HEARTBEAT 0
 typedef struct {
@@ -1176,6 +1184,7 @@ typedef union {
     pd_finalitytracker_final_hint_t finalitytracker_final_hint;
     pd_grandpa_report_equivocation_t grandpa_report_equivocation;
     pd_grandpa_report_equivocation_unsigned_t grandpa_report_equivocation_unsigned;
+    pd_grandpa_note_stalled_t grandpa_note_stalled;
     pd_imonline_heartbeat_t imonline_heartbeat;
     pd_democracy_propose_t democracy_propose;
     pd_democracy_second_t democracy_second;
@@ -1362,3 +1371,5 @@ typedef union {
 #ifdef __cplusplus
 }
 #endif
+
+#pragma clang diagnostic pop

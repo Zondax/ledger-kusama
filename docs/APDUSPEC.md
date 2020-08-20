@@ -1,4 +1,4 @@
-# Kusama/Polkadot App
+# Kusama App
 
 ## General structure
 

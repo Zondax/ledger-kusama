@@ -354,6 +354,13 @@ __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_grandpa_note_stalled(
+    parser_context_t *c, pd_grandpa_note_stalled_t *m) {
+    CHECK_ERROR(_readBlockNumber(c, &m->delay))
+    CHECK_ERROR(_readBlockNumber(c, &m->best_finalized_block_number))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_imonline_heartbeat(
     parser_context_t *c, pd_imonline_heartbeat_t *m) {
     CHECK_ERROR(_readHeartbeat(c, &m->heartbeat))
@@ -1465,6 +1472,9 @@ parser_error_t _readMethodBasic(
         case 2561: /* module 10 call 1 */
             CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned(c, &method->grandpa_report_equivocation_unsigned))
             break;
+        case 2562: /* module 10 call 2 */
+            CHECK_ERROR(_readMethod_grandpa_note_stalled(c, &method->grandpa_note_stalled))
+            break;
         case 2816: /* module 11 call 0 */
             CHECK_ERROR(_readMethod_imonline_heartbeat(c, &method->imonline_heartbeat))
             break;
@@ -2038,6 +2048,9 @@ parser_error_t _readMethod(
         case 2561: /* module 10 call 1 */
             CHECK_ERROR(_readMethod_grandpa_report_equivocation_unsigned(c, &method->basic.grandpa_report_equivocation_unsigned))
             break;
+        case 2562: /* module 10 call 2 */
+            CHECK_ERROR(_readMethod_grandpa_note_stalled(c, &method->basic.grandpa_note_stalled))
+            break;
         case 2816: /* module 11 call 0 */
             CHECK_ERROR(_readMethod_imonline_heartbeat(c, &method->basic.imonline_heartbeat))
             break;
@@ -2562,6 +2575,7 @@ const char * _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx) {
         case 2304: /* module 9 call 0 */   return "Final hint";
         case 2560: /* module 10 call 0 */   return "Report equivocation";
         case 2561: /* module 10 call 1 */   return "Report equivocation unsigned";
+        case 2562: /* module 10 call 2 */   return "Note stalled";
         case 2816: /* module 11 call 0 */   return "Heartbeat";
         case 3328: /* module 13 call 0 */   return "Propose";
         case 3329: /* module 13 call 1 */   return "Second";
@@ -2763,6 +2777,7 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t *met
         case 2304: /* module 9 call 0 */ return 1;
         case 2560: /* module 10 call 0 */ return 2;
         case 2561: /* module 10 call 1 */ return 2;
+        case 2562: /* module 10 call 2 */ return 2;
         case 2816: /* module 11 call 0 */ return 2;
         case 3328: /* module 13 call 0 */ return 2;
         case 3329: /* module 13 call 1 */ return 2;
@@ -3195,6 +3210,12 @@ const char * _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
             switch(itemIdx) {
                 case 0: return "Equivocation proof";
                 case 1: return "Key owner proof";
+                default: return NULL;
+            }
+        case 2562: /* module 10 call 2 */
+            switch(itemIdx) {
+                case 0: return "Delay";
+                case 1: return "Best finalized block number";
                 default: return NULL;
             }
         case 2816: /* module 11 call 0 */
@@ -4655,6 +4676,21 @@ parser_error_t _getMethod_ItemValue(
             case 1: /* grandpa_report_equivocation_unsigned - key_owner_proof */;
                 return _toStringKeyOwnerProof(
                     &m->basic.grandpa_report_equivocation_unsigned.key_owner_proof,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            default:
+                return parser_no_data;
+        }
+        case 2562: /* module 10 call 2 */
+        switch(itemIdx) {
+            case 0: /* grandpa_note_stalled - delay */;
+                return _toStringBlockNumber(
+                    &m->basic.grandpa_note_stalled.delay,
+                    outValue, outValueLen,
+                    pageIdx, pageCount);
+            case 1: /* grandpa_note_stalled - best_finalized_block_number */;
+                return _toStringBlockNumber(
+                    &m->basic.grandpa_note_stalled.best_finalized_block_number,
                     outValue, outValueLen,
                     pageIdx, pageCount);
             default:
