@@ -37,7 +37,7 @@ typedef enum {
 // Coin Specific
 #define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_KUSAMA
 #define SUPPORTED_TX_VERSION                LEDGER_MAJOR_VERSION
-#define SUPPORTED_SPEC_VERSION              LEDGER_MINOR_VERSION
+#define SUPPORTED_SPEC_VERSION              (2000+LEDGER_MINOR_VERSION)
 #define SUPPORTED_MINIMUM_SPEC_VERSION      2008
 
 #define COIN_AMOUNT_DECIMAL_PLACES          12
