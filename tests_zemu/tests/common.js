@@ -5,8 +5,8 @@ export const TESTING_ALLOWLIST_SEED = "00000000000000000000000000000000000000000
 
 export function dummyAllowlist(nonce) {
     const addresses = [
-        "CyNP3N6Xrg7qMVLBX3bqJry9SENkEnwzYoHCv8E7QcJr4z8",
-        "J7wUqKjcKUu1UbiSR5VR9eB2rMmNpQyBNePAvcNhyXxjoU2",
+        "GpbHwwUMWkyCtfRbJprLtSUZAF2E8pqiPSCaqkwX67mCsxB",
+        "Eexsymcsxq3MDb9f9wwCTHn8d73wsk7EXiqHW1QJesM2X3t",
     ]
 
     // Prepare len field
