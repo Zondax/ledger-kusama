@@ -214,10 +214,8 @@ describe('Basic checks', function () {
             await sim.clickBoth();
             await sim.clickLeft();
 
-            // Try to sign a nomination not included in the allowlist
-            // This nomination targets CyNP3N6Xrg7qMVLBX3bqJry9SENkEnwzYoHCv8E7QcJr4z8
-            // This nomination targets J7wUqKjcKUu1UbiSR5VR9eB2rMmNpQyBNePAvcNhyXxjoU2
-            let nominate_tx1 = "0605081194483c0e55b33267013ba1f18d00db6dffc3cf6a14215509b96e70a13a0b48f54ad635bff9901c12a3bdfbe13c34e5cd58c689c1858da77e996106eb052a82d503910133158139ae28a3dfaac5fe1560a5e9e05ce307000002000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            // Try to sign a nomination included in the allowlist
+            let nominate_tx1 = "060508bbd3793ebbb4830ad98e1c97ba3674f793e124ce64e5d9cdabd7813b574c78f45c03385b6f32c9a5861545a20a4de1b2c88a0f206d38e5a0b77386516cfa0a43d5038d2403d2029649e707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
             const txBlob1 = Buffer.from(nominate_tx1, "hex");
             const signatureResponse1 = app.sign(0x80000000, 0x80000000, 0x80000000, txBlob1);
             await Zemu.sleep(1000);
@@ -233,8 +231,8 @@ describe('Basic checks', function () {
             console.log("Try an address that is not allowed")
 
             // Now try a nominations that is not allowed
-            // GZavqGwCkoYGUTHwTofXD6ptnDYCDdDvDbdky3HhRUZpyF1
-            const nominate_tx2 = "060504b0619129f1f57df3b96c89be87cd152c35a3178b94a91d4407610dd6aff925f4d503ae11030000e307000002000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            // HDQUMvHtV4kPXkrgp7PoDVGCLEc9qSdwwLWJLzFnsGrKAiM
+            const nominate_tx2 = "060504cd39b168d05b1b00cc4cc572c57c57ecad0b6da84b31a28c745c9283184b23c1d503ae11030033158139ae28a3dfaac5fe1560a5e9e05ce707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
             const txBlob2 = Buffer.from(nominate_tx2, "hex");
             const signature2 = await app.sign(0x80000000, 0x80000000, 0x80000000, txBlob2);
             await Zemu.sleep(1000);

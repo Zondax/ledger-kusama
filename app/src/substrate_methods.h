@@ -44,10 +44,10 @@ extern "C" {
 #define PD_CALL_TECHNICALMEMBERSHIP 17
 #define PD_CALL_TREASURY 18
 #define PD_CALL_CLAIMS 19
-#define PD_CALL_PARACHAINS 20
-#define PD_CALL_ATTESTATIONS 21
-#define PD_CALL_SLOTS 22
-#define PD_CALL_REGISTRAR 23
+#define PD_CALL_DUMMYPARACHAINS 20
+#define PD_CALL_DUMMYATTESTATIONS 21
+#define PD_CALL_DUMMYSLOTS 22
+#define PD_CALL_DUMMYREGISTRAR 23
 #define PD_CALL_UTILITY 24
 #define PD_CALL_IDENTITY 25
 #define PD_CALL_SOCIETY 26
@@ -675,117 +675,6 @@ typedef struct {
     pd_OptionAccountId_t maybe_preclaim;
 } pd_claims_move_claim_t;
 
-#define PD_CALL_PARACHAINS_SET_HEADS 0
-typedef struct {
-    pd_VecAttestedCandidate_t heads;
-} pd_parachains_set_heads_t;
-
-#define PD_CALL_PARACHAINS_REPORT_DOUBLE_VOTE 1
-typedef struct {
-    pd_DoubleVoteReport_t report;
-} pd_parachains_report_double_vote_t;
-
-#define PD_CALL_PARACHAINS_TRANSFER_TO_PARACHAIN 2
-typedef struct {
-    pd_ParaId_t to;
-    pd_Balance_t amount;
-    pd_Remark_t remark;
-} pd_parachains_transfer_to_parachain_t;
-
-#define PD_CALL_PARACHAINS_SEND_XCMP_MESSAGE 3
-typedef struct {
-    pd_ParaId_t to;
-    pd_Bytes_t msg;
-} pd_parachains_send_xcmp_message_t;
-
-#define PD_CALL_ATTESTATIONS_MORE_ATTESTATIONS 0
-typedef struct {
-    pd_MoreAttestations_t _more;
-} pd_attestations_more_attestations_t;
-
-#define PD_CALL_SLOTS_NEW_AUCTION 0
-typedef struct {
-    pd_CompactBlockNumber_t duration;
-    pd_CompactLeasePeriodOf_t lease_period_index;
-} pd_slots_new_auction_t;
-
-#define PD_CALL_SLOTS_BID 1
-typedef struct {
-    pd_CompactSubId_t sub;
-    pd_CompactAuctionIndex_t auction_index;
-    pd_CompactLeasePeriodOf_t first_slot;
-    pd_CompactLeasePeriodOf_t last_slot;
-    pd_CompactBalanceOf_t amount;
-} pd_slots_bid_t;
-
-#define PD_CALL_SLOTS_BID_RENEW 2
-typedef struct {
-    pd_CompactAuctionIndex_t auction_index;
-    pd_CompactLeasePeriodOf_t first_slot;
-    pd_CompactLeasePeriodOf_t last_slot;
-    pd_CompactBalanceOf_t amount;
-} pd_slots_bid_renew_t;
-
-#define PD_CALL_SLOTS_SET_OFFBOARDING 3
-typedef struct {
-    pd_LookupSource_t dest;
-} pd_slots_set_offboarding_t;
-
-#define PD_CALL_SLOTS_FIX_DEPLOY_DATA 4
-typedef struct {
-    pd_CompactSubId_t sub;
-    pd_CompactParaId_t para_id;
-    pd_Hash_t code_hash;
-    pd_u32_t code_size;
-    pd_HeadData_t initial_head_data;
-} pd_slots_fix_deploy_data_t;
-
-#define PD_CALL_SLOTS_ELABORATE_DEPLOY_DATA 5
-typedef struct {
-    pd_CompactParaId_t para_id;
-    pd_ValidationCode_t code;
-} pd_slots_elaborate_deploy_data_t;
-
-#define PD_CALL_REGISTRAR_REGISTER_PARA 0
-typedef struct {
-    pd_CompactParaId_t id;
-    pd_ParaInfo_t info;
-    pd_ValidationCode_t code;
-    pd_HeadData_t initial_head_data;
-} pd_registrar_register_para_t;
-
-#define PD_CALL_REGISTRAR_DEREGISTER_PARA 1
-typedef struct {
-    pd_CompactParaId_t id;
-} pd_registrar_deregister_para_t;
-
-#define PD_CALL_REGISTRAR_SET_THREAD_COUNT 2
-typedef struct {
-    pd_u32_t count;
-} pd_registrar_set_thread_count_t;
-
-#define PD_CALL_REGISTRAR_REGISTER_PARATHREAD 3
-typedef struct {
-    pd_ValidationCode_t code;
-    pd_HeadData_t initial_head_data;
-} pd_registrar_register_parathread_t;
-
-#define PD_CALL_REGISTRAR_SELECT_PARATHREAD 4
-typedef struct {
-    pd_CompactParaId_t _id;
-    pd_CollatorId_t _collator;
-    pd_Hash_t _head_hash;
-} pd_registrar_select_parathread_t;
-
-#define PD_CALL_REGISTRAR_DEREGISTER_PARATHREAD 5
-typedef struct {
-} pd_registrar_deregister_parathread_t;
-
-#define PD_CALL_REGISTRAR_SWAP 6
-typedef struct {
-    pd_CompactParaId_t other;
-} pd_registrar_swap_t;
-
 #define PD_CALL_UTILITY_BATCH 0
 typedef struct {
     pd_VecCall_t calls;
@@ -1068,14 +957,16 @@ typedef struct {
 
 #define PD_CALL_PROXY_ADD_PROXY 1
 typedef struct {
-    pd_AccountId_t proxy;
+    pd_AccountId_t delegate;
     pd_ProxyType_t proxy_type;
+    pd_BlockNumber_t delay;
 } pd_proxy_add_proxy_t;
 
 #define PD_CALL_PROXY_REMOVE_PROXY 2
 typedef struct {
-    pd_AccountId_t proxy;
+    pd_AccountId_t delegate;
     pd_ProxyType_t proxy_type;
+    pd_BlockNumber_t delay;
 } pd_proxy_remove_proxy_t;
 
 #define PD_CALL_PROXY_REMOVE_PROXIES 3
@@ -1085,6 +976,7 @@ typedef struct {
 #define PD_CALL_PROXY_ANONYMOUS 4
 typedef struct {
     pd_ProxyType_t proxy_type;
+    pd_BlockNumber_t delay;
     pd_u16_t index;
 } pd_proxy_anonymous_t;
 
@@ -1096,6 +988,32 @@ typedef struct {
     pd_CompactBlockNumber_t height;
     pd_Compactu32_t ext_index;
 } pd_proxy_kill_anonymous_t;
+
+#define PD_CALL_PROXY_ANNOUNCE 6
+typedef struct {
+    pd_AccountId_t real;
+    pd_CallHashOf_t call_hash;
+} pd_proxy_announce_t;
+
+#define PD_CALL_PROXY_REMOVE_ANNOUNCEMENT 7
+typedef struct {
+    pd_AccountId_t real;
+    pd_CallHashOf_t call_hash;
+} pd_proxy_remove_announcement_t;
+
+#define PD_CALL_PROXY_REJECT_ANNOUNCEMENT 8
+typedef struct {
+    pd_AccountId_t delegate;
+    pd_CallHashOf_t call_hash;
+} pd_proxy_reject_announcement_t;
+
+#define PD_CALL_PROXY_PROXY_ANNOUNCED 9
+typedef struct {
+    pd_AccountId_t delegate;
+    pd_AccountId_t real;
+    pd_OptionProxyType_t force_proxy_type;
+    pd_Call_t call;
+} pd_proxy_proxy_announced_t;
 
 #define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1 0
 typedef struct {
@@ -1243,24 +1161,6 @@ typedef union {
     pd_claims_claim_attest_t claims_claim_attest;
     pd_claims_attest_t claims_attest;
     pd_claims_move_claim_t claims_move_claim;
-    pd_parachains_set_heads_t parachains_set_heads;
-    pd_parachains_report_double_vote_t parachains_report_double_vote;
-    pd_parachains_transfer_to_parachain_t parachains_transfer_to_parachain;
-    pd_parachains_send_xcmp_message_t parachains_send_xcmp_message;
-    pd_attestations_more_attestations_t attestations_more_attestations;
-    pd_slots_new_auction_t slots_new_auction;
-    pd_slots_bid_t slots_bid;
-    pd_slots_bid_renew_t slots_bid_renew;
-    pd_slots_set_offboarding_t slots_set_offboarding;
-    pd_slots_fix_deploy_data_t slots_fix_deploy_data;
-    pd_slots_elaborate_deploy_data_t slots_elaborate_deploy_data;
-    pd_registrar_register_para_t registrar_register_para;
-    pd_registrar_deregister_para_t registrar_deregister_para;
-    pd_registrar_set_thread_count_t registrar_set_thread_count;
-    pd_registrar_register_parathread_t registrar_register_parathread;
-    pd_registrar_select_parathread_t registrar_select_parathread;
-    pd_registrar_deregister_parathread_t registrar_deregister_parathread;
-    pd_registrar_swap_t registrar_swap;
     pd_utility_batch_t utility_batch;
     pd_utility_as_derivative_t utility_as_derivative;
     pd_identity_add_registrar_t identity_add_registrar;
@@ -1315,6 +1215,10 @@ typedef union {
     pd_proxy_remove_proxies_t proxy_remove_proxies;
     pd_proxy_anonymous_t proxy_anonymous;
     pd_proxy_kill_anonymous_t proxy_kill_anonymous;
+    pd_proxy_announce_t proxy_announce;
+    pd_proxy_remove_announcement_t proxy_remove_announcement;
+    pd_proxy_reject_announcement_t proxy_reject_announcement;
+    pd_proxy_proxy_announced_t proxy_proxy_announced;
     pd_multisig_as_multi_threshold_1_t multisig_as_multi_threshold_1;
     pd_multisig_as_multi_t multisig_as_multi;
     pd_multisig_approve_as_multi_t multisig_approve_as_multi;
