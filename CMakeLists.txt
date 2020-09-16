@@ -125,6 +125,19 @@ target_include_directories(app_lib PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/common
         )
 
+file(GLOB_RECURSE MINI_SODIUM_SRC
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/core_ed25519.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/core_ristretto255.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/ref10/ed25519_ref10.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/sodium/utils.c
+        )
+
+add_library(mini_sodium STATIC ${MINI_SODIUM_SRC})
+target_include_directories(mini_sodium PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/include/sodium
+        )
+
 ##############################################################
 ##############################################################
 #  Tests
@@ -144,6 +157,7 @@ target_include_directories(unittests PRIVATE
 target_link_libraries(unittests PRIVATE
         gtest_main
         app_lib
+        mini_sodium
         CONAN_PKG::fmt
         CONAN_PKG::jsoncpp)
 
