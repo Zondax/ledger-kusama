@@ -15,6 +15,7 @@
 ********************************************************************************/
 
 #include "gmock/gmock.h"
+#include "crypto_scalarmult_ristretto255.h"
 #include "crypto_core_ristretto255.h"
 
 #include <iostream>
@@ -32,4 +33,9 @@ TEST(SODIUM, crypto_core_ristretto255_is_valid_point) {
 
     parseHexString(p, sizeof(p), badPoint);
     EXPECT_FALSE(crypto_core_ristretto255_is_valid_point(p));
+
+    crypto_core_ristretto255_scalar_reduce(p,p);
+    unsigned char gr[crypto_core_ristretto255_BYTES];
+
+    crypto_scalarmult_ristretto255_base(gr,p);
 }
