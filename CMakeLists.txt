@@ -129,6 +129,7 @@ file(GLOB_RECURSE MINI_SODIUM_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/core_ed25519.c
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/core_ristretto255.c
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_core/ed25519/ref10/ed25519_ref10.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/crypto_scalarmult/ref10/scalarmult_ristretto255_ref10.c
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/libsodium/src/libsodium/sodium/utils.c
         )
 
