@@ -26,12 +26,14 @@ extern crate core;
 
 fn debug(_msg: &str) {}
 
-use crate::bolos::c_zemu_log_stack;
+use crate::bolos::*;
 use core::convert::TryInto;
 use core::mem;
 use core::panic::PanicInfo;
 use core::slice::{from_raw_parts, from_raw_parts_mut};
 use schnorrkel::{PublicKey, SecretKey};
+use merlin::Transcript;
+use curve25519_dalek::scalar::Scalar;
 
 #[cfg(not(test))]
 #[panic_handler]
@@ -47,12 +49,15 @@ pub extern "C" fn get_sr25519_pk(sk_ed25519_expanded_ptr: *const u8, pk_sr25519_
     let pk_sr25519 = unsafe { from_raw_parts_mut(pk_sr25519_ptr, 32) };
 
     let secret: SecretKey = SecretKey::from_ed25519_bytes(&sk_ed25519_expanded[..]).unwrap();
+
     c_zemu_log_stack(b"from_ed25519_bytes\x00".as_ref());
 
-    let public: PublicKey = secret.to_public();
+    let public = libsodium_ristretto_scalarmult_base(&secret.to_bytes()[0..32]);
+
+    //let public: PublicKey = secret.to_public();
     c_zemu_log_stack(b"secret.to_public\x00".as_ref());
 
-    pk_sr25519.copy_from_slice(&public.to_bytes())
+    pk_sr25519.copy_from_slice(&public)
 }
 
 #[cfg(test)]
@@ -60,6 +65,8 @@ mod tests {
     use crate::*;
     use log::{debug, info};
     use schnorrkel::{Keypair, PublicKey, SecretKey, Signature};
+
+    use curve25519_dalek::scalar::Scalar;
 
     fn init_logging() {
         let _ = env_logger::builder().is_test(true).try_init();

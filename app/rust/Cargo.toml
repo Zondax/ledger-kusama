@@ -11,6 +11,12 @@ crate-type = ["staticlib"]
 
 [dependencies]
 rand={ version = "0.7.3", default-features = false}
+merlin = {version = "2.0.0", default-features=false}
+
+[dependencies.curve25519-dalek]
+version = "3.0.0"
+default-features = false
+features=["u32_backend"]
 
 [dependencies.schnorrkel]
 version = "0.9.1"

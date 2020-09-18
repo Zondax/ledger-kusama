@@ -15,9 +15,15 @@
 ********************************************************************************/
 //! Rust interfaces to Ledger SDK APIs.
 
+#[cfg(test)]
+use curve25519_dalek::constants::RISTRETTO_BASEPOINT_POINT;
+use curve25519_dalek::scalar::Scalar;
+
+
 extern "C" {
     fn zemu_log_stack(buffer: *const u8);
     fn check_app_canary();
+    fn c_ristretto_scalarmult_base(scalar: *const u8, result: *mut u8);
 }
 
 #[cfg(not(test))]
@@ -29,4 +35,22 @@ pub fn c_zemu_log_stack(s: &[u8]) {}
 
 pub fn c_check_app_canary() {
     unsafe { check_app_canary() }
+}
+
+#[cfg(not(test))]
+pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8;32]{
+    let mut result = [0u8;32];
+    unsafe {
+        c_ristretto_scalarmult_base(scalar.as_ptr(),result.as_mut_ptr());
+    }
+    result
+}
+
+#[cfg(test)]
+pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8;32] {
+    let mut scalarbytes = [0u8; 32];
+    scalarbytes.copy_from_slice(&scalar);
+    let x = Scalar::from_bits(scalarbytes);
+    let pubkey = x * RISTRETTO_BASEPOINT_POINT;
+    pubkey.compress().to_bytes()
 }

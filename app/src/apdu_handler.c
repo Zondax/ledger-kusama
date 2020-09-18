@@ -295,19 +295,6 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 
 #if defined(APP_TESTING)
 #include "rslib.h"
-#include <hexutils.h>
-#include "crypto_scalarmult_ristretto255.h"
-#include "crypto_core_ristretto255.h"
-
-void divide_by_cofactor(uint8_t *key){
-    uint8_t low = 0;
-    for(int i = 31; i >= 0; i--){
-        uint8_t r = key[i] & 0x7;
-        key[i] >>=3;
-        key[i] += low;
-        low = r << 5;
-    }
-}
 
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     uint8_t input[64];
@@ -321,16 +308,8 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5,
             0x06, 0x07};
 
-    divide_by_cofactor(skbytes);
 
-    unsigned char pkrs[crypto_core_ristretto255_BYTES];
-
-    crypto_scalarmult_ristretto255_base(pkrs,skbytes);
-
-    memcpy(G_io_apdu_buffer, pkrs,32);
-
-    zemu_log("get_sr25519_pk back\n");
-    CHECK_APP_CANARY();
+    get_sr25519_pk(skbytes, G_io_apdu_buffer);
 
     *tx = 32;
     THROW(APDU_CODE_OK);
