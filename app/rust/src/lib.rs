@@ -32,7 +32,7 @@ use core::mem;
 use core::panic::PanicInfo;
 use core::slice::{from_raw_parts, from_raw_parts_mut};
 use curve25519_dalek::scalar::Scalar;
-use merlin::Transcript;
+use merlin::{Transcript, TranscriptRngBuilder, TranscriptRng};
 use schnorrkel::context::SigningTranscript;
 use schnorrkel::{PublicKey, SecretKey};
 
@@ -52,14 +52,14 @@ fn signtranscript_setup(context: &[u8], message: &[u8]) -> Transcript {
 }
 
 #[inline(never)]
-fn write_R(x: &[u8;32], tr: &mut Transcript, signature: &mut [u8]){
+fn write_R(x: &[u8; 32], tr: &mut Transcript, signature: &mut [u8]) {
     let R = libsodium_ristretto_scalarmult_base(x);
     tr.append_message(b"sign:R", &R); //R
     signature[0..32].copy_from_slice(&R);
 }
 
 #[inline(never)]
-fn mult_with_secret(k: &mut Scalar, sk: &[u8]){
+fn mult_with_secret(k: &mut Scalar, sk: &[u8]) {
     let mut skbytes = [0u8; 32];
     skbytes.copy_from_slice(&sk[0..32]);
     let s = Scalar::from_bits(skbytes);
@@ -67,20 +67,28 @@ fn mult_with_secret(k: &mut Scalar, sk: &[u8]){
 }
 
 #[inline(never)]
-fn add_witness(k: &mut Scalar, x: [u8;32]) -> [u8;32]{
+fn add_witness(k: &mut Scalar, x: [u8; 32]) -> [u8; 32] {
     let r = Scalar::from_bits(x);
     *k = *k + r;
     k.to_bytes()
 }
 
 #[inline(never)]
-fn get_challenge_scalar(tr: &mut Transcript) -> Scalar{
+fn get_challenge_scalar(tr: &mut Transcript) -> Scalar {
     let mut kbytes = [0u8; 64];
     tr.challenge_bytes(b"sign:c", &mut kbytes);
     Scalar::from_bytes_mod_order_wide(&kbytes)
 }
 
-//the signing function assumes as input a ristretto key, not a ed25519 key!
+#[inline(never)]
+fn get_witness_bytes(tr: &mut Transcript, nonce_bytes: &[u8]) -> [u8;32]{
+    c_zemu_log_stack(b"witness_bytes\x00".as_ref());
+    let mut x = [0u8; 32];
+    tr.witness_bytes_rng(b"witness-bytes",&mut x,&[nonce_bytes],Trng);
+    x
+}
+
+//the signing function assumes as input a ristretto secret key, not a ed25519 secret key!
 #[no_mangle]
 pub extern "C" fn sign_sr25519(
     sk_ristretto_expanded_ptr: *const u8,
@@ -92,7 +100,8 @@ pub extern "C" fn sign_sr25519(
 ) {
     c_zemu_log_stack(b"sign_sr25519\x00".as_ref());
 
-    let sk_ristretto_expanded = unsafe { from_raw_parts(sk_ristretto_expanded_ptr as *const u8, 64) };
+    let sk_ristretto_expanded =
+        unsafe { from_raw_parts(sk_ristretto_expanded_ptr as *const u8, 64) };
     let context = unsafe { from_raw_parts(context_ptr as *const u8, context_len) };
     let message = unsafe { from_raw_parts(msg_ptr as *const u8, msg_len) };
     let signature = unsafe { from_raw_parts_mut(sig_ptr, 64) };
@@ -106,16 +115,16 @@ pub extern "C" fn sign_sr25519(
         signtranscript.append_message(b"sign:pk", &public); //commitpoint: pk
     }
 
-    let x: [u8; 32] = [0xaa; 32]; //fixme
+    let x = get_witness_bytes(&mut signtranscript, &sk_ristretto_expanded[32..]);
 
-    write_R(&x,&mut signtranscript,signature);
+
+    //signtranscript.witness_bytes_rng(b"witness-bytes",&mut x,&[&sk_ristretto_expanded[32..]],Trng);
+    write_R(&x, &mut signtranscript, signature);
 
     let mut k = get_challenge_scalar(&mut signtranscript);
     mult_with_secret(&mut k, sk_ristretto_expanded);
     signature[32..].copy_from_slice(&add_witness(&mut k, x));
-
     signature[63] |= 128;
-
 }
 
 #[no_mangle]
@@ -160,7 +169,7 @@ mod tests {
             04, 0x5, 0x06, 0x07,
         ];
 
-        let mut pk = [0u8;32];
+        let mut pk = [0u8; 32];
 
         get_sr25519_pk(sk_ed25519_expanded.as_mut_ptr(), pk.as_mut_ptr());
 
