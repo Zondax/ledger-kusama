@@ -311,15 +311,15 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             04, 0x5, 0x06, 0x07};
 
     uint8_t context[4] = {103, 111, 111, 100};
-    uint8_t msg[8] = {116, 101, 115, 116, 32, 109, 101, 115, 115, 97, 103, 101};
+    uint8_t msg[12] = {116, 101, 115, 116, 32, 109, 101, 115, 115, 97, 103, 101};
 
 
     get_sr25519_pk(skbytes, pubkey);
 
 
-    sign_sr25519(skbytes, context, sizeof(context), msg, sizeof(msg), G_io_apdu_buffer);
+    sign_sr25519(skbytes, context, sizeof(context), msg, sizeof(msg), G_io_apdu_buffer,G_io_apdu_buffer+32);
 
-    *tx = 32;
+    *tx = 64;
     THROW(APDU_CODE_OK);
 }
 #endif

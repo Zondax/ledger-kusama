@@ -79,6 +79,8 @@ impl RngCore for Trng {
 
     #[cfg(not(target_arch = "x86_64"))]
     fn fill_bytes(&mut self, dest: &mut [u8]) {
+        c_zemu_log_stack(b"fill_bytes\x00".as_ref());
+
         unsafe {
             cx_rng(dest.as_mut_ptr(), dest.len() as u32);
         }

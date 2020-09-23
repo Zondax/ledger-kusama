@@ -33,8 +33,9 @@ use core::panic::PanicInfo;
 use core::slice::{from_raw_parts, from_raw_parts_mut};
 use curve25519_dalek::scalar::Scalar;
 use merlin::{Transcript, TranscriptRngBuilder, TranscriptRng};
-use schnorrkel::context::SigningTranscript;
+use schnorrkel::context::{SigningContext,SigningTranscript};
 use schnorrkel::{PublicKey, SecretKey};
+use rand::RngCore;
 
 #[cfg(not(test))]
 #[panic_handler]
@@ -74,17 +75,30 @@ fn add_witness(k: &mut Scalar, x: [u8; 32]) -> [u8; 32] {
 }
 
 #[inline(never)]
-fn get_challenge_scalar(tr: &mut Transcript) -> Scalar {
+fn get_challenge_scalar(k: &mut Scalar, tr: &mut Transcript) {
     let mut kbytes = [0u8; 64];
     tr.challenge_bytes(b"sign:c", &mut kbytes);
-    Scalar::from_bytes_mod_order_wide(&kbytes)
+    *k += Scalar::from_bytes_mod_order_wide(&kbytes);
 }
 
 #[inline(never)]
-fn get_witness_bytes(tr: &mut Transcript, nonce_bytes: &[u8]) -> [u8;32]{
+fn get_witness_bytes_custom(tr: &mut Transcript, nonce_bytes: &[u8], buffer: *mut u8) -> [u8;32]{
     c_zemu_log_stack(b"witness_bytes\x00".as_ref());
     let mut x = [0u8; 32];
-    tr.witness_bytes_rng(b"witness-bytes",&mut x,&[nonce_bytes],Trng);
+    let br = unsafe {
+        &mut *(buffer as *mut Transcript)
+    };
+    br.clone_from(tr);
+    br.append_message(b"nonce-bytes",&nonce_bytes);
+    {
+        let random_bytes = {
+            let mut bytes = [0u8; 32];
+            Trng.fill_bytes(&mut bytes);
+            bytes
+        };
+        br.append_message(b"rng", &random_bytes);
+    }
+    br.challenge_bytes(b"witness-output",&mut x);
     x
 }
 
@@ -97,6 +111,7 @@ pub extern "C" fn sign_sr25519(
     msg_ptr: *const u8,
     msg_len: usize,
     sig_ptr: *mut u8,
+    buffer: *mut u8,
 ) {
     c_zemu_log_stack(b"sign_sr25519\x00".as_ref());
 
@@ -115,13 +130,14 @@ pub extern "C" fn sign_sr25519(
         signtranscript.append_message(b"sign:pk", &public); //commitpoint: pk
     }
 
-    let x = get_witness_bytes(&mut signtranscript, &sk_ristretto_expanded[32..]);
-
-
-    //signtranscript.witness_bytes_rng(b"witness-bytes",&mut x,&[&sk_ristretto_expanded[32..]],Trng);
+    let x = get_witness_bytes_custom(&mut signtranscript, &sk_ristretto_expanded[32..], buffer);
     write_R(&x, &mut signtranscript, signature);
 
-    let mut k = get_challenge_scalar(&mut signtranscript);
+    let mut k = unsafe {
+        &mut *(buffer as *mut Scalar)
+    };
+    get_challenge_scalar(&mut k, &mut signtranscript);
+
     mult_with_secret(&mut k, sk_ristretto_expanded);
     signature[32..].copy_from_slice(&add_witness(&mut k, x));
     signature[63] |= 128;
@@ -151,7 +167,7 @@ pub extern "C" fn get_sr25519_pk(sk_ed25519_expanded_ptr: *mut u8, pk_sr25519_pt
 mod tests {
     use crate::*;
     use log::{debug, info};
-    use schnorrkel::{Keypair, PublicKey, SecretKey, Signature};
+    use schnorrkel::{Keypair, PublicKey, SecretKey, Signature, context::*};
 
     use curve25519_dalek::scalar::Scalar;
 
@@ -160,7 +176,7 @@ mod tests {
     }
 
     #[test]
-    fn test_sig() {
+    fn test_sign_verify() {
         let mut sk_ed25519_expanded = [
             0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06,
             0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5,
@@ -169,25 +185,46 @@ mod tests {
             04, 0x5, 0x06, 0x07,
         ];
 
+        let pk_expected = "b65abc66a8fdeac1197d03daa6c3791d0c0799a52db6b7127b1cd12d46e34364";
+
+        let secret = SecretKey::from_ed25519_bytes(&sk_ed25519_expanded).unwrap();
+
         let mut pk = [0u8; 32];
 
         get_sr25519_pk(sk_ed25519_expanded.as_mut_ptr(), pk.as_mut_ptr());
 
-        let context = b"good";
+        assert_eq!(hex::encode(pk), pk_expected);
 
+        let context = b"good";
         let msg = "test message".as_bytes();
         let mut signature = [0u8; 64];
 
+        let mut buffer = [0u8;260];
         sign_sr25519(
-            sk_ed25519_expanded.as_ptr(),
+            secret.to_bytes().as_ptr(),
             context.as_ptr(),
             context.len(),
             msg.as_ptr(),
             msg.len(),
             signature.as_mut_ptr(),
+            buffer.as_mut_ptr()
         );
 
-        assert_eq!(signature[..], [0u8; 64][..]);
+        let keypair: Keypair = Keypair::from(secret);
+
+        let mut sigledger = [0u8;64];
+        hex::decode_to_slice("48fdbe5cf3524bdd078ac711565d658a3053d10660749959883c4710f49d9948b2d5f829bea6800897dc6ea0150ca11075cc36b75bfcf3712aafb8e1bd10bf8f",&mut sigledger).expect("dec");
+
+        let self_sig = Signature::from_bytes(&signature).unwrap();
+        let self_sig_ledger = Signature::from_bytes(&sigledger).unwrap();
+
+        let vers = signing_context(context);
+
+        assert!(keypair.verify(vers.bytes(msg), &self_sig).is_ok(),
+                "Verification of a valid signature failed!");
+        assert!(keypair.verify(vers.bytes(msg), &self_sig_ledger).is_ok(),
+                "Verification of a valid signature from ledger failed!");
+
     }
 
     #[test]
