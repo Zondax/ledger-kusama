@@ -19,7 +19,6 @@
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_POINT;
 use curve25519_dalek::scalar::Scalar;
 
-
 extern "C" {
     fn zemu_log_stack(buffer: *const u8);
     fn check_app_canary();
@@ -38,16 +37,17 @@ pub fn c_check_app_canary() {
 }
 
 #[cfg(not(test))]
-pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8;32]{
-    let mut result = [0u8;32];
+pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
+    c_zemu_log_stack(b"scalarmult\x00".as_ref());
+    let mut result = [0u8; 32];
     unsafe {
-        c_ristretto_scalarmult_base(scalar.as_ptr(),result.as_mut_ptr());
+        c_ristretto_scalarmult_base(scalar.as_ptr(), result.as_mut_ptr());
     }
     result
 }
 
 #[cfg(test)]
-pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8;32] {
+pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
     let mut scalarbytes = [0u8; 32];
     scalarbytes.copy_from_slice(&scalar);
     let x = Scalar::from_bits(scalarbytes);
