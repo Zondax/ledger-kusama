@@ -55,10 +55,9 @@ fn signtranscript_setup(context: &[u8], message: &[u8], pk: &[u8]) -> Transcript
 }
 
 #[inline(never)]
-fn write_R(x: &[u8; 32], tr: &mut Transcript, signature: &mut [u8]) {
+fn compute_R(x: &[u8; 32], signature: &mut [u8]) {
     c_zemu_log_stack(b"writeR\x00".as_ref());
     let R = libsodium_ristretto_scalarmult_base(x);
-    tr.append_message(b"sign:R", &R); //R
     signature[0..32].copy_from_slice(&R);
 }
 
@@ -87,20 +86,26 @@ fn get_challenge_scalar(tr: &mut Transcript) -> Scalar {
 
 #[inline(never)]
 fn sign_phase2_challenge(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8], message: &[u8], witness: &[u8;32], signature: &mut [u8]){
-    c_zemu_log_stack(b"challenge\x00".as_ref());
+/*    c_zemu_log_stack(b"challenge\x00".as_ref());
     let mut signtranscript = signtranscript_setup(context, message, pk);
-    write_R(witness, &mut signtranscript, signature);
+    signtranscript.append_message(b"sign:R", &signature[0..32]);
 
     let mut k = get_challenge_scalar(&mut signtranscript);
     mult_with_secret(&mut k, sk_ristretto_expanded);
     signature[32..].copy_from_slice(&add_witness(&mut k, *witness));
     signature[63] |= 128;
+
+ */
 }
 
 #[inline(never)]
 fn sign_phase1_witness(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8], message: &[u8]) -> [u8;32]{
     c_zemu_log_stack(b"witness\x00".as_ref());
-    let mut signtranscript = signtranscript_setup(context, message, pk);
+    let mut signtranscript = Transcript::new(b"SigningContext");
+    signtranscript.append_message(b"", context);
+    signtranscript.append_message(b"sign-bytes", message);
+    signtranscript.append_message(b"proto-name", b"Schnorr-sig"); //proto name
+    signtranscript.append_message(b"sign:pk", pk);
     let mut x = [0u8; 32];
     signtranscript.append_message(b"nonce-bytes",&sk_ristretto_expanded[32..]);
     {
@@ -136,6 +141,7 @@ pub extern "C" fn sign_sr25519(
     let signature = unsafe { from_raw_parts_mut(sig_ptr, 64) };
 
     let x = sign_phase1_witness(sk_ristretto_expanded,pk,context,message);
+    compute_R(&x, signature);
     sign_phase2_challenge(sk_ristretto_expanded,pk,context,message,&x,signature);
 }
 
