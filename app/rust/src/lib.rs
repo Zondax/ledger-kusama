@@ -86,7 +86,7 @@ fn get_challenge_scalar(tr: &mut Transcript) -> Scalar {
 
 #[inline(never)]
 fn sign_phase2_challenge(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8], message: &[u8], witness: &[u8;32], signature: &mut [u8]){
-/*    c_zemu_log_stack(b"challenge\x00".as_ref());
+    c_zemu_log_stack(b"challenge\x00".as_ref());
     let mut signtranscript = signtranscript_setup(context, message, pk);
     signtranscript.append_message(b"sign:R", &signature[0..32]);
 
@@ -95,7 +95,7 @@ fn sign_phase2_challenge(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8]
     signature[32..].copy_from_slice(&add_witness(&mut k, *witness));
     signature[63] |= 128;
 
- */
+
 }
 
 #[inline(never)]
