@@ -30,6 +30,11 @@ zxerr_t addr_getNumItems(uint8_t *num_items) {
     return zxerr_ok;
 }
 
+__Z_INLINE zxerr_t addr_getItemAddress(char *outVal, uint16_t outValLen, uint8_t pageIdx, uint8_t *pageCount) {
+    pageString(outVal, outValLen, (char *) (G_io_apdu_buffer + PK_LEN_ED25519), pageIdx, pageCount);
+    return zxerr_ok;
+}
+
 zxerr_t addr_getItem(int8_t displayIdx,
                      char *outKey, uint16_t outKeyLen,
                      char *outVal, uint16_t outValLen,

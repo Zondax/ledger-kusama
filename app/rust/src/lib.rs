@@ -55,10 +55,10 @@ fn signtranscript_setup(context: &[u8], message: &[u8], pk: &[u8]) -> Transcript
 }
 
 #[inline(never)]
-fn compute_R(x: &[u8; 32], signature: &mut [u8]) {
+fn compute_r(x: &[u8; 32], signature: &mut [u8]) {
     c_zemu_log_stack(b"writeR\x00".as_ref());
-    let R = libsodium_ristretto_scalarmult_base(x);
-    signature[0..32].copy_from_slice(&R);
+    let r = libsodium_ristretto_scalarmult_base(x);
+    signature[0..32].copy_from_slice(&r);
 }
 
 #[inline(never)]
@@ -141,7 +141,7 @@ pub extern "C" fn sign_sr25519(
     let signature = unsafe { from_raw_parts_mut(sig_ptr, 64) };
 
     let x = sign_phase1_witness(sk_ristretto_expanded,pk,context,message);
-    compute_R(&x, signature);
+    compute_r(&x, signature);
     sign_phase2_challenge(sk_ristretto_expanded,pk,context,message,&x,signature);
 }
 

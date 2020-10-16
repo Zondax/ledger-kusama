@@ -223,12 +223,12 @@ extern crate alloc;
 
 use rand_core::{RngCore,CryptoRng};
 
-#[cfg(all(feature = "getrandom", feature = "rand"))] 
+#[cfg(all(feature = "getrandom", feature = "rand"))]
 fn rand_hack() -> impl RngCore+CryptoRng {
     ::rand::thread_rng()
 }
 
-#[cfg(all(feature = "getrandom", not(feature = "rand")))] 
+#[cfg(all(feature = "getrandom", not(feature = "rand")))]
 fn rand_hack() -> impl RngCore+CryptoRng {
     ::rand_core::OsRng
 }
@@ -248,9 +248,6 @@ fn rand_hack() -> impl RngCore+CryptoRng {
 
     PanicRng
 }
-
-#[macro_use]
-extern crate arrayref;
 
 #[macro_use]
 mod serdey;

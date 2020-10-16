@@ -1,5 +1,4 @@
 /*******************************************************************************
-*   (c) 2016 Ledger
 *   (c) 2019 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +14,25 @@
 *  limitations under the License.
 ********************************************************************************/
 
-#include "actions.h"
+#pragma once
 
-uint16_t action_addrResponseLen;
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <zxmacros.h>
+#include "coin.h"
+#include <stdbool.h>
+#include <sigutils.h>
+#include "zxerror.h"
+
+#define SS58_BLAKE_PREFIX  (const unsigned char *) "SS58PRE"
+#define SS58_BLAKE_PREFIX_LEN 7
+#define SS58_ADDRESS_MAX_LEN 60u
+
+uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
+                                uint8_t addressType, const uint8_t *pubkey);
+
+#ifdef __cplusplus
+}
+#endif

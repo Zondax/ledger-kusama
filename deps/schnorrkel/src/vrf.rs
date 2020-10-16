@@ -12,7 +12,7 @@
 //! *Warning*  We warn that our VRF construction supports malleable
 //! outputs via the `*malleable*` methods.  These are insecure when
 //! used in  conjunction with our HDKD provided in dervie.rs.
-//! Attackers could translate malleable VRF outputs from one soft subkey 
+//! Attackers could translate malleable VRF outputs from one soft subkey
 //! to another soft subkey, gaining early knowledge of the VRF output.
 //! We suggest using either non-malleable VRFs or using implicit
 //! certificates instead of HDKD when using VRFs.
@@ -89,7 +89,7 @@ use std::{boxed::Box, vec::Vec};
 use curve25519_dalek::constants;
 use curve25519_dalek::ristretto::{CompressedRistretto, RistrettoPoint};
 use curve25519_dalek::scalar::Scalar;
-use curve25519_dalek::traits::{IsIdentity,MultiscalarMul,VartimeMultiscalarMul}; // Identity
+use curve25519_dalek::traits::{IsIdentity}; // Identity
 
 use merlin::Transcript;
 
@@ -99,7 +99,7 @@ use crate::points::RistrettoBoth;
 // use crate::errors::SignatureError;
 
 /// Value for `kusama` paramater to `*dleq*` methods that yields the VRF for kusama.
-/// 
+///
 /// Greg Maxwell argue that nonce generation should hash all parameters
 /// that challenge generation does in https://moderncrypto.org/mail-archive/curves/2020/001012.html
 /// We support this position in prionciple as a defense in depth against
@@ -109,7 +109,7 @@ use crate::points::RistrettoBoth;
 /// We cannot justify add this defense to the deployed VRF because
 /// several layers already address this attack, including merlin's
 /// witnesses and that signers normally only sign VRF outputs once.
-/// 
+///
 /// We suggest using Greg Maxwell's trick if you use a stand alone DLEQ
 /// proof though, meaning call `*dleq*` methods with `kusama: false`.
 ///
@@ -144,7 +144,7 @@ impl<T> VRFSigningTranscript for T where T: SigningTranscript {
     type T = T;
     #[inline(always)]
     fn transcript_with_malleability_addressed(mut self, publickey: &PublicKey) -> T {
-        self.commit_point(b"vrf-nm-pk", publickey.as_compressed());        
+        self.commit_point(b"vrf-nm-pk", publickey.as_compressed());
         // publickey.make_transcript_nonmalleable(&mut self);
         self
     }
@@ -153,8 +153,8 @@ impl<T> VRFSigningTranscript for T where T: SigningTranscript {
 /// VRF SigningTranscript for malleable VRF ouputs.
 ///
 /// *Warning*  We caution that malleable VRF outputs are insecure when
-/// used in conjunction with HDKD, as provided in dervie.rs. 
-/// Attackers could translate malleable VRF outputs from one soft subkey 
+/// used in conjunction with HDKD, as provided in dervie.rs.
+/// Attackers could translate malleable VRF outputs from one soft subkey
 /// to another soft subkey, gaining early knowledge of the VRF output.
 /// We think most VRF applicaitons for which HDKH soudns suitable
 /// benefit from using implicit certificates insead of HDKD anyways,
@@ -172,8 +172,8 @@ impl<T> VRFSigningTranscript for Malleable<T> where T: SigningTranscript {
 /// Create a malleable VRF input point by hashing a transcript to a point.
 ///
 /// *Warning*  We caution that malleable VRF inputs are insecure when
-/// used in conjunction with HDKD, as provided in dervie.rs. 
-/// Attackers could translate malleable VRF outputs from one soft subkey 
+/// used in conjunction with HDKD, as provided in dervie.rs.
+/// Attackers could translate malleable VRF outputs from one soft subkey
 /// to another soft subkey, gaining early knowledge of the VRF output.
 /// We think most VRF applicaitons for which HDKH soudns suitable
 /// benefit from using implicit certificates insead of HDKD anyways,
@@ -420,8 +420,8 @@ impl PublicKey {
     ///
     /// TODO: Add constant time 128 bit batched multiplication to dalek.
     /// TODO: Is rand_chacha's `gen::<u128>()` standardizable enough to
-    /// prefer it over merlin for the output?  
-    pub fn vrfs_merge<B>(&self, ps: &[B], vartime: bool) -> VRFInOut
+    /// prefer it over merlin for the output?
+    pub fn vrfs_merge<B>(&self, ps: &[B], _: bool) -> VRFInOut
     where
         B: Borrow<VRFInOut>,
     {
@@ -653,7 +653,7 @@ impl Keypair {
     /// VRFs repeatedly until they win some contest.  In these case,
     /// you should probably use vrf_sign_n_check to gain access to the
     /// `VRFInOut` from `vrf_create_hash` first, and then avoid computing
-    /// the proof whenever you do not win. 
+    /// the proof whenever you do not win.
     pub fn vrf_sign<T>(&self, t: T) -> (VRFInOut, VRFProof, VRFProofBatchable)
     where T: VRFSigningTranscript,
     {
@@ -661,7 +661,7 @@ impl Keypair {
         // We have context in t and another hear confuses batching
     }
 
-    /// Run VRF on one single input transcript and an extra message transcript, 
+    /// Run VRF on one single input transcript and an extra message transcript,
     /// producing the outpus and correspodning short proof.
     pub fn vrf_sign_extra<T,E>(&self, t: T, extra: E) -> (VRFInOut, VRFProof, VRFProofBatchable)
     where T: VRFSigningTranscript,
@@ -823,7 +823,7 @@ impl PublicKey {
         out: &VRFPreOut,
         proof: &VRFProof,
         extra: E,
-    ) -> SignatureResult<(VRFInOut, VRFProofBatchable)> 
+    ) -> SignatureResult<(VRFInOut, VRFProofBatchable)>
     where T: VRFSigningTranscript,
           E: SigningTranscript,
     {

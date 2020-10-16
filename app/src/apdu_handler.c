@@ -162,13 +162,13 @@ __Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *t
     THROW(APDU_CODE_OK);
 }
 
-__Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handleGetAddrEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     extractHDPath(rx, OFFSET_DATA);
 
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
 
     if (requireConfirmation) {
-        app_fill_address();
+        app_fill_address(addr_ed22519);
 
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
         view_review_show();
@@ -177,7 +177,26 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
         return;
     }
 
-    *tx = app_fill_address();
+    *tx = app_fill_address(addr_ed22519);
+    THROW(APDU_CODE_OK);
+}
+
+__Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    extractHDPath(rx, OFFSET_DATA);
+
+    uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+
+    if (requireConfirmation) {
+        app_fill_address(addr_sr25519);
+
+        view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
+        view_review_show();
+
+        *flags |= IO_ASYNCH_REPLY;
+        return;
+    }
+
+    *tx = app_fill_address(addr_sr25519);
     THROW(APDU_CODE_OK);
 }
 
@@ -347,6 +366,11 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
                     handleGetAddr(flags, tx, rx);
+                    break;
+                }
+
+                case INS_GET_ADDR_SR25519: {
+                    handleGetAddrSr25519(flags, tx, rx);
                     break;
                 }
 
