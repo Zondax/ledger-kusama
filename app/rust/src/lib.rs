@@ -36,6 +36,7 @@ use merlin::{Transcript, TranscriptRngBuilder, TranscriptRng};
 use schnorrkel::context::{SigningContext,SigningTranscript};
 use schnorrkel::{PublicKey, SecretKey};
 use rand::RngCore;
+use zeroize::Zeroize;
 
 #[cfg(not(test))]
 #[panic_handler]
@@ -44,20 +45,9 @@ fn panic(_info: &PanicInfo) -> ! {
 }
 
 #[inline(never)]
-fn signtranscript_setup(context: &[u8], message: &[u8], pk: &[u8]) -> Transcript {
-    c_zemu_log_stack(b"setup\x00".as_ref());
-    let mut signtranscript = Transcript::new(b"SigningContext");
-    signtranscript.append_message(b"", context);
-    signtranscript.append_message(b"sign-bytes", message);
-    signtranscript.append_message(b"proto-name", b"Schnorr-sig"); //proto name
-    signtranscript.append_message(b"sign:pk", pk); //commitpoint: pk
-    signtranscript
-}
-
-#[inline(never)]
-fn compute_r(x: &[u8; 32], signature: &mut [u8]) {
-    c_zemu_log_stack(b"writeR\x00".as_ref());
+fn write_r(x: &[u8; 32], tr: &mut Transcript, signature: &mut [u8]) {
     let r = libsodium_ristretto_scalarmult_base(x);
+    tr.append_message(b"sign:R", &r); //R
     signature[0..32].copy_from_slice(&r);
 }
 
@@ -77,80 +67,80 @@ fn add_witness(k: &mut Scalar, x: [u8; 32]) -> [u8; 32] {
 }
 
 #[inline(never)]
-fn get_challenge_scalar(tr: &mut Transcript) -> Scalar {
-    c_zemu_log_stack(b"challenge\x00".as_ref());
+fn get_challenge_scalar(k: &mut Scalar, tr: &mut Transcript) {
     let mut kbytes = [0u8; 64];
     tr.challenge_bytes(b"sign:c", &mut kbytes);
-    Scalar::from_bytes_mod_order_wide(&kbytes)
+    *k += Scalar::from_bytes_mod_order_wide(&kbytes);
 }
 
 #[inline(never)]
-fn sign_phase2_challenge(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8], message: &[u8], witness: &[u8;32], signature: &mut [u8]){
-    c_zemu_log_stack(b"challenge\x00".as_ref());
-    let mut signtranscript = signtranscript_setup(context, message, pk);
-    signtranscript.append_message(b"sign:R", &signature[0..32]);
-
-    let mut k = get_challenge_scalar(&mut signtranscript);
-    mult_with_secret(&mut k, sk_ristretto_expanded);
-    signature[32..].copy_from_slice(&add_witness(&mut k, *witness));
-    signature[63] |= 128;
-
-
-}
-
-#[inline(never)]
-fn sign_phase1_witness(sk_ristretto_expanded: &[u8], pk: &[u8], context: &[u8], message: &[u8]) -> [u8;32]{
-    c_zemu_log_stack(b"witness\x00".as_ref());
-    let mut signtranscript = Transcript::new(b"SigningContext");
-    signtranscript.append_message(b"", context);
-    signtranscript.append_message(b"sign-bytes", message);
-    signtranscript.append_message(b"proto-name", b"Schnorr-sig"); //proto name
-    signtranscript.append_message(b"sign:pk", pk);
+fn get_witness_bytes_custom(tr: &mut Transcript, nonce_bytes: &[u8], buffer: *mut u8) -> [u8;32]{
+    c_zemu_log_stack(b"witness_bytes\x00".as_ref());
     let mut x = [0u8; 32];
-    signtranscript.append_message(b"nonce-bytes",&sk_ristretto_expanded[32..]);
+    let br = unsafe {
+        &mut *(buffer as *mut Transcript)
+    };
+    br.clone_from(tr);
+    br.append_message(b"nonce-bytes",&nonce_bytes);
     {
         let random_bytes = {
             let mut bytes = [0u8; 32];
             Trng.fill_bytes(&mut bytes);
             bytes
         };
-        signtranscript.append_message(b"rng", &random_bytes);
+        br.append_message(b"rng", &random_bytes);
     }
-    signtranscript.challenge_bytes(b"witness-output",&mut x);
+    br.challenge_bytes(b"witness-output",&mut x);
+    br.zeroize();
     x
 }
+
 //the signing function assumes as input a ristretto secret key, not a ed25519 secret key!
 #[no_mangle]
 pub extern "C" fn sign_sr25519(
     sk_ristretto_expanded_ptr: *const u8,
-    pk_ptr : *const u8,
+    pk_ptr: *const u8,
     context_ptr: *const u8,
     context_len: usize,
     msg_ptr: *const u8,
     msg_len: usize,
     sig_ptr: *mut u8,
+    buffer: *mut u8,
 ) {
     c_zemu_log_stack(b"sign_sr25519\x00".as_ref());
 
     let sk_ristretto_expanded =
         unsafe { from_raw_parts(sk_ristretto_expanded_ptr as *const u8, 64) };
-    let pk =
-        unsafe { from_raw_parts(pk_ptr as *const u8, 32) };
+    let pk =  unsafe { from_raw_parts(pk_ptr as *const u8, 32) };
     let context = unsafe { from_raw_parts(context_ptr as *const u8, context_len) };
     let message = unsafe { from_raw_parts(msg_ptr as *const u8, msg_len) };
-    let signature = unsafe { from_raw_parts_mut(sig_ptr, 64) };
+    let signature = unsafe { from_raw_parts_mut(sig_ptr as *mut u8, 64) };
 
-    let x = sign_phase1_witness(sk_ristretto_expanded,pk,context,message);
-    compute_r(&x, signature);
-    sign_phase2_challenge(sk_ristretto_expanded,pk,context,message,&x,signature);
+    let mut signtranscript = Transcript::new(b"SigningContext");
+    signtranscript.append_message(b"", context);
+    signtranscript.append_message(b"sign-bytes", message);
+    signtranscript.append_message(b"proto-name", b"Schnorr-sig"); //proto name
+    signtranscript.append_message(b"sign:pk", pk); //commitpoint: pk
+
+    let x = get_witness_bytes_custom(&mut signtranscript, &sk_ristretto_expanded[32..], buffer);
+    write_r(&x, &mut signtranscript, signature);
+
+    let mut k = unsafe {
+        &mut *(buffer as *mut Scalar)
+    };
+    get_challenge_scalar(&mut k, &mut signtranscript);
+
+    mult_with_secret(&mut k, sk_ristretto_expanded);
+    signature[32..].copy_from_slice(&add_witness(&mut k, x));
+    signature[63] |= 128;
 }
 
 #[no_mangle]
 pub extern "C" fn get_sr25519_pk(sk_ed25519_expanded_ptr: *mut u8, pk_sr25519_ptr: *mut u8) {
     c_zemu_log_stack(b"get_sr25519_pk\x00".as_ref());
 
-    let sk_ed25519_expanded = unsafe { from_raw_parts_mut(sk_ed25519_expanded_ptr, 64) };
-    let pk_sr25519 = unsafe { from_raw_parts_mut(pk_sr25519_ptr, 32) };
+    let sk_ed25519_expanded = unsafe { from_raw_parts_mut(sk_ed25519_expanded_ptr as *mut u8, 64) };
+    let pk_sr25519 = unsafe { from_raw_parts_mut(pk_sr25519_ptr as *mut u8, 32) };
 
     let secret: SecretKey = SecretKey::from_ed25519_bytes(&sk_ed25519_expanded[..]).unwrap();
 
@@ -200,7 +190,7 @@ mod tests {
         let context = b"good";
         let msg = "test message".as_bytes();
         let mut signature = [0u8; 64];
-
+        let mut buffer = [0x00;230];
         sign_sr25519(
             secret.to_bytes().as_ptr(),
             pk.as_ptr(),
@@ -209,6 +199,7 @@ mod tests {
             msg.as_ptr(),
             msg.len(),
             signature.as_mut_ptr(),
+            buffer.as_mut_ptr(),
         );
 
         let keypair: Keypair = Keypair::from(secret);
