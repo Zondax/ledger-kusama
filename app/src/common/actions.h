@@ -47,22 +47,13 @@ __Z_INLINE void app_reject() {
     io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
 }
 
-__Z_INLINE zxerr_t app_fill_address(address_kind_e addressKind) {
+__Z_INLINE zxerr_t app_fill_address(key_kind_e addressKind) {
     // Put data directly in the apdu buffer
     MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
-
-    switch (addressKind) {
-        case addr_ed22519: {
-            CHECK_ZXERR(crypto_fillAddress(addr_ed22519,
-                                           G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 2,
-                                           &action_addrResponseLen));
-            return zxerr_ok;
-        }
-        case addr_sr25519:
-        default:
-            return zxerr_invalid_crypto_settings;
-    }
-
+    CHECK_ZXERR(crypto_fillAddress(key_ed22519,
+                                   G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 2,
+                                   &action_addrResponseLen));
+    return zxerr_ok;
 }
 
 __Z_INLINE void app_reply_error() {

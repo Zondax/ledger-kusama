@@ -28,9 +28,9 @@ extern "C" {
 #define PK_LEN_ED25519       32u
 
 typedef enum {
-    addr_ed22519     = 0,
-    addr_sr25519     = 1
-} address_kind_e;
+    key_ed22519     = 0,
+    key_sr25519     = 1
+} key_kind_e;
 
 #define VIEW_ADDRESS_OFFSET_ED25519         (PK_LEN_ED25519)
 

@@ -168,7 +168,7 @@ __Z_INLINE void handleGetAddrEd25519(volatile uint32_t *flags, volatile uint32_t
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
 
     if (requireConfirmation) {
-        app_fill_address(addr_ed22519);
+        app_fill_address(key_ed22519);
 
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
         view_review_show();
@@ -177,7 +177,7 @@ __Z_INLINE void handleGetAddrEd25519(volatile uint32_t *flags, volatile uint32_t
         return;
     }
 
-    *tx = app_fill_address(addr_ed22519);
+    *tx = app_fill_address(key_ed22519);
     THROW(APDU_CODE_OK);
 }
 
@@ -187,7 +187,7 @@ __Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
 
     if (requireConfirmation) {
-        app_fill_address(addr_sr25519);
+        app_fill_address(key_sr25519);
 
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
         view_review_show();
@@ -196,7 +196,7 @@ __Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t
         return;
     }
 
-    *tx = app_fill_address(addr_sr25519);
+    *tx = app_fill_address(key_sr25519);
     THROW(APDU_CODE_OK);
 }
 

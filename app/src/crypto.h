@@ -39,7 +39,7 @@ extern uint32_t hdPath[HDPATH_LEN_DEFAULT];
 uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
                                 uint8_t addressType, const uint8_t *pubkey);
 
-zxerr_t crypto_fillAddress(address_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen);
+zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen);
 
 zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
                     const uint8_t *message, uint16_t messageLen,
