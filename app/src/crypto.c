@@ -75,9 +75,10 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
     if ((cx_publicKey.W[32] & 1) != 0) {
         pubKey[31] |= 0x80;
     }
+    return zxerr_ok;
 }
 
-zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
+zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMaxlen,
                     const uint8_t *message, uint16_t messageLen,
                     uint16_t *signatureLen) {
     const uint8_t *toSign = message;
@@ -92,8 +93,7 @@ zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
         messageLen = 32;
     }
 
-    cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[32];
+    uint8_t privateKeyData[64];
     int signatureLength = 0;
     unsigned int info = 0;
 
@@ -111,32 +111,57 @@ zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
                     NULL,
                     NULL,
                     0);
-            cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
 
-            // Sign
-            *signature = PREFIX_SIGNATURE_TYPE_ED25519;
-            signatureLength = cx_eddsa_sign(&cx_privateKey,
-                                            CX_LAST,
-                                            CX_SHA512,
-                                            toSign,
-                                            messageLen,
-                                            NULL,
-                                            0,
-                                            signature+1,
-                                            signatureMaxlen-1,
-                                            &info);
+
+            switch(keytype) {
+                case key_ed22519: {
+                    cx_ecfp_private_key_t cx_privateKey;
+                    cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
+
+                    // Sign
+                    *signature = PREFIX_SIGNATURE_TYPE_ED25519;
+                    signatureLength = cx_eddsa_sign(&cx_privateKey,
+                                                    CX_LAST,
+                                                    CX_SHA512,
+                                                    toSign,
+                                                    messageLen,
+                                                    NULL,
+                                                    0,
+                                                    signature + 1,
+                                                    signatureMaxlen - 1,
+                                                    &info);
+                    MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
+                }
+
+                case key_sr25519: {
+                    if (signatureMaxlen < MIN_BUFFER_LENGTH){
+                        return zxerr_invalid_crypto_settings;
+                    }
+
+                    uint8_t pubkey[32];
+                    *signature = PREFIX_SIGNATURE_TYPE_SR25519;
+                    get_sr25519_pk(privateKeyData, pubkey);
+                    sign_sr25519(privateKeyData, pubkey, NULL, 0, toSign,messageLen, signature, signature + 32);
+                    signatureLength = 64;
+                }
+                default: {
+                    *signatureLen = 0;
+                    return zxerr_invalid_crypto_settings;
+                }
+            }
         }
         CATCH_ALL {
-            return 0;
+            *signatureLen = 0;
+            return zxerr_unknown;
         };
         FINALLY {
-            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
-            MEMZERO(privateKeyData, 32);
+            MEMZERO(signature + signatureLength, signatureMaxlen - signatureLength);
+            MEMZERO(privateKeyData, 64);
         }
     }
     END_TRY;
-
-    return signatureLength + 1;
+    *signatureLen = signatureLength + 1;
+    return zxerr_ok;
 }
 
 zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen) {
