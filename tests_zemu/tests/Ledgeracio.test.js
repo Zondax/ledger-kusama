@@ -33,7 +33,7 @@ const sim_options = {
 
 jest.setTimeout(30000)
 
-describe('Ledgeracion', function () {
+describe('Ledgeracio', function () {
     test('can start and stop container', async function () {
         const sim = new Zemu(APP_PATH);
         try {
