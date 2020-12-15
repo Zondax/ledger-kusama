@@ -33,7 +33,6 @@ extern "C" {
 #define PD_CALL_STAKING 6
 #define PD_CALL_OFFENCES 7
 #define PD_CALL_SESSION 8
-#define PD_CALL_FINALITYTRACKER 9
 #define PD_CALL_GRANDPA 10
 #define PD_CALL_IMONLINE 11
 #define PD_CALL_AUTHORITYDISCOVERY 12
@@ -44,10 +43,6 @@ extern "C" {
 #define PD_CALL_TECHNICALMEMBERSHIP 17
 #define PD_CALL_TREASURY 18
 #define PD_CALL_CLAIMS 19
-#define PD_CALL_DUMMYPARACHAINS 20
-#define PD_CALL_DUMMYATTESTATIONS 21
-#define PD_CALL_DUMMYSLOTS 22
-#define PD_CALL_DUMMYREGISTRAR 23
 #define PD_CALL_UTILITY 24
 #define PD_CALL_IDENTITY 25
 #define PD_CALL_SOCIETY 26
@@ -109,13 +104,13 @@ typedef struct {
 
 #define PD_CALL_BABE_REPORT_EQUIVOCATION 0
 typedef struct {
-    pd_BabeEquivocationProof_t equivocation_proof;
+    pd_EquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_babe_report_equivocation_t;
 
 #define PD_CALL_BABE_REPORT_EQUIVOCATION_UNSIGNED 1
 typedef struct {
-    pd_BabeEquivocationProof_t equivocation_proof;
+    pd_EquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_babe_report_equivocation_unsigned_t;
 
@@ -254,7 +249,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_SET_INVULNERABLES 14
 typedef struct {
-    pd_VecAccountId_t validators;
+    pd_VecAccountId_t invulnerables;
 } pd_staking_set_invulnerables_t;
 
 #define PD_CALL_STAKING_FORCE_UNSTAKE 15
@@ -324,20 +319,15 @@ typedef struct {
 typedef struct {
 } pd_session_purge_keys_t;
 
-#define PD_CALL_FINALITYTRACKER_FINAL_HINT 0
-typedef struct {
-    pd_CompactBlockNumber_t hint;
-} pd_finalitytracker_final_hint_t;
-
 #define PD_CALL_GRANDPA_REPORT_EQUIVOCATION 0
 typedef struct {
-    pd_GrandpaEquivocationProof_t equivocation_proof;
+    pd_EquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_grandpa_report_equivocation_t;
 
 #define PD_CALL_GRANDPA_REPORT_EQUIVOCATION_UNSIGNED 1
 typedef struct {
-    pd_GrandpaEquivocationProof_t equivocation_proof;
+    pd_EquivocationProof_t equivocation_proof;
     pd_KeyOwnerProof_t key_owner_proof;
 } pd_grandpa_report_equivocation_unsigned_t;
 
@@ -475,6 +465,17 @@ typedef struct {
     pd_Hash_t proposal_hash;
     pd_ReferendumIndex_t index;
 } pd_democracy_enact_proposal_t;
+
+#define PD_CALL_DEMOCRACY_BLACKLIST 23
+typedef struct {
+    pd_Hash_t proposal_hash;
+    pd_OptionReferendumIndex_t maybe_ref_index;
+} pd_democracy_blacklist_t;
+
+#define PD_CALL_DEMOCRACY_CANCEL_PROPOSAL 24
+typedef struct {
+    pd_CompactPropIndex_t prop_index;
+} pd_democracy_cancel_proposal_t;
 
 #define PD_CALL_COUNCIL_SET_MEMBERS 0
 typedef struct {
@@ -627,19 +628,69 @@ typedef struct {
 typedef struct {
     pd_Bytes_t reason;
     pd_AccountId_t who;
-    pd_BalanceOf_t tip_value;
+    pd_CompactBalanceOf_t tip_value;
 } pd_treasury_tip_new_t;
 
 #define PD_CALL_TREASURY_TIP 6
 typedef struct {
     pd_Hash_t hash;
-    pd_BalanceOf_t tip_value;
+    pd_CompactBalanceOf_t tip_value;
 } pd_treasury_tip_t;
 
 #define PD_CALL_TREASURY_CLOSE_TIP 7
 typedef struct {
     pd_Hash_t hash;
 } pd_treasury_close_tip_t;
+
+#define PD_CALL_TREASURY_PROPOSE_BOUNTY 8
+typedef struct {
+    pd_CompactBalanceOf_t value;
+    pd_Bytes_t description;
+} pd_treasury_propose_bounty_t;
+
+#define PD_CALL_TREASURY_APPROVE_BOUNTY 9
+typedef struct {
+    pd_CompactProposalIndex_t bounty_id;
+} pd_treasury_approve_bounty_t;
+
+#define PD_CALL_TREASURY_PROPOSE_CURATOR 10
+typedef struct {
+    pd_CompactProposalIndex_t bounty_id;
+    pd_LookupSource_t curator;
+    pd_CompactBalanceOf_t fee;
+} pd_treasury_propose_curator_t;
+
+#define PD_CALL_TREASURY_UNASSIGN_CURATOR 11
+typedef struct {
+    pd_CompactProposalIndex_t bounty_id;
+} pd_treasury_unassign_curator_t;
+
+#define PD_CALL_TREASURY_ACCEPT_CURATOR 12
+typedef struct {
+    pd_CompactProposalIndex_t bounty_id;
+} pd_treasury_accept_curator_t;
+
+#define PD_CALL_TREASURY_AWARD_BOUNTY 13
+typedef struct {
+    pd_CompactProposalIndex_t bounty_id;
+    pd_LookupSource_t beneficiary;
+} pd_treasury_award_bounty_t;
+
+#define PD_CALL_TREASURY_CLAIM_BOUNTY 14
+typedef struct {
+    pd_CompactBountyIndex_t bounty_id;
+} pd_treasury_claim_bounty_t;
+
+#define PD_CALL_TREASURY_CLOSE_BOUNTY 15
+typedef struct {
+    pd_CompactBountyIndex_t bounty_id;
+} pd_treasury_close_bounty_t;
+
+#define PD_CALL_TREASURY_EXTEND_BOUNTY_EXPIRY 16
+typedef struct {
+    pd_CompactBountyIndex_t bounty_id;
+    pd_Bytes_t _remark;
+} pd_treasury_extend_bounty_expiry_t;
 
 #define PD_CALL_CLAIMS_CLAIM 0
 typedef struct {
@@ -684,6 +735,11 @@ typedef struct {
     pd_u16_t index;
     pd_Call_t call;
 } pd_utility_as_derivative_t;
+
+#define PD_CALL_UTILITY_BATCH_ALL 2
+typedef struct {
+    pd_VecCall_t calls;
+} pd_utility_batch_all_t;
 
 #define PD_CALL_IDENTITY_ADD_REGISTRAR 0
 typedef struct {
@@ -737,7 +793,7 @@ typedef struct {
 typedef struct {
     pd_CompactRegistrarIndex_t reg_index;
     pd_LookupSource_t target;
-    pd_IdentityJudgement_t judgement;
+    pd_Judgement_t judgement;
 } pd_identity_provide_judgement_t;
 
 #define PD_CALL_IDENTITY_KILL_IDENTITY 10
@@ -823,7 +879,7 @@ typedef struct {
 #define PD_CALL_SOCIETY_JUDGE_SUSPENDED_CANDIDATE 10
 typedef struct {
     pd_AccountId_t who;
-    pd_SocietyJudgement_t judgement;
+    pd_Judgement_t judgement;
 } pd_society_judge_suspended_candidate_t;
 
 #define PD_CALL_SOCIETY_SET_MAX_MEMBERS 11
@@ -1097,7 +1153,6 @@ typedef union {
     pd_staking_submit_election_solution_unsigned_t staking_submit_election_solution_unsigned;
     pd_session_set_keys_t session_set_keys;
     pd_session_purge_keys_t session_purge_keys;
-    pd_finalitytracker_final_hint_t finalitytracker_final_hint;
     pd_grandpa_report_equivocation_t grandpa_report_equivocation;
     pd_grandpa_report_equivocation_unsigned_t grandpa_report_equivocation_unsigned;
     pd_grandpa_note_stalled_t grandpa_note_stalled;
@@ -1125,6 +1180,8 @@ typedef union {
     pd_democracy_remove_vote_t democracy_remove_vote;
     pd_democracy_remove_other_vote_t democracy_remove_other_vote;
     pd_democracy_enact_proposal_t democracy_enact_proposal;
+    pd_democracy_blacklist_t democracy_blacklist;
+    pd_democracy_cancel_proposal_t democracy_cancel_proposal;
     pd_council_set_members_t council_set_members;
     pd_council_vote_t council_vote;
     pd_council_close_t council_close;
@@ -1154,6 +1211,15 @@ typedef union {
     pd_treasury_tip_new_t treasury_tip_new;
     pd_treasury_tip_t treasury_tip;
     pd_treasury_close_tip_t treasury_close_tip;
+    pd_treasury_propose_bounty_t treasury_propose_bounty;
+    pd_treasury_approve_bounty_t treasury_approve_bounty;
+    pd_treasury_propose_curator_t treasury_propose_curator;
+    pd_treasury_unassign_curator_t treasury_unassign_curator;
+    pd_treasury_accept_curator_t treasury_accept_curator;
+    pd_treasury_award_bounty_t treasury_award_bounty;
+    pd_treasury_claim_bounty_t treasury_claim_bounty;
+    pd_treasury_close_bounty_t treasury_close_bounty;
+    pd_treasury_extend_bounty_expiry_t treasury_extend_bounty_expiry;
     pd_claims_claim_t claims_claim;
     pd_claims_mint_claim_t claims_mint_claim;
     pd_claims_claim_attest_t claims_claim_attest;
@@ -1161,6 +1227,7 @@ typedef union {
     pd_claims_move_claim_t claims_move_claim;
     pd_utility_batch_t utility_batch;
     pd_utility_as_derivative_t utility_as_derivative;
+    pd_utility_batch_all_t utility_batch_all;
     pd_identity_add_registrar_t identity_add_registrar;
     pd_identity_set_identity_t identity_set_identity;
     pd_identity_set_subs_t identity_set_subs;

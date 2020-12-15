@@ -91,7 +91,7 @@ __Z_INLINE parser_error_t _readMethod_system_suicide(
 __Z_INLINE parser_error_t _readMethod_babe_report_equivocation(
     parser_context_t* c, pd_babe_report_equivocation_t* m)
 {
-    CHECK_ERROR(_readBabeEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readEquivocationProof(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -99,7 +99,7 @@ __Z_INLINE parser_error_t _readMethod_babe_report_equivocation(
 __Z_INLINE parser_error_t _readMethod_babe_report_equivocation_unsigned(
     parser_context_t* c, pd_babe_report_equivocation_unsigned_t* m)
 {
-    CHECK_ERROR(_readBabeEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readEquivocationProof(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -290,7 +290,7 @@ __Z_INLINE parser_error_t _readMethod_staking_force_new_era(
 __Z_INLINE parser_error_t _readMethod_staking_set_invulnerables(
     parser_context_t* c, pd_staking_set_invulnerables_t* m)
 {
-    CHECK_ERROR(_readVecAccountId(c, &m->validators))
+    CHECK_ERROR(_readVecAccountId(c, &m->invulnerables))
     return parser_ok;
 }
 
@@ -383,17 +383,10 @@ __Z_INLINE parser_error_t _readMethod_session_purge_keys(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_finalitytracker_final_hint(
-    parser_context_t* c, pd_finalitytracker_final_hint_t* m)
-{
-    CHECK_ERROR(_readCompactBlockNumber(c, &m->hint))
-    return parser_ok;
-}
-
 __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation(
     parser_context_t* c, pd_grandpa_report_equivocation_t* m)
 {
-    CHECK_ERROR(_readGrandpaEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readEquivocationProof(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -401,7 +394,7 @@ __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation(
 __Z_INLINE parser_error_t _readMethod_grandpa_report_equivocation_unsigned(
     parser_context_t* c, pd_grandpa_report_equivocation_unsigned_t* m)
 {
-    CHECK_ERROR(_readGrandpaEquivocationProof(c, &m->equivocation_proof))
+    CHECK_ERROR(_readEquivocationProof(c, &m->equivocation_proof))
     CHECK_ERROR(_readKeyOwnerProof(c, &m->key_owner_proof))
     return parser_ok;
 }
@@ -588,6 +581,21 @@ __Z_INLINE parser_error_t _readMethod_democracy_enact_proposal(
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readReferendumIndex(c, &m->index))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_democracy_blacklist(
+    parser_context_t* c, pd_democracy_blacklist_t* m)
+{
+    CHECK_ERROR(_readHash(c, &m->proposal_hash))
+    CHECK_ERROR(_readOptionReferendumIndex(c, &m->maybe_ref_index))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_democracy_cancel_proposal(
+    parser_context_t* c, pd_democracy_cancel_proposal_t* m)
+{
+    CHECK_ERROR(_readCompactPropIndex(c, &m->prop_index))
     return parser_ok;
 }
 
@@ -829,7 +837,7 @@ __Z_INLINE parser_error_t _readMethod_treasury_tip_new(
 {
     CHECK_ERROR(_readBytes(c, &m->reason))
     CHECK_ERROR(_readAccountId(c, &m->who))
-    CHECK_ERROR(_readBalanceOf(c, &m->tip_value))
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->tip_value))
     return parser_ok;
 }
 
@@ -837,7 +845,7 @@ __Z_INLINE parser_error_t _readMethod_treasury_tip(
     parser_context_t* c, pd_treasury_tip_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
-    CHECK_ERROR(_readBalanceOf(c, &m->tip_value))
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->tip_value))
     return parser_ok;
 }
 
@@ -845,6 +853,74 @@ __Z_INLINE parser_error_t _readMethod_treasury_close_tip(
     parser_context_t* c, pd_treasury_close_tip_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_propose_bounty(
+    parser_context_t* c, pd_treasury_propose_bounty_t* m)
+{
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
+    CHECK_ERROR(_readBytes(c, &m->description))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_approve_bounty(
+    parser_context_t* c, pd_treasury_approve_bounty_t* m)
+{
+    CHECK_ERROR(_readCompactProposalIndex(c, &m->bounty_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_propose_curator(
+    parser_context_t* c, pd_treasury_propose_curator_t* m)
+{
+    CHECK_ERROR(_readCompactProposalIndex(c, &m->bounty_id))
+    CHECK_ERROR(_readLookupSource(c, &m->curator))
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->fee))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_unassign_curator(
+    parser_context_t* c, pd_treasury_unassign_curator_t* m)
+{
+    CHECK_ERROR(_readCompactProposalIndex(c, &m->bounty_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_accept_curator(
+    parser_context_t* c, pd_treasury_accept_curator_t* m)
+{
+    CHECK_ERROR(_readCompactProposalIndex(c, &m->bounty_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_award_bounty(
+    parser_context_t* c, pd_treasury_award_bounty_t* m)
+{
+    CHECK_ERROR(_readCompactProposalIndex(c, &m->bounty_id))
+    CHECK_ERROR(_readLookupSource(c, &m->beneficiary))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_claim_bounty(
+    parser_context_t* c, pd_treasury_claim_bounty_t* m)
+{
+    CHECK_ERROR(_readCompactBountyIndex(c, &m->bounty_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_close_bounty(
+    parser_context_t* c, pd_treasury_close_bounty_t* m)
+{
+    CHECK_ERROR(_readCompactBountyIndex(c, &m->bounty_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_treasury_extend_bounty_expiry(
+    parser_context_t* c, pd_treasury_extend_bounty_expiry_t* m)
+{
+    CHECK_ERROR(_readCompactBountyIndex(c, &m->bounty_id))
+    CHECK_ERROR(_readBytes(c, &m->_remark))
     return parser_ok;
 }
 
@@ -903,6 +979,13 @@ __Z_INLINE parser_error_t _readMethod_utility_as_derivative(
 {
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCall(c, &m->call))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_utility_batch_all(
+    parser_context_t* c, pd_utility_batch_all_t* m)
+{
+    CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
@@ -977,7 +1060,7 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement(
 {
     CHECK_ERROR(_readCompactRegistrarIndex(c, &m->reg_index))
     CHECK_ERROR(_readLookupSource(c, &m->target))
-    CHECK_ERROR(_readIdentityJudgement(c, &m->judgement))
+    CHECK_ERROR(_readJudgement(c, &m->judgement))
     return parser_ok;
 }
 
@@ -1095,7 +1178,7 @@ __Z_INLINE parser_error_t _readMethod_society_judge_suspended_candidate(
     parser_context_t* c, pd_society_judge_suspended_candidate_t* m)
 {
     CHECK_ERROR(_readAccountId(c, &m->who))
-    CHECK_ERROR(_readSocietyJudgement(c, &m->judgement))
+    CHECK_ERROR(_readJudgement(c, &m->judgement))
     return parser_ok;
 }
 
@@ -1544,9 +1627,6 @@ parser_error_t _readMethodBasic(
     case 2049: /* module 8 call 1 */
         CHECK_ERROR(_readMethod_session_purge_keys(c, &method->session_purge_keys))
         break;
-    case 2304: /* module 9 call 0 */
-        CHECK_ERROR(_readMethod_finalitytracker_final_hint(c, &method->finalitytracker_final_hint))
-        break;
     case 2560: /* module 10 call 0 */
         CHECK_ERROR(_readMethod_grandpa_report_equivocation(c, &method->grandpa_report_equivocation))
         break;
@@ -1627,6 +1707,12 @@ parser_error_t _readMethodBasic(
         break;
     case 3350: /* module 13 call 22 */
         CHECK_ERROR(_readMethod_democracy_enact_proposal(c, &method->democracy_enact_proposal))
+        break;
+    case 3351: /* module 13 call 23 */
+        CHECK_ERROR(_readMethod_democracy_blacklist(c, &method->democracy_blacklist))
+        break;
+    case 3352: /* module 13 call 24 */
+        CHECK_ERROR(_readMethod_democracy_cancel_proposal(c, &method->democracy_cancel_proposal))
         break;
     case 3584: /* module 14 call 0 */
         CHECK_ERROR(_readMethod_council_set_members(c, &method->council_set_members))
@@ -1715,6 +1801,33 @@ parser_error_t _readMethodBasic(
     case 4615: /* module 18 call 7 */
         CHECK_ERROR(_readMethod_treasury_close_tip(c, &method->treasury_close_tip))
         break;
+    case 4616: /* module 18 call 8 */
+        CHECK_ERROR(_readMethod_treasury_propose_bounty(c, &method->treasury_propose_bounty))
+        break;
+    case 4617: /* module 18 call 9 */
+        CHECK_ERROR(_readMethod_treasury_approve_bounty(c, &method->treasury_approve_bounty))
+        break;
+    case 4618: /* module 18 call 10 */
+        CHECK_ERROR(_readMethod_treasury_propose_curator(c, &method->treasury_propose_curator))
+        break;
+    case 4619: /* module 18 call 11 */
+        CHECK_ERROR(_readMethod_treasury_unassign_curator(c, &method->treasury_unassign_curator))
+        break;
+    case 4620: /* module 18 call 12 */
+        CHECK_ERROR(_readMethod_treasury_accept_curator(c, &method->treasury_accept_curator))
+        break;
+    case 4621: /* module 18 call 13 */
+        CHECK_ERROR(_readMethod_treasury_award_bounty(c, &method->treasury_award_bounty))
+        break;
+    case 4622: /* module 18 call 14 */
+        CHECK_ERROR(_readMethod_treasury_claim_bounty(c, &method->treasury_claim_bounty))
+        break;
+    case 4623: /* module 18 call 15 */
+        CHECK_ERROR(_readMethod_treasury_close_bounty(c, &method->treasury_close_bounty))
+        break;
+    case 4624: /* module 18 call 16 */
+        CHECK_ERROR(_readMethod_treasury_extend_bounty_expiry(c, &method->treasury_extend_bounty_expiry))
+        break;
     case 4864: /* module 19 call 0 */
         CHECK_ERROR(_readMethod_claims_claim(c, &method->claims_claim))
         break;
@@ -1735,6 +1848,9 @@ parser_error_t _readMethodBasic(
         break;
     case 6145: /* module 24 call 1 */
         CHECK_ERROR(_readMethod_utility_as_derivative(c, &method->utility_as_derivative))
+        break;
+    case 6146: /* module 24 call 2 */
+        CHECK_ERROR(_readMethod_utility_batch_all(c, &method->utility_batch_all))
         break;
     case 6400: /* module 25 call 0 */
         CHECK_ERROR(_readMethod_identity_add_registrar(c, &method->identity_add_registrar))
@@ -2079,9 +2195,6 @@ parser_error_t _readMethod(
     case 2049: /* module 8 call 1 */
         CHECK_ERROR(_readMethod_session_purge_keys(c, &method->basic.session_purge_keys))
         break;
-    case 2304: /* module 9 call 0 */
-        CHECK_ERROR(_readMethod_finalitytracker_final_hint(c, &method->basic.finalitytracker_final_hint))
-        break;
     case 2560: /* module 10 call 0 */
         CHECK_ERROR(_readMethod_grandpa_report_equivocation(c, &method->basic.grandpa_report_equivocation))
         break;
@@ -2162,6 +2275,12 @@ parser_error_t _readMethod(
         break;
     case 3350: /* module 13 call 22 */
         CHECK_ERROR(_readMethod_democracy_enact_proposal(c, &method->basic.democracy_enact_proposal))
+        break;
+    case 3351: /* module 13 call 23 */
+        CHECK_ERROR(_readMethod_democracy_blacklist(c, &method->basic.democracy_blacklist))
+        break;
+    case 3352: /* module 13 call 24 */
+        CHECK_ERROR(_readMethod_democracy_cancel_proposal(c, &method->basic.democracy_cancel_proposal))
         break;
     case 3584: /* module 14 call 0 */
         CHECK_ERROR(_readMethod_council_set_members(c, &method->basic.council_set_members))
@@ -2262,6 +2381,33 @@ parser_error_t _readMethod(
     case 4615: /* module 18 call 7 */
         CHECK_ERROR(_readMethod_treasury_close_tip(c, &method->basic.treasury_close_tip))
         break;
+    case 4616: /* module 18 call 8 */
+        CHECK_ERROR(_readMethod_treasury_propose_bounty(c, &method->basic.treasury_propose_bounty))
+        break;
+    case 4617: /* module 18 call 9 */
+        CHECK_ERROR(_readMethod_treasury_approve_bounty(c, &method->basic.treasury_approve_bounty))
+        break;
+    case 4618: /* module 18 call 10 */
+        CHECK_ERROR(_readMethod_treasury_propose_curator(c, &method->basic.treasury_propose_curator))
+        break;
+    case 4619: /* module 18 call 11 */
+        CHECK_ERROR(_readMethod_treasury_unassign_curator(c, &method->basic.treasury_unassign_curator))
+        break;
+    case 4620: /* module 18 call 12 */
+        CHECK_ERROR(_readMethod_treasury_accept_curator(c, &method->basic.treasury_accept_curator))
+        break;
+    case 4621: /* module 18 call 13 */
+        CHECK_ERROR(_readMethod_treasury_award_bounty(c, &method->basic.treasury_award_bounty))
+        break;
+    case 4622: /* module 18 call 14 */
+        CHECK_ERROR(_readMethod_treasury_claim_bounty(c, &method->basic.treasury_claim_bounty))
+        break;
+    case 4623: /* module 18 call 15 */
+        CHECK_ERROR(_readMethod_treasury_close_bounty(c, &method->basic.treasury_close_bounty))
+        break;
+    case 4624: /* module 18 call 16 */
+        CHECK_ERROR(_readMethod_treasury_extend_bounty_expiry(c, &method->basic.treasury_extend_bounty_expiry))
+        break;
     case 4864: /* module 19 call 0 */
         CHECK_ERROR(_readMethod_claims_claim(c, &method->basic.claims_claim))
         break;
@@ -2282,6 +2428,9 @@ parser_error_t _readMethod(
         break;
     case 6145: /* module 24 call 1 */
         CHECK_ERROR(_readMethod_utility_as_derivative(c, &method->basic.utility_as_derivative))
+        break;
+    case 6146: /* module 24 call 2 */
+        CHECK_ERROR(_readMethod_utility_batch_all(c, &method->basic.utility_batch_all))
         break;
     case 6400: /* module 25 call 0 */
         CHECK_ERROR(_readMethod_identity_add_registrar(c, &method->basic.identity_add_registrar))
@@ -2496,8 +2645,6 @@ const char* _getMethod_ModuleName(uint8_t moduleIdx)
         return "Offences";
     case 8:
         return "Session";
-    case 9:
-        return "Finalitytracker";
     case 10:
         return "Grandpa";
     case 11:
@@ -2518,14 +2665,6 @@ const char* _getMethod_ModuleName(uint8_t moduleIdx)
         return "Treasury";
     case 19:
         return "Claims";
-    case 20:
-        return "Dummyparachains";
-    case 21:
-        return "Dummyattestations";
-    case 22:
-        return "Dummyslots";
-    case 23:
-        return "Dummyregistrar";
     case 24:
         return "Utility";
     case 25:
@@ -2652,8 +2791,6 @@ const char* _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx)
         return "Set keys";
     case 2049: /* module 8 call 1 */
         return "Purge keys";
-    case 2304: /* module 9 call 0 */
-        return "Final hint";
     case 2560: /* module 10 call 0 */
         return "Report equivocation";
     case 2561: /* module 10 call 1 */
@@ -2708,6 +2845,10 @@ const char* _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx)
         return "Remove other vote";
     case 3350: /* module 13 call 22 */
         return "Enact proposal";
+    case 3351: /* module 13 call 23 */
+        return "Blacklist";
+    case 3352: /* module 13 call 24 */
+        return "Cancel proposal";
     case 3584: /* module 14 call 0 */
         return "Set members";
     case 3585: /* module 14 call 1 */
@@ -2774,6 +2915,24 @@ const char* _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx)
         return "Tip";
     case 4615: /* module 18 call 7 */
         return "Close tip";
+    case 4616: /* module 18 call 8 */
+        return "Propose bounty";
+    case 4617: /* module 18 call 9 */
+        return "Approve bounty";
+    case 4618: /* module 18 call 10 */
+        return "Propose curator";
+    case 4619: /* module 18 call 11 */
+        return "Unassign curator";
+    case 4620: /* module 18 call 12 */
+        return "Accept curator";
+    case 4621: /* module 18 call 13 */
+        return "Award bounty";
+    case 4622: /* module 18 call 14 */
+        return "Claim bounty";
+    case 4623: /* module 18 call 15 */
+        return "Close bounty";
+    case 4624: /* module 18 call 16 */
+        return "Extend bounty expiry";
     case 4864: /* module 19 call 0 */
         return "Claim";
     case 4865: /* module 19 call 1 */
@@ -2788,6 +2947,8 @@ const char* _getMethod_Name(uint8_t moduleIdx, uint8_t callIdx)
         return "Batch";
     case 6145: /* module 24 call 1 */
         return "As derivative";
+    case 6146: /* module 24 call 2 */
+        return "Batch all";
     case 6400: /* module 25 call 0 */
         return "Add registrar";
     case 6401: /* module 25 call 1 */
@@ -3018,8 +3179,6 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* met
         return 2;
     case 2049: /* module 8 call 1 */
         return 0;
-    case 2304: /* module 9 call 0 */
-        return 1;
     case 2560: /* module 10 call 0 */
         return 2;
     case 2561: /* module 10 call 1 */
@@ -3074,6 +3233,10 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* met
         return 2;
     case 3350: /* module 13 call 22 */
         return 2;
+    case 3351: /* module 13 call 23 */
+        return 2;
+    case 3352: /* module 13 call 24 */
+        return 1;
     case 3584: /* module 14 call 0 */
         return 3;
     case 3585: /* module 14 call 1 */
@@ -3140,6 +3303,24 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* met
         return 2;
     case 4615: /* module 18 call 7 */
         return 1;
+    case 4616: /* module 18 call 8 */
+        return 2;
+    case 4617: /* module 18 call 9 */
+        return 1;
+    case 4618: /* module 18 call 10 */
+        return 3;
+    case 4619: /* module 18 call 11 */
+        return 1;
+    case 4620: /* module 18 call 12 */
+        return 1;
+    case 4621: /* module 18 call 13 */
+        return 2;
+    case 4622: /* module 18 call 14 */
+        return 1;
+    case 4623: /* module 18 call 15 */
+        return 1;
+    case 4624: /* module 18 call 16 */
+        return 2;
     case 4864: /* module 19 call 0 */
         return 2;
     case 4865: /* module 19 call 1 */
@@ -3154,6 +3335,8 @@ uint8_t _getMethod_NumItems(uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* met
         return 1;
     case 6145: /* module 24 call 1 */
         return 2;
+    case 6146: /* module 24 call 2 */
+        return 1;
     case 6400: /* module 25 call 0 */
         return 1;
     case 6401: /* module 25 call 1 */
@@ -3568,7 +3751,7 @@ const char* _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
     case 1550: /* module 6 call 14 */
         switch (itemIdx) {
         case 0:
-            return "Validators";
+            return "Invulnerables";
         default:
             return NULL;
         }
@@ -3670,13 +3853,6 @@ const char* _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
         }
     case 2049: /* module 8 call 1 */
         switch (itemIdx) {
-        default:
-            return NULL;
-        }
-    case 2304: /* module 9 call 0 */
-        switch (itemIdx) {
-        case 0:
-            return "Hint";
         default:
             return NULL;
         }
@@ -3890,6 +4066,22 @@ const char* _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
             return "Proposal hash";
         case 1:
             return "Index";
+        default:
+            return NULL;
+        }
+    case 3351: /* module 13 call 23 */
+        switch (itemIdx) {
+        case 0:
+            return "Proposal hash";
+        case 1:
+            return "Maybe ref index";
+        default:
+            return NULL;
+        }
+    case 3352: /* module 13 call 24 */
+        switch (itemIdx) {
+        case 0:
+            return "Prop index";
         default:
             return NULL;
         }
@@ -4176,6 +4368,79 @@ const char* _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
         default:
             return NULL;
         }
+    case 4616: /* module 18 call 8 */
+        switch (itemIdx) {
+        case 0:
+            return "Value";
+        case 1:
+            return "Description";
+        default:
+            return NULL;
+        }
+    case 4617: /* module 18 call 9 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        default:
+            return NULL;
+        }
+    case 4618: /* module 18 call 10 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        case 1:
+            return "Curator";
+        case 2:
+            return "Fee";
+        default:
+            return NULL;
+        }
+    case 4619: /* module 18 call 11 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        default:
+            return NULL;
+        }
+    case 4620: /* module 18 call 12 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        default:
+            return NULL;
+        }
+    case 4621: /* module 18 call 13 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        case 1:
+            return "Beneficiary";
+        default:
+            return NULL;
+        }
+    case 4622: /* module 18 call 14 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        default:
+            return NULL;
+        }
+    case 4623: /* module 18 call 15 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        default:
+            return NULL;
+        }
+    case 4624: /* module 18 call 16 */
+        switch (itemIdx) {
+        case 0:
+            return "Bounty id";
+        case 1:
+            return "Remark";
+        default:
+            return NULL;
+        }
     case 4864: /* module 19 call 0 */
         switch (itemIdx) {
         case 0:
@@ -4240,6 +4505,13 @@ const char* _getMethod_ItemName(uint8_t moduleIdx, uint8_t callIdx, uint8_t item
             return "Index";
         case 1:
             return "Call";
+        default:
+            return NULL;
+        }
+    case 6146: /* module 24 call 2 */
+        switch (itemIdx) {
+        case 0:
+            return "Calls";
         default:
             return NULL;
         }
@@ -4906,7 +5178,7 @@ parser_error_t _getMethod_ItemValue(
     case 256: /* module 1 call 0 */
         switch (itemIdx) {
         case 0: /* babe_report_equivocation - equivocation_proof */;
-            return _toStringBabeEquivocationProof(
+            return _toStringEquivocationProof(
                 &m->basic.babe_report_equivocation.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4921,7 +5193,7 @@ parser_error_t _getMethod_ItemValue(
     case 257: /* module 1 call 1 */
         switch (itemIdx) {
         case 0: /* babe_report_equivocation_unsigned - equivocation_proof */;
-            return _toStringBabeEquivocationProof(
+            return _toStringEquivocationProof(
                 &m->basic.babe_report_equivocation_unsigned.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5225,9 +5497,9 @@ parser_error_t _getMethod_ItemValue(
         }
     case 1550: /* module 6 call 14 */
         switch (itemIdx) {
-        case 0: /* staking_set_invulnerables - validators */;
+        case 0: /* staking_set_invulnerables - invulnerables */;
             return _toStringVecAccountId(
-                &m->basic.staking_set_invulnerables.validators,
+                &m->basic.staking_set_invulnerables.invulnerables,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -5403,20 +5675,10 @@ parser_error_t _getMethod_ItemValue(
         default:
             return parser_no_data;
         }
-    case 2304: /* module 9 call 0 */
-        switch (itemIdx) {
-        case 0: /* finalitytracker_final_hint - hint */;
-            return _toStringCompactBlockNumber(
-                &m->basic.finalitytracker_final_hint.hint,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
     case 2560: /* module 10 call 0 */
         switch (itemIdx) {
         case 0: /* grandpa_report_equivocation - equivocation_proof */;
-            return _toStringGrandpaEquivocationProof(
+            return _toStringEquivocationProof(
                 &m->basic.grandpa_report_equivocation.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5431,7 +5693,7 @@ parser_error_t _getMethod_ItemValue(
     case 2561: /* module 10 call 1 */
         switch (itemIdx) {
         case 0: /* grandpa_report_equivocation_unsigned - equivocation_proof */;
-            return _toStringGrandpaEquivocationProof(
+            return _toStringEquivocationProof(
                 &m->basic.grandpa_report_equivocation_unsigned.equivocation_proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5738,6 +6000,31 @@ parser_error_t _getMethod_ItemValue(
         case 1: /* democracy_enact_proposal - index */;
             return _toStringReferendumIndex(
                 &m->basic.democracy_enact_proposal.index,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 3351: /* module 13 call 23 */
+        switch (itemIdx) {
+        case 0: /* democracy_blacklist - proposal_hash */;
+            return _toStringHash(
+                &m->basic.democracy_blacklist.proposal_hash,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* democracy_blacklist - maybe_ref_index */;
+            return _toStringOptionReferendumIndex(
+                &m->basic.democracy_blacklist.maybe_ref_index,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 3352: /* module 13 call 24 */
+        switch (itemIdx) {
+        case 0: /* democracy_cancel_proposal - prop_index */;
+            return _toStringCompactPropIndex(
+                &m->basic.democracy_cancel_proposal.prop_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6171,7 +6458,7 @@ parser_error_t _getMethod_ItemValue(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* treasury_tip_new - tip_value */;
-            return _toStringBalanceOf(
+            return _toStringCompactBalanceOf(
                 &m->basic.treasury_tip_new.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6186,7 +6473,7 @@ parser_error_t _getMethod_ItemValue(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* treasury_tip - tip_value */;
-            return _toStringBalanceOf(
+            return _toStringCompactBalanceOf(
                 &m->basic.treasury_tip.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6198,6 +6485,121 @@ parser_error_t _getMethod_ItemValue(
         case 0: /* treasury_close_tip - hash */;
             return _toStringHash(
                 &m->basic.treasury_close_tip.hash,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4616: /* module 18 call 8 */
+        switch (itemIdx) {
+        case 0: /* treasury_propose_bounty - value */;
+            return _toStringCompactBalanceOf(
+                &m->basic.treasury_propose_bounty.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* treasury_propose_bounty - description */;
+            return _toStringBytes(
+                &m->basic.treasury_propose_bounty.description,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4617: /* module 18 call 9 */
+        switch (itemIdx) {
+        case 0: /* treasury_approve_bounty - bounty_id */;
+            return _toStringCompactProposalIndex(
+                &m->basic.treasury_approve_bounty.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4618: /* module 18 call 10 */
+        switch (itemIdx) {
+        case 0: /* treasury_propose_curator - bounty_id */;
+            return _toStringCompactProposalIndex(
+                &m->basic.treasury_propose_curator.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* treasury_propose_curator - curator */;
+            return _toStringLookupSource(
+                &m->basic.treasury_propose_curator.curator,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* treasury_propose_curator - fee */;
+            return _toStringCompactBalanceOf(
+                &m->basic.treasury_propose_curator.fee,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4619: /* module 18 call 11 */
+        switch (itemIdx) {
+        case 0: /* treasury_unassign_curator - bounty_id */;
+            return _toStringCompactProposalIndex(
+                &m->basic.treasury_unassign_curator.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4620: /* module 18 call 12 */
+        switch (itemIdx) {
+        case 0: /* treasury_accept_curator - bounty_id */;
+            return _toStringCompactProposalIndex(
+                &m->basic.treasury_accept_curator.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4621: /* module 18 call 13 */
+        switch (itemIdx) {
+        case 0: /* treasury_award_bounty - bounty_id */;
+            return _toStringCompactProposalIndex(
+                &m->basic.treasury_award_bounty.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* treasury_award_bounty - beneficiary */;
+            return _toStringLookupSource(
+                &m->basic.treasury_award_bounty.beneficiary,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4622: /* module 18 call 14 */
+        switch (itemIdx) {
+        case 0: /* treasury_claim_bounty - bounty_id */;
+            return _toStringCompactBountyIndex(
+                &m->basic.treasury_claim_bounty.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4623: /* module 18 call 15 */
+        switch (itemIdx) {
+        case 0: /* treasury_close_bounty - bounty_id */;
+            return _toStringCompactBountyIndex(
+                &m->basic.treasury_close_bounty.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4624: /* module 18 call 16 */
+        switch (itemIdx) {
+        case 0: /* treasury_extend_bounty_expiry - bounty_id */;
+            return _toStringCompactBountyIndex(
+                &m->basic.treasury_extend_bounty_expiry.bounty_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* treasury_extend_bounty_expiry - _remark */;
+            return _toStringBytes(
+                &m->basic.treasury_extend_bounty_expiry._remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6313,6 +6715,16 @@ parser_error_t _getMethod_ItemValue(
         case 1: /* utility_as_derivative - call */;
             return _toStringCall(
                 &m->basic.utility_as_derivative.call,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 6146: /* module 24 call 2 */
+        switch (itemIdx) {
+        case 0: /* utility_batch_all - calls */;
+            return _toStringVecCall(
+                &m->basic.utility_batch_all.calls,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6436,7 +6848,7 @@ parser_error_t _getMethod_ItemValue(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* identity_provide_judgement - judgement */;
-            return _toStringIdentityJudgement(
+            return _toStringJudgement(
                 &m->basic.identity_provide_judgement.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6626,7 +7038,7 @@ parser_error_t _getMethod_ItemValue(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* society_judge_suspended_candidate - judgement */;
-            return _toStringSocietyJudgement(
+            return _toStringJudgement(
                 &m->basic.society_judge_suspended_candidate.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
