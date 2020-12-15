@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <zxmacros.h>
 #include "zbuffer.h"
+#include "app_mode.h"
 #include "parser.h"
 #include "coin.h"
 #include "coin_ss58.h"
@@ -40,7 +41,7 @@ void __assert_fail(const char * assertion, const char * file, unsigned int line,
 
 #define FIELD_METHOD        0
 #define FIELD_NETWORK       1
-#define FIELD_ONCE          2
+#define FIELD_NONCE         2
 #define FIELD_TIP           3
 #define FIELD_ERA_PHASE     4
 #define FIELD_ERA_PERIOD    5
@@ -101,6 +102,9 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
             if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
                 return parser_ok;
             }
+            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
+                return parser_ok;
+            }
             if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_NOMINATE) {
                 pd_VecLookupSource_t *targets = &ctx->tx_obj->method.basic.staking_nominate.targets;
                 CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
@@ -114,6 +118,9 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
                 return parser_ok;
             }
             if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_VALIDATE) {
+                return parser_ok;
+            }
+            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
                 return parser_ok;
             }
         }
@@ -198,7 +205,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                               outVal, outValLen,
                               pageIdx, pageCount);
                 break;
-            case FIELD_ONCE:
+            case FIELD_NONCE:
                 snprintf(outKey, outKeyLen, "Nonce");
                 _toStringCompactIndex(&ctx->tx_obj->nonce,
                                       outVal, outValLen,
