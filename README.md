@@ -65,7 +65,7 @@ then run:
 - You will need python 3 and then run
     - `make deps`
 
-- This project requires Ledger firmware 1.6
+- This project requires Ledger firmware 1.6.1
     - The current repository keeps track of Ledger's SDK but it is possible to override it by changing the git submodule.
 
 *Warning*: Some IDEs may not use the same python interpreter or virtual enviroment as the one you used when running `pip`.
