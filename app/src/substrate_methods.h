@@ -21,8 +21,8 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define PD_CALL_SYSTEM 0
 #define PD_CALL_BABE 1
@@ -56,7 +56,6 @@ extern "C" {
 #define PD_CALL_SCHEDULER 29
 #define PD_CALL_PROXY 30
 #define PD_CALL_MULTISIG 31
-
 
 #define PD_CALL_SYSTEM_FILL_BLOCK 0
 typedef struct {
@@ -1048,7 +1047,6 @@ typedef struct {
     pd_u8_array_32_t call_hash;
 } pd_multisig_cancel_as_multi_t;
 
-
 typedef union {
     pd_system_fill_block_t system_fill_block;
     pd_system_remark_t system_remark;
@@ -1229,7 +1227,7 @@ typedef struct {
     pd_CallIndex_t callIndex;
     pd_MethodBasic_t method;
     // Track proposal buffer
-    const uint8_t *_ptr;
+    const uint8_t* _ptr;
     uint16_t _len;
 } pd_Proposal_t;
 
@@ -1258,7 +1256,6 @@ typedef struct {
     pd_Proposal_t proposal;
     pd_Compactu32_t length_bound;
 } pd_technicalcommittee_propose_t;
-
 
 typedef union {
     pd_council_execute_t council_execute;
