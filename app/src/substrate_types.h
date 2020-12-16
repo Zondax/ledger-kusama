@@ -110,11 +110,6 @@ typedef struct {
 } pd_Conviction_t;
 
 typedef struct {
-    pd_bool_t aye;
-    pd_Conviction_t conviction;
-} pd_Vote_t;
-
-typedef struct {
     const uint8_t* _ptr;
 } pd_u8_array_20_t;
 
@@ -142,35 +137,25 @@ typedef uint32_t pd_BlockNumber_t; // u32
 // Based
 // https://github.com/paritytech/substrate/blob/master/node/primitives/src/lib.rs
 
-typedef compactInt_t pd_CompactAssignments_t;
+typedef struct {
+    uint8_t type;
+    const uint8_t* _ptr;
+    uint8_t _len;
+} pd_Data_t;
 
-typedef compactInt_t pd_CompactBlockNumber_t;
+typedef struct {
+    pd_Data_t data1;
+    pd_Data_t data2;
+} pd_TupleDataData_t;
 
-typedef compactInt_t pd_CompactEraIndex_t;
-
-typedef compactInt_t pd_CompactMemberCount_t;
-
-typedef compactInt_t pd_CompactMoment_t;
-
-typedef compactInt_t pd_CompactPerBill_t;
-
-typedef compactInt_t pd_CompactPropIndex_t;
-
-typedef compactInt_t pd_CompactProposalIndex_t;
-
-typedef compactInt_t pd_CompactReferendumIndex_t;
-
-typedef compactInt_t pd_CompactRegistrarIndex_t;
-
-typedef compactInt_t pd_CompactWeight_t;
+typedef struct {
+    pd_bool_t aye;
+    pd_Conviction_t conviction;
+} pd_Vote_t;
 
 typedef struct {
     const uint8_t* _ptr;
 } pd_AccountId_t;
-
-typedef struct {
-    uint32_t value;
-} pd_AccountIndex_t;
 
 typedef struct {
     pd_BalanceOf_t aye;
@@ -183,103 +168,18 @@ typedef struct {
 } pd_AccountVoteStandard_t;
 
 typedef struct {
-    uint8_t value;
-    union {
-        pd_AccountVoteStandard_t voteStandard;
-        pd_AccountVoteSplit_t voteSplit;
-    };
-} pd_AccountVote_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BabeEquivocationProof_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-} pd_Bytes_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_CallHashOf_t;
-
-typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_Call_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    pd_u32_t digest_interval;
+    pd_u32_t digest_levels;
 } pd_ChangesTrieConfiguration_t;
 
 typedef struct {
-    uint8_t type;
-    const uint8_t* _ptr;
-    uint8_t _len;
-} pd_Data_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_DefunctVoter_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_EcdsaSignature_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ElectionScore_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ElectionSize_t;
-
-typedef struct {
-    uint32_t value;
-} pd_EraIndex_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_EthereumAddress_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_GrandpaEquivocationProof_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_IdentityFields_t;
-
-typedef struct {
-    // https://github.com/paritytech/substrate/blob/effe489951d1edab9d34846b1eefdfaf9511dab9/frame/identity/src/lib.rs#L276
-    pd_VecTupleDataData_t additional;
-    pd_Data_t display;
-    pd_Data_t legal;
-    pd_Data_t web;
-    pd_Data_t riot;
-    pd_Data_t email;
-    pd_Optionu8_array_20_t pgp_fingerprint;
-    pd_Data_t image;
-    pd_Data_t twitter;
-} pd_IdentityInfo_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_IdentityJudgement_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_KeyOwnerProof_t;
+    compactInt_t value;
+} pd_CompactPerBill_t;
 
 typedef struct {
     const uint8_t* _ptr;
@@ -290,32 +190,8 @@ typedef struct {
 } pd_LookupSource_t;
 
 typedef struct {
-    uint32_t value;
-} pd_MemberCount_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_OpaqueCall_t;
-
-typedef struct {
-    uint32_t value;
-} pd_Perbill_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Percent_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint64_t value;
 } pd_Period_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Priority_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -327,31 +203,15 @@ typedef struct {
 } pd_ReferendumIndex_t;
 
 typedef struct {
-    uint32_t value;
-} pd_RegistrarIndex_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Renouncing_t;
-
-typedef struct {
-    uint8_t value;
-} pd_RewardDestination_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_Signature_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_SocietyJudgement_t;
-
-typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_StatementKind_t;
+
+typedef struct {
+    pd_u32_t dependency_id;
+    uint8_t weight;
+    pd_bool_t is_exclusive;
+} pd_StreamDependency_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -370,14 +230,44 @@ typedef struct {
 } pd_TupleBalanceOfBalanceOfBlockNumber_t;
 
 typedef struct {
-    pd_Data_t data1;
-    pd_Data_t data2;
-} pd_TupleDataData_t;
+    uint16_t value;
+} pd_ValidatorIndex_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ValidatorIndex_t;
+    uint8_t value;
+    union {
+        pd_AccountVoteStandard_t voteStandard;
+        pd_AccountVoteSplit_t voteSplit;
+    };
+} pd_AccountVote_t;
+
+typedef struct {
+    // https://github.com/paritytech/substrate/blob/effe489951d1edab9d34846b1eefdfaf9511dab9/frame/identity/src/lib.rs#L276
+    pd_VecTupleDataData_t additional;
+    pd_Data_t display;
+    pd_Data_t legal;
+    pd_Data_t web;
+    pd_Data_t riot;
+    pd_Data_t email;
+    pd_Optionu8_array_20_t pgp_fingerprint;
+    pd_Data_t image;
+    pd_Data_t twitter;
+} pd_IdentityInfo_t;
+
+typedef struct {
+    uint8_t some;
+    pd_ChangesTrieConfiguration_t contained;
+} pd_OptionChangesTrieConfiguration_t;
+
+typedef struct {
+    uint8_t some;
+    pd_TupleBalanceOfBalanceOfBlockNumber_t contained;
+} pd_OptionTupleBalanceOfBalanceOfBlockNumber_t;
+
+typedef struct {
+    uint32_t stream_id;
+    pd_StreamDependency_t dependency;
+} pd_Priority_t;
 
 typedef struct {
     pd_CompactPerBill_t commission;
@@ -390,13 +280,151 @@ typedef struct {
 } pd_VestingInfo_t;
 
 typedef struct {
+    uint32_t value;
+} pd_AccountIndex_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+} pd_Bytes_t;
+
+typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Weight_t;
+} pd_CallHashOf_t;
+
+typedef compactInt_t pd_CompactAssignments_t;
+
+typedef compactInt_t pd_CompactBlockNumber_t;
+
+typedef compactInt_t pd_CompactBountyIndex_t;
+
+typedef compactInt_t pd_CompactEraIndex_t;
+
+typedef compactInt_t pd_CompactMemberCount_t;
+
+typedef compactInt_t pd_CompactMoment_t;
+
+typedef compactInt_t pd_CompactPropIndex_t;
+
+typedef compactInt_t pd_CompactProposalIndex_t;
+
+typedef compactInt_t pd_CompactReferendumIndex_t;
+
+typedef compactInt_t pd_CompactRegistrarIndex_t;
+
+typedef compactInt_t pd_CompactWeight_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_DefunctVoter_t;
 
 typedef struct {
     const uint8_t* _ptr;
-} pd_u8_array_32_t;
+} pd_EcdsaSignature_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ElectionScore_t;
+
+typedef struct {
+    compactInt_t validators;
+    compactInt_t nominators;
+} pd_ElectionSize_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_EquivocationProof_t;
+
+typedef struct {
+    uint32_t value;
+} pd_EraIndex_t;
+
+typedef struct {
+    const uint8_t* _ptr;
+} pd_EthereumAddress_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_IdentityFields_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Judgement_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_KeyOwnerProof_t;
+
+typedef struct {
+    uint32_t value;
+} pd_MemberCount_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_OpaqueCall_t;
+
+typedef struct {
+    uint8_t some;
+    pd_AccountId_t contained;
+} pd_OptionAccountId_t;
+
+typedef struct {
+    uint8_t some;
+    pd_Period_t contained;
+} pd_OptionPeriod_t;
+
+typedef struct {
+    uint8_t some;
+    pd_ProxyType_t contained;
+} pd_OptionProxyType_t;
+
+typedef struct {
+    uint8_t some;
+    pd_ReferendumIndex_t contained;
+} pd_OptionReferendumIndex_t;
+
+typedef struct {
+    uint8_t some;
+    pd_StatementKind_t contained;
+} pd_OptionStatementKind_t;
+
+typedef struct {
+    uint8_t some;
+    pd_Timepoint_t contained;
+} pd_OptionTimepoint_t;
+
+typedef struct {
+    uint32_t value;
+} pd_Perbill_t;
+
+typedef struct {
+    compactInt_t value;
+} pd_Percent_t;
+
+typedef struct {
+    uint32_t value;
+} pd_RegistrarIndex_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Renouncing_t;
+
+typedef struct {
+    uint8_t value;
+} pd_RewardDestination_t;
+
+typedef struct {
+    const uint8_t* _ptr;
+} pd_Signature_t;
 
 typedef struct {
     uint64_t _len;
@@ -453,39 +481,12 @@ typedef struct {
 } pd_Vecu32_t;
 
 typedef struct {
-    uint8_t some;
-    pd_AccountId_t contained;
-} pd_OptionAccountId_t;
+    uint64_t value;
+} pd_Weight_t;
 
 typedef struct {
-    uint8_t some;
-    pd_ChangesTrieConfiguration_t contained;
-} pd_OptionChangesTrieConfiguration_t;
-
-typedef struct {
-    uint8_t some;
-    pd_Period_t contained;
-} pd_OptionPeriod_t;
-
-typedef struct {
-    uint8_t some;
-    pd_ProxyType_t contained;
-} pd_OptionProxyType_t;
-
-typedef struct {
-    uint8_t some;
-    pd_StatementKind_t contained;
-} pd_OptionStatementKind_t;
-
-typedef struct {
-    uint8_t some;
-    pd_Timepoint_t contained;
-} pd_OptionTimepoint_t;
-
-typedef struct {
-    uint8_t some;
-    pd_TupleBalanceOfBalanceOfBlockNumber_t contained;
-} pd_OptionTupleBalanceOfBalanceOfBlockNumber_t;
+    const uint8_t* _ptr;
+} pd_u8_array_32_t;
 
 // Types with dependencies
 
