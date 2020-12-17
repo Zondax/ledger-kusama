@@ -71,6 +71,16 @@ __Z_INLINE zxerr_t app_fill_address(key_kind_e addressKind) {
     return zxerr_ok;
 }
 
+__Z_INLINE key_kind_e get_key_type(uint8_t num){
+    if (num == 0x00){
+        return key_ed22519;
+    }else if (num == 0x01){
+        return key_sr25519;
+    }else{
+        return 0xff;
+    }
+}
+
 __Z_INLINE void app_reply_error() {
     set_code(G_io_apdu_buffer, 0, APDU_CODE_DATA_INVALID);
     io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);

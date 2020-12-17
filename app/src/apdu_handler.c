@@ -157,21 +157,25 @@ __Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *t
     THROW(APDU_CODE_OK);
 }
 
-__Z_INLINE void handleGetAddrEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     extractHDPath(rx, OFFSET_DATA);
 
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
 
+    key_kind_e key_type = get_key_type(addr_type);
+
+    zxerr_t zxerr = app_fill_address(key_type);
+    if(zxerr != zxerr_ok){
+        *tx = 0;
+        THROW(APDU_CODE_DATA_INVALID);
+    }
     if (requireConfirmation) {
-        app_fill_address(key_ed22519);
-
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
         view_review_show();
-
         *flags |= IO_ASYNCH_REPLY;
         return;
     }
-    app_fill_address(key_ed22519);
     *tx = action_addrResponseLen;
     THROW(APDU_CODE_OK);
 }
@@ -385,7 +389,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleGetAddrEd25519(flags, tx, rx);
+                    handleGetAddr(flags, tx, rx);
                     break;
                 }
 

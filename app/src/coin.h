@@ -26,6 +26,7 @@ extern "C" {
 #define HDPATH_1_DEFAULT     (0x80000000 | 0x1b2)       // 434
 
 #define PK_LEN_ED25519       32u
+#define PK_LEN_SR25519       32u
 
 typedef enum {
     key_ed22519     = 0,

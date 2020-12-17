@@ -199,11 +199,31 @@ zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t buf
             return 0;
    }
     MEMZERO(buffer, bufferLen);
-    crypto_extractPublicKey(addressKind, hdPath, buffer, bufferLen);
-    zemu_log_stack("pk extracted");
-    size_t outLen = crypto_SS58EncodePubkey(buffer + PK_LEN_ED25519,
-                                            bufferLen - PK_LEN_ED25519,
+    CHECK_ZXERR(crypto_extractPublicKey(addressKind, hdPath, buffer, bufferLen));
+
+    uint16_t pklen = 0;
+    switch(addressKind){
+        case key_ed22519: {
+            pklen = PK_LEN_ED25519;
+            break;
+        }
+        case key_sr25519: {
+            pklen = PK_LEN_SR25519;
+            break;
+        }
+        default: {
+            MEMZERO(buffer, bufferLen);
+            return zxerr_unknown;
+        }
+    }
+
+    size_t outLen = crypto_SS58EncodePubkey(buffer + pklen,
+                                            bufferLen - pklen,
                                             PK_ADDRESS_TYPE, buffer);
+    if(outLen == 0){
+        MEMZERO(buffer, bufferLen);
+        return zxerr_unknown;
+    }
 
     *addrResponseLen = PK_LEN_ED25519 + outLen;
     return zxerr_ok;
