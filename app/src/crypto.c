@@ -158,7 +158,8 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
         N_sr25519_signdata.signdataLen = messageLen;
     }
     MEMZERO(buffer,bufferLen);
-    uint8_t *privateKeyData = buffer;
+    uint8_t privateKeyData[64];
+    MEMZERO(privateKeyData, 64);
     os_perso_derive_node_bip32_seed_key(
             HDW_NORMAL,
             CX_CURVE_Ed25519,
@@ -169,7 +170,8 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
             NULL,
             0);
 
-    uint8_t *pubkey = buffer + 64;
+    uint8_t pubkey[32];
+    MEMZERO(pubkey, 32);
     get_sr25519_pk(privateKeyData, pubkey);
     MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, 64);
     MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, 32);
