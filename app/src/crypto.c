@@ -160,7 +160,7 @@ zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMax
             return zxerr_unknown;
         };
         FINALLY {
-            MEMZERO(signature + signatureLength, signatureMaxlen - signatureLength);
+            MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
             MEMZERO(privateKeyData, 64);
         }
     }
