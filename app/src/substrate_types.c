@@ -945,7 +945,9 @@ parser_error_t _toStringCompactBalanceOf(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactBalance(v, outValue, outValueLen, pageIdx, pageCount);
+    CHECK_ERROR(_toStringCompactBalance(v, outValue, outValueLen, pageIdx, pageCount))
+    number_inplace_trimming(outValue);
+    return parser_ok;
 }
 
 parser_error_t _toStringCompactPerBill(
