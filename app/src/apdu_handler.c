@@ -176,8 +176,8 @@ __Z_INLINE void handleGetAddrEd25519(volatile uint32_t *flags, volatile uint32_t
         *flags |= IO_ASYNCH_REPLY;
         return;
     }
-
-    *tx = app_fill_address(key_ed22519);
+    app_fill_address(key_ed22519);
+    *tx = action_addrResponseLen;
     THROW(APDU_CODE_OK);
 }
 
@@ -365,7 +365,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleGetAddr(flags, tx, rx);
+                    handleGetAddrEd25519(flags, tx, rx);
                     break;
                 }
 

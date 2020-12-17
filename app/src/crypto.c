@@ -52,9 +52,11 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
                     cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
                     cx_ecfp_generate_pair(CX_CURVE_Ed25519, &cx_publicKey, &cx_privateKey, 1);
+                    break;
                 }
                 case key_sr25519:
                     get_sr25519_pk(privateKeyData, pubKey);
+                    break;
                 default:
                     return zxerr_invalid_crypto_settings;
             }
@@ -131,6 +133,7 @@ zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMax
                                                     signatureMaxlen - 1,
                                                     &info);
                     MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
+                    break;
                 }
 
                 case key_sr25519: {
@@ -143,9 +146,11 @@ zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMax
                     get_sr25519_pk(privateKeyData, pubkey);
                     sign_sr25519(privateKeyData, pubkey, NULL, 0, toSign,messageLen, signature, signature + 32);
                     signatureLength = 64;
+                    break;
                 }
                 default: {
                     *signatureLen = 0;
+                    CLOSE_TRY;
                     return zxerr_invalid_crypto_settings;
                 }
             }
@@ -170,12 +175,11 @@ zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t buf
    }
     MEMZERO(buffer, bufferLen);
     crypto_extractPublicKey(addressKind, hdPath, buffer, bufferLen);
-
+    zemu_log_stack("pk extracted");
     size_t outLen = crypto_SS58EncodePubkey(buffer + PK_LEN_ED25519,
                                             bufferLen - PK_LEN_ED25519,
                                             PK_ADDRESS_TYPE, buffer);
 
     *addrResponseLen = PK_LEN_ED25519 + outLen;
-
-    return PK_LEN_ED25519 + outLen;
+    return zxerr_ok;
 }
