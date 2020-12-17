@@ -49,7 +49,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
 
 
             switch (addressKind) {
-                case key_ed22519: {
+                case key_ed25519: {
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
                     cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
                     cx_ecfp_generate_pair(CX_CURVE_Ed25519, &cx_publicKey, &cx_privateKey, 1);
@@ -203,7 +203,7 @@ zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t buf
 
     uint16_t pklen = 0;
     switch(addressKind){
-        case key_ed22519: {
+        case key_ed25519: {
             pklen = PK_LEN_ED25519;
             break;
         }

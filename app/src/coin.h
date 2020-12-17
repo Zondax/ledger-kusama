@@ -29,7 +29,7 @@ extern "C" {
 #define PK_LEN_SR25519       32u
 
 typedef enum {
-    key_ed22519     = 0,
+    key_ed25519     = 0,
     key_sr25519     = 1
 } key_kind_e;
 

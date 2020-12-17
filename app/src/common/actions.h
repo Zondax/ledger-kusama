@@ -73,7 +73,7 @@ __Z_INLINE zxerr_t app_fill_address(key_kind_e addressKind) {
 
 __Z_INLINE key_kind_e get_key_type(uint8_t num){
     if (num == 0x00){
-        return key_ed22519;
+        return key_ed25519;
     }else if (num == 0x01){
         return key_sr25519;
     }else{
