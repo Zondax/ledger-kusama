@@ -26,6 +26,20 @@ extern "C" {
 #include <sigutils.h>
 #include "zxerror.h"
 
+// Flash
+typedef struct {
+    uint8_t sk[64];
+    uint8_t pk[32];
+    uint8_t digest[32];
+    uint8_t signature[64];
+} sr25519_signdata_t;
+
+#if defined(TARGET_NANOS) || defined(TARGET_NANOX)
+sr25519_signdata_t NV_CONST N_srdata_impl __attribute__ ((aligned(64)));
+#define N_sr25519_signdata (*(NV_VOLATILE sr25519_signdata_t *)PIC(&N_srdata_impl))
+#endif
+
+
 //#define SS58_BLAKE_PREFIX  (const unsigned char *) "SS58PRE"
 //#define SS58_BLAKE_PREFIX_LEN 7
 #define SS58_ADDRESS_MAX_LEN 60u
@@ -42,9 +56,13 @@ uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
 
 zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen);
 
-zxerr_t crypto_sign(key_kind_e keytype, uint8_t *signature, uint16_t signatureMaxlen,
+zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
                     const uint8_t *message, uint16_t messageLen,
                     uint16_t *signatureLen);
+
+zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
+                            const uint8_t *message, uint16_t messageLen,
+                            uint16_t *signatureLen);
 
 #ifdef __cplusplus
 }

@@ -24,22 +24,22 @@
 #include "zxerror.h"
 
 extern uint16_t action_addrResponseLen;
+extern uint16_t action_signResponseLen;
 
-__Z_INLINE void app_sign() {
+
+__Z_INLINE zxerr_t app_sign_standalone() {
     const uint8_t *message = tx_get_buffer();
     const uint16_t messageLength = tx_get_buffer_length();
-
     uint16_t replyLen = 0;
-    const zxerr_t err = crypto_sign(key_ed22519,G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3,
+    zxerr_t err = crypto_sign(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3,
                                     message, messageLength, &replyLen);
+    return err;
+}
 
-    if (err != zxerr_ok || replyLen == 0) {
-        set_code(G_io_apdu_buffer, 0, APDU_CODE_SIGN_VERIFY_ERROR);
-        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
-    } else {
-        set_code(G_io_apdu_buffer, replyLen, APDU_CODE_OK);
-        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, replyLen + 2);
-    }
+__Z_INLINE void app_sign() {
+    MEMCPY(G_io_apdu_buffer, &N_sr25519_signdata.signature, 64);
+    set_code(G_io_apdu_buffer, 64, APDU_CODE_OK);
+    io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 64 + 2);
 }
 
 __Z_INLINE void app_reject() {

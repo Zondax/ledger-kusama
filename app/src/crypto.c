@@ -18,6 +18,7 @@
 #include "base58.h"
 #include "coin.h"
 #include "cx.h"
+#include "rslib.h"
 
 uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
@@ -78,9 +79,9 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
     return zxerr_ok;
 }
 
-zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMaxlen,
-                    const uint8_t *message, uint16_t messageLen,
-                    uint16_t *signatureLen) {
+zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
+                            const uint8_t *message, uint16_t messageLen,
+                            uint16_t *signatureLen) {
     const uint8_t *toSign = message;
     uint8_t messageDigest[32];
 
@@ -112,9 +113,6 @@ zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMax
                     NULL,
                     0);
 
-
-            switch(keytype) {
-                case key_ed22519: {
                     cx_ecfp_private_key_t cx_privateKey;
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
 
@@ -131,39 +129,68 @@ zxerr_t crypto_sign(key_kind_e keytype,uint8_t *signature, uint16_t signatureMax
                                                     signatureMaxlen - 1,
                                                     &info);
                     MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
-                    break;
-                }
 
-                case key_sr25519: {
-                    if (signatureMaxlen < MIN_BUFFER_LENGTH){
+                }
+    CATCH_ALL {
+        *signatureLen = 0;
+        return zxerr_unknown;
+    };
+    FINALLY {
+        MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
+    }
+}
+END_TRY;
+    return zxerr_ok;
+}
+
+zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
+                    const uint8_t *message, uint16_t messageLen,
+                    uint16_t *signatureLen) {
+
+    BEGIN_TRY
+    {
+        TRY
+        {
+            if (signatureMaxlen < MIN_BUFFER_LENGTH){
                         return zxerr_invalid_crypto_settings;
                     }
 
-                    uint8_t pubkey[32];
+                    if (messageLen > 0) {
+                        // Hash it
+                        uint8_t *messageDigest = signature + 220;
+                        cx_blake2b_t *ctx = (cx_blake2b_t *) signature;
+                        cx_blake2b_init(ctx, 256);
+                        cx_hash(&ctx->header, CX_LAST, message, messageLen, messageDigest, 32);
+                        MEMCPY_NV(&N_sr25519_signdata.digest, messageDigest, 32);
+                    }
+                    uint8_t *privateKeyData = signature;
+                    // Generate keys
+                    os_perso_derive_node_bip32_seed_key(
+                            HDW_NORMAL,
+                            CX_CURVE_Ed25519,
+                            hdPath,
+                            HDPATH_LEN_DEFAULT,
+                            privateKeyData,
+                            NULL,
+                            NULL,
+                            0);
+
+                    uint8_t *pubkey = signature + 64;
                     *signature = PREFIX_SIGNATURE_TYPE_SR25519;
                     get_sr25519_pk(privateKeyData, pubkey);
-                    sign_sr25519(privateKeyData, pubkey, NULL, 0, toSign,messageLen, signature, signature + 32);
-                    signatureLength = 64;
-                    break;
+                    MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, 64);
+                    MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, 32);
+                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.digest,32, signature, signature + 32);
+                    MEMCPY_NV(&N_sr25519_signdata.signature, signature, 64);
                 }
-                default: {
-                    *signatureLen = 0;
-                    CLOSE_TRY;
-                    return zxerr_invalid_crypto_settings;
-                }
-            }
-        }
         CATCH_ALL {
-            *signatureLen = 0;
             return zxerr_unknown;
         };
         FINALLY {
-            MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
-            MEMZERO(privateKeyData, 64);
+            MEMZERO(signature + 64 + 1, signatureMaxlen - 64 - 1);
         }
     }
     END_TRY;
-    *signatureLen = signatureLength + 1;
     return zxerr_ok;
 }
 

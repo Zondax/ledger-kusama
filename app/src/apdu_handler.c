@@ -208,10 +208,12 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     }
 
     CHECK_APP_CANARY()
+    zxerr_t err = app_sign_standalone();
+
+    CHECK_APP_CANARY()
 
     const char *error_msg = tx_parse();
     CHECK_APP_CANARY()
-
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
         MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
@@ -219,7 +221,6 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
         THROW(APDU_CODE_DATA_INVALID);
     }
 
-    CHECK_APP_CANARY()
     view_review_init(tx_getItem, tx_getNumItems, app_sign);
     view_review_show();
     *flags |= IO_ASYNCH_REPLY;
@@ -366,7 +367,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleGetAddrEd25519(flags, tx, rx);
+                    handleGetAddrSr25519(flags, tx, rx);
                     break;
                 }
 
