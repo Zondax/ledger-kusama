@@ -26,10 +26,10 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                                 uint8_t *pubKey, uint16_t pubKeyLen) {
     cx_ecfp_public_key_t cx_publicKey;
     cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[64];
-    MEMZERO(privateKeyData, 64);
+    uint8_t privateKeyData[SK_LEN_25519];
+    MEMZERO(privateKeyData, SK_LEN_25519);
 
-    if (pubKeyLen < PK_LEN_ED25519) {
+    if (pubKeyLen < PK_LEN_25519) {
         return zxerr_invalid_crypto_settings;
     }
 
@@ -53,11 +53,11 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
                     cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
                     cx_ecfp_generate_pair(CX_CURVE_Ed25519, &cx_publicKey, &cx_privateKey, 1);
-                    for (int i = 0; i < 32; i++) {
+                    for (int i = 0; i < PK_LEN_25519; i++) {
                         pubKey[i] = cx_publicKey.W[64 - i];
                     }
 
-                    if ((cx_publicKey.W[32] & 1) != 0) {
+                    if ((cx_publicKey.W[PK_LEN_25519] & 1) != 0) {
                         pubKey[31] |= 0x80;
                     }
                     break;
@@ -72,7 +72,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
         }
         FINALLY {
             MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
-            MEMZERO(privateKeyData, 64);
+            MEMZERO(privateKeyData, SK_LEN_25519);
         }
     }
     END_TRY;
@@ -84,18 +84,18 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
                             const uint8_t *message, uint16_t messageLen,
                             uint16_t *signatureLen) {
     const uint8_t *toSign = message;
-    uint8_t messageDigest[32];
+    uint8_t messageDigest[BLAKE2B_DIGEST_SIZE];
 
-    if (messageLen > 256) {
+    if (messageLen > MAX_SIGN_SIZE) {
         // Hash it
         cx_blake2b_t ctx;
         cx_blake2b_init(&ctx, 256);
-        cx_hash(&ctx.header, CX_LAST, message, messageLen, messageDigest, 32);
+        cx_hash(&ctx.header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE);
         toSign = messageDigest;
-        messageLen = 32;
+        messageLen = BLAKE2B_DIGEST_SIZE;
     }
 
-    uint8_t privateKeyData[64];
+    uint8_t privateKeyData[SK_LEN_25519];
     int signatureLength = 0;
     unsigned int info = 0;
 
@@ -115,7 +115,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
                     0);
 
                     cx_ecfp_private_key_t cx_privateKey;
-                    cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
+                    cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey);
 
                     // Sign
                     *signature = PREFIX_SIGNATURE_TYPE_ED25519;
@@ -146,20 +146,20 @@ END_TRY;
 
 zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
                     const uint8_t *message, uint16_t messageLen){
-    if (messageLen > 256) {
+    if (messageLen > MAX_SIGN_SIZE) {
         uint8_t *messageDigest = buffer + sizeof(cx_blake2b_t);
         cx_blake2b_t *ctx = (cx_blake2b_t *) buffer;
         cx_blake2b_init(ctx, 256);
-        cx_hash(&ctx->header, CX_LAST, message, messageLen, buffer, 32);
-        MEMCPY_NV(&N_sr25519_signdata.signdata, messageDigest, 32);
-        N_sr25519_signdata.signdataLen = 32;
+        cx_hash(&ctx->header, CX_LAST, message, messageLen, buffer, BLAKE2B_DIGEST_SIZE);
+        MEMCPY_NV(&N_sr25519_signdata.signdata, messageDigest, BLAKE2B_DIGEST_SIZE);
+        N_sr25519_signdata.signdataLen = BLAKE2B_DIGEST_SIZE;
     }else{
         MEMCPY_NV(&N_sr25519_signdata.signdata, message, messageLen);
         N_sr25519_signdata.signdataLen = messageLen;
     }
     MEMZERO(buffer,bufferLen);
-    uint8_t privateKeyData[64];
-    MEMZERO(privateKeyData, 64);
+    uint8_t privateKeyData[SK_LEN_25519];
+    MEMZERO(privateKeyData, SK_LEN_25519);
     os_perso_derive_node_bip32_seed_key(
             HDW_NORMAL,
             CX_CURVE_Ed25519,
@@ -170,11 +170,11 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
             NULL,
             0);
 
-    uint8_t pubkey[32];
-    MEMZERO(pubkey, 32);
+    uint8_t pubkey[PK_LEN_25519];
+    MEMZERO(pubkey, PK_LEN_25519);
     get_sr25519_pk(privateKeyData, pubkey);
-    MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, 64);
-    MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, 32);
+    MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, SK_LEN_25519);
+    MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, PK_LEN_25519);
     MEMZERO(buffer,bufferLen);
 }
 
@@ -189,14 +189,14 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                         return zxerr_invalid_crypto_settings;
                     }
             *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + 33);
-                    MEMCPY_NV(&N_sr25519_signdata.signature, signature, 64);
+                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
+                    MEMCPY_NV(&N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
                 }
         CATCH_ALL {
             return zxerr_unknown;
         };
         FINALLY {
-            MEMZERO(signature + 64 + 1, signatureMaxlen - 64 - 1);
+            MEMZERO(signature + SIG_PLUS_TYPE_LEN, signatureMaxlen - SIG_PLUS_TYPE_LEN);
         }
     }
     END_TRY;
@@ -204,36 +204,20 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
 }
 
 zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen) {
-   if (bufferLen < PK_LEN_ED25519 + SS58_ADDRESS_MAX_LEN) {
+   if (bufferLen < PK_LEN_25519 + SS58_ADDRESS_MAX_LEN) {
             return 0;
    }
     MEMZERO(buffer, bufferLen);
     CHECK_ZXERR(crypto_extractPublicKey(addressKind, hdPath, buffer, bufferLen));
 
-    uint16_t pklen = 0;
-    switch(addressKind){
-        case key_ed25519: {
-            pklen = PK_LEN_ED25519;
-            break;
-        }
-        case key_sr25519: {
-            pklen = PK_LEN_SR25519;
-            break;
-        }
-        default: {
-            MEMZERO(buffer, bufferLen);
-            return zxerr_unknown;
-        }
-    }
-
-    size_t outLen = crypto_SS58EncodePubkey(buffer + pklen,
-                                            bufferLen - pklen,
+    size_t outLen = crypto_SS58EncodePubkey(buffer + PK_LEN_25519,
+                                            bufferLen - PK_LEN_25519,
                                             PK_ADDRESS_TYPE, buffer);
     if(outLen == 0){
         MEMZERO(buffer, bufferLen);
         return zxerr_unknown;
     }
 
-    *addrResponseLen = PK_LEN_ED25519 + outLen;
+    *addrResponseLen = PK_LEN_25519 + outLen;
     return zxerr_ok;
 }

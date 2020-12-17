@@ -28,11 +28,11 @@ extern "C" {
 
 // Flash
 typedef struct {
-    uint8_t sk[64];
-    uint8_t pk[32];
-    uint8_t signdata[256];
+    uint8_t sk[SK_LEN_25519];
+    uint8_t pk[PK_LEN_25519];
+    uint8_t signdata[MAX_SIGN_SIZE];
     uint16_t signdataLen;
-    uint8_t signature[65];
+    uint8_t signature[SIG_PLUS_TYPE_LEN];
 } sr25519_signdata_t;
 
 #if defined(TARGET_NANOS) || defined(TARGET_NANOX)
@@ -48,7 +48,8 @@ sr25519_signdata_t NV_CONST N_srdata_impl __attribute__ ((aligned(64)));
 #define PREFIX_SIGNATURE_TYPE_ED25519  0
 #define PREFIX_SIGNATURE_TYPE_SR25519  1
 #define PREFIX_SIGNATURE_TYPE_EDCSA    2
-#define MIN_BUFFER_LENGTH 235
+#define MIN_BUFFER_LENGTH              235
+#define START_BUFFER                   33
 
 extern uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
