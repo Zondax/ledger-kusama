@@ -27,13 +27,18 @@ extern uint16_t action_addrResponseLen;
 extern uint16_t action_signResponseLen;
 
 
-__Z_INLINE zxerr_t app_sign_standalone() {
+__Z_INLINE zxerr_t app_sign_sr25519() {
     const uint8_t *message = tx_get_buffer();
     const uint16_t messageLength = tx_get_buffer_length();
     uint16_t replyLen = 0;
-    zxerr_t err = crypto_sign(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3,
-                                    message, messageLength, &replyLen);
-    return err;
+    zxerr_t zxerr;
+    zxerr = crypto_sign_sr25519_prephase(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3, message, messageLength);
+    if(zxerr != zxerr_ok){
+        MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
+        return zxerr;
+    }
+    zxerr = crypto_sign_sr25519(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3, &replyLen);
+    return zxerr;
 }
 
 __Z_INLINE void app_sign_ed25519() {
@@ -51,10 +56,10 @@ __Z_INLINE void app_sign_ed25519() {
     }
 }
 
-__Z_INLINE void app_sign() {
-    MEMCPY(G_io_apdu_buffer, &N_sr25519_signdata.signature, 64);
-    set_code(G_io_apdu_buffer, 64, APDU_CODE_OK);
-    io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 64 + 2);
+__Z_INLINE void app_return_sr25519() {
+    MEMCPY(G_io_apdu_buffer, &N_sr25519_signdata.signature, 65);
+    set_code(G_io_apdu_buffer, 65, APDU_CODE_OK);
+    io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 65 + 2);
 }
 
 __Z_INLINE void app_reject() {

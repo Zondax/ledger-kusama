@@ -66,6 +66,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     get_sr25519_pk(privateKeyData, pubKey);
                     break;
                 default:
+                    CLOSE_TRY;
                     return zxerr_invalid_crypto_settings;
             }
         }
@@ -143,8 +144,39 @@ END_TRY;
     return zxerr_ok;
 }
 
-zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
-                    const uint8_t *message, uint16_t messageLen,
+zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
+                    const uint8_t *message, uint16_t messageLen){
+    if (messageLen > 256) {
+        uint8_t *messageDigest = buffer + sizeof(cx_blake2b_t);
+        cx_blake2b_t *ctx = (cx_blake2b_t *) buffer;
+        cx_blake2b_init(ctx, 256);
+        cx_hash(&ctx->header, CX_LAST, message, messageLen, buffer, 32);
+        MEMCPY_NV(&N_sr25519_signdata.signdata, messageDigest, 32);
+        N_sr25519_signdata.signdataLen = 32;
+    }else{
+        MEMCPY_NV(&N_sr25519_signdata.signdata, message, messageLen);
+        N_sr25519_signdata.signdataLen = messageLen;
+    }
+    MEMZERO(buffer,bufferLen);
+    uint8_t *privateKeyData = buffer;
+    os_perso_derive_node_bip32_seed_key(
+            HDW_NORMAL,
+            CX_CURVE_Ed25519,
+            hdPath,
+            HDPATH_LEN_DEFAULT,
+            privateKeyData,
+            NULL,
+            NULL,
+            0);
+
+    uint8_t *pubkey = buffer + 64;
+    get_sr25519_pk(privateKeyData, pubkey);
+    MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, 64);
+    MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, 32);
+    MEMZERO(buffer,bufferLen);
+}
+
+zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                     uint16_t *signatureLen) {
 
     BEGIN_TRY
@@ -154,33 +186,8 @@ zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
             if (signatureMaxlen < MIN_BUFFER_LENGTH){
                         return zxerr_invalid_crypto_settings;
                     }
-
-                    if (messageLen > 0) {
-                        // Hash it
-                        uint8_t *messageDigest = signature + 220;
-                        cx_blake2b_t *ctx = (cx_blake2b_t *) signature;
-                        cx_blake2b_init(ctx, 256);
-                        cx_hash(&ctx->header, CX_LAST, message, messageLen, messageDigest, 32);
-                        MEMCPY_NV(&N_sr25519_signdata.digest, messageDigest, 32);
-                    }
-                    uint8_t *privateKeyData = signature;
-                    // Generate keys
-                    os_perso_derive_node_bip32_seed_key(
-                            HDW_NORMAL,
-                            CX_CURVE_Ed25519,
-                            hdPath,
-                            HDPATH_LEN_DEFAULT,
-                            privateKeyData,
-                            NULL,
-                            NULL,
-                            0);
-
-                    uint8_t *pubkey = signature + 64;
-                    *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-                    get_sr25519_pk(privateKeyData, pubkey);
-                    MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, 64);
-                    MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, 32);
-                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.digest,32, signature, signature + 32);
+            *signature = PREFIX_SIGNATURE_TYPE_SR25519;
+                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + 33);
                     MEMCPY_NV(&N_sr25519_signdata.signature, signature, 64);
                 }
         CATCH_ALL {

@@ -207,7 +207,11 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
     }
 
     CHECK_APP_CANARY()
-    zxerr_t err = app_sign_standalone();
+    zxerr_t err = app_sign_sr25519();
+    if(err != zxerr_ok){
+        *tx = 0;
+        THROW(APDU_CODE_DATA_INVALID);
+    }
 
     CHECK_APP_CANARY()
 
@@ -220,7 +224,7 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
         THROW(APDU_CODE_DATA_INVALID);
     }
 
-    view_review_init(tx_getItem, tx_getNumItems, app_sign);
+    view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
     view_review_show();
     *flags |= IO_ASYNCH_REPLY;
 }
@@ -230,7 +234,6 @@ __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *t
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }
-
 
     CHECK_APP_CANARY()
 

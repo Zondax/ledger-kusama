@@ -30,8 +30,9 @@ extern "C" {
 typedef struct {
     uint8_t sk[64];
     uint8_t pk[32];
-    uint8_t digest[32];
-    uint8_t signature[64];
+    uint8_t signdata[256];
+    uint16_t signdataLen;
+    uint8_t signature[65];
 } sr25519_signdata_t;
 
 #if defined(TARGET_NANOS) || defined(TARGET_NANOX)
@@ -56,8 +57,8 @@ uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
 
 zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen);
 
-zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen,
-                    const uint8_t *message, uint16_t messageLen,
+zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen, const uint8_t *message, uint16_t messageLen);
+zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                     uint16_t *signatureLen);
 
 zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
