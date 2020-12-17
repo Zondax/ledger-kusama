@@ -53,7 +53,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
                     cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
                     cx_ecfp_generate_pair(CX_CURVE_Ed25519, &cx_publicKey, &cx_privateKey, 1);
-                    for (int i = 0; i < PK_LEN_25519; i++) {
+                    for (unsigned int i = 0; i < PK_LEN_25519; i++) {
                         pubKey[i] = cx_publicKey.W[64 - i];
                     }
 
@@ -189,7 +189,7 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                         return zxerr_invalid_crypto_settings;
                     }
             *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-                    sign_sr25519(&N_sr25519_signdata.sk, &N_sr25519_signdata.pk, NULL, 0, &N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
+                    sign_sr25519((uint8_t *)&N_sr25519_signdata.sk, (uint8_t *)&N_sr25519_signdata.pk, NULL, 0, (uint8_t *)&N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
                     MEMCPY_NV(&N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
                 }
         CATCH_ALL {
