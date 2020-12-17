@@ -201,7 +201,7 @@ __Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t
     THROW(APDU_CODE_OK);
 }
 
-__Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     zemu_log("handleSign\n");
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
@@ -222,6 +222,29 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     }
 
     view_review_init(tx_getItem, tx_getNumItems, app_sign);
+    view_review_show();
+    *flags |= IO_ASYNCH_REPLY;
+}
+
+__Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    zemu_log("handleSign\n");
+    if (!process_chunk(tx, rx)) {
+        THROW(APDU_CODE_OK);
+    }
+
+
+    CHECK_APP_CANARY()
+
+    const char *error_msg = tx_parse();
+    CHECK_APP_CANARY()
+    if (error_msg != NULL) {
+        int error_msg_length = strlen(error_msg);
+        MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
+        *tx += (error_msg_length);
+        THROW(APDU_CODE_DATA_INVALID);
+    }
+
+    view_review_init(tx_getItem, tx_getNumItems, app_sign_ed25519);
     view_review_show();
     *flags |= IO_ASYNCH_REPLY;
 }
@@ -367,7 +390,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleGetAddrSr25519(flags, tx, rx);
+                    handleGetAddrEd25519(flags, tx, rx);
                     break;
                 }
 
@@ -380,7 +403,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleSign(flags, tx, rx);
+                    handleSignEd25519(flags, tx, rx);
                     break;
                 }
 
