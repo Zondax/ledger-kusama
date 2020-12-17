@@ -52,6 +52,13 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, 32, &cx_privateKey);
                     cx_ecfp_init_public_key(CX_CURVE_Ed25519, NULL, 0, &cx_publicKey);
                     cx_ecfp_generate_pair(CX_CURVE_Ed25519, &cx_publicKey, &cx_privateKey, 1);
+                    for (int i = 0; i < 32; i++) {
+                        pubKey[i] = cx_publicKey.W[64 - i];
+                    }
+
+                    if ((cx_publicKey.W[32] & 1) != 0) {
+                        pubKey[31] |= 0x80;
+                    }
                     break;
                 }
                 case key_sr25519:
@@ -68,15 +75,6 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
     }
     END_TRY;
 
-    // Format pubkey
-    //FIXME: is this necessary for SR25519 keys as well?
-    for (int i = 0; i < 32; i++) {
-        pubKey[i] = cx_publicKey.W[64 - i];
-    }
-
-    if ((cx_publicKey.W[32] & 1) != 0) {
-        pubKey[31] |= 0x80;
-    }
     return zxerr_ok;
 }
 

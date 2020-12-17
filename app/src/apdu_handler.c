@@ -196,7 +196,8 @@ __Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t
         return;
     }
 
-    *tx = app_fill_address(key_sr25519);
+    app_fill_address(key_sr25519);
+    *tx = action_addrResponseLen;
     THROW(APDU_CODE_OK);
 }
 
