@@ -34,10 +34,12 @@ zxerr_t addr_getItem(int8_t displayIdx,
                      char *outKey, uint16_t outKeyLen,
                      char *outVal, uint16_t outValLen,
                      uint8_t pageIdx, uint8_t *pageCount) {
-    zemu_log_stack("addr_getItem");
+    char buffer[30];
+    snprintf(buffer, sizeof(buffer), "addr_getItem %d/%d", displayIdx, pageIdx);
+    zemu_log_stack(buffer);
     switch (displayIdx) {
         case 0:
-            snprintf(outKey, outKeyLen, "Your Address");
+            snprintf(outKey, outKeyLen, "Address");
             pageString(outVal, outValLen, (char *) (G_io_apdu_buffer + PK_LEN_ED25519), pageIdx, pageCount);
             return zxerr_ok;
         case 1: {
