@@ -224,7 +224,7 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
         THROW(APDU_CODE_OK);
     }
     uint8_t type = G_io_apdu_buffer[OFFSET_P2];
-    key_kind_e key_type = key_sr25519; //get_key_type(type);
+    key_kind_e key_type = get_key_type(type);
     if (key_type == key_ed25519){
         handleSignEd25519(flags, tx, rx);
     }else if (key_type == key_sr25519){

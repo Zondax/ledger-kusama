@@ -21,6 +21,7 @@
 #include "rslib.h"
 #include "zxmacros.h"
 
+uint16_t sr25519_signdataLen;
 uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
 zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPATH_LEN_DEFAULT],
@@ -154,10 +155,10 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
         cx_blake2b_init(ctx, 256);
         cx_hash(&ctx->header, CX_LAST, message, messageLen, buffer, BLAKE2B_DIGEST_SIZE);
         MEMCPY_NV(&N_sr25519_signdata.signdata, messageDigest, BLAKE2B_DIGEST_SIZE);
-        N_sr25519_signdata.signdataLen = BLAKE2B_DIGEST_SIZE;
+        sr25519_signdataLen = BLAKE2B_DIGEST_SIZE;
     }else{
         MEMCPY_NV(&N_sr25519_signdata.signdata, (void *)message, messageLen);
-        N_sr25519_signdata.signdataLen = messageLen;
+        sr25519_signdataLen = messageLen;
     }
     MEMZERO(buffer,bufferLen);
     uint8_t privateKeyData[SK_LEN_25519];
@@ -193,7 +194,7 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                 return zxerr_invalid_crypto_settings;
             }
             *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-            sign_sr25519((uint8_t *)&N_sr25519_signdata.sk, (uint8_t *)&N_sr25519_signdata.pk, NULL, 0, (uint8_t *)&N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
+            sign_sr25519((uint8_t *)&N_sr25519_signdata.sk, (uint8_t *)&N_sr25519_signdata.pk, NULL, 0, (uint8_t *)&N_sr25519_signdata.signdata, sr25519_signdataLen, signature + 1, signature + START_BUFFER);
             MEMCPY_NV(&N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
         }
         CATCH_ALL {

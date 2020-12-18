@@ -31,9 +31,10 @@ typedef struct {
     uint8_t sk[SK_LEN_25519];
     uint8_t pk[PK_LEN_25519];
     uint8_t signdata[MAX_SIGN_SIZE];
-    uint16_t signdataLen;
     uint8_t signature[SIG_PLUS_TYPE_LEN];
 } sr25519_signdata_t;
+
+extern uint16_t sr25519_signdataLen;
 
 #if defined(TARGET_NANOS) || defined(TARGET_NANOX)
 sr25519_signdata_t NV_CONST N_srdata_impl __attribute__ ((aligned(64)));
@@ -54,8 +55,7 @@ zxerr_t zeroize_sr25519_signdata(){
     MEMCPY_NV(&N_sr25519_signdata.pk, dummypk, PK_LEN_25519);
     MEMCPY_NV(&N_sr25519_signdata.signdata, dummysigndata, MAX_SIGN_SIZE);
     MEMCPY_NV(&N_sr25519_signdata.signature, dummysignature, SIG_PLUS_TYPE_LEN);
-
-    N_sr25519_signdata.signdataLen = 0;
+    sr25519_signdataLen = 0;
     return zxerr_ok;
 }
 //#define SS58_BLAKE_PREFIX  (const unsigned char *) "SS58PRE"
