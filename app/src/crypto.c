@@ -114,33 +114,34 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
                     NULL,
                     0);
 
-                    cx_ecfp_private_key_t cx_privateKey;
-                    cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey);
+            cx_ecfp_private_key_t cx_privateKey;
+            cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey);
 
-                    // Sign
-                    *signature = PREFIX_SIGNATURE_TYPE_ED25519;
-                    signatureLength = cx_eddsa_sign(&cx_privateKey,
-                                                    CX_LAST,
-                                                    CX_SHA512,
-                                                    toSign,
-                                                    messageLen,
-                                                    NULL,
-                                                    0,
-                                                    signature + 1,
-                                                    signatureMaxlen - 1,
-                                                    &info);
-                    MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
+            // Sign
+            *signature = PREFIX_SIGNATURE_TYPE_ED25519;
+            signatureLength = cx_eddsa_sign(&cx_privateKey,
+                                            CX_LAST,
+                                            CX_SHA512,
+                                            toSign,
+                                            messageLen,
+                                            NULL,
+                                            0,
+                                            signature + 1,
+                                            signatureMaxlen - 1,
+                                            &info);
+            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
 
-                }
-    CATCH_ALL {
-        *signatureLen = 0;
-        return zxerr_unknown;
-    };
-    FINALLY {
-        MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
+        }
+        CATCH_ALL {
+            *signatureLen = 0;
+            CLOSE_TRY;
+            return zxerr_unknown;
+        };
+        FINALLY {
+            MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
+        }
     }
-}
-END_TRY;
+    END_TRY;
     return zxerr_ok;
 }
 
@@ -186,13 +187,15 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
         TRY
         {
             if (signatureMaxlen < MIN_BUFFER_LENGTH){
-                        return zxerr_invalid_crypto_settings;
-                    }
+                CLOSE_TRY;
+                return zxerr_invalid_crypto_settings;
+            }
             *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-                    sign_sr25519((uint8_t *)&N_sr25519_signdata.sk, (uint8_t *)&N_sr25519_signdata.pk, NULL, 0, (uint8_t *)&N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
-                    MEMCPY_NV(&N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
-                }
+            sign_sr25519((uint8_t *)&N_sr25519_signdata.sk, (uint8_t *)&N_sr25519_signdata.pk, NULL, 0, (uint8_t *)&N_sr25519_signdata.signdata,N_sr25519_signdata.signdataLen, signature + 1, signature + START_BUFFER);
+            MEMCPY_NV(&N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
+        }
         CATCH_ALL {
+            CLOSE_TRY;
             return zxerr_unknown;
         };
         FINALLY {
