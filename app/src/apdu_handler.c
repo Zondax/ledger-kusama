@@ -180,33 +180,7 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     THROW(APDU_CODE_OK);
 }
 
-__Z_INLINE void handleGetAddrSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    extractHDPath(rx, OFFSET_DATA);
-
-    uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
-
-    if (requireConfirmation) {
-        app_fill_address(key_sr25519);
-
-        view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
-        view_review_show();
-
-        *flags |= IO_ASYNCH_REPLY;
-        return;
-    }
-
-    app_fill_address(key_sr25519);
-    *tx = action_addrResponseLen;
-    THROW(APDU_CODE_OK);
-}
-
 __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    zemu_log("handleSign\n");
-    if (!process_chunk(tx, rx)) {
-        THROW(APDU_CODE_OK);
-    }
-
-    CHECK_APP_CANARY()
     zxerr_t err = app_sign_sr25519();
     if(err != zxerr_ok){
         *tx = 0;
@@ -230,13 +204,6 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
 }
 
 __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    zemu_log("handleSign\n");
-    if (!process_chunk(tx, rx)) {
-        THROW(APDU_CODE_OK);
-    }
-
-    CHECK_APP_CANARY()
-
     const char *error_msg = tx_parse();
     CHECK_APP_CANARY()
     if (error_msg != NULL) {
@@ -249,6 +216,23 @@ __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *t
     view_review_init(tx_getItem, tx_getNumItems, app_sign_ed25519);
     view_review_show();
     *flags |= IO_ASYNCH_REPLY;
+}
+
+__Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    zemu_log("handleSign\n");
+    if (!process_chunk(tx, rx)) {
+        THROW(APDU_CODE_OK);
+    }
+    uint8_t type = G_io_apdu_buffer[OFFSET_P2];
+    key_kind_e key_type = key_sr25519; //get_key_type(type);
+    if (key_type == key_ed25519){
+        handleSignEd25519(flags, tx, rx);
+    }else if (key_type == key_sr25519){
+        handleSignSr25519(flags, tx, rx);
+    }else{
+        *tx = 0;
+        THROW(APDU_CODE_DATA_INVALID);
+    }
 }
 
 #if defined(APP_RESTRICTED)
@@ -388,7 +372,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     break;
                 }
 
-                case INS_GET_ADDR_ED25519: {
+                case INS_GET_ADDR: {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
@@ -396,16 +380,11 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     break;
                 }
 
-                case INS_GET_ADDR_SR25519: {
-                    handleGetAddrSr25519(flags, tx, rx);
-                    break;
-                }
-
-                case INS_SIGN_ED25519: {
+                case INS_SIGN: {
                     if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
                         THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
                     }
-                    handleSignEd25519(flags, tx, rx);
+                    handleSign(flags, tx, rx);
                     break;
                 }
 
