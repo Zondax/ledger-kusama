@@ -132,6 +132,7 @@ void app_init() {
     BLE_power(0, NULL);
     BLE_power(1, "Nano X");
 #endif // HAVE_BLE
+    zeroize_sr25519_signdata();
 }
 
 #pragma clang diagnostic push

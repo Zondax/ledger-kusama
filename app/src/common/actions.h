@@ -51,18 +51,26 @@ __Z_INLINE void app_sign_ed25519() {
         set_code(G_io_apdu_buffer, 0, APDU_CODE_SIGN_VERIFY_ERROR);
         io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
     }else {
-        set_code(G_io_apdu_buffer, 64, APDU_CODE_OK);
-        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 64 + 2);
+        set_code(G_io_apdu_buffer, SIG_PLUS_TYPE_LEN, APDU_CODE_OK);
+        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, SIG_PLUS_TYPE_LEN + 2);
     }
 }
 
 __Z_INLINE void app_return_sr25519() {
-    MEMCPY(G_io_apdu_buffer, &N_sr25519_signdata.signature, 65);
-    set_code(G_io_apdu_buffer, 65, APDU_CODE_OK);
-    io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 65 + 2);
+    MEMCPY(G_io_apdu_buffer, &N_sr25519_signdata.signature, SIG_PLUS_TYPE_LEN);
+    zxerr_t zxerr = zeroize_sr25519_signdata();
+
+    if(zxerr != zxerr_ok){
+        set_code(G_io_apdu_buffer, 0, APDU_CODE_SIGN_VERIFY_ERROR);
+        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
+    }else {
+        set_code(G_io_apdu_buffer, SIG_PLUS_TYPE_LEN, APDU_CODE_OK);
+        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, SIG_PLUS_TYPE_LEN + 2);
+    }
 }
 
 __Z_INLINE void app_reject() {
+    zeroize_sr25519_signdata();
     set_code(G_io_apdu_buffer, 0, APDU_CODE_COMMAND_NOT_ALLOWED);
     io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
 }
@@ -87,6 +95,7 @@ __Z_INLINE key_kind_e get_key_type(uint8_t num){
 }
 
 __Z_INLINE void app_reply_error() {
+    zeroize_sr25519_signdata();
     set_code(G_io_apdu_buffer, 0, APDU_CODE_DATA_INVALID);
     io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
 }

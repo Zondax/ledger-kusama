@@ -40,7 +40,24 @@ sr25519_signdata_t NV_CONST N_srdata_impl __attribute__ ((aligned(64)));
 #define N_sr25519_signdata (*(NV_VOLATILE sr25519_signdata_t *)PIC(&N_srdata_impl))
 #endif
 
+zxerr_t zeroize_sr25519_signdata(){
+    uint8_t dummysk[SK_LEN_25519];
+    MEMZERO(dummysk, SK_LEN_25519);
+    uint8_t dummypk[PK_LEN_25519];
+    MEMZERO(dummypk, PK_LEN_25519);
+    uint8_t dummysigndata[MAX_SIGN_SIZE];
+    MEMZERO(dummysigndata, MAX_SIGN_SIZE);
+    uint8_t dummysignature[SIG_PLUS_TYPE_LEN];
+    MEMZERO(dummysignature, SIG_PLUS_TYPE_LEN);
 
+    MEMCPY_NV(&N_sr25519_signdata.sk, dummysk, SK_LEN_25519);
+    MEMCPY_NV(&N_sr25519_signdata.pk, dummypk, PK_LEN_25519);
+    MEMCPY_NV(&N_sr25519_signdata.signdata, dummysigndata, MAX_SIGN_SIZE);
+    MEMCPY_NV(&N_sr25519_signdata.signature, dummysignature, SIG_PLUS_TYPE_LEN);
+
+    N_sr25519_signdata.signdataLen = 0;
+    return zxerr_ok;
+}
 //#define SS58_BLAKE_PREFIX  (const unsigned char *) "SS58PRE"
 //#define SS58_BLAKE_PREFIX_LEN 7
 #define SS58_ADDRESS_MAX_LEN 60u
