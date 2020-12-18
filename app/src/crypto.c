@@ -19,6 +19,7 @@
 #include "coin.h"
 #include "cx.h"
 #include "rslib.h"
+#include "zxmacros.h"
 
 uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
@@ -155,7 +156,7 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
         MEMCPY_NV(&N_sr25519_signdata.signdata, messageDigest, BLAKE2B_DIGEST_SIZE);
         N_sr25519_signdata.signdataLen = BLAKE2B_DIGEST_SIZE;
     }else{
-        MEMCPY_NV(&N_sr25519_signdata.signdata, message, messageLen);
+        MEMCPY_NV(&N_sr25519_signdata.signdata, (void *)message, messageLen);
         N_sr25519_signdata.signdataLen = messageLen;
     }
     MEMZERO(buffer,bufferLen);
@@ -177,6 +178,7 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
     MEMCPY_NV(&N_sr25519_signdata.sk, privateKeyData, SK_LEN_25519);
     MEMCPY_NV(&N_sr25519_signdata.pk, pubkey, PK_LEN_25519);
     MEMZERO(buffer,bufferLen);
+    return zxerr_ok;
 }
 
 zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,

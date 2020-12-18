@@ -1,3 +1,6 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 #ifndef __STDC_WANT_LIB_EXT1__
 # define __STDC_WANT_LIB_EXT1__ 1
 #endif
@@ -801,3 +804,4 @@ sodium_unpad(size_t *unpadded_buflen_p, const unsigned char *buf,
 
     return (int) (valid - 1U);
 }
+#pragma GCC diagnostic pop

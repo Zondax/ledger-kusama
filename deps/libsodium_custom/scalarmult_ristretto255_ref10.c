@@ -1,4 +1,5 @@
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 #include <string.h>
 
 #include "crypto_scalarmult_ed25519.h"
@@ -61,3 +62,4 @@ crypto_scalarmult_ristretto255_scalarbytes(void)
 {
     return crypto_scalarmult_ristretto255_SCALARBYTES;
 }
+#pragma GCC diagnostic pop

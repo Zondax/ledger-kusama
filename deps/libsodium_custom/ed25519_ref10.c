@@ -1,3 +1,7 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -2983,3 +2987,5 @@ ristretto255_from_hash(unsigned char s[32], const unsigned char h[64])
     ge25519_p1p1_to_p3(&p, &p_p1p1);
     ristretto255_p3_tobytes(s, &p);
 }
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop

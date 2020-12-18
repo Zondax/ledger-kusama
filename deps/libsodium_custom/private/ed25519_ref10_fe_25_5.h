@@ -1,3 +1,5 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 #include <string.h>
 
 #include "private/common.h"
@@ -1042,3 +1044,4 @@ fe25519_mul32(fe25519 h, const fe25519 f, uint32_t n)
     h[8] = (int32_t) h8;
     h[9] = (int32_t) h9;
 }
+#pragma GCC diagnostic pop
