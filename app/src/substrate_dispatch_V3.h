@@ -19,25 +19,28 @@
 extern "C" {
 #endif
 
-#include "parser_common.h"
-#include "substrate_dispatch_V3.h"
+#include "parser_impl.h"
+#include "substrate_functions.h"
+#include "substrate_functions_V3.h"
 #include <stddef.h>
 #include <stdint.h>
 
-parser_error_t _readMethod(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* method);
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* method);
-const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx);
-const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
-const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
+parser_error_t _readMethodBasic_V3(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_MethodBasic_V3_t* method);
 
-parser_error_t _getMethod_ItemValue(
-    uint32_t transactionVersion,
-    pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx,
+parser_error_t _readMethod_V3(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_Method_V3_t* method);
+
+const char* _getMethod_ModuleName_V3(uint8_t moduleIdx);
+
+const char* _getMethod_Name_V3(uint8_t moduleIdx, uint8_t callIdx);
+
+const char* _getMethod_ItemName_V3(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
+
+uint8_t _getMethod_NumItems_V3(uint8_t moduleIdx, uint8_t callIdx, pd_Method_V3_t* method);
+
+parser_error_t _getMethod_ItemValue_V3(
+    pd_Method_V3_t* m, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx,
     char* outValue, uint16_t outValueLen,
     uint8_t pageIdx, uint8_t* pageCount);
-
-//Special getters
-pd_VecLookupSource_t* getStakingTargets(const parser_context_t* c);
 
 #ifdef __cplusplus
 }
