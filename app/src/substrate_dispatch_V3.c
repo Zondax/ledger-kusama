@@ -2746,7 +2746,7 @@ const char* _getMethod_Name_V3(uint8_t moduleIdx, uint8_t callIdx)
     case 1538: /* module 6 call 2 */
         return "Unbond";
     case 1539: /* module 6 call 3 */
-        return "Withdraw unbonded";
+        return "Withdraw Unbonded";
     case 1540: /* module 6 call 4 */
         return "Validate";
     case 1541: /* module 6 call 5 */
@@ -3666,7 +3666,7 @@ const char* _getMethod_ItemName_V3(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1537: /* module 6 call 1 */
         switch (itemIdx) {
         case 0:
-            return "Max additional";
+            return "Amount";
         default:
             return NULL;
         }
