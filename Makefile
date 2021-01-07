@@ -34,3 +34,11 @@ endif
 build_ledgeracio: COIN=Ledgeracio		# Alternative app purpose
 build_ledgeracio: build
 	cp $(CURDIR)/app/bin/app.elf $(CURDIR)/app/bin/app_ledgeracio.elf
+
+tests_tools_build:
+	cd tests_tools/neon && yarn install
+
+tests_tools_test: tests_tools_build
+	cd tests_tools/neon && yarn test
+
+zemu_install: tests_tools_build
