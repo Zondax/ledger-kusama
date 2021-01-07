@@ -68,11 +68,8 @@ describe('Standard', function () {
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-            await sim.clickRight();
-            await sim.clickRight();
-            await sim.clickBoth();
 
-            //await sim.compareSnapshotsAndAccept(".", "show_address", 3); FIXME
+            await sim.compareSnapshotsAndAccept(".", "show_address_sr25519", 3);
 
             const resp = await respRequest;
             console.log(resp);
@@ -90,20 +87,16 @@ describe('Standard', function () {
         }
     });
 
-    test('show address - reject', async function () {
+    test('show address - reject sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
             await sim.start(sim_options);
             const app = newKusamaApp(sim.getTransport());
 
-            const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
+            const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-            await sim.clickRight();
-            await sim.clickRight();
-            await sim.clickRight();
-            await sim.clickBoth();
-            //await sim.compareSnapshotsAndAccept(".", "show_address_reject", 4, 2); FIXME
+            await sim.compareSnapshotsAndAccept(".", "show_address_reject_sr25519", 4, 2);
 
             const resp = await respRequest;
             console.log(resp);
