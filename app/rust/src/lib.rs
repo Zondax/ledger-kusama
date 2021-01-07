@@ -74,14 +74,16 @@ fn get_challenge_scalar(k: &mut Scalar, tr: &mut Transcript) {
 }
 
 #[inline(never)]
-fn get_witness_bytes_custom(tr: &mut Transcript, nonce_bytes: &[u8], buffer: *mut u8) -> [u8;32]{
+fn get_witness_bytes_custom(tr: &mut Transcript, nonce_seeds: &[&[u8]], buffer: *mut u8) -> [u8;32]{
     c_zemu_log_stack(b"witness_bytes\x00".as_ref());
     let mut x = [0u8; 32];
     let br = unsafe {
         &mut *(buffer as *mut Transcript)
     };
     br.clone_from(tr);
-    br.append_message(b"nonce-bytes",&nonce_bytes);
+    for ns in nonce_seeds {
+        br.append_message(b"nonce-bytes", ns);
+    }
     {
         let random_bytes = {
             let mut bytes = [0u8; 32];
@@ -90,7 +92,7 @@ fn get_witness_bytes_custom(tr: &mut Transcript, nonce_bytes: &[u8], buffer: *mu
         };
         br.append_message(b"rng", &random_bytes);
     }
-    br.challenge_bytes(b"witness-output",&mut x);
+    br.challenge_bytes(b"witness-bytes",&mut x);
     br.zeroize();
     x
 }
@@ -122,7 +124,7 @@ pub extern "C" fn sign_sr25519(
     signtranscript.append_message(b"proto-name", b"Schnorr-sig"); //proto name
     signtranscript.append_message(b"sign:pk", pk); //commitpoint: pk
 
-    let x = get_witness_bytes_custom(&mut signtranscript, &sk_ristretto_expanded[32..], buffer);
+    let x = get_witness_bytes_custom(&mut signtranscript, &[&sk_ristretto_expanded[32..]], buffer);
     write_r(&x, &mut signtranscript, signature);
 
     let mut k = unsafe {
