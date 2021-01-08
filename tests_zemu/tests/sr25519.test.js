@@ -18,6 +18,8 @@ import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
 const {newKusamaApp} = require("@zondax/ledger-polkadot");
 
+var addon = require('../../tests_tools/neon/native');
+
 const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 
@@ -144,7 +146,8 @@ describe('Standard', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            const valid = true; //fixme: add sr25519 verify with neon
+            let signingcontext = Buffer.from([]);
+            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
@@ -193,7 +196,8 @@ describe('Standard', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            const valid = true; //fixme ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
+            let signingcontext = Buffer.from([]);
+            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
@@ -246,7 +250,8 @@ describe('Standard', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            const valid = true; //fixme ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
+            let signingcontext = Buffer.from([]);
+            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
@@ -289,7 +294,8 @@ describe('Standard', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            const valid = true; //fixme ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
+            let signingcontext = Buffer.from([]);
+            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
@@ -365,7 +371,8 @@ describe('Standard', function () {
                 blake2bUpdate(context, txBlob);
                 prehash = Buffer.from(blake2bFinal(context));
             }
-            const valid = true; //fixme ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
+            let signingcontext = Buffer.from([]);
+            const valid = addon.schnorrkel_verify(pubKey,signingcontext,prehash, signatureResponse.signature.slice(1));
             expect(valid).toEqual(true);
         } finally {
             await sim.close();
