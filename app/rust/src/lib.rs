@@ -32,10 +32,10 @@ use core::mem;
 use core::panic::PanicInfo;
 use core::slice::{from_raw_parts, from_raw_parts_mut};
 use curve25519_dalek::scalar::Scalar;
-use merlin::{Transcript, TranscriptRngBuilder, TranscriptRng};
-use schnorrkel::context::{SigningContext,SigningTranscript};
-use schnorrkel::{PublicKey, SecretKey};
+use merlin::{Transcript, TranscriptRng, TranscriptRngBuilder};
 use rand::RngCore;
+use schnorrkel::context::{SigningContext, SigningTranscript};
+use schnorrkel::{PublicKey, SecretKey};
 use zeroize::Zeroize;
 
 #[cfg(not(test))]
@@ -74,12 +74,14 @@ fn get_challenge_scalar(k: &mut Scalar, tr: &mut Transcript) {
 }
 
 #[inline(never)]
-fn get_witness_bytes_custom(tr: &mut Transcript, nonce_seeds: &[&[u8]], buffer: *mut u8) -> [u8;32]{
+fn get_witness_bytes_custom(
+    tr: &mut Transcript,
+    nonce_seeds: &[&[u8]],
+    buffer: *mut u8,
+) -> [u8; 32] {
     c_zemu_log_stack(b"witness_bytes\x00".as_ref());
     let mut x = [0u8; 32];
-    let br = unsafe {
-        &mut *(buffer as *mut Transcript)
-    };
+    let br = unsafe { &mut *(buffer as *mut Transcript) };
     br.clone_from(tr);
     for ns in nonce_seeds {
         br.append_message(b"nonce-bytes", ns);
@@ -92,7 +94,7 @@ fn get_witness_bytes_custom(tr: &mut Transcript, nonce_seeds: &[&[u8]], buffer: 
         };
         br.append_message(b"rng", &random_bytes);
     }
-    br.challenge_bytes(b"witness-bytes",&mut x);
+    br.challenge_bytes(b"witness-bytes", &mut x);
     br.zeroize();
     x
 }
@@ -113,7 +115,7 @@ pub extern "C" fn sign_sr25519(
 
     let sk_ristretto_expanded =
         unsafe { from_raw_parts(sk_ristretto_expanded_ptr as *const u8, 64) };
-    let pk =  unsafe { from_raw_parts(pk_ptr as *const u8, 32) };
+    let pk = unsafe { from_raw_parts(pk_ptr as *const u8, 32) };
     let context = unsafe { from_raw_parts(context_ptr as *const u8, context_len) };
     let message = unsafe { from_raw_parts(msg_ptr as *const u8, msg_len) };
     let signature = unsafe { from_raw_parts_mut(sig_ptr as *mut u8, 64) };
@@ -127,9 +129,7 @@ pub extern "C" fn sign_sr25519(
     let x = get_witness_bytes_custom(&mut signtranscript, &[&sk_ristretto_expanded[32..]], buffer);
     write_r(&x, &mut signtranscript, signature);
 
-    let mut k = unsafe {
-        &mut *(buffer as *mut Scalar)
-    };
+    let mut k = unsafe { &mut *(buffer as *mut Scalar) };
     get_challenge_scalar(&mut k, &mut signtranscript);
 
     mult_with_secret(&mut k, sk_ristretto_expanded);
@@ -161,7 +161,7 @@ pub extern "C" fn get_sr25519_pk(sk_ed25519_expanded_ptr: *mut u8, pk_sr25519_pt
 mod tests {
     use crate::*;
     use log::{debug, info};
-    use schnorrkel::{Keypair, PublicKey, SecretKey, Signature, context::*};
+    use schnorrkel::{context::*, Keypair, PublicKey, SecretKey, Signature};
 
     use curve25519_dalek::scalar::Scalar;
 
@@ -192,7 +192,7 @@ mod tests {
         let context = b"good";
         let msg = "test message".as_bytes();
         let mut signature = [0u8; 64];
-        let mut buffer = [0x00;230];
+        let mut buffer = [0x00; 230];
         sign_sr25519(
             secret.to_bytes().as_ptr(),
             pk.as_ptr(),
@@ -206,7 +206,7 @@ mod tests {
 
         let keypair: Keypair = Keypair::from(secret);
 
-        let mut sigledger = [0u8;64];
+        let mut sigledger = [0u8; 64];
         hex::decode_to_slice("48fdbe5cf3524bdd078ac711565d658a3053d10660749959883c4710f49d9948b2d5f829bea6800897dc6ea0150ca11075cc36b75bfcf3712aafb8e1bd10bf8f",&mut sigledger).expect("dec");
 
         let self_sig = Signature::from_bytes(&signature).unwrap();
@@ -214,11 +214,14 @@ mod tests {
 
         let vers = signing_context(context);
 
-        assert!(keypair.verify(vers.bytes(msg), &self_sig).is_ok(),
-                "Verification of a valid signature failed!");
-        assert!(keypair.verify(vers.bytes(msg), &self_sig_ledger).is_ok(),
-                "Verification of a valid signature from ledger failed!");
-
+        assert!(
+            keypair.verify(vers.bytes(msg), &self_sig).is_ok(),
+            "Verification of a valid signature failed!"
+        );
+        assert!(
+            keypair.verify(vers.bytes(msg), &self_sig_ledger).is_ok(),
+            "Verification of a valid signature from ledger failed!"
+        );
     }
 
     #[test]
