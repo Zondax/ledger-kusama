@@ -42,9 +42,9 @@ $(info TESTS_JS_PACKAGE      : $(TESTS_JS_PACKAGE))
 
 ifeq ($(USERID),1001)
 # TODO: Use podman inside circleci machines?
-DOCKER_IMAGE=zondax/builder-bolos-1001@sha256:423348672bb9f1e6aca573de29afa6763bcbead1a592cedb62c8fbfd82fb7f65
+DOCKER_IMAGE=zondax/builder-bolos-1001@sha256:8e9256dc9a190953cb9474b438e5d9b44560a3785f010774aa7a1391d57ba666
 else
-DOCKER_IMAGE=zondax/builder-bolos@sha256:2ce8f16b1e3face5464c538198e57a64340f664d932b3383d019f2636321f342
+DOCKER_IMAGE=zondax/builder-bolos@sha256:f3601fe6249cd39d839814460c66c2b06e2155a5592ec55424710fbfa7d6039d
 endif
 
 ifdef INTERACTIVE
