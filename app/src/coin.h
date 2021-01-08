@@ -53,6 +53,8 @@ typedef enum {
 #define COIN_NAME                           "Kusama"
 #define COIN_TICKER                         "KSM"
 
+#define SUPPORT_SR25519                     1
+
 #if defined(APP_STANDARD)
 #include "coin_standard.h"
 #elif defined(APP_RESTRICTED)

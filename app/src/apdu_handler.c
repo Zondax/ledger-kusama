@@ -161,10 +161,13 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     extractHDPath(rx, OFFSET_DATA);
 
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+
+#if SUPPORT_SR25519
     uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
-
     key_kind_e key_type = get_key_type(addr_type);
-
+#else
+    key_kind_e key_type = key_ed25519;
+#endif
     zxerr_t zxerr = app_fill_address(key_type);
     if(zxerr != zxerr_ok){
         *tx = 0;
@@ -223,8 +226,12 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }
-    uint8_t type = G_io_apdu_buffer[OFFSET_P2];
-    key_kind_e key_type = get_key_type(type);
+#if SUPPORT_SR25519
+    uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
+    key_kind_e key_type = get_key_type(addr_type);
+#else
+    key_kind_e key_type = key_ed25519;
+#endif
     if (key_type == key_ed25519){
         handleSignEd25519(flags, tx, rx);
     }else if (key_type == key_sr25519){
