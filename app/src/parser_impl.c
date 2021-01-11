@@ -18,7 +18,6 @@
 #include "parser_impl.h"
 #include "parser_txdef.h"
 #include "coin.h"
-#include "crypto.h"
 #include "crypto_helper.h"
 #include "bignum.h"
 #include "coin_ss58.h"
