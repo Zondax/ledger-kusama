@@ -65,6 +65,11 @@ parser_error_t _readCompactBlockNumber(parser_context_t* c, pd_CompactBlockNumbe
     return _readCompactInt(c, v);
 }
 
+parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v){
+
+    GEN_DEF_READARRAY(16)
+}
+
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
 {
 
@@ -100,6 +105,13 @@ parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
     }
     }
 }
+
+parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v)
+{
+
+    return _readBalance(c, &v->value);
+}
+
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
 {
 
@@ -108,18 +120,24 @@ parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
     CHECK_ERROR(_readData(c, &v->data2))
     return parser_ok;
 }
+
 parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v){
 
     GEN_DEF_READARRAY(20)
-} parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
+}
+
+parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 {
 
     return parser_not_supported;
 }
+
 parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v){
 
     GEN_DEF_READARRAY(32)
-} parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
+}
+
+parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
 {
 
     CHECK_INPUT()
@@ -132,6 +150,7 @@ parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v){
     CTX_CHECK_AND_ADVANCE(c, v->_len);
     return parser_ok;
 }
+
 parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t* v)
 {
 
@@ -139,14 +158,18 @@ parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t*
     CHECK_ERROR(_readCompactInt(c, &v->value));
     return parser_ok;
 }
+
 parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v){
 
     GEN_DEF_READARRAY(32)
-} parser_error_t _readHeartbeat(parser_context_t* c, pd_Heartbeat_t* v)
+}
+
+parser_error_t _readHeartbeat(parser_context_t* c, pd_Heartbeat_t* v)
 {
 
     return parser_not_supported;
 }
+
 parser_error_t _readVecHeader(parser_context_t* c, pd_VecHeader_t* v){
 
     GEN_DEF_READVECTOR(Header)
@@ -278,6 +301,49 @@ parser_error_t _toStringCompactBlockNumber(
     return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringBalance(
+    const pd_Balance_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    CLEAN_AND_CHECK()
+
+    char bufferUI[200];
+    MEMSET(outValue, 0, outValueLen);
+    MEMSET(bufferUI, 0, sizeof(bufferUI));
+    *pageCount = 1;
+
+    uint8_t bcdOut[100];
+    const uint16_t bcdOutLen = sizeof(bcdOut);
+
+    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 16);
+    if (!bignumLittleEndian_bcdprint(bufferUI, sizeof(bufferUI), bcdOut, bcdOutLen)) {
+        return parser_unexpected_buffer_end;
+    }
+
+    // Format number
+    if (intstr_to_fpstr_inplace(bufferUI, sizeof(bufferUI), COIN_AMOUNT_DECIMAL_PLACES) == 0) {
+        return parser_unexpected_value;
+    }
+
+    number_inplace_trimming(bufferUI);
+    size_t size = strlen(bufferUI) + strlen(COIN_TICKER) + 2;
+    char _tmpBuffer[200];
+    MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
+    strcat(_tmpBuffer, COIN_TICKER);
+    strcat(_tmpBuffer, " ");
+    strcat(_tmpBuffer, bufferUI);
+    // print length: strlen(value) + strlen(COIN_TICKER) + strlen(" ") + nullChar
+    MEMZERO(bufferUI, sizeof(bufferUI));
+    snprintf(bufferUI, size, "%s", _tmpBuffer);
+
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+    return parser_ok;
+}
+
 parser_error_t _toStringData(
     const pd_Data_t* v,
     char* outValue,
@@ -314,6 +380,17 @@ parser_error_t _toStringData(
     }
 
     return parser_print_not_supported;
+}
+
+parser_error_t _toStringBalanceOf(
+    const pd_BalanceOf_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    return _toStringBalance(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringTupleDataData(

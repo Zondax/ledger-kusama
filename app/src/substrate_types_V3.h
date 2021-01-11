@@ -31,10 +31,6 @@ typedef struct {
 } pd_Conviction_V3_t;
 
 typedef struct {
-    const uint8_t* _ptr;
-} pd_BalanceOf_V3_t;
-
-typedef struct {
     pd_bool_t aye;
     pd_Conviction_V3_t conviction;
 } pd_Vote_V3_t;
@@ -44,13 +40,13 @@ typedef struct {
 } pd_AccountId_V3_t;
 
 typedef struct {
-    pd_BalanceOf_V3_t aye;
-    pd_BalanceOf_V3_t nay;
+    pd_BalanceOf_t aye;
+    pd_BalanceOf_t nay;
 } pd_AccountVoteSplit_V3_t;
 
 typedef struct {
     pd_Vote_V3_t vote;
-    pd_BalanceOf_V3_t balance;
+    pd_BalanceOf_t balance;
 } pd_AccountVoteStandard_V3_t;
 
 typedef struct {
@@ -110,8 +106,8 @@ typedef struct {
 } pd_TupleAccountIdData_V3_t;
 
 typedef struct {
-    pd_BalanceOf_V3_t balance1;
-    pd_BalanceOf_V3_t balance2;
+    pd_BalanceOf_t balance1;
+    pd_BalanceOf_t balance2;
     pd_BlockNumber_t blockNumber;
 } pd_TupleBalanceOfBalanceOfBlockNumber_V3_t;
 
@@ -160,8 +156,8 @@ typedef struct {
 } pd_ValidatorPrefs_V3_t;
 
 typedef struct {
-    pd_BalanceOf_V3_t locked;
-    pd_BalanceOf_V3_t per_block;
+    pd_BalanceOf_t locked;
+    pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_V3_t;
 

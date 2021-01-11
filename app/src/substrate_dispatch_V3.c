@@ -502,7 +502,7 @@ __Z_INLINE parser_error_t _readMethod_democracy_delegate_V3(
 {
     CHECK_ERROR(_readAccountId_V3(c, &m->to))
     CHECK_ERROR(_readConviction_V3(c, &m->conviction))
-    CHECK_ERROR(_readBalanceOf_V3(c, &m->balance))
+    CHECK_ERROR(_readBalanceOf(c, &m->balance))
     return parser_ok;
 }
 
@@ -936,7 +936,7 @@ __Z_INLINE parser_error_t _readMethod_claims_mint_claim_V3(
     parser_context_t* c, pd_claims_mint_claim_V3_t* m)
 {
     CHECK_ERROR(_readEthereumAddress_V3(c, &m->who))
-    CHECK_ERROR(_readBalanceOf_V3(c, &m->value))
+    CHECK_ERROR(_readBalanceOf(c, &m->value))
     CHECK_ERROR(_readOptionTupleBalanceOfBalanceOfBlockNumber_V3(c, &m->vesting_schedule))
     CHECK_ERROR(_readOptionStatementKind_V3(c, &m->statement))
     return parser_ok;
@@ -1103,7 +1103,7 @@ __Z_INLINE parser_error_t _readMethod_identity_quit_sub_V3(
 __Z_INLINE parser_error_t _readMethod_society_bid_V3(
     parser_context_t* c, pd_society_bid_V3_t* m)
 {
-    CHECK_ERROR(_readBalanceOf_V3(c, &m->value))
+    CHECK_ERROR(_readBalanceOf(c, &m->value))
     return parser_ok;
 }
 
@@ -1118,8 +1118,8 @@ __Z_INLINE parser_error_t _readMethod_society_vouch_V3(
     parser_context_t* c, pd_society_vouch_V3_t* m)
 {
     CHECK_ERROR(_readAccountId_V3(c, &m->who))
-    CHECK_ERROR(_readBalanceOf_V3(c, &m->value))
-    CHECK_ERROR(_readBalanceOf_V3(c, &m->tip))
+    CHECK_ERROR(_readBalanceOf(c, &m->value))
+    CHECK_ERROR(_readBalanceOf(c, &m->tip))
     return parser_ok;
 }
 
@@ -5883,7 +5883,7 @@ parser_error_t _getMethod_ItemValue_V3(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* democracy_delegate_V3 - balance */;
-            return _toStringBalanceOf_V3(
+            return _toStringBalanceOf(
                 &m->basic.democracy_delegate_V3.balance,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6628,7 +6628,7 @@ parser_error_t _getMethod_ItemValue_V3(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* claims_mint_claim_V3 - value */;
-            return _toStringBalanceOf_V3(
+            return _toStringBalanceOf(
                 &m->basic.claims_mint_claim_V3.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6913,7 +6913,7 @@ parser_error_t _getMethod_ItemValue_V3(
     case 6656: /* module 26 call 0 */
         switch (itemIdx) {
         case 0: /* society_bid_V3 - value */;
-            return _toStringBalanceOf_V3(
+            return _toStringBalanceOf(
                 &m->basic.society_bid_V3.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6938,12 +6938,12 @@ parser_error_t _getMethod_ItemValue_V3(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* society_vouch_V3 - value */;
-            return _toStringBalanceOf_V3(
+            return _toStringBalanceOf(
                 &m->basic.society_vouch_V3.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* society_vouch_V3 - tip */;
-            return _toStringBalanceOf_V3(
+            return _toStringBalanceOf(
                 &m->basic.society_vouch_V3.tip,
                 outValue, outValueLen,
                 pageIdx, pageCount);

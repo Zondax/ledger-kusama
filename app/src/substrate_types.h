@@ -70,10 +70,18 @@ typedef struct {
 ////////////////////////
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_Balance_t;
+
+typedef struct {
     uint8_t type;
     const uint8_t* _ptr;
     uint8_t _len;
 } pd_Data_t;
+
+typedef struct {
+    pd_Balance_t value;
+} pd_BalanceOf_t;
 
 typedef struct {
     pd_Data_t data1;

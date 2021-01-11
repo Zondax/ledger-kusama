@@ -409,7 +409,7 @@ typedef struct {
 typedef struct {
     pd_AccountId_V3_t to;
     pd_Conviction_V3_t conviction;
-    pd_BalanceOf_V3_t balance;
+    pd_BalanceOf_t balance;
 } pd_democracy_delegate_V3_t;
 
 #define PD_CALL_DEMOCRACY_UNDELEGATE 12
@@ -703,7 +703,7 @@ typedef struct {
 #define PD_CALL_CLAIMS_MINT_CLAIM 1
 typedef struct {
     pd_EthereumAddress_V3_t who;
-    pd_BalanceOf_V3_t value;
+    pd_BalanceOf_t value;
     pd_OptionTupleBalanceOfBalanceOfBlockNumber_V3_t vesting_schedule;
     pd_OptionStatementKind_V3_t statement;
 } pd_claims_mint_claim_V3_t;
@@ -826,7 +826,7 @@ typedef struct {
 
 #define PD_CALL_SOCIETY_BID 0
 typedef struct {
-    pd_BalanceOf_V3_t value;
+    pd_BalanceOf_t value;
 } pd_society_bid_V3_t;
 
 #define PD_CALL_SOCIETY_UNBID 1
@@ -837,8 +837,8 @@ typedef struct {
 #define PD_CALL_SOCIETY_VOUCH 2
 typedef struct {
     pd_AccountId_V3_t who;
-    pd_BalanceOf_V3_t value;
-    pd_BalanceOf_V3_t tip;
+    pd_BalanceOf_t value;
+    pd_BalanceOf_t tip;
 } pd_society_vouch_V3_t;
 
 #define PD_CALL_SOCIETY_UNVOUCH 3

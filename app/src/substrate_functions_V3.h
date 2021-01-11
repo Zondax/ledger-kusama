@@ -31,7 +31,6 @@ parser_error_t _readAccountIndex_V3(parser_context_t* c, pd_AccountIndex_V3_t* v
 parser_error_t _readAccountVoteSplit_V3(parser_context_t* c, pd_AccountVoteSplit_V3_t* v);
 parser_error_t _readAccountVoteStandard_V3(parser_context_t* c, pd_AccountVoteStandard_V3_t* v);
 parser_error_t _readAccountVote_V3(parser_context_t* c, pd_AccountVote_V3_t* v);
-parser_error_t _readBalanceOf_V3(parser_context_t* c, pd_BalanceOf_V3_t* v);
 parser_error_t _readCallHashOf_V3(parser_context_t* c, pd_CallHashOf_V3_t* v);
 parser_error_t _readCall_V3(parser_context_t* c, pd_Call_V3_t* v);
 parser_error_t _readChangesTrieConfiguration_V3(parser_context_t* c, pd_ChangesTrieConfiguration_V3_t* v);
@@ -130,13 +129,6 @@ parser_error_t _toStringAccountVoteStandard_V3(
 
 parser_error_t _toStringAccountVote_V3(
     const pd_AccountVote_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringBalanceOf_V3(
-    const pd_BalanceOf_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
