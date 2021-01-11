@@ -12,8 +12,8 @@ import ed25519 from "ed25519-supercop";
 const seed = "equip will roof matter pink blind book anxiety banner elbow sun young"
 const SIM_OPTIONS = {
     logging: true,
-    start_delay: 4000,
-//    X11: true,
+    start_delay: 1000,
+    X11: true,
     custom: `-s "${seed}" --color LAGOON_BLUE`
 };
 
@@ -83,6 +83,15 @@ async function debugScenario(sim, app) {
     console.log(resp.hash.toString("hex"));
 }
 
+async function debugSchnorrkel(sim, app) {
+    let input = 10;
+
+    let response = await sim.getTransport()
+        .send(0x99, 0xFF, 0, 0, Buffer.from([input]));
+
+    console.log(response.toString("hex"));
+}
+
 async function main() {
     await beforeStart();
 
@@ -99,7 +108,7 @@ async function main() {
         ////////////
         /// TIP you can use zemu commands here to take the app to the point where you trigger a breakpoint
 
-        await debugScenario(sim, app);
+        await debugSchnorrkel(sim, app);
 
         /// TIP
 
