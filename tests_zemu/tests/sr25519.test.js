@@ -121,6 +121,7 @@ describe('Standard', function () {
 
             let txBlobStr = "0400a03c31b64722c0852992e65493764f31ca55a86a8fa3262ba54381698bcc066133158139ae28a3dfaac5fe1560a5e9e05cd503ae1103008ed73e0dea07000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
 
+
             const txBlob = Buffer.from(txBlobStr, "hex");
 
             const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex, false, 1);
