@@ -334,6 +334,76 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 #if defined(APP_TESTING)
 #include "rslib.h"
 
+#include "crypto_scalarmult_ristretto255.h"
+#include "crypto_core_ristretto255.h"
+#include "private/ed25519_ref10.h"
+#include "utils.h"
+
+
+void c_ristretto_scalarmult_base1(uint8_t *scalar, uint8_t *point){
+    unsigned char pkrs[crypto_core_ristretto255_BYTES];
+    crypto_scalarmult_ristretto255_base(pkrs,scalar);
+    MEMCPY(point,pkrs,crypto_core_ristretto255_BYTES);
+}
+
+static uint8_t const C_ED25519_G[] = {
+  //uncompressed
+  0x04,
+  //x
+  0x21, 0x69, 0x36, 0xd3, 0xcd, 0x6e, 0x53, 0xfe, 0xc0, 0xa4, 0xe2, 0x31, 0xfd, 0xd6, 0xdc, 0x5c,
+  0x69, 0x2c, 0xc7, 0x60, 0x95, 0x25, 0xa7, 0xb2, 0xc9, 0x56, 0x2d, 0x60, 0x8f, 0x25, 0xd5, 0x1a,
+  //y
+  0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
+  0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x58
+};
+
+#define SWAP_BYTES(x, y, tmp) { \
+                   tmp = x;     \
+                   x = y;       \
+                   y = tmp;\
+}
+
+#define SWAP_ENDIAN(x, tmp) { \
+                 for (int i = 0; i < 16; i++){ \
+                          SWAP_BYTES(*(x + i), *(x + (31-i)), tmp); \
+                 }          \
+}
+
+int
+crypto_test(unsigned char *q,const unsigned char *n)
+{
+    unsigned char *t = q;
+    ge25519_p3     Q;
+    unsigned int   i;
+
+    for (i = 0; i < 32; ++i) {
+        t[i] = n[31-i];
+    }
+    t[0] &= 127;
+    //ge25519_scalarmult_base(&Q, t);
+    uint8_t Pxy[65];
+    memcpy(Pxy, C_ED25519_G, sizeof(Pxy));
+    uint8_t expected[65];
+    cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), t, 32);
+    uint8_t tmp = 0;
+    SWAP_ENDIAN(&Pxy[1], tmp);
+    SWAP_ENDIAN(&Pxy[1+32], tmp);
+
+    fe25519_frombytes(Q.X, &Pxy[1]);
+    fe25519_frombytes(Q.Y, &Pxy[33]);
+
+    fe25519_1(Q.Z);
+    fe25519_mul(Q.T, Q.X, Q.Y);
+
+    ristretto255_p3_tobytes(q, &Q);
+    if (sodium_is_zero(q, 32)) {
+        return -1;
+    }
+    return 0;
+}
+
+
+
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     uint8_t pubkey[32];
     MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
@@ -348,13 +418,18 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03,
             04, 0x5, 0x06, 0x07};
 
-    uint8_t context[4] = {103, 111, 111, 100};
-    uint8_t msg[12] = {116, 101, 115, 116, 32, 109, 101, 115, 115, 97, 103, 101};
+    c_ristretto_scalarmult_base1(skbytes, pubkey);
 
-    get_sr25519_pk(skbytes, pubkey);
-    sign_sr25519(skbytes, pubkey, context, sizeof(context), msg, sizeof(msg), G_io_apdu_buffer, G_io_apdu_buffer + 32);
+    MEMCPY(G_io_apdu_buffer, pubkey, 32);
+    G_io_apdu_buffer[32] = 0xaa;
+    G_io_apdu_buffer[33] = 0xaa;
+    crypto_test(pubkey,skbytes);
 
-    *tx = 64;
+
+    MEMCPY(G_io_apdu_buffer + 34, pubkey,32);
+    //sign_sr25519(skbytes, pubkey, context, sizeof(context), msg, sizeof(msg), G_io_apdu_buffer, G_io_apdu_buffer + 32);
+
+    *tx = 64+2;
     THROW(APDU_CODE_OK);
 }
 #endif

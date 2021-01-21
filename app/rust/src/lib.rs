@@ -164,6 +164,8 @@ mod tests {
     use schnorrkel::{context::*, Keypair, PublicKey, SecretKey, Signature};
 
     use curve25519_dalek::scalar::Scalar;
+    use curve25519_dalek::constants::ED25519_BASEPOINT_POINT;
+    use curve25519_dalek::edwards::EdwardsPoint;
 
     fn init_logging() {
         let _ = env_logger::builder().is_test(true).try_init();
@@ -235,6 +237,8 @@ mod tests {
             0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03,
             04, 0x5, 0x06, 0x07,
         ];
+
+
         let pk_expected = "b65abc66a8fdeac1197d03daa6c3791d0c0799a52db6b7127b1cd12d46e34364";
 
         let mut pk = [0u8; 32];
