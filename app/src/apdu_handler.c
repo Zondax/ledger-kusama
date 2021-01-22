@@ -380,40 +380,6 @@ static uint8_t const ED25519_MOD[] = {
                  }          \
 }
 
-int
-crypto_test(unsigned char *q,const unsigned char *n)
-{
-    zemu_log_stack("new test");
-    unsigned char *t = q;
-    ge25519_p3     Q;
-    unsigned int   i;
-
-    for (i = 0; i < 32; ++i) {
-        t[i] = n[31-i];
-    }
-    t[0] &= 127;
-    //ge25519_scalarmult_base(&Q, t);
-    uint8_t Pxy[65];
-    memcpy(Pxy, C_ED25519_G, sizeof(Pxy));
-    cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), t, 32);
-    uint8_t tmp = 0;
-    SWAP_ENDIAN(&Pxy[1], tmp);
-    SWAP_ENDIAN(&Pxy[1+32], tmp);
-
-    fe25519_frombytes(Q.X, &Pxy[1]);
-    fe25519_frombytes(Q.Y, &Pxy[33]);
-
-    fe25519_1(Q.Z);
-    fe25519_mul(Q.T, Q.X, Q.Y);
-
-    ristretto255_p3_tobytes(q, &Q);
-    if (sodium_is_zero(q, 32)) {
-        return -1;
-    }
-    return 0;
-}
-
-
 unsigned char const C_ED25519_FIELD[32] = {
     // q:  0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed
     0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -762,7 +728,7 @@ ristretto255_p3_tobytes_test(unsigned char *s, const ge25519_p3 *h)
 
     fe25519_sq(u1_u2u2, u2);           /* u1_u2u2 = u2^2 */
     fe25519_mul(u1_u2u2, u1, u1_u2u2); /* u1_u2u2 = u1*u2^2 */
-    fe25519_pow22523(u1_u2u2,u1_u2u2);
+
     fe25519_1(one);
     ristretto255_sqrt_ratio_m1(inv_sqrt, one, u1_u2u2);
 
@@ -793,8 +759,7 @@ ristretto255_p3_tobytes_test(unsigned char *s, const ge25519_p3 *h)
 
     fe25519_sub(s_, h->Z, y_);
     fe25519_mul(s_, den_inv, s_);
-    //fe25519_abs(s_, s_);
-    fe25519_cneg(s_, s_, fe25519_isnegative(s_));
+    fe25519_abs(s_, s_);
     fe25519_tobytes(s, s_);
 }
 
@@ -825,8 +790,6 @@ ristretto255_p3_tobytes_sdk(unsigned char *s, const ge25519_p3_ff *h)
 
     fe25519_sq_ff(u1_u2u2, u2);           /* u1_u2u2 = u2^2 */
     fe25519_mul_ff(u1_u2u2, u1, u1_u2u2); /* u1_u2u2 = u1*u2^2 */
-
-    fe25519_pow22523_ff(u1_u2u2,u1_u2u2);
 
     fe25519_1_ff(one);
     ristretto255_sqrt_ratio_m1_ff(inv_sqrt, one, u1_u2u2);
@@ -863,6 +826,66 @@ ristretto255_p3_tobytes_sdk(unsigned char *s, const ge25519_p3_ff *h)
 
 }
 
+int
+crypto_test(unsigned char *q,const unsigned char *n)
+{
+    zemu_log_stack("new test");
+    unsigned char *t = q;
+    unsigned int   i;
+
+    for (i = 0; i < 32; ++i) {
+        t[i] = n[31-i];
+    }
+    t[0] &= 127;
+    //ge25519_scalarmult_base(&Q, t);
+    uint8_t Pxy[65];
+    memcpy(Pxy, C_ED25519_G, sizeof(Pxy));
+    cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), t, 32);
+    ge25519_p3_ff Q_ff;
+    MEMZERO(&Q_ff, sizeof(ge25519_p3_ff));
+    MEMCPY(Q_ff.X, &Pxy[1],32);
+    MEMCPY(Q_ff.Y, &Pxy[33],32);
+    fe25519_1_ff(Q_ff.Z);
+    fe25519_mul_ff(Q_ff.T, Q_ff.X,Q_ff.Y);
+    ristretto255_p3_tobytes_sdk(q, &Q_ff);
+    uint8_t tmp = 0;
+    SWAP_ENDIAN(q, tmp);
+    /*
+    if (sodium_is_zero(q, 32)) {
+        return -1;
+    }
+    */
+    return 0;
+}
+
+
+int
+crypto_test2(unsigned char *q,const unsigned char *n)
+{
+    unsigned char *t = q;
+    ge25519_p3     Q;
+    unsigned int   i;
+
+    for (i = 0; i < 32; ++i) {
+        t[i] = n[i];
+    }
+    t[31] &= 127;
+    ge25519_scalarmult_base(&Q, t);
+    fe25519 zinv;
+    fe25519_invert(zinv, Q.Z);
+    fe25519_mul(Q.X, zinv, Q.X);
+    fe25519_mul(Q.Y, zinv, Q.Y);
+    fe25519_mul(Q.T, Q.X, Q.Y);
+    fe25519_1(Q.Z);
+    fe25519_tobytes(q, Q.Y);
+    ristretto255_p3_tobytes_test(q, &Q);
+    if (sodium_is_zero(q, 32)) {
+        return -1;
+    }
+    return 0;
+}
+
+
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
 
@@ -894,9 +917,10 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04,
             0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03,
             04, 0x5, 0x06, 0x07};
-
-    //c_ristretto_scalarmult_base1(skbytes, G_io_apdu_buffer);
-    crypto_scalarmult_ristretto255_base(G_io_apdu_buffer, skbytes);
+    crypto_test(G_io_apdu_buffer, skbytes);
+    crypto_test2(G_io_apdu_buffer+34, skbytes);
+    *tx = 66;
+    return;
     uint8_t buf[32];
     unsigned int   i;
 //crypto_scalarmult_ristretto255_base(unsigned char *q, const unsigned char *n)
@@ -910,21 +934,22 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     }
     t[31] &= 127;
     ge25519_scalarmult_base(&Q, t);
-
-    fe25519_tobytes(G_io_apdu_buffer, Q.X);
+    fe25519 zinv;
+    fe25519_invert(zinv, Q.Z);
+    fe25519_mul(zinv, zinv, Q.Y);
+    fe25519_tobytes(G_io_apdu_buffer, zinv);
     *tx = 32;
     return;
 */
     uint8_t tmp = 0;
     for (i = 0; i < 32; ++i) {
-        buf[i] = skbytes[i];
+        buf[i] = skbytes[31-i];
     }
-    buf[31] &= 127;
-    SWAP_ENDIAN(buf,tmp);
+    buf[0] &= 127;
     uint8_t Pxy[65];
     memcpy(Pxy, C_ED25519_G, sizeof(Pxy));
     cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), buf, 32);
-    MEMCPY(G_io_apdu_buffer, Pxy + 1, 32);
+    MEMCPY(G_io_apdu_buffer, Pxy + 33, 32);
     SWAP_ENDIAN(G_io_apdu_buffer, tmp);
     *tx = 32;
     return;
