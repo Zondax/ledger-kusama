@@ -99,55 +99,9 @@ void fe25519_tobytes_sdk(unsigned char *s, const fe25519_sdk f)
     SWAP_ENDIAN(&s[0], tmp);
 }
 
-//TODO: maybe replace this with cx_math_pow
 void fe25519_pow22523_sdk(fe25519_sdk out, const fe25519_sdk z)
 {
-    fe25519_sdk t0, t1, t2;
-    int     i;
-
-    fe25519_sq_sdk(t0, z);
-    fe25519_sq_sdk(t1, t0);
-    fe25519_sq_sdk(t1, t1);
-    fe25519_mul_sdk(t1, z, t1);
-    fe25519_mul_sdk(t0, t0, t1);
-    fe25519_sq_sdk(t0, t0);
-    fe25519_mul_sdk(t0, t1, t0);
-    fe25519_sq_sdk(t1, t0);
-    for (i = 1; i < 5; ++i) {
-        fe25519_sq_sdk(t1, t1);
-    }
-    fe25519_mul_sdk(t0, t1, t0);
-    fe25519_sq_sdk(t1, t0);
-    for (i = 1; i < 10; ++i) {
-        fe25519_sq_sdk(t1, t1);
-    }
-    fe25519_mul_sdk(t1, t1, t0);
-    fe25519_sq_sdk(t2, t1);
-    for (i = 1; i < 20; ++i) {
-        fe25519_sq_sdk(t2, t2);
-    }
-    fe25519_mul_sdk(t1, t2, t1);
-    for (i = 1; i < 11; ++i) {
-        fe25519_sq_sdk(t1, t1);
-    }
-    fe25519_mul_sdk(t0, t1, t0);
-    fe25519_sq_sdk(t1, t0);
-    for (i = 1; i < 50; ++i) {
-        fe25519_sq_sdk(t1, t1);
-    }
-    fe25519_mul_sdk(t1, t1, t0);
-    fe25519_sq_sdk(t2, t1);
-    for (i = 1; i < 100; ++i) {
-        fe25519_sq_sdk(t2, t2);
-    }
-    fe25519_mul_sdk(t1, t2, t1);
-    for (i = 1; i < 51; ++i) {
-        fe25519_sq_sdk(t1, t1);
-    }
-    fe25519_mul_sdk(t0, t1, t0);
-    fe25519_sq_sdk(t0, t0);
-    fe25519_sq_sdk(t0, t0);
-    fe25519_mul_sdk(out, t0, z);
+    cx_math_powm(out, z, ED25519_POW225, ED25519_SCALAR_BYTES, ED25519_FIELD_SIZE, ED25519_SCALAR_BYTES);
 }
 
 int ristretto255_sqrt_ratio_m1_sdk(fe25519_sdk x, const fe25519_sdk u, const fe25519_sdk v)
