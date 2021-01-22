@@ -25,7 +25,7 @@ void fe25519_add_sdk(fe25519_sdk h, const fe25519_sdk f, const fe25519_sdk g)
 
 void fe25519_sub_sdk(fe25519_sdk h, const fe25519_sdk f, const fe25519_sdk g)
 {
-    cx_math_subm((unsigned char *) h, f, g, ED25519_FIELD_SIZE, ED25519_SCALAR_BYTES);
+    cx_math_subm(h, f, g, ED25519_FIELD_SIZE, ED25519_SCALAR_BYTES);
 }
 
 void fe25519_mul_sdk(fe25519_sdk h, const fe25519_sdk f, const fe25519_sdk g)
@@ -54,7 +54,7 @@ int fe25519_isnegative_sdk(const fe25519_sdk f)
     return f[ED25519_SCALAR_BYTES-1] & 1;
 }
 
-void fe25519_neg_sdk(const fe25519_sdk h, const fe25519_sdk f)
+void fe25519_neg_sdk(fe25519_sdk h, const fe25519_sdk f)
 {
     cx_math_subm(h, ED25519_FIELD_ZERO, f, ED25519_FIELD_SIZE, ED25519_SCALAR_BYTES);
 }
