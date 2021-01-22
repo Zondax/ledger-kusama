@@ -561,7 +561,7 @@ fe25519_cmov_ff(fe25519_ff f, const fe25519_ff g, unsigned int b)
 static inline void
 fe25519_cneg_ff(fe25519_ff h, const fe25519_ff f, unsigned int b)
 {
-    fe25519 negf;
+    fe25519_ff negf;
 
     fe25519_neg_ff(negf, f);
     fe25519_copy_ff(h, f);
@@ -584,6 +584,17 @@ static const fe25519_ff ed25519_invsqrtamd_ff = {
 0x7b, 0x91, 0xfe, 0x01, 0xd8, 0x40, 0x9d, 0x2f, 0x16, 0x17,
 0x5a, 0x41, 0x72, 0xbe, 0x99, 0xc8, 0xfd, 0xaa, 0x80, 0x5d, 0x40, 0xea
 };
+
+static const fe25519 fe25519_sqrtm1 = {
+    -32595792, -7943725,  9377950,  3500415, 12389472, -272473, -25146209, -2005654, 326686, 11406482
+};
+
+
+/* 1 / sqrt(a - d) */
+static const fe25519 ed25519_invsqrtamd = {
+    6111485, 4156064, -27798727, 12243468, -25904040, 120897, 20826367, -7060776, 6093568, -1986012
+};
+
 
 static int
 ristretto255_sqrt_ratio_m1_ff(fe25519_ff x, const fe25519_ff u, const fe25519_ff v)
@@ -621,6 +632,110 @@ ristretto255_sqrt_ratio_m1_ff(fe25519_ff x, const fe25519_ff u, const fe25519_ff
     return has_m_root | has_p_root;
 }
 
+static void
+fe25519_pow22523(fe25519 out, const fe25519 z)
+{
+    fe25519 t0, t1, t2;
+    int     i;
+
+    fe25519_sq(t0, z);
+    fe25519_sq(t1, t0);
+    fe25519_sq(t1, t1);
+    fe25519_mul(t1, z, t1);
+    fe25519_mul(t0, t0, t1);
+    fe25519_sq(t0, t0);
+    fe25519_mul(t0, t1, t0);
+    fe25519_sq(t1, t0);
+    for (i = 1; i < 5; ++i) {
+        fe25519_sq(t1, t1);
+    }
+    fe25519_mul(t0, t1, t0);
+    fe25519_sq(t1, t0);
+    for (i = 1; i < 10; ++i) {
+        fe25519_sq(t1, t1);
+    }
+    fe25519_mul(t1, t1, t0);
+    fe25519_sq(t2, t1);
+    for (i = 1; i < 20; ++i) {
+        fe25519_sq(t2, t2);
+    }
+    fe25519_mul(t1, t2, t1);
+    for (i = 1; i < 11; ++i) {
+        fe25519_sq(t1, t1);
+    }
+    fe25519_mul(t0, t1, t0);
+    fe25519_sq(t1, t0);
+    for (i = 1; i < 50; ++i) {
+        fe25519_sq(t1, t1);
+    }
+    fe25519_mul(t1, t1, t0);
+    fe25519_sq(t2, t1);
+    for (i = 1; i < 100; ++i) {
+        fe25519_sq(t2, t2);
+    }
+    fe25519_mul(t1, t2, t1);
+    for (i = 1; i < 51; ++i) {
+        fe25519_sq(t1, t1);
+    }
+    fe25519_mul(t0, t1, t0);
+    fe25519_sq(t0, t0);
+    fe25519_sq(t0, t0);
+    fe25519_mul(out, t0, z);
+}
+
+static void
+fe25519_cneg(fe25519 h, const fe25519 f, unsigned int b)
+{
+    fe25519 negf;
+
+    fe25519_neg(negf, f);
+    fe25519_copy(h, f);
+    fe25519_cmov(h, negf, b);
+}
+
+static void
+fe25519_abs(fe25519 h, const fe25519 f)
+{
+    fe25519_cneg(h, f, fe25519_isnegative(f));
+}
+
+
+static int
+ristretto255_sqrt_ratio_m1(fe25519 x, const fe25519 u, const fe25519 v)
+{
+    fe25519 v3;
+    fe25519 vxx;
+    fe25519 m_root_check, p_root_check, f_root_check;
+    fe25519 x_sqrtm1;
+    int     has_m_root, has_p_root, has_f_root;
+
+    fe25519_sq(v3, v);
+    fe25519_mul(v3, v3, v); /* v3 = v^3 */
+    fe25519_sq(x, v3);
+    fe25519_mul(x, x, u);
+    fe25519_mul(x, x, v); /* x = uv^7 */
+
+    fe25519_pow22523(x, x); /* x = (uv^7)^((q-5)/8) */
+    fe25519_mul(x, x, v3);
+    fe25519_mul(x, x, u); /* x = uv^3(uv^7)^((q-5)/8) */
+
+    fe25519_sq(vxx, x);
+    fe25519_mul(vxx, vxx, v); /* vx^2 */
+    fe25519_sub(m_root_check, vxx, u); /* vx^2-u */
+    fe25519_add(p_root_check, vxx, u); /* vx^2+u */
+    fe25519_mul(f_root_check, u, fe25519_sqrtm1); /* u*sqrt(-1) */
+    fe25519_add(f_root_check, vxx, f_root_check); /* vx^2+u*sqrt(-1) */
+    has_m_root = fe25519_iszero(m_root_check);
+    has_p_root = fe25519_iszero(p_root_check);
+    has_f_root = fe25519_iszero(f_root_check);
+    fe25519_mul(x_sqrtm1, x, fe25519_sqrtm1); /* x*sqrt(-1) */
+
+    fe25519_cmov(x, x_sqrtm1, has_p_root | has_f_root);
+    fe25519_abs(x, x);
+
+    return has_m_root | has_p_root;
+}
+
 void
 ristretto255_p3_tobytes_test(unsigned char *s, const ge25519_p3 *h)
 {
@@ -647,11 +762,40 @@ ristretto255_p3_tobytes_test(unsigned char *s, const ge25519_p3 *h)
 
     fe25519_sq(u1_u2u2, u2);           /* u1_u2u2 = u2^2 */
     fe25519_mul(u1_u2u2, u1, u1_u2u2); /* u1_u2u2 = u1*u2^2 */
-    fe25519_pow22523_ff(u1_u2u2,u1_u2u2);
-    fe25519_1_ff(one);
-    ristretto255_sqrt_ratio_m1_ff(inv_sqrt, one, u1_u2u2);
+    fe25519_pow22523(u1_u2u2,u1_u2u2);
+    fe25519_1(one);
+    ristretto255_sqrt_ratio_m1(inv_sqrt, one, u1_u2u2);
 
-    fe25519_tobytes(s, inv_sqrt);
+    fe25519_mul(den1, inv_sqrt, u1);
+    fe25519_mul(den2, inv_sqrt, u2);
+    fe25519_mul(z_inv, den1, den2);
+    fe25519_mul(z_inv, z_inv, h->T);
+
+    fe25519_mul(ix, h->X, fe25519_sqrtm1);
+    fe25519_mul(iy, h->Y, fe25519_sqrtm1);
+
+    fe25519_mul(eden, den1, ed25519_invsqrtamd);
+
+    fe25519_mul(t_z_inv, h->T, z_inv);
+    rotate = fe25519_isnegative(t_z_inv);
+
+    fe25519_copy(x_, h->X);
+    fe25519_copy(y_, h->Y);
+    fe25519_copy(den_inv, den2);
+
+    fe25519_cmov(x_, iy, rotate);
+
+    fe25519_cmov(y_, ix, rotate);
+    fe25519_cmov(den_inv, eden, rotate);
+
+    fe25519_mul(x_z_inv, x_, z_inv);
+    fe25519_cneg(y_, y_, fe25519_isnegative(x_z_inv));
+
+    fe25519_sub(s_, h->Z, y_);
+    fe25519_mul(s_, den_inv, s_);
+    //fe25519_abs(s_, s_);
+    fe25519_cneg(s_, s_, fe25519_isnegative(s_));
+    fe25519_tobytes(s, s_);
 }
 
 
@@ -693,7 +837,6 @@ ristretto255_p3_tobytes_sdk(unsigned char *s, const ge25519_p3_ff *h)
     fe25519_mul_ff(z_inv, z_inv, h->T);
 
     fe25519_mul_ff(ix, h->X, fe25519_sqrtm1_ff);
-
     fe25519_mul_ff(iy, h->Y, fe25519_sqrtm1_ff);
 
     fe25519_mul_ff(eden, den1, ed25519_invsqrtamd_ff);
@@ -706,6 +849,7 @@ ristretto255_p3_tobytes_sdk(unsigned char *s, const ge25519_p3_ff *h)
     fe25519_copy_ff(den_inv, den2);
 
     fe25519_cmov_ff(x_, iy, rotate);
+
     fe25519_cmov_ff(y_, ix, rotate);
     fe25519_cmov_ff(den_inv, eden, rotate);
 
@@ -715,20 +859,32 @@ ristretto255_p3_tobytes_sdk(unsigned char *s, const ge25519_p3_ff *h)
     fe25519_sub_ff(s_, h->Z, y_);
     fe25519_mul_ff(s_, den_inv, s_);
     fe25519_abs_ff(s_, s_);
-
     MEMCPY(s, s_, sizeof(fe25519_ff));
 
 }
 
-static const fe25519 fe25519_sqrtm1 = {
-    6111485, 4156064, -27798727, 12243468, -25904040, 120897, 20826367, -7060776, 6093568, -1986012
-};
-
-
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    uint8_t pubkey[32];
     MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
 
+/*
+    fe25519_ff prod, one;
+    fe25519_1_ff(one);
+    uint8_t ttt;
+    fe25519_cneg_ff(prod,ed25519_invsqrtamd_ff,1);
+    MEMCPY(G_io_apdu_buffer, prod, 32);
+    SWAP_ENDIAN(G_io_apdu_buffer, ttt);
+*/
+/*
+    G_io_apdu_buffer[32] = 0xaa;
+    G_io_apdu_buffer[33] = 0xaa;
+    fe25519 pr, onef;
+    fe25519_1(onef);
+    fe25519_cneg(pr,ed25519_invsqrtamd,1);
+    fe25519_tobytes(G_io_apdu_buffer + 34, pr);
+
+    *tx = 66;
+    THROW(APDU_CODE_OK);
+*/
 //     You can add anything that helps testing here.
     zemu_log_stack("handleTest");
 
@@ -739,30 +895,64 @@ void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03, 04, 0x5, 0x06, 0x07, 0x00, 0x01, 0x02, 0x03,
             04, 0x5, 0x06, 0x07};
 
-    unsigned char *n = skbytes;
-    unsigned char *t = skbytes;
+    //c_ristretto_scalarmult_base1(skbytes, G_io_apdu_buffer);
+    crypto_scalarmult_ristretto255_base(G_io_apdu_buffer, skbytes);
+    uint8_t buf[32];
     unsigned int   i;
+//crypto_scalarmult_ristretto255_base(unsigned char *q, const unsigned char *n)
+/*
+    unsigned char *t = G_io_apdu_buffer;
+    unsigned char *n = skbytes;
+    ge25519_p3     Q;
 
     for (i = 0; i < 32; ++i) {
-        t[i] = n[31-i];
+        t[i] = n[i];
     }
-    t[0] &= 127;
+    t[31] &= 127;
+    ge25519_scalarmult_base(&Q, t);
+
+    fe25519_tobytes(G_io_apdu_buffer, Q.X);
+    *tx = 32;
+    return;
+*/
+    uint8_t tmp = 0;
+    for (i = 0; i < 32; ++i) {
+        buf[i] = skbytes[i];
+    }
+    buf[31] &= 127;
+    SWAP_ENDIAN(buf,tmp);
     uint8_t Pxy[65];
     memcpy(Pxy, C_ED25519_G, sizeof(Pxy));
-    cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), t, 32);
+    cx_ecfp_scalar_mult(CX_CURVE_Ed25519, Pxy, sizeof(Pxy), buf, 32);
+    MEMCPY(G_io_apdu_buffer, Pxy + 1, 32);
+    SWAP_ENDIAN(G_io_apdu_buffer, tmp);
+    *tx = 32;
+    return;
+/*
+    SWAP_ENDIAN(&Pxy[1],tmp);
+    SWAP_ENDIAN(&Pxy[33],tmp);
+    ge25519_p3 Q;
+    fe25519_frombytes(Q.X, &Pxy[1]);
+    fe25519_frombytes(Q.Y, &Pxy[33]);
+    fe25519_mul(Q.T, Q.X, Q.Y);
+    fe25519_1(Q.Z);
+    ristretto255_p3_tobytes_test(G_io_apdu_buffer, &Q);
+    //ristretto255_p3_tobytes(G_io_apdu_buffer, &Q);
+*/
 
     ge25519_p3_ff Q_ff;
     MEMZERO(&Q_ff, sizeof(ge25519_p3_ff));
     MEMCPY(Q_ff.X, &Pxy[1],32);
     MEMCPY(Q_ff.Y, &Pxy[33],32);
     fe25519_1_ff(Q_ff.Z);
+    fe25519_mul_ff(Q_ff.T, Q_ff.X,Q_ff.Y);
 
     G_io_apdu_buffer[32] = 0xaa;
     G_io_apdu_buffer[33] = 0xaa;
 
-    uint8_t tmp = 0;
-    ristretto255_p3_tobytes_sdk(G_io_apdu_buffer + 34, &Q_ff);
-    SWAP_ENDIAN(G_io_apdu_buffer + 34, tmp);
+    ristretto255_p3_tobytes_sdk(&G_io_apdu_buffer[34], &Q_ff);
+    SWAP_ENDIAN(&G_io_apdu_buffer[34], tmp);
+
     *tx = 66;
     THROW(APDU_CODE_OK);
 }
