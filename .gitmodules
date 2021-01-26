@@ -7,6 +7,3 @@
 [submodule "cmake/cmake-modules"]
 	path = cmake/cmake-modules
 	url = https://github.com/bilke/cmake-modules.git
-[submodule "deps/libsodium"]
-	path = deps/libsodium
-	url = https://github.com/Zondax/libsodium.git
