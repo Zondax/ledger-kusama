@@ -65,6 +65,11 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
 __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
     zemu_log("process_chunk\n");
     const uint8_t payloadType = G_io_apdu_buffer[OFFSET_PAYLOAD_TYPE];
+
+    if (G_io_apdu_buffer[OFFSET_P2] != 0) {
+        THROW(APDU_CODE_INVALIDP1P2);
+    }
+
     if (rx < OFFSET_DATA) {
         THROW(APDU_CODE_WRONG_LENGTH);
     }
