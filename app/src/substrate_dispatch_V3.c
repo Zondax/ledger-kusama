@@ -611,7 +611,7 @@ __Z_INLINE parser_error_t _readMethod_council_set_members_V3(
 __Z_INLINE parser_error_t _readMethod_council_execute_V3(
     parser_context_t* c, pd_council_execute_V3_t* m)
 {
-    CHECK_ERROR(_readProposal_V3(c, &m->proposal))
+    CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -620,7 +620,7 @@ __Z_INLINE parser_error_t _readMethod_council_propose_V3(
     parser_context_t* c, pd_council_propose_V3_t* m)
 {
     CHECK_ERROR(_readCompactMemberCount_V3(c, &m->threshold))
-    CHECK_ERROR(_readProposal_V3(c, &m->proposal))
+    CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -663,7 +663,7 @@ __Z_INLINE parser_error_t _readMethod_technicalcommittee_set_members_V3(
 __Z_INLINE parser_error_t _readMethod_technicalcommittee_execute_V3(
     parser_context_t* c, pd_technicalcommittee_execute_V3_t* m)
 {
-    CHECK_ERROR(_readProposal_V3(c, &m->proposal))
+    CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -672,7 +672,7 @@ __Z_INLINE parser_error_t _readMethod_technicalcommittee_propose_V3(
     parser_context_t* c, pd_technicalcommittee_propose_V3_t* m)
 {
     CHECK_ERROR(_readCompactMemberCount_V3(c, &m->threshold))
-    CHECK_ERROR(_readProposal_V3(c, &m->proposal))
+    CHECK_ERROR(_readProposal(c, &m->proposal))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -970,7 +970,7 @@ __Z_INLINE parser_error_t _readMethod_claims_move_claim_V3(
 __Z_INLINE parser_error_t _readMethod_utility_batch_V3(
     parser_context_t* c, pd_utility_batch_V3_t* m)
 {
-    CHECK_ERROR(_readVecCall_V3(c, &m->calls))
+    CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
@@ -978,14 +978,14 @@ __Z_INLINE parser_error_t _readMethod_utility_as_derivative_V3(
     parser_context_t* c, pd_utility_as_derivative_V3_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->index))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_utility_batch_all_V3(
     parser_context_t* c, pd_utility_batch_all_V3_t* m)
 {
-    CHECK_ERROR(_readVecCall_V3(c, &m->calls))
+    CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
@@ -1193,7 +1193,7 @@ __Z_INLINE parser_error_t _readMethod_recovery_as_recovered_V3(
     parser_context_t* c, pd_recovery_as_recovered_V3_t* m)
 {
     CHECK_ERROR(_readAccountId_V3(c, &m->account))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1292,7 +1292,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_V3(
     CHECK_ERROR(_readBlockNumber(c, &m->when))
     CHECK_ERROR(_readOptionPeriod_V3(c, &m->maybe_periodic))
     CHECK_ERROR(_readPriority_V3(c, &m->priority))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1311,7 +1311,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_V3(
     CHECK_ERROR(_readBlockNumber(c, &m->when))
     CHECK_ERROR(_readOptionPeriod_V3(c, &m->maybe_periodic))
     CHECK_ERROR(_readPriority_V3(c, &m->priority))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1328,7 +1328,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_after_V3(
     CHECK_ERROR(_readBlockNumber(c, &m->after))
     CHECK_ERROR(_readOptionPeriod_V3(c, &m->maybe_periodic))
     CHECK_ERROR(_readPriority_V3(c, &m->priority))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1339,7 +1339,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_after_V3(
     CHECK_ERROR(_readBlockNumber(c, &m->after))
     CHECK_ERROR(_readOptionPeriod_V3(c, &m->maybe_periodic))
     CHECK_ERROR(_readPriority_V3(c, &m->priority))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1348,7 +1348,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_V3(
 {
     CHECK_ERROR(_readAccountId_V3(c, &m->real))
     CHECK_ERROR(_readOptionProxyType_V3(c, &m->force_proxy_type))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1426,7 +1426,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V3(
     CHECK_ERROR(_readAccountId_V3(c, &m->delegate))
     CHECK_ERROR(_readAccountId_V3(c, &m->real))
     CHECK_ERROR(_readOptionProxyType_V3(c, &m->force_proxy_type))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1434,7 +1434,7 @@ __Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1_V3(
     parser_context_t* c, pd_multisig_as_multi_threshold_1_V3_t* m)
 {
     CHECK_ERROR(_readVecAccountId_V3(c, &m->other_signatories))
-    CHECK_ERROR(_readCall_V3(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1846,9 +1846,6 @@ parser_error_t _readMethodBasic_V3(
     case 6144: /* module 24 call 0 */
         CHECK_ERROR(_readMethod_utility_batch_V3(c, &method->utility_batch_V3))
         break;
-    case 6145: /* module 24 call 1 */
-        CHECK_ERROR(_readMethod_utility_as_derivative_V3(c, &method->utility_as_derivative_V3))
-        break;
     case 6146: /* module 24 call 2 */
         CHECK_ERROR(_readMethod_utility_batch_all_V3(c, &method->utility_batch_all_V3))
         break;
@@ -1933,9 +1930,6 @@ parser_error_t _readMethodBasic_V3(
     case 6667: /* module 26 call 11 */
         CHECK_ERROR(_readMethod_society_set_max_members_V3(c, &method->society_set_max_members_V3))
         break;
-    case 6912: /* module 27 call 0 */
-        CHECK_ERROR(_readMethod_recovery_as_recovered_V3(c, &method->recovery_as_recovered_V3))
-        break;
     case 6913: /* module 27 call 1 */
         CHECK_ERROR(_readMethod_recovery_set_recovered_V3(c, &method->recovery_set_recovered_V3))
         break;
@@ -1972,26 +1966,11 @@ parser_error_t _readMethodBasic_V3(
     case 7171: /* module 28 call 3 */
         CHECK_ERROR(_readMethod_vesting_force_vested_transfer_V3(c, &method->vesting_force_vested_transfer_V3))
         break;
-    case 7424: /* module 29 call 0 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_V3(c, &method->scheduler_schedule_V3))
-        break;
     case 7425: /* module 29 call 1 */
         CHECK_ERROR(_readMethod_scheduler_cancel_V3(c, &method->scheduler_cancel_V3))
         break;
-    case 7426: /* module 29 call 2 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_V3(c, &method->scheduler_schedule_named_V3))
-        break;
     case 7427: /* module 29 call 3 */
         CHECK_ERROR(_readMethod_scheduler_cancel_named_V3(c, &method->scheduler_cancel_named_V3))
-        break;
-    case 7428: /* module 29 call 4 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_after_V3(c, &method->scheduler_schedule_after_V3))
-        break;
-    case 7429: /* module 29 call 5 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_after_V3(c, &method->scheduler_schedule_named_after_V3))
-        break;
-    case 7680: /* module 30 call 0 */
-        CHECK_ERROR(_readMethod_proxy_proxy_V3(c, &method->proxy_proxy_V3))
         break;
     case 7681: /* module 30 call 1 */
         CHECK_ERROR(_readMethod_proxy_add_proxy_V3(c, &method->proxy_add_proxy_V3))
@@ -2016,12 +1995,6 @@ parser_error_t _readMethodBasic_V3(
         break;
     case 7688: /* module 30 call 8 */
         CHECK_ERROR(_readMethod_proxy_reject_announcement_V3(c, &method->proxy_reject_announcement_V3))
-        break;
-    case 7689: /* module 30 call 9 */
-        CHECK_ERROR(_readMethod_proxy_proxy_announced_V3(c, &method->proxy_proxy_announced_V3))
-        break;
-    case 7936: /* module 31 call 0 */
-        CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1_V3(c, &method->multisig_as_multi_threshold_1_V3))
         break;
     case 7937: /* module 31 call 1 */
         CHECK_ERROR(_readMethod_multisig_as_multi_V3(c, &method->multisig_as_multi_V3))
@@ -2427,7 +2400,7 @@ parser_error_t _readMethod_V3(
         CHECK_ERROR(_readMethod_utility_batch_V3(c, &method->basic.utility_batch_V3))
         break;
     case 6145: /* module 24 call 1 */
-        CHECK_ERROR(_readMethod_utility_as_derivative_V3(c, &method->basic.utility_as_derivative_V3))
+        CHECK_ERROR(_readMethod_utility_as_derivative_V3(c, &method->nested.utility_as_derivative_V3))
         break;
     case 6146: /* module 24 call 2 */
         CHECK_ERROR(_readMethod_utility_batch_all_V3(c, &method->basic.utility_batch_all_V3))
@@ -2514,7 +2487,7 @@ parser_error_t _readMethod_V3(
         CHECK_ERROR(_readMethod_society_set_max_members_V3(c, &method->basic.society_set_max_members_V3))
         break;
     case 6912: /* module 27 call 0 */
-        CHECK_ERROR(_readMethod_recovery_as_recovered_V3(c, &method->basic.recovery_as_recovered_V3))
+        CHECK_ERROR(_readMethod_recovery_as_recovered_V3(c, &method->nested.recovery_as_recovered_V3))
         break;
     case 6913: /* module 27 call 1 */
         CHECK_ERROR(_readMethod_recovery_set_recovered_V3(c, &method->basic.recovery_set_recovered_V3))
@@ -2553,25 +2526,25 @@ parser_error_t _readMethod_V3(
         CHECK_ERROR(_readMethod_vesting_force_vested_transfer_V3(c, &method->basic.vesting_force_vested_transfer_V3))
         break;
     case 7424: /* module 29 call 0 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_V3(c, &method->basic.scheduler_schedule_V3))
+        CHECK_ERROR(_readMethod_scheduler_schedule_V3(c, &method->nested.scheduler_schedule_V3))
         break;
     case 7425: /* module 29 call 1 */
         CHECK_ERROR(_readMethod_scheduler_cancel_V3(c, &method->basic.scheduler_cancel_V3))
         break;
     case 7426: /* module 29 call 2 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_V3(c, &method->basic.scheduler_schedule_named_V3))
+        CHECK_ERROR(_readMethod_scheduler_schedule_named_V3(c, &method->nested.scheduler_schedule_named_V3))
         break;
     case 7427: /* module 29 call 3 */
         CHECK_ERROR(_readMethod_scheduler_cancel_named_V3(c, &method->basic.scheduler_cancel_named_V3))
         break;
     case 7428: /* module 29 call 4 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_after_V3(c, &method->basic.scheduler_schedule_after_V3))
+        CHECK_ERROR(_readMethod_scheduler_schedule_after_V3(c, &method->nested.scheduler_schedule_after_V3))
         break;
     case 7429: /* module 29 call 5 */
-        CHECK_ERROR(_readMethod_scheduler_schedule_named_after_V3(c, &method->basic.scheduler_schedule_named_after_V3))
+        CHECK_ERROR(_readMethod_scheduler_schedule_named_after_V3(c, &method->nested.scheduler_schedule_named_after_V3))
         break;
     case 7680: /* module 30 call 0 */
-        CHECK_ERROR(_readMethod_proxy_proxy_V3(c, &method->basic.proxy_proxy_V3))
+        CHECK_ERROR(_readMethod_proxy_proxy_V3(c, &method->nested.proxy_proxy_V3))
         break;
     case 7681: /* module 30 call 1 */
         CHECK_ERROR(_readMethod_proxy_add_proxy_V3(c, &method->basic.proxy_add_proxy_V3))
@@ -2598,10 +2571,10 @@ parser_error_t _readMethod_V3(
         CHECK_ERROR(_readMethod_proxy_reject_announcement_V3(c, &method->basic.proxy_reject_announcement_V3))
         break;
     case 7689: /* module 30 call 9 */
-        CHECK_ERROR(_readMethod_proxy_proxy_announced_V3(c, &method->basic.proxy_proxy_announced_V3))
+        CHECK_ERROR(_readMethod_proxy_proxy_announced_V3(c, &method->nested.proxy_proxy_announced_V3))
         break;
     case 7936: /* module 31 call 0 */
-        CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1_V3(c, &method->basic.multisig_as_multi_threshold_1_V3))
+        CHECK_ERROR(_readMethod_multisig_as_multi_threshold_1_V3(c, &method->nested.multisig_as_multi_threshold_1_V3))
         break;
     case 7937: /* module 31 call 1 */
         CHECK_ERROR(_readMethod_multisig_as_multi_V3(c, &method->basic.multisig_as_multi_V3))
@@ -6053,7 +6026,7 @@ parser_error_t _getMethod_ItemValue_V3(
     case 3585: /* module 14 call 1 */
         switch (itemIdx) {
         case 0: /* council_execute_V3 - proposal */;
-            return _toStringProposal_V3(
+            return _toStringProposal(
                 &m->nested.council_execute_V3.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6073,7 +6046,7 @@ parser_error_t _getMethod_ItemValue_V3(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* council_propose_V3 - proposal */;
-            return _toStringProposal_V3(
+            return _toStringProposal(
                 &m->nested.council_propose_V3.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6163,7 +6136,7 @@ parser_error_t _getMethod_ItemValue_V3(
     case 3841: /* module 15 call 1 */
         switch (itemIdx) {
         case 0: /* technicalcommittee_execute_V3 - proposal */;
-            return _toStringProposal_V3(
+            return _toStringProposal(
                 &m->nested.technicalcommittee_execute_V3.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6183,7 +6156,7 @@ parser_error_t _getMethod_ItemValue_V3(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* technicalcommittee_propose_V3 - proposal */;
-            return _toStringProposal_V3(
+            return _toStringProposal(
                 &m->nested.technicalcommittee_propose_V3.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6698,7 +6671,7 @@ parser_error_t _getMethod_ItemValue_V3(
     case 6144: /* module 24 call 0 */
         switch (itemIdx) {
         case 0: /* utility_batch_V3 - calls */;
-            return _toStringVecCall_V3(
+            return _toStringVecCall(
                 &m->basic.utility_batch_V3.calls,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6709,12 +6682,12 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* utility_as_derivative_V3 - index */;
             return _toStringu16(
-                &m->basic.utility_as_derivative_V3.index,
+                &m->nested.utility_as_derivative_V3.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* utility_as_derivative_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.utility_as_derivative_V3.call,
+            return _toStringCall(
+                &m->nested.utility_as_derivative_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6723,7 +6696,7 @@ parser_error_t _getMethod_ItemValue_V3(
     case 6146: /* module 24 call 2 */
         switch (itemIdx) {
         case 0: /* utility_batch_all_V3 - calls */;
-            return _toStringVecCall_V3(
+            return _toStringVecCall(
                 &m->basic.utility_batch_all_V3.calls,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7059,12 +7032,12 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* recovery_as_recovered_V3 - account */;
             return _toStringAccountId_V3(
-                &m->basic.recovery_as_recovered_V3.account,
+                &m->nested.recovery_as_recovered_V3.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* recovery_as_recovered_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.recovery_as_recovered_V3.call,
+            return _toStringCall(
+                &m->nested.recovery_as_recovered_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7219,22 +7192,22 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* scheduler_schedule_V3 - when */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_V3.when,
+                &m->nested.scheduler_schedule_V3.when,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* scheduler_schedule_V3 - maybe_periodic */;
             return _toStringOptionPeriod_V3(
-                &m->basic.scheduler_schedule_V3.maybe_periodic,
+                &m->nested.scheduler_schedule_V3.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* scheduler_schedule_V3 - priority */;
             return _toStringPriority_V3(
-                &m->basic.scheduler_schedule_V3.priority,
+                &m->nested.scheduler_schedule_V3.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.scheduler_schedule_V3.call,
+            return _toStringCall(
+                &m->nested.scheduler_schedule_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7259,27 +7232,27 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* scheduler_schedule_named_V3 - id */;
             return _toStringBytes(
-                &m->basic.scheduler_schedule_named_V3.id,
+                &m->nested.scheduler_schedule_named_V3.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* scheduler_schedule_named_V3 - when */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_named_V3.when,
+                &m->nested.scheduler_schedule_named_V3.when,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* scheduler_schedule_named_V3 - maybe_periodic */;
             return _toStringOptionPeriod_V3(
-                &m->basic.scheduler_schedule_named_V3.maybe_periodic,
+                &m->nested.scheduler_schedule_named_V3.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_named_V3 - priority */;
             return _toStringPriority_V3(
-                &m->basic.scheduler_schedule_named_V3.priority,
+                &m->nested.scheduler_schedule_named_V3.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* scheduler_schedule_named_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.scheduler_schedule_named_V3.call,
+            return _toStringCall(
+                &m->nested.scheduler_schedule_named_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7299,22 +7272,22 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* scheduler_schedule_after_V3 - after */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_after_V3.after,
+                &m->nested.scheduler_schedule_after_V3.after,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* scheduler_schedule_after_V3 - maybe_periodic */;
             return _toStringOptionPeriod_V3(
-                &m->basic.scheduler_schedule_after_V3.maybe_periodic,
+                &m->nested.scheduler_schedule_after_V3.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* scheduler_schedule_after_V3 - priority */;
             return _toStringPriority_V3(
-                &m->basic.scheduler_schedule_after_V3.priority,
+                &m->nested.scheduler_schedule_after_V3.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_after_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.scheduler_schedule_after_V3.call,
+            return _toStringCall(
+                &m->nested.scheduler_schedule_after_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7324,27 +7297,27 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* scheduler_schedule_named_after_V3 - id */;
             return _toStringBytes(
-                &m->basic.scheduler_schedule_named_after_V3.id,
+                &m->nested.scheduler_schedule_named_after_V3.id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* scheduler_schedule_named_after_V3 - after */;
             return _toStringBlockNumber(
-                &m->basic.scheduler_schedule_named_after_V3.after,
+                &m->nested.scheduler_schedule_named_after_V3.after,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* scheduler_schedule_named_after_V3 - maybe_periodic */;
             return _toStringOptionPeriod_V3(
-                &m->basic.scheduler_schedule_named_after_V3.maybe_periodic,
+                &m->nested.scheduler_schedule_named_after_V3.maybe_periodic,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_named_after_V3 - priority */;
             return _toStringPriority_V3(
-                &m->basic.scheduler_schedule_named_after_V3.priority,
+                &m->nested.scheduler_schedule_named_after_V3.priority,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* scheduler_schedule_named_after_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.scheduler_schedule_named_after_V3.call,
+            return _toStringCall(
+                &m->nested.scheduler_schedule_named_after_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7354,17 +7327,17 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* proxy_proxy_V3 - real */;
             return _toStringAccountId_V3(
-                &m->basic.proxy_proxy_V3.real,
+                &m->nested.proxy_proxy_V3.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_proxy_V3 - force_proxy_type */;
             return _toStringOptionProxyType_V3(
-                &m->basic.proxy_proxy_V3.force_proxy_type,
+                &m->nested.proxy_proxy_V3.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_proxy_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.proxy_proxy_V3.call,
+            return _toStringCall(
+                &m->nested.proxy_proxy_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7514,22 +7487,22 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* proxy_proxy_announced_V3 - delegate */;
             return _toStringAccountId_V3(
-                &m->basic.proxy_proxy_announced_V3.delegate,
+                &m->nested.proxy_proxy_announced_V3.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_proxy_announced_V3 - real */;
             return _toStringAccountId_V3(
-                &m->basic.proxy_proxy_announced_V3.real,
+                &m->nested.proxy_proxy_announced_V3.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_proxy_announced_V3 - force_proxy_type */;
             return _toStringOptionProxyType_V3(
-                &m->basic.proxy_proxy_announced_V3.force_proxy_type,
+                &m->nested.proxy_proxy_announced_V3.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* proxy_proxy_announced_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.proxy_proxy_announced_V3.call,
+            return _toStringCall(
+                &m->nested.proxy_proxy_announced_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7539,12 +7512,12 @@ parser_error_t _getMethod_ItemValue_V3(
         switch (itemIdx) {
         case 0: /* multisig_as_multi_threshold_1_V3 - other_signatories */;
             return _toStringVecAccountId_V3(
-                &m->basic.multisig_as_multi_threshold_1_V3.other_signatories,
+                &m->nested.multisig_as_multi_threshold_1_V3.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* multisig_as_multi_threshold_1_V3 - call */;
-            return _toStringCall_V3(
-                &m->basic.multisig_as_multi_threshold_1_V3.call,
+            return _toStringCall(
+                &m->nested.multisig_as_multi_threshold_1_V3.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:

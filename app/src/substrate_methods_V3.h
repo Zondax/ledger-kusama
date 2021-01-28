@@ -729,18 +729,12 @@ typedef struct {
 
 #define PD_CALL_UTILITY_BATCH 0
 typedef struct {
-    pd_VecCall_V3_t calls;
+    pd_VecCall_t calls;
 } pd_utility_batch_V3_t;
-
-#define PD_CALL_UTILITY_AS_DERIVATIVE 1
-typedef struct {
-    pd_u16_t index;
-    pd_Call_V3_t call;
-} pd_utility_as_derivative_V3_t;
 
 #define PD_CALL_UTILITY_BATCH_ALL 2
 typedef struct {
-    pd_VecCall_V3_t calls;
+    pd_VecCall_t calls;
 } pd_utility_batch_all_V3_t;
 
 #define PD_CALL_IDENTITY_ADD_REGISTRAR 0
@@ -889,12 +883,6 @@ typedef struct {
     pd_u32_t max;
 } pd_society_set_max_members_V3_t;
 
-#define PD_CALL_RECOVERY_AS_RECOVERED 0
-typedef struct {
-    pd_AccountId_V3_t account;
-    pd_Call_V3_t call;
-} pd_recovery_as_recovered_V3_t;
-
 #define PD_CALL_RECOVERY_SET_RECOVERED 1
 typedef struct {
     pd_AccountId_V3_t lost;
@@ -960,57 +948,16 @@ typedef struct {
     pd_VestingInfo_V3_t schedule;
 } pd_vesting_force_vested_transfer_V3_t;
 
-#define PD_CALL_SCHEDULER_SCHEDULE 0
-typedef struct {
-    pd_BlockNumber_t when;
-    pd_OptionPeriod_V3_t maybe_periodic;
-    pd_Priority_V3_t priority;
-    pd_Call_V3_t call;
-} pd_scheduler_schedule_V3_t;
-
 #define PD_CALL_SCHEDULER_CANCEL 1
 typedef struct {
     pd_BlockNumber_t when;
     pd_u32_t index;
 } pd_scheduler_cancel_V3_t;
 
-#define PD_CALL_SCHEDULER_SCHEDULE_NAMED 2
-typedef struct {
-    pd_Bytes_t id;
-    pd_BlockNumber_t when;
-    pd_OptionPeriod_V3_t maybe_periodic;
-    pd_Priority_V3_t priority;
-    pd_Call_V3_t call;
-} pd_scheduler_schedule_named_V3_t;
-
 #define PD_CALL_SCHEDULER_CANCEL_NAMED 3
 typedef struct {
     pd_Bytes_t id;
 } pd_scheduler_cancel_named_V3_t;
-
-#define PD_CALL_SCHEDULER_SCHEDULE_AFTER 4
-typedef struct {
-    pd_BlockNumber_t after;
-    pd_OptionPeriod_V3_t maybe_periodic;
-    pd_Priority_V3_t priority;
-    pd_Call_V3_t call;
-} pd_scheduler_schedule_after_V3_t;
-
-#define PD_CALL_SCHEDULER_SCHEDULE_NAMED_AFTER 5
-typedef struct {
-    pd_Bytes_t id;
-    pd_BlockNumber_t after;
-    pd_OptionPeriod_V3_t maybe_periodic;
-    pd_Priority_V3_t priority;
-    pd_Call_V3_t call;
-} pd_scheduler_schedule_named_after_V3_t;
-
-#define PD_CALL_PROXY_PROXY 0
-typedef struct {
-    pd_AccountId_V3_t real;
-    pd_OptionProxyType_V3_t force_proxy_type;
-    pd_Call_V3_t call;
-} pd_proxy_proxy_V3_t;
 
 #define PD_CALL_PROXY_ADD_PROXY 1
 typedef struct {
@@ -1063,20 +1010,6 @@ typedef struct {
     pd_AccountId_V3_t delegate;
     pd_CallHashOf_V3_t call_hash;
 } pd_proxy_reject_announcement_V3_t;
-
-#define PD_CALL_PROXY_PROXY_ANNOUNCED 9
-typedef struct {
-    pd_AccountId_V3_t delegate;
-    pd_AccountId_V3_t real;
-    pd_OptionProxyType_V3_t force_proxy_type;
-    pd_Call_V3_t call;
-} pd_proxy_proxy_announced_V3_t;
-
-#define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1 0
-typedef struct {
-    pd_VecAccountId_V3_t other_signatories;
-    pd_Call_V3_t call;
-} pd_multisig_as_multi_threshold_1_V3_t;
 
 #define PD_CALL_MULTISIG_AS_MULTI 1
 typedef struct {
@@ -1228,7 +1161,6 @@ typedef union {
     pd_claims_attest_V3_t claims_attest_V3;
     pd_claims_move_claim_V3_t claims_move_claim_V3;
     pd_utility_batch_V3_t utility_batch_V3;
-    pd_utility_as_derivative_V3_t utility_as_derivative_V3;
     pd_utility_batch_all_V3_t utility_batch_all_V3;
     pd_identity_add_registrar_V3_t identity_add_registrar_V3;
     pd_identity_set_identity_V3_t identity_set_identity_V3;
@@ -1257,7 +1189,6 @@ typedef union {
     pd_society_judge_suspended_member_V3_t society_judge_suspended_member_V3;
     pd_society_judge_suspended_candidate_V3_t society_judge_suspended_candidate_V3;
     pd_society_set_max_members_V3_t society_set_max_members_V3;
-    pd_recovery_as_recovered_V3_t recovery_as_recovered_V3;
     pd_recovery_set_recovered_V3_t recovery_set_recovered_V3;
     pd_recovery_create_recovery_V3_t recovery_create_recovery_V3;
     pd_recovery_initiate_recovery_V3_t recovery_initiate_recovery_V3;
@@ -1270,13 +1201,8 @@ typedef union {
     pd_vesting_vest_other_V3_t vesting_vest_other_V3;
     pd_vesting_vested_transfer_V3_t vesting_vested_transfer_V3;
     pd_vesting_force_vested_transfer_V3_t vesting_force_vested_transfer_V3;
-    pd_scheduler_schedule_V3_t scheduler_schedule_V3;
     pd_scheduler_cancel_V3_t scheduler_cancel_V3;
-    pd_scheduler_schedule_named_V3_t scheduler_schedule_named_V3;
     pd_scheduler_cancel_named_V3_t scheduler_cancel_named_V3;
-    pd_scheduler_schedule_after_V3_t scheduler_schedule_after_V3;
-    pd_scheduler_schedule_named_after_V3_t scheduler_schedule_named_after_V3;
-    pd_proxy_proxy_V3_t proxy_proxy_V3;
     pd_proxy_add_proxy_V3_t proxy_add_proxy_V3;
     pd_proxy_remove_proxy_V3_t proxy_remove_proxy_V3;
     pd_proxy_remove_proxies_V3_t proxy_remove_proxies_V3;
@@ -1285,52 +1211,118 @@ typedef union {
     pd_proxy_announce_V3_t proxy_announce_V3;
     pd_proxy_remove_announcement_V3_t proxy_remove_announcement_V3;
     pd_proxy_reject_announcement_V3_t proxy_reject_announcement_V3;
-    pd_proxy_proxy_announced_V3_t proxy_proxy_announced_V3;
-    pd_multisig_as_multi_threshold_1_V3_t multisig_as_multi_threshold_1_V3;
     pd_multisig_as_multi_V3_t multisig_as_multi_V3;
     pd_multisig_approve_as_multi_V3_t multisig_approve_as_multi_V3;
     pd_multisig_cancel_as_multi_V3_t multisig_cancel_as_multi_V3;
 } pd_MethodBasic_V3_t;
 
-typedef struct {
-    pd_CallIndex_t callIndex;
-    pd_MethodBasic_V3_t method;
-    // Track proposal buffer
-    const uint8_t* _ptr;
-    uint16_t _len;
-} pd_Proposal_V3_t;
-
 #define PD_CALL_COUNCIL_EXECUTE 1
 typedef struct {
-    pd_Proposal_V3_t proposal;
+    pd_Proposal_t proposal;
     pd_Compactu32_t length_bound;
 } pd_council_execute_V3_t;
 
 #define PD_CALL_COUNCIL_PROPOSE 2
 typedef struct {
     pd_CompactMemberCount_V3_t threshold;
-    pd_Proposal_V3_t proposal;
+    pd_Proposal_t proposal;
     pd_Compactu32_t length_bound;
 } pd_council_propose_V3_t;
 
 #define PD_CALL_TECHNICALCOMMITTEE_EXECUTE 1
 typedef struct {
-    pd_Proposal_V3_t proposal;
+    pd_Proposal_t proposal;
     pd_Compactu32_t length_bound;
 } pd_technicalcommittee_execute_V3_t;
 
 #define PD_CALL_TECHNICALCOMMITTEE_PROPOSE 2
 typedef struct {
     pd_CompactMemberCount_V3_t threshold;
-    pd_Proposal_V3_t proposal;
+    pd_Proposal_t proposal;
     pd_Compactu32_t length_bound;
 } pd_technicalcommittee_propose_V3_t;
+
+#define PD_CALL_UTILITY_AS_DERIVATIVE 1
+typedef struct {
+    pd_u16_t index;
+    pd_Call_t call;
+} pd_utility_as_derivative_V3_t;
+
+#define PD_CALL_RECOVERY_AS_RECOVERED 0
+typedef struct {
+    pd_AccountId_V3_t account;
+    pd_Call_t call;
+} pd_recovery_as_recovered_V3_t;
+
+#define PD_CALL_SCHEDULER_SCHEDULE 0
+typedef struct {
+    pd_BlockNumber_t when;
+    pd_OptionPeriod_V3_t maybe_periodic;
+    pd_Priority_V3_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_V3_t;
+
+#define PD_CALL_SCHEDULER_SCHEDULE_NAMED 2
+typedef struct {
+    pd_Bytes_t id;
+    pd_BlockNumber_t when;
+    pd_OptionPeriod_V3_t maybe_periodic;
+    pd_Priority_V3_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_named_V3_t;
+
+#define PD_CALL_SCHEDULER_SCHEDULE_AFTER 4
+typedef struct {
+    pd_BlockNumber_t after;
+    pd_OptionPeriod_V3_t maybe_periodic;
+    pd_Priority_V3_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_after_V3_t;
+
+#define PD_CALL_SCHEDULER_SCHEDULE_NAMED_AFTER 5
+typedef struct {
+    pd_Bytes_t id;
+    pd_BlockNumber_t after;
+    pd_OptionPeriod_V3_t maybe_periodic;
+    pd_Priority_V3_t priority;
+    pd_Call_t call;
+} pd_scheduler_schedule_named_after_V3_t;
+
+#define PD_CALL_PROXY_PROXY 0
+typedef struct {
+    pd_AccountId_V3_t real;
+    pd_OptionProxyType_V3_t force_proxy_type;
+    pd_Call_t call;
+} pd_proxy_proxy_V3_t;
+
+#define PD_CALL_PROXY_PROXY_ANNOUNCED 9
+typedef struct {
+    pd_AccountId_V3_t delegate;
+    pd_AccountId_V3_t real;
+    pd_OptionProxyType_V3_t force_proxy_type;
+    pd_Call_t call;
+} pd_proxy_proxy_announced_V3_t;
+
+#define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1 0
+typedef struct {
+    pd_VecAccountId_V3_t other_signatories;
+    pd_Call_t call;
+} pd_multisig_as_multi_threshold_1_V3_t;
 
 typedef union {
     pd_council_execute_V3_t council_execute_V3;
     pd_council_propose_V3_t council_propose_V3;
     pd_technicalcommittee_execute_V3_t technicalcommittee_execute_V3;
     pd_technicalcommittee_propose_V3_t technicalcommittee_propose_V3;
+    pd_utility_as_derivative_V3_t utility_as_derivative_V3;
+    pd_recovery_as_recovered_V3_t recovery_as_recovered_V3;
+    pd_scheduler_schedule_V3_t scheduler_schedule_V3;
+    pd_scheduler_schedule_named_V3_t scheduler_schedule_named_V3;
+    pd_scheduler_schedule_after_V3_t scheduler_schedule_after_V3;
+    pd_scheduler_schedule_named_after_V3_t scheduler_schedule_named_after_V3;
+    pd_proxy_proxy_V3_t proxy_proxy_V3;
+    pd_proxy_proxy_announced_V3_t proxy_proxy_announced_V3;
+    pd_multisig_as_multi_threshold_1_V3_t multisig_as_multi_threshold_1_V3;
 } pd_MethodNested_V3_t;
 
 typedef union {

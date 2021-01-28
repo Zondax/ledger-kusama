@@ -50,11 +50,6 @@ typedef struct {
 } pd_AccountVoteStandard_V3_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Call_V3_t;
-
-typedef struct {
     pd_u32_t digest_interval;
     pd_u32_t digest_levels;
 } pd_ChangesTrieConfiguration_V3_t;
@@ -76,8 +71,7 @@ typedef struct {
 } pd_Period_V3_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint8_t value;
 } pd_ProxyType_V3_t;
 
 typedef struct {
@@ -96,8 +90,8 @@ typedef struct {
 } pd_StreamDependency_V3_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    pd_BlockNumber_t height;
+    uint32_t index;
 } pd_Timepoint_V3_t;
 
 typedef struct {
@@ -137,9 +131,18 @@ typedef struct {
 } pd_IdentityInfo_V3_t;
 
 typedef struct {
+    pd_Call_t call;
+} pd_OpaqueCall_V3_t;
+
+typedef struct {
     uint8_t some;
     pd_ChangesTrieConfiguration_V3_t contained;
 } pd_OptionChangesTrieConfiguration_V3_t;
+
+typedef struct {
+    uint8_t some;
+    pd_Timepoint_V3_t contained;
+} pd_OptionTimepoint_V3_t;
 
 typedef struct {
     uint8_t some;
@@ -166,8 +169,7 @@ typedef struct {
 } pd_AccountIndex_V3_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    const uint8_t* _ptr;
 } pd_CallHashOf_V3_t;
 
 typedef compactInt_t pd_CompactAssignments_V3_t;
@@ -246,11 +248,6 @@ typedef struct {
 } pd_MemberCount_V3_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_OpaqueCall_V3_t;
-
-typedef struct {
     uint8_t some;
     pd_AccountId_V3_t contained;
 } pd_OptionAccountId_V3_t;
@@ -274,11 +271,6 @@ typedef struct {
     uint8_t some;
     pd_StatementKind_V3_t contained;
 } pd_OptionStatementKind_V3_t;
-
-typedef struct {
-    uint8_t some;
-    pd_Timepoint_V3_t contained;
-} pd_OptionTimepoint_V3_t;
 
 typedef struct {
     uint32_t value;
@@ -310,12 +302,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecAccountId_V3_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecCall_V3_t;
 
 typedef struct {
     uint64_t _len;
