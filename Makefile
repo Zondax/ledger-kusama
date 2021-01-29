@@ -28,7 +28,7 @@ default:
 	$(MAKE) -C app
 %:
 	$(info "Calling app Makefile for target $@")
-	COIN=$(COIN) $(MAKE) -C app $@
+	COIN=$(COIN) SUPPORT_SR25519=$(SUPPORT_SR25519) $(MAKE) -C app $@
 endif
 
 build_ledgeracio: COIN=Ledgeracio		# Alternative app purpose
