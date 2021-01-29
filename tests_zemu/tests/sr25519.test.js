@@ -24,7 +24,7 @@ const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 
 const Resolve = require("path").resolve;
-const APP_PATH = Resolve("../app/bin/app.elf");
+const APP_PATH = Resolve("../app/bin/app_sr25519.elf");
 
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
 const sim_options = {
@@ -36,7 +36,7 @@ const sim_options = {
 
 jest.setTimeout(60000)
 
-describe('Standard', function () {
+describe('SR25519', function () {
     test('get address sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
