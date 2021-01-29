@@ -144,7 +144,6 @@ target_include_directories(unittests PRIVATE
 target_link_libraries(unittests PRIVATE
         gtest_main
         app_lib
-        mini_sodium
         CONAN_PKG::fmt
         CONAN_PKG::jsoncpp)
 
