@@ -127,6 +127,7 @@ parser_error_t _readCompactInt(parser_context_t *c, compactInt_t *v) {
         case 0:         // single byte
             v->len = 1;
             CTX_CHECK_AND_ADVANCE(c, v->len)
+            _getValue(v, &tmp);
             break;
         case 1:         // 2-byte
             v->len = 2;
