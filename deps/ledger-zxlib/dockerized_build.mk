@@ -59,6 +59,7 @@ define run_docker
 	docker run $(TTY_SETTING) $(INTERACTIVE_SETTING) --rm \
 	-e SCP_PRIVKEY=$(SCP_PRIVKEY) \
 	-e BOLOS_SDK=$(1) \
+	-e SUPPORT_SR25519=$(SUPPORT_SR25519) \
 	-e BOLOS_ENV=/opt/bolos \
 	-u $(USERID) \
 	-v $(shell pwd):/project \
