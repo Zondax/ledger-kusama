@@ -28,7 +28,6 @@ jobs:
             cd /home/zondax/project
             make
 
-
   build_ledger_sr25519:
     docker:
       - image: zondax/builder-bolos:latest
@@ -117,7 +116,6 @@ jobs:
             nvm use 14.4.0
             export PATH=~/.cargo/bin:$PATH
             make zemu_install
-            make tests_tools_build
       - run:
           name: Run zemu tests
           command: |
@@ -200,6 +198,7 @@ jobs:
             nvm use 14.4.0
             export PATH=~/.cargo/bin:$PATH
             make zemu_install
+            make tests_tools_build
       - run:
           name: Run zemu tests for SR25519 app
           command: |
@@ -260,15 +259,19 @@ workflows:
       - build
       - build_ledger
       - build_ledger_ledgeracio
+      - build_ledger_sr25519
       - test_zemu
       - test_zemu_ledgeracio
+      - test_zemu_sr25519
       - build_package:
           requires:
             - build
             - build_ledger
             - build_ledger_ledgeracio
+            - build_ledger_sr25519
             - test_zemu
             - test_zemu_ledgeracio
+            - test_zemu_sr25519
           filters:
             branches:
               only:
@@ -278,8 +281,10 @@ workflows:
             - build
             - build_ledger
             - build_ledger_ledgeracio
+            - build_ledger_sr25519
             - test_zemu
             - test_zemu_ledgeracio
+            - test_zemu_sr25519
           filters:
             branches:
               only:
