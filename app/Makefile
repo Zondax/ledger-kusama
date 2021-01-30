@@ -170,10 +170,12 @@ LDLIBS   += -lm -lgcc -lc
 LDLIBS   += -Lrust/target/thumbv6m-none-eabi/release -lrslib
 
 ##########################
+GLYPH_SRC_DIR = glyphs
 include $(BOLOS_SDK)/Makefile.glyphs
 
 APP_SOURCE_PATH += $(MY_DIR)/../deps/libsodium_custom/
 APP_SOURCE_PATH += $(MY_DIR)/src
+APP_SOURCE_PATH += $(MY_DIR)/glyphs
 APP_SOURCE_PATH += $(MY_DIR)/rust/include
 APP_SOURCE_PATH += $(MY_DIR)/../deps/ledger-zxlib/include
 APP_SOURCE_PATH += $(MY_DIR)/../deps/ledger-zxlib/src
