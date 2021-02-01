@@ -210,5 +210,4 @@ dep/%.d: %.c Makefile
 
 .PHONY: listvariants
 listvariants:
-	@echo VARIANTS COIN KSM
-	@echo VARIANTS COIN Ledgeracio
+	@echo VARIANTS COIN KSM Ledgeracio
