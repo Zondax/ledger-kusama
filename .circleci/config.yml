@@ -208,7 +208,7 @@ jobs:
           command: |
             nvm use 14.4.0
             export PATH=~/.cargo/bin:$PATH
-            cd  ~/project/tests_zemu && yarn testSR25519
+            cd ~/repo/tests_zemu && yarn testSR25519
 
   build_package:
     docker:
