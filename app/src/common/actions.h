@@ -26,7 +26,7 @@
 extern uint16_t action_addrResponseLen;
 extern uint16_t action_signResponseLen;
 
-
+#ifdef SUPPORT_SR25519
 __Z_INLINE zxerr_t app_sign_sr25519() {
     const uint8_t *message = tx_get_buffer();
     const uint16_t messageLength = tx_get_buffer_length();
@@ -40,6 +40,7 @@ __Z_INLINE zxerr_t app_sign_sr25519() {
     zxerr = crypto_sign_sr25519(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 3, &replyLen);
     return zxerr;
 }
+#endif
 
 __Z_INLINE void app_sign_ed25519() {
     const uint8_t *message = tx_get_buffer();
