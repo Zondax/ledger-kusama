@@ -237,9 +237,11 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     switch (key_type) {
         case key_ed25519:
             handleSignEd25519(flags, tx, rx);
+            break;
 #ifdef SUPPORT_SR25519
         case key_sr25519:
             handleSignSr25519(flags, tx, rx);
+            break;
 #endif
         default: {
             THROW(APDU_CODE_DATA_INVALID);
