@@ -20,6 +20,7 @@
 #include "cx.h"
 #include "rslib.h"
 #include "zxmacros.h"
+#include "ristretto.h"
 
 uint16_t sr25519_signdataLen;
 uint32_t hdPath[HDPATH_LEN_DEFAULT];
@@ -66,7 +67,8 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                 }
 #ifdef SUPPORT_SR25519
                     case key_sr25519:
-                        get_sr25519_pk(privateKeyData, pubKey);
+                            get_sr25519_sk(privateKeyData);
+                            crypto_scalarmult_ristretto255_base_sdk(pubKey, privateKeyData);
                         break;
 #endif
                 default:
@@ -182,7 +184,8 @@ zxerr_t crypto_sign_sr25519_prephase(uint8_t *buffer, uint16_t bufferLen,
 
     uint8_t pubkey[PK_LEN_25519];
     MEMZERO(pubkey, PK_LEN_25519);
-    get_sr25519_pk(privateKeyData, pubkey);
+    get_sr25519_sk(privateKeyData);
+    crypto_scalarmult_ristretto255_base_sdk(pubkey, privateKeyData);
     MEMCPY_NV((void *) &N_sr25519_signdata.sk, privateKeyData, SK_LEN_25519);
     MEMCPY_NV((void *) &N_sr25519_signdata.pk, pubkey, PK_LEN_25519);
     MEMZERO(buffer, bufferLen);
@@ -201,9 +204,11 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
                 return zxerr_invalid_crypto_settings;
             }
             *signature = PREFIX_SIGNATURE_TYPE_SR25519;
-            sign_sr25519((uint8_t *) &N_sr25519_signdata.sk, (uint8_t *) &N_sr25519_signdata.pk, NULL, 0,
-                         (uint8_t *) &N_sr25519_signdata.signdata, sr25519_signdataLen, signature + 1,
-                         signature + START_BUFFER);
+            sign_sr25519_phase1((uint8_t *) &N_sr25519_signdata.sk, (uint8_t *) &N_sr25519_signdata.pk, NULL, 0,
+                         (uint8_t *) &N_sr25519_signdata.signdata, sr25519_signdataLen, signature + 1);
+            crypto_scalarmult_ristretto255_base_sdk(signature + 1, signature + 1 + PK_LEN_25519);
+            sign_sr25519_phase2((uint8_t *) &N_sr25519_signdata.sk, (uint8_t *) &N_sr25519_signdata.pk, NULL, 0,
+                         (uint8_t *) &N_sr25519_signdata.signdata, sr25519_signdataLen, signature + 1);
             MEMCPY_NV((void *) &N_sr25519_signdata.signature, signature, SIG_PLUS_TYPE_LEN);
         }
         CATCH_ALL
