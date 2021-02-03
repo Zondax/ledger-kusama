@@ -27,7 +27,7 @@ extern "C" {
     fn cx_rng(buffer: *mut u8, len: u32);
     fn zemu_log_stack(buffer: *const u8);
     fn check_app_canary();
-    fn c_ristretto_scalarmult_base(scalar: *const u8, result: *mut u8);
+    //fn c_ristretto_scalarmult_base(scalar: *const u8, result: *mut u8);
 }
 
 #[cfg(not(test))]
@@ -42,24 +42,24 @@ pub fn c_check_app_canary() {
     unsafe { check_app_canary() }
 }
 
-#[cfg(not(test))]
-pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
-    c_zemu_log_stack(b"scalarmult\x00".as_ref());
-    let mut result = [0u8; 32];
-    unsafe {
-        c_ristretto_scalarmult_base(scalar.as_ptr(), result.as_mut_ptr());
-    }
-    result
-}
-
-#[cfg(test)]
-pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
-    let mut scalarbytes = [0u8; 32];
-    scalarbytes.copy_from_slice(&scalar);
-    let x = Scalar::from_bits(scalarbytes);
-    let pubkey = x * RISTRETTO_BASEPOINT_POINT;
-    pubkey.compress().to_bytes()
-}
+// #[cfg(not(test))]
+// pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
+//     c_zemu_log_stack(b"scalarmult\x00".as_ref());
+//     let mut result = [0u8; 32];
+//     unsafe {
+//         c_ristretto_scalarmult_base(scalar.as_ptr(), result.as_mut_ptr());
+//     }
+//     result
+// }
+//
+// #[cfg(test)]
+// pub fn libsodium_ristretto_scalarmult_base(scalar: &[u8]) -> [u8; 32] {
+//     let mut scalarbytes = [0u8; 32];
+//     scalarbytes.copy_from_slice(&scalar);
+//     let x = Scalar::from_bits(scalarbytes);
+//     let pubkey = x * RISTRETTO_BASEPOINT_POINT;
+//     pubkey.compress().to_bytes()
+// }
 
 pub struct Trng;
 
