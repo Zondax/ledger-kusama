@@ -196,7 +196,7 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            make build_ledgeracio
+            make build_sr25519
       - run:
           name: Build/Install build js deps
           command: |
@@ -204,11 +204,11 @@ jobs:
             export PATH=~/.cargo/bin:$PATH
             make zemu_install
       - run:
-          name: Run zemu tests for Ledgeracio app
+          name: Run zemu tests for sr25519
           command: |
             nvm use 14.4.0
             export PATH=~/.cargo/bin:$PATH
-            SUPPORT_SR25519=1 make zemu_test
+            cd $(TESTS_ZEMU_DIR) && yarn testSR25519
 
   build_package:
     docker:

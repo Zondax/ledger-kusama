@@ -35,7 +35,7 @@ endif
 
 build_ledgeracio: COIN=Ledgeracio		# Alternative app purpose
 build_ledgeracio: buildS
-	cp $(CURDIR)/app/bin/app.elf $(CURDIR)/app/bin/app_ledgeracio.elf
+	cp $(CURDIR)/app/bin/app_s.elf $(CURDIR)/app/bin/app_ledgeracio.elf
 
 build_sr25519: SUPPORT_SR25519=1		# Alternative app purpose
 build_sr25519: buildS
