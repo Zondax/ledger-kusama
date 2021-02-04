@@ -146,10 +146,6 @@ parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
 {
 
     pd_Method_t _method;
-//    CHECK_ERROR(_getNextFreeMethodSlot(c, &_method))
-//    if (_method == NULL) {
-//        return parser_unexpected_error;
-//    }
 
     CHECK_ERROR(_readCallImpl(c, v, &_method))
     zb_check_canary();
