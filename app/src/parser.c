@@ -22,7 +22,6 @@
 #include "coin.h"
 #include "coin_ss58.h"
 #include "substrate_dispatch.h"
-#include "substrate_methods.h"
 
 #if defined(APP_RESTRICTED)
 #include "coin.h"
