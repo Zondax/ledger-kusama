@@ -31,16 +31,20 @@ parser_error_t _readu64(parser_context_t* c, pd_u64_t* v);
 parser_error_t _readBlockNumber(parser_context_t* c, pd_BlockNumber_t* v);
 parser_error_t _readCompactu32(parser_context_t* c, pd_Compactu32_t* v);
 parser_error_t _readCompactu64(parser_context_t* c, pd_Compactu64_t* v);
+parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_Method_t* m);
 
 parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v);
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v);
 parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v);
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v);
 parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v);
+parser_error_t _readCall(parser_context_t* c, pd_Call_t* v);
 parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v);
 parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v);
 parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_t* v);
 parser_error_t _readVecTupleDataData(parser_context_t* c, pd_VecTupleDataData_t* v);
+parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v);
+parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v);
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v);
 parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t* v);
 parser_error_t _readCompactBlockNumber(parser_context_t* c, pd_CompactBlockNumber_t* v);
@@ -129,6 +133,13 @@ parser_error_t _toStringu8_array_20(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringCall(
+    const pd_Call_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringHeader(
     const pd_Header_t* v,
     char* outValue,
@@ -152,6 +163,20 @@ parser_error_t _toStringOptionu8_array_20(
 
 parser_error_t _toStringVecTupleDataData(
     const pd_VecTupleDataData_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringProposal(
+    const pd_Proposal_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringVecCall(
+    const pd_VecCall_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

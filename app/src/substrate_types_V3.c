@@ -116,14 +116,8 @@ parser_error_t _readAccountVote_V3(parser_context_t* c, pd_AccountVote_V3_t* v)
     return parser_ok;
 }
 
-parser_error_t _readCallHashOf_V3(parser_context_t* c, pd_CallHashOf_V3_t* v)
-{
-    return parser_not_supported;
-}
-
-parser_error_t _readCall_V3(parser_context_t* c, pd_Call_V3_t* v)
-{
-    return parser_not_supported;
+parser_error_t _readCallHashOf_V3(parser_context_t* c, pd_CallHashOf_V3_t* v){
+    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readChangesTrieConfiguration_V3(parser_context_t* c, pd_ChangesTrieConfiguration_V3_t* v)
@@ -148,11 +142,6 @@ parser_error_t _readConviction_V3(parser_context_t* c, pd_Conviction_V3_t* v)
     }
 
     return parser_ok;
-}
-
-parser_error_t _readDefunctVoter_V3(parser_context_t* c, pd_DefunctVoter_V3_t* v)
-{
-    return parser_not_supported;
 }
 
 parser_error_t _readEcdsaSignature_V3(parser_context_t* c, pd_EcdsaSignature_V3_t* v){
@@ -233,7 +222,10 @@ parser_error_t _readMemberCount_V3(parser_context_t* c, pd_MemberCount_V3_t* v)
 
 parser_error_t _readOpaqueCall_V3(parser_context_t* c, pd_OpaqueCall_V3_t* v)
 {
-    return parser_not_supported;
+    // Encoded as Byte[], array size comes first
+    uint8_t size;
+    CHECK_ERROR(_readUInt8(c, &size))
+    return _readCall(c, &v->call);
 }
 
 parser_error_t _readPerbill_V3(parser_context_t* c, pd_Perbill_V3_t* v)
@@ -260,7 +252,14 @@ parser_error_t _readPriority_V3(parser_context_t* c, pd_Priority_V3_t* v)
 
 parser_error_t _readProxyType_V3(parser_context_t* c, pd_ProxyType_V3_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    if (v->value > 3) {
+        return parser_value_out_of_range;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _readReferendumIndex_V3(parser_context_t* c, pd_ReferendumIndex_V3_t* v)
@@ -309,7 +308,9 @@ parser_error_t _readStreamDependency_V3(parser_context_t* c, pd_StreamDependency
 
 parser_error_t _readTimepoint_V3(parser_context_t* c, pd_Timepoint_V3_t* v)
 {
-    return parser_not_supported;
+    CHECK_ERROR(_readBlockNumber(c, &v->height))
+    CHECK_ERROR(_readu32(c, &v->index))
+    return parser_ok;
 }
 
 parser_error_t _readTupleAccountIdData_V3(parser_context_t* c, pd_TupleAccountIdData_V3_t* v)
@@ -373,10 +374,6 @@ parser_error_t _readu8_array_32_V3(parser_context_t* c, pd_u8_array_32_V3_t* v){
 
 parser_error_t _readVecAccountId_V3(parser_context_t* c, pd_VecAccountId_V3_t* v){
     GEN_DEF_READVECTOR(AccountId_V3)
-}
-
-parser_error_t _readVecCall_V3(parser_context_t* c, pd_VecCall_V3_t* v){
-    GEN_DEF_READVECTOR(Call_V3)
 }
 
 parser_error_t _readVecKeyValue_V3(parser_context_t* c, pd_VecKeyValue_V3_t* v){
@@ -722,21 +719,8 @@ parser_error_t _toStringCallHashOf_V3(
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringCall_V3(
-    const pd_Call_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    uint8_t* pageCount){
+    GEN_DEF_TOSTRING_ARRAY(32)
 }
 
 parser_error_t _toStringChangesTrieConfiguration_V3(
@@ -817,17 +801,6 @@ parser_error_t _toStringConviction_V3(
     return parser_ok;
 }
 
-parser_error_t _toStringDefunctVoter_V3(
-    const pd_DefunctVoter_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
 parser_error_t _toStringEcdsaSignature_V3(
     const pd_EcdsaSignature_V3_t* v,
     char* outValue,
@@ -866,13 +839,13 @@ parser_error_t _toStringElectionSize_V3(
     }
 
     if (pageIdx < pages[0]) {
-        CHECK_ERROR(_toStringCompactInt(&v->validators, COIN_AMOUNT_DECIMAL_PLACES, 0, "", outValue, outValueLen, 0, &pages[0]))
+        CHECK_ERROR(_toStringCompactInt(&v->validators, COIN_AMOUNT_DECIMAL_PLACES, 0, "", outValue, outValueLen, pageIdx, &pages[0]))
         return parser_ok;
     }
     pageIdx -= pages[0];
 
     if (pageIdx < pages[1]) {
-        CHECK_ERROR(_toStringCompactInt(&v->nominators, COIN_AMOUNT_DECIMAL_PLACES, 0, "", outValue, outValueLen, 0, &pages[1]))
+        CHECK_ERROR(_toStringCompactInt(&v->nominators, COIN_AMOUNT_DECIMAL_PLACES, 0, "", outValue, outValueLen, pageIdx, &pages[1]))
         return parser_ok;
     }
 
@@ -1103,8 +1076,7 @@ parser_error_t _toStringOpaqueCall_V3(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringPerbill_V3(
@@ -1191,7 +1163,26 @@ parser_error_t _toStringProxyType_V3(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Any");
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "NonTransfer");
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Governance");
+        break;
+    case 3:
+        snprintf(outValue, outValueLen, "Staking");
+        break;
+    default:
+        return parser_print_not_supported;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringReferendumIndex_V3(
@@ -1322,7 +1313,30 @@ parser_error_t _toStringTimepoint_V3(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+
+    // Index + count pages
+    uint8_t pages[2];
+    CHECK_ERROR(_toStringBlockNumber(&v->height, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringu32(&v->index, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = pages[0] + pages[1];
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringBlockNumber(&v->height, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    //////
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringu32(&v->index, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
 }
 
 parser_error_t _toStringTupleAccountIdData_V3(
@@ -1488,16 +1502,6 @@ parser_error_t _toStringVecAccountId_V3(
     uint8_t* pageCount)
 {
     GEN_DEF_TOSTRING_VECTOR(AccountId_V3);
-}
-
-parser_error_t _toStringVecCall_V3(
-    const pd_VecCall_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    GEN_DEF_TOSTRING_VECTOR(Call_V3);
 }
 
 parser_error_t _toStringVecKeyValue_V3(
@@ -1706,29 +1710,4 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V3(
         snprintf(outValue, outValueLen, "None");
     }
     return parser_ok;
-}
-
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-
-parser_error_t _readProposal_V3(parser_context_t* c, pd_Proposal_V3_t* v)
-{
-    CHECK_INPUT();
-    uint16_t startOffset = c->offset;
-    CHECK_ERROR(_readCallIndex(c, &v->callIndex))
-    CHECK_ERROR(_readMethodBasic_V3(c, v->callIndex.moduleIdx, v->callIndex.idx, &v->method))
-    v->_ptr = c->buffer + startOffset;
-    v->_len = c->offset - startOffset;
-    return parser_ok;
-}
-
-parser_error_t _toStringProposal_V3(
-    const pd_Proposal_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    GEN_DEF_TOSTRING_ARRAY(v->_len);
 }

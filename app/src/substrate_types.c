@@ -18,8 +18,10 @@
 #include "coin.h"
 #include "parser_impl.h"
 
+#include "substrate_dispatch.h"
 #include <stddef.h>
 #include <stdint.h>
+#include <zbuffer.h>
 #include <zxmacros.h>
 
 parser_error_t _readbool(parser_context_t* c, pd_bool_t* v)
@@ -55,6 +57,20 @@ parser_error_t _readCompactu32(parser_context_t* c, pd_Compactu32_t* v)
 parser_error_t _readCompactu64(parser_context_t* c, pd_Compactu64_t* v)
 {
     return _readCompactInt(c, v);
+}
+
+parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_Method_t* m)
+{
+    CHECK_ERROR(_readCallIndex(c, &v->callIndex));
+
+    if (!_getMethod_IsNestingSupported(c->tx_obj->transactionVersion, v->callIndex.moduleIdx, v->callIndex.idx)) {
+        return parser_not_supported;
+    }
+
+    CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, m))
+    v->_methodPtr = (uint8_t*)m;
+    v->_txVerPtr = &c->tx_obj->transactionVersion;
+    return parser_ok;
 }
 
 ///////////////////////////////////
@@ -126,6 +142,20 @@ parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v){
     GEN_DEF_READARRAY(20)
 }
 
+parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
+{
+
+    pd_Method_t _method;
+//    CHECK_ERROR(_getNextFreeMethodSlot(c, &_method))
+//    if (_method == NULL) {
+//        return parser_unexpected_error;
+//    }
+
+    CHECK_ERROR(_readCallImpl(c, v, &_method))
+    zb_check_canary();
+    return parser_ok;
+}
+
 parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 {
 
@@ -135,6 +165,30 @@ parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v){
 
     GEN_DEF_READARRAY(32)
+}
+
+parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
+{
+
+    return _readCall(c, &v->call);
+}
+
+parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
+{
+
+    compactInt_t clen;
+    pd_Call_t dummy;
+    CHECK_PARSER_ERR(_readCompactInt(c, &clen));
+    CHECK_PARSER_ERR(_getValue(&clen, &v->_len));
+    v->_ptr = c->buffer + c->offset;
+    v->_lenBuffer = c->offset;
+    for (uint64_t i = 0; i < v->_len; i++) {
+        CHECK_ERROR(_readCall(c, &dummy))
+    }
+    v->_lenBuffer = c->offset - v->_lenBuffer;
+    v->callTxVersion = *dummy._txVerPtr;
+
+    return parser_ok;
 }
 
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
@@ -444,6 +498,54 @@ parser_error_t _toStringu8_array_20(
     GEN_DEF_TOSTRING_ARRAY(20)
 }
 
+parser_error_t _toStringCall(
+    const pd_Call_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    CLEAN_AND_CHECK()
+    uint8_t callNumItems = _getMethod_NumItems(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx, (pd_Method_t*)v->_methodPtr);
+
+    *pageCount = 1;
+    for (uint8_t i = 0; i < callNumItems; i++) {
+        uint8_t itemPages = 0;
+        _getMethod_ItemValue(*v->_txVerPtr, (pd_Method_t*)v->_methodPtr, v->callIndex.moduleIdx, v->callIndex.idx, i,
+            outValue, outValueLen, 0, &itemPages);
+        *pageCount += itemPages;
+    }
+
+    if (pageIdx == 0) {
+        snprintf(outValue, outValueLen, "%s", _getMethod_Name(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx));
+        return parser_ok;
+    }
+
+    pageIdx--;
+
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    for (uint8_t i = 0; i < callNumItems; i++) {
+        uint8_t itemPages = 0;
+        _getMethod_ItemValue(*v->_txVerPtr, (pd_Method_t*)v->_methodPtr, v->callIndex.moduleIdx, v->callIndex.idx, i,
+            outValue, outValueLen, 0, &itemPages);
+
+        if (pageIdx < itemPages) {
+            uint8_t tmp;
+            _getMethod_ItemValue(*v->_txVerPtr, (pd_Method_t*)v->_methodPtr, v->callIndex.moduleIdx, v->callIndex.idx, i,
+                outValue, outValueLen, pageIdx, &tmp);
+            return parser_ok;
+        }
+
+        pageIdx -= itemPages;
+    }
+
+    return parser_display_idx_out_of_range;
+}
+
 parser_error_t _toStringHeader(
     const pd_Header_t* v,
     char* outValue,
@@ -465,6 +567,68 @@ parser_error_t _toStringLookupSource(
 {
 
     return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringProposal(
+    const pd_Proposal_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringVecCall(
+    const pd_VecCall_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    CLEAN_AND_CHECK()
+    /* count number of pages, then output specific */
+    *pageCount = 0;
+    uint8_t chunkPageCount;
+    uint16_t currentPage, currentTotalPage = 0;
+    /* We need to do it twice because there is no memory to keep intermediate results*/
+    /* First count*/
+    parser_context_t ctx;
+    parser_init(&ctx, v->_ptr, v->_lenBuffer);
+    parser_tx_t _txObj;
+    pd_Call_t _call;
+    ctx.tx_obj = &_txObj;
+    _txObj.transactionVersion = v->callTxVersion;
+    _call._txVerPtr = &v->callTxVersion;
+
+    for (uint16_t i = 0; i < v->_len; i++) {
+        pd_Method_t _method;
+        CHECK_ERROR(_readCallImpl(&ctx, &_call, &_method));
+        CHECK_ERROR(_toStringCall(&_call, outValue, outValueLen, 0, &chunkPageCount));
+        (*pageCount) += chunkPageCount;
+    }
+
+    /* Then iterate until we can print the corresponding chunk*/
+    parser_init(&ctx, v->_ptr, v->_lenBuffer);
+    for (uint16_t i = 0; i < v->_len; i++) {
+        pd_Method_t _method;
+        CHECK_ERROR(_readCallImpl(&ctx, &_call, &_method));
+
+        chunkPageCount = 1;
+        currentPage = 0;
+        while (currentPage < chunkPageCount) {
+            CHECK_ERROR(_toStringCall(&_call, outValue, outValueLen, currentPage, &chunkPageCount));
+            if (currentTotalPage == pageIdx) {
+                return parser_ok;
+            }
+            currentPage++;
+            currentTotalPage++;
+        }
+    }
+
+    return parser_print_not_supported;
 }
 
 parser_error_t _toStringBytes(

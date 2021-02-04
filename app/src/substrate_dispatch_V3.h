@@ -44,6 +44,7 @@ parser_error_t _getMethod_ItemValue_V3(
     uint8_t pageIdx, uint8_t* pageCount);
 
 bool _getMethod_ItemIsExpert_V3(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
+bool _getMethod_IsNestingSupported_V3(uint8_t moduleIdx, uint8_t callIdx);
 
 #ifdef __cplusplus
 }
