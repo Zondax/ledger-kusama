@@ -45,6 +45,7 @@ parser_error_t _readCompactReferendumIndex_V3(parser_context_t* c, pd_CompactRef
 parser_error_t _readCompactRegistrarIndex_V3(parser_context_t* c, pd_CompactRegistrarIndex_V3_t* v);
 parser_error_t _readCompactWeight_V3(parser_context_t* c, pd_CompactWeight_V3_t* v);
 parser_error_t _readConviction_V3(parser_context_t* c, pd_Conviction_V3_t* v);
+parser_error_t _readDefunctVoter_V3(parser_context_t* c, pd_DefunctVoter_V3_t* v);
 parser_error_t _readEcdsaSignature_V3(parser_context_t* c, pd_EcdsaSignature_V3_t* v);
 parser_error_t _readElectionScore_V3(parser_context_t* c, pd_ElectionScore_V3_t* v);
 parser_error_t _readElectionSize_V3(parser_context_t* c, pd_ElectionSize_V3_t* v);
@@ -224,6 +225,13 @@ parser_error_t _toStringCompactWeight_V3(
 
 parser_error_t _toStringConviction_V3(
     const pd_Conviction_V3_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringDefunctVoter_V3(
+    const pd_DefunctVoter_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

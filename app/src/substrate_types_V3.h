@@ -193,6 +193,11 @@ typedef compactInt_t pd_CompactRegistrarIndex_V3_t;
 typedef compactInt_t pd_CompactWeight_V3_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_DefunctVoter_V3_t;
+
+typedef struct {
     const uint8_t* _ptr;
 } pd_EcdsaSignature_V3_t;
 

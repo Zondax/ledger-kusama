@@ -26,8 +26,6 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-parser_error_t _readMethodBasic_V3(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_MethodBasic_V3_t* method);
-
 parser_error_t _readMethod_V3(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_Method_V3_t* method);
 
 const char* _getMethod_ModuleName_V3(uint8_t moduleIdx);

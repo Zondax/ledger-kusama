@@ -53,8 +53,6 @@ extern "C" {
 #define PD_CALL_SCHEDULER_V3 29
 #define PD_CALL_PROXY_V3 30
 #define PD_CALL_MULTISIG_V3 31
-#define PD_CALL_BOUNTIES_V3 35
-#define PD_CALL_TIPS_V3 36
 
 #define PD_CALL_SYSTEM_FILL_BLOCK_V3 0
 typedef struct {
@@ -101,6 +99,10 @@ typedef struct {
     pd_Key_V3_t prefix;
     pd_u32_t _subkeys;
 } pd_system_kill_prefix_V3_t;
+
+#define PD_CALL_SYSTEM_SUICIDE_V3 9
+typedef struct {
+} pd_system_suicide_V3_t;
 
 #define PD_CALL_BABE_REPORT_EQUIVOCATION_V3 0
 typedef struct {
@@ -308,11 +310,6 @@ typedef struct {
     pd_EraIndex_V3_t era;
     pd_ElectionSize_V3_t size;
 } pd_staking_submit_election_solution_unsigned_V3_t;
-
-#define PD_CALL_STAKING_KICK_V3 24
-typedef struct {
-    pd_VecLookupSource_t who;
-} pd_staking_kick_V3_t;
 
 #define PD_CALL_SESSION_SET_KEYS_V3 0
 typedef struct {
@@ -572,27 +569,26 @@ typedef struct {
 typedef struct {
 } pd_electionsphragmen_remove_voter_V3_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_SUBMIT_CANDIDACY_V3 2
+#define PD_CALL_ELECTIONSPHRAGMEN_REPORT_DEFUNCT_VOTER_V3 2
+typedef struct {
+    pd_DefunctVoter_V3_t defunct;
+} pd_electionsphragmen_report_defunct_voter_V3_t;
+
+#define PD_CALL_ELECTIONSPHRAGMEN_SUBMIT_CANDIDACY_V3 3
 typedef struct {
     pd_Compactu32_t candidate_count;
 } pd_electionsphragmen_submit_candidacy_V3_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_RENOUNCE_CANDIDACY_V3 3
+#define PD_CALL_ELECTIONSPHRAGMEN_RENOUNCE_CANDIDACY_V3 4
 typedef struct {
     pd_Renouncing_V3_t renouncing;
 } pd_electionsphragmen_renounce_candidacy_V3_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_REMOVE_MEMBER_V3 4
+#define PD_CALL_ELECTIONSPHRAGMEN_REMOVE_MEMBER_V3 5
 typedef struct {
     pd_LookupSource_t who;
     pd_bool_t has_replacement;
 } pd_electionsphragmen_remove_member_V3_t;
-
-#define PD_CALL_ELECTIONSPHRAGMEN_CLEAN_DEFUNCT_VOTERS_V3 5
-typedef struct {
-    pd_u32_t _num_voters;
-    pd_u32_t _num_defunct;
-} pd_electionsphragmen_clean_defunct_voters_V3_t;
 
 #define PD_CALL_TECHNICALMEMBERSHIP_ADD_MEMBER_V3 0
 typedef struct {
@@ -644,6 +640,85 @@ typedef struct {
 typedef struct {
     pd_CompactProposalIndex_V3_t proposal_id;
 } pd_treasury_approve_proposal_V3_t;
+
+#define PD_CALL_TREASURY_REPORT_AWESOME_V3 3
+typedef struct {
+    pd_Bytes_t reason;
+    pd_AccountId_V3_t who;
+} pd_treasury_report_awesome_V3_t;
+
+#define PD_CALL_TREASURY_RETRACT_TIP_V3 4
+typedef struct {
+    pd_Hash_t hash;
+} pd_treasury_retract_tip_V3_t;
+
+#define PD_CALL_TREASURY_TIP_NEW_V3 5
+typedef struct {
+    pd_Bytes_t reason;
+    pd_AccountId_V3_t who;
+    pd_CompactBalanceOf_t tip_value;
+} pd_treasury_tip_new_V3_t;
+
+#define PD_CALL_TREASURY_TIP_V3 6
+typedef struct {
+    pd_Hash_t hash;
+    pd_CompactBalanceOf_t tip_value;
+} pd_treasury_tip_V3_t;
+
+#define PD_CALL_TREASURY_CLOSE_TIP_V3 7
+typedef struct {
+    pd_Hash_t hash;
+} pd_treasury_close_tip_V3_t;
+
+#define PD_CALL_TREASURY_PROPOSE_BOUNTY_V3 8
+typedef struct {
+    pd_CompactBalanceOf_t value;
+    pd_Bytes_t description;
+} pd_treasury_propose_bounty_V3_t;
+
+#define PD_CALL_TREASURY_APPROVE_BOUNTY_V3 9
+typedef struct {
+    pd_CompactProposalIndex_V3_t bounty_id;
+} pd_treasury_approve_bounty_V3_t;
+
+#define PD_CALL_TREASURY_PROPOSE_CURATOR_V3 10
+typedef struct {
+    pd_CompactProposalIndex_V3_t bounty_id;
+    pd_LookupSource_t curator;
+    pd_CompactBalanceOf_t fee;
+} pd_treasury_propose_curator_V3_t;
+
+#define PD_CALL_TREASURY_UNASSIGN_CURATOR_V3 11
+typedef struct {
+    pd_CompactProposalIndex_V3_t bounty_id;
+} pd_treasury_unassign_curator_V3_t;
+
+#define PD_CALL_TREASURY_ACCEPT_CURATOR_V3 12
+typedef struct {
+    pd_CompactProposalIndex_V3_t bounty_id;
+} pd_treasury_accept_curator_V3_t;
+
+#define PD_CALL_TREASURY_AWARD_BOUNTY_V3 13
+typedef struct {
+    pd_CompactProposalIndex_V3_t bounty_id;
+    pd_LookupSource_t beneficiary;
+} pd_treasury_award_bounty_V3_t;
+
+#define PD_CALL_TREASURY_CLAIM_BOUNTY_V3 14
+typedef struct {
+    pd_CompactBountyIndex_V3_t bounty_id;
+} pd_treasury_claim_bounty_V3_t;
+
+#define PD_CALL_TREASURY_CLOSE_BOUNTY_V3 15
+typedef struct {
+    pd_CompactBountyIndex_V3_t bounty_id;
+} pd_treasury_close_bounty_V3_t;
+
+#define PD_CALL_TREASURY_EXTEND_BOUNTY_EXPIRY_V3 16
+typedef struct {
+    pd_CompactBountyIndex_V3_t bounty_id;
+    pd_Bytes_t _remark;
+} pd_treasury_extend_bounty_expiry_V3_t;
 
 #define PD_CALL_CLAIMS_CLAIM_V3 0
 typedef struct {
@@ -1056,90 +1131,6 @@ typedef struct {
     pd_u8_array_32_V3_t call_hash;
 } pd_multisig_cancel_as_multi_V3_t;
 
-#define PD_CALL_BOUNTIES_PROPOSE_BOUNTY_V3 0
-typedef struct {
-    pd_CompactBalanceOf_t value;
-    pd_Bytes_t description;
-} pd_bounties_propose_bounty_V3_t;
-
-#define PD_CALL_BOUNTIES_APPROVE_BOUNTY_V3 1
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-} pd_bounties_approve_bounty_V3_t;
-
-#define PD_CALL_BOUNTIES_PROPOSE_CURATOR_V3 2
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-    pd_LookupSource_t curator;
-    pd_CompactBalanceOf_t fee;
-} pd_bounties_propose_curator_V3_t;
-
-#define PD_CALL_BOUNTIES_UNASSIGN_CURATOR_V3 3
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-} pd_bounties_unassign_curator_V3_t;
-
-#define PD_CALL_BOUNTIES_ACCEPT_CURATOR_V3 4
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-} pd_bounties_accept_curator_V3_t;
-
-#define PD_CALL_BOUNTIES_AWARD_BOUNTY_V3 5
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-    pd_LookupSource_t beneficiary;
-} pd_bounties_award_bounty_V3_t;
-
-#define PD_CALL_BOUNTIES_CLAIM_BOUNTY_V3 6
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-} pd_bounties_claim_bounty_V3_t;
-
-#define PD_CALL_BOUNTIES_CLOSE_BOUNTY_V3 7
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-} pd_bounties_close_bounty_V3_t;
-
-#define PD_CALL_BOUNTIES_EXTEND_BOUNTY_EXPIRY_V3 8
-typedef struct {
-    pd_CompactBountyIndex_V3_t bounty_id;
-    pd_Bytes_t _remark;
-} pd_bounties_extend_bounty_expiry_V3_t;
-
-#define PD_CALL_TIPS_REPORT_AWESOME_V3 0
-typedef struct {
-    pd_Bytes_t reason;
-    pd_AccountId_V3_t who;
-} pd_tips_report_awesome_V3_t;
-
-#define PD_CALL_TIPS_RETRACT_TIP_V3 1
-typedef struct {
-    pd_Hash_t hash;
-} pd_tips_retract_tip_V3_t;
-
-#define PD_CALL_TIPS_TIP_NEW_V3 2
-typedef struct {
-    pd_Bytes_t reason;
-    pd_AccountId_V3_t who;
-    pd_CompactBalanceOf_t tip_value;
-} pd_tips_tip_new_V3_t;
-
-#define PD_CALL_TIPS_TIP_V3 3
-typedef struct {
-    pd_Hash_t hash;
-    pd_CompactBalanceOf_t tip_value;
-} pd_tips_tip_V3_t;
-
-#define PD_CALL_TIPS_CLOSE_TIP_V3 4
-typedef struct {
-    pd_Hash_t hash;
-} pd_tips_close_tip_V3_t;
-
-#define PD_CALL_TIPS_SLASH_TIP_V3 5
-typedef struct {
-    pd_Hash_t hash;
-} pd_tips_slash_tip_V3_t;
-
 typedef union {
     pd_system_fill_block_V3_t system_fill_block_V3;
     pd_system_remark_V3_t system_remark_V3;
@@ -1150,6 +1141,7 @@ typedef union {
     pd_system_set_storage_V3_t system_set_storage_V3;
     pd_system_kill_storage_V3_t system_kill_storage_V3;
     pd_system_kill_prefix_V3_t system_kill_prefix_V3;
+    pd_system_suicide_V3_t system_suicide_V3;
     pd_babe_report_equivocation_V3_t babe_report_equivocation_V3;
     pd_babe_report_equivocation_unsigned_V3_t babe_report_equivocation_unsigned_V3;
     pd_timestamp_set_V3_t timestamp_set_V3;
@@ -1187,7 +1179,6 @@ typedef union {
     pd_staking_reap_stash_V3_t staking_reap_stash_V3;
     pd_staking_submit_election_solution_V3_t staking_submit_election_solution_V3;
     pd_staking_submit_election_solution_unsigned_V3_t staking_submit_election_solution_unsigned_V3;
-    pd_staking_kick_V3_t staking_kick_V3;
     pd_session_set_keys_V3_t session_set_keys_V3;
     pd_session_purge_keys_V3_t session_purge_keys_V3;
     pd_grandpa_report_equivocation_V3_t grandpa_report_equivocation_V3;
@@ -1233,10 +1224,10 @@ typedef union {
     pd_technicalcommittee_disapprove_proposal_V3_t technicalcommittee_disapprove_proposal_V3;
     pd_electionsphragmen_vote_V3_t electionsphragmen_vote_V3;
     pd_electionsphragmen_remove_voter_V3_t electionsphragmen_remove_voter_V3;
+    pd_electionsphragmen_report_defunct_voter_V3_t electionsphragmen_report_defunct_voter_V3;
     pd_electionsphragmen_submit_candidacy_V3_t electionsphragmen_submit_candidacy_V3;
     pd_electionsphragmen_renounce_candidacy_V3_t electionsphragmen_renounce_candidacy_V3;
     pd_electionsphragmen_remove_member_V3_t electionsphragmen_remove_member_V3;
-    pd_electionsphragmen_clean_defunct_voters_V3_t electionsphragmen_clean_defunct_voters_V3;
     pd_technicalmembership_add_member_V3_t technicalmembership_add_member_V3;
     pd_technicalmembership_remove_member_V3_t technicalmembership_remove_member_V3;
     pd_technicalmembership_swap_member_V3_t technicalmembership_swap_member_V3;
@@ -1247,6 +1238,20 @@ typedef union {
     pd_treasury_propose_spend_V3_t treasury_propose_spend_V3;
     pd_treasury_reject_proposal_V3_t treasury_reject_proposal_V3;
     pd_treasury_approve_proposal_V3_t treasury_approve_proposal_V3;
+    pd_treasury_report_awesome_V3_t treasury_report_awesome_V3;
+    pd_treasury_retract_tip_V3_t treasury_retract_tip_V3;
+    pd_treasury_tip_new_V3_t treasury_tip_new_V3;
+    pd_treasury_tip_V3_t treasury_tip_V3;
+    pd_treasury_close_tip_V3_t treasury_close_tip_V3;
+    pd_treasury_propose_bounty_V3_t treasury_propose_bounty_V3;
+    pd_treasury_approve_bounty_V3_t treasury_approve_bounty_V3;
+    pd_treasury_propose_curator_V3_t treasury_propose_curator_V3;
+    pd_treasury_unassign_curator_V3_t treasury_unassign_curator_V3;
+    pd_treasury_accept_curator_V3_t treasury_accept_curator_V3;
+    pd_treasury_award_bounty_V3_t treasury_award_bounty_V3;
+    pd_treasury_claim_bounty_V3_t treasury_claim_bounty_V3;
+    pd_treasury_close_bounty_V3_t treasury_close_bounty_V3;
+    pd_treasury_extend_bounty_expiry_V3_t treasury_extend_bounty_expiry_V3;
     pd_claims_claim_V3_t claims_claim_V3;
     pd_claims_mint_claim_V3_t claims_mint_claim_V3;
     pd_claims_claim_attest_V3_t claims_claim_attest_V3;
@@ -1315,21 +1320,6 @@ typedef union {
     pd_multisig_as_multi_V3_t multisig_as_multi_V3;
     pd_multisig_approve_as_multi_V3_t multisig_approve_as_multi_V3;
     pd_multisig_cancel_as_multi_V3_t multisig_cancel_as_multi_V3;
-    pd_bounties_propose_bounty_V3_t bounties_propose_bounty_V3;
-    pd_bounties_approve_bounty_V3_t bounties_approve_bounty_V3;
-    pd_bounties_propose_curator_V3_t bounties_propose_curator_V3;
-    pd_bounties_unassign_curator_V3_t bounties_unassign_curator_V3;
-    pd_bounties_accept_curator_V3_t bounties_accept_curator_V3;
-    pd_bounties_award_bounty_V3_t bounties_award_bounty_V3;
-    pd_bounties_claim_bounty_V3_t bounties_claim_bounty_V3;
-    pd_bounties_close_bounty_V3_t bounties_close_bounty_V3;
-    pd_bounties_extend_bounty_expiry_V3_t bounties_extend_bounty_expiry_V3;
-    pd_tips_report_awesome_V3_t tips_report_awesome_V3;
-    pd_tips_retract_tip_V3_t tips_retract_tip_V3;
-    pd_tips_tip_new_V3_t tips_tip_new_V3;
-    pd_tips_tip_V3_t tips_tip_V3;
-    pd_tips_close_tip_V3_t tips_close_tip_V3;
-    pd_tips_slash_tip_V3_t tips_slash_tip_V3;
 } pd_MethodBasic_V3_t;
 
 typedef union {
