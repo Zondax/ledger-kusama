@@ -22,6 +22,7 @@
 #include "coin.h"
 #include "coin_ss58.h"
 #include "substrate_dispatch.h"
+#include "substrate_methods.h"
 
 #if defined(APP_RESTRICTED)
 #include "coin.h"
@@ -49,6 +50,8 @@ void __assert_fail(const char * assertion, const char * file, unsigned int line,
 
 
 #define EXPERT_FIELDS_TOTAL_COUNT 5
+
+
 
 parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t dataLen, parser_tx_t *tx_obj) {
     CHECK_PARSER_ERR(parser_init(ctx, data, dataLen))
@@ -116,14 +119,14 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
 
 #if defined(APP_RESTRICTED)
     if (hdPath[2] == HDPATH_2_STASH) {
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_STAKING) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_NOMINATE) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_NOMINATE)) {
                 pd_VecLookupSource_t *targets = getStakingTargets(ctx);
                 CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
                 return parser_ok;
@@ -131,22 +134,22 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
         }
     }
     if (hdPath[2] == HDPATH_2_VALIDATOR) {
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_STAKING) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_VALIDATE) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_VALIDATE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
                 return parser_ok;
             }
         }
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_SESSION) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_SESSION_SET_KEYS) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(SESSION)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_SET_KEYS)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_SESSION_PURGE_KEYS) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_PURGE_KEYS)) {
                 return parser_ok;
             }
         }
