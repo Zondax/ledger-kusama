@@ -32,13 +32,13 @@ Download a release from here (https://github.com/Zondax/ledger-kusama/releases).
 
 If the file is not executable, run
 ```sh
-chmod +x ./zxtool.sh
+chmod +x ./installer_s.sh
 ```
 
 then run:
 
 ```sh
-./zxtool.sh load
+./installer_s.sh load
 ```
 
 # Development
