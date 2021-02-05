@@ -212,12 +212,32 @@ parser_error_t _readKey_V4(parser_context_t* c, pd_Key_V4_t* v){
 }
 
 parser_error_t _readKeys_V4(parser_context_t* c, pd_Keys_V4_t* v){
-    GEN_DEF_READARRAY(5 * 32)
+    GEN_DEF_READARRAY(6 * 32)
 }
 
-parser_error_t _readLookupSource_V4(parser_context_t* c, pd_LookupSource_V4_t* v){
+parser_error_t _readLookupSource_V4(parser_context_t* c, pd_LookupSource_V4_t* v)
+{
+    CHECK_INPUT();
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Id
+        CHECK_ERROR(_readAccountId_V4(c, &v->id))
+        break;
+    case 1: // Index
+        CHECK_ERROR(_readAccountIndex_V4(c, &v->index))
+        break;
+    case 2: // Raw
+        CHECK_ERROR(_readBytes(c, &v->raw))
+        break;
+    case 3: // Address32
+        GEN_DEF_READARRAY(32)
+    case 5: // Address20
+        GEN_DEF_READARRAY(20)
+    default:
+        return parser_unexpected_value;
+    }
 
-    GEN_DEF_READARRAY(32)
+    return parser_ok;
 }
 
 parser_error_t _readMemberCount_V4(parser_context_t* c, pd_MemberCount_V4_t* v)
@@ -341,7 +361,9 @@ parser_error_t _readValidatorIndex_V4(parser_context_t* c, pd_ValidatorIndex_V4_
 parser_error_t _readValidatorPrefs_V4(parser_context_t* c, pd_ValidatorPrefs_V4_t* v)
 {
     CHECK_INPUT();
-    return _readCompactPerBill_V4(c, &v->commission);
+    CHECK_ERROR(_readCompactPerBill_V4(c, &v->commission));
+    CHECK_ERROR(_readUInt8(c, &v->blocked));
+    return parser_ok;
 }
 
 parser_error_t _readVestingInfo_V4(parser_context_t* c, pd_VestingInfo_V4_t* v)
@@ -1075,7 +1097,30 @@ parser_error_t _toStringLookupSource_V4(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
+    CLEAN_AND_CHECK()
+    switch (v->value) {
+    case 0: // Id
+        CHECK_ERROR(_toStringAccountId_V4(&v->id, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 1: // Index
+        CHECK_ERROR(_toStringAccountIndex_V4(&v->index, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2: // Raw
+        CHECK_ERROR(_toStringBytes(&v->raw, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 3: // Address32
+    {
+        GEN_DEF_TOSTRING_ARRAY(32)
+    }
+    case 4: // Address20
+    {
+        GEN_DEF_TOSTRING_ARRAY(20)
+    }
+    default:
+        return parser_not_supported;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringMemberCount_V4(
@@ -1428,7 +1473,31 @@ parser_error_t _toStringValidatorPrefs_V4(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactPerBill_V4(&v->commission, outValue, outValueLen, pageIdx, pageCount);
+    CLEAN_AND_CHECK()
+
+    // Index + count pages
+    uint8_t pages[2];
+    CHECK_ERROR(_toStringCompactPerBill_V4(&v->commission, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringbool(&v->blocked, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = pages[0] + pages[1];
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringCompactPerBill_V4(&v->commission, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    //////
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringbool(&v->blocked, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
 }
 
 parser_error_t _toStringVestingInfo_V4(

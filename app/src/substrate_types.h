@@ -85,6 +85,11 @@ typedef struct {
 } pd_BalanceOf_t;
 
 typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+} pd_Bytes_t;
+
+typedef struct {
     pd_Data_t data1;
     pd_Data_t data2;
 } pd_TupleDataData_t;
@@ -125,11 +130,6 @@ typedef struct {
     uint64_t _lenBuffer;
     uint32_t callTxVersion;
 } pd_VecCall_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-} pd_Bytes_t;
 
 typedef struct {
     compactInt_t value;

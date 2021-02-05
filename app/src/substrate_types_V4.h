@@ -31,13 +31,17 @@ typedef struct {
 } pd_Conviction_V4_t;
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_AccountId_V4_t;
+
+typedef struct {
+    uint32_t value;
+} pd_AccountIndex_V4_t;
+
+typedef struct {
     pd_bool_t aye;
     pd_Conviction_V4_t conviction;
 } pd_Vote_V4_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_AccountId_V4_t;
 
 typedef struct {
     pd_BalanceOf_t aye;
@@ -67,7 +71,13 @@ typedef struct {
 } pd_Key_V4_t;
 
 typedef struct {
-    const uint8_t* _ptr;
+    uint8_t value;
+    union {
+        pd_AccountId_V4_t id;
+        pd_AccountIndex_V4_t index;
+        pd_Bytes_t raw;
+        const uint8_t* _ptr;
+    };
 } pd_LookupSource_V4_t;
 
 typedef struct {
@@ -160,17 +170,20 @@ typedef struct {
 
 typedef struct {
     pd_CompactPerBill_V4_t commission;
+    pd_bool_t blocked;
 } pd_ValidatorPrefs_V4_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_VecLookupSource_V4_t;
 
 typedef struct {
     pd_BalanceOf_t locked;
     pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_V4_t;
-
-typedef struct {
-    uint32_t value;
-} pd_AccountIndex_V4_t;
 
 typedef struct {
     const uint8_t* _ptr;
@@ -313,12 +326,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecKey_V4_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecLookupSource_V4_t;
 
 typedef struct {
     uint64_t _len;

@@ -128,6 +128,20 @@ parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v)
     return _readBalance(c, &v->value);
 }
 
+parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
+{
+
+    CHECK_INPUT()
+
+    compactInt_t clen;
+    CHECK_ERROR(_readCompactInt(c, &clen))
+    CHECK_ERROR(_getValue(&clen, &v->_len))
+
+    v->_ptr = c->buffer + c->offset;
+    CTX_CHECK_AND_ADVANCE(c, v->_len);
+    return parser_ok;
+}
+
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
 {
 
@@ -178,20 +192,6 @@ parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
     v->_lenBuffer = c->offset - v->_lenBuffer;
     v->callTxVersion = *dummy._txVerPtr;
 
-    return parser_ok;
-}
-
-parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
-{
-
-    CHECK_INPUT()
-
-    compactInt_t clen;
-    CHECK_ERROR(_readCompactInt(c, &clen))
-    CHECK_ERROR(_getValue(&clen, &v->_len))
-
-    v->_ptr = c->buffer + c->offset;
-    CTX_CHECK_AND_ADVANCE(c, v->_len);
     return parser_ok;
 }
 
@@ -433,6 +433,17 @@ parser_error_t _toStringBalanceOf(
     return _toStringBalance(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringBytes(
+    const pd_Bytes_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+
+    GEN_DEF_TOSTRING_ARRAY(v->_len);
+}
+
 parser_error_t _toStringTupleDataData(
     const pd_TupleDataData_t* v,
     char* outValue,
@@ -604,17 +615,6 @@ parser_error_t _toStringVecCall(
     }
 
     return parser_print_not_supported;
-}
-
-parser_error_t _toStringBytes(
-    const pd_Bytes_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-
-    GEN_DEF_TOSTRING_ARRAY(v->_len);
 }
 
 parser_error_t _toStringCompactBalanceOf(
