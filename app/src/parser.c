@@ -50,6 +50,8 @@ void __assert_fail(const char * assertion, const char * file, unsigned int line,
 
 #define EXPERT_FIELDS_TOTAL_COUNT 5
 
+
+
 parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t dataLen, parser_tx_t *tx_obj) {
     CHECK_PARSER_ERR(parser_init(ctx, data, dataLen))
     ctx->tx_obj = tx_obj;
@@ -59,32 +61,6 @@ parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t d
 
     return err;
 }
-
-#if defined(APP_RESTRICTED)
-parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
-    if (!allowlist_is_active()) {
-        return parser_not_allowed;
-    }
-
-    parser_context_t ctx;
-    // each look up source is 32 bytes
-    pd_LookupSource_t lookupSource;
-
-    parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
-    for (uint16_t i = 0; i < targets->_len; i++) {
-        CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
-        char buffer[100];
-        uint8_t dummy;
-        CHECK_ERROR(_toStringLookupSource(&lookupSource, buffer, sizeof(buffer), 0, &dummy));
-
-        if (!allowlist_item_validate(buffer)) {
-            return parser_not_allowed;
-        }
-    }
-
-    return parser_ok;
-}
-#endif
 
 __Z_INLINE bool parser_show_expert_fields() {
     return app_mode_expert();
@@ -116,37 +92,36 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
 
 #if defined(APP_RESTRICTED)
     if (hdPath[2] == HDPATH_2_STASH) {
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_STAKING) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_NOMINATE) {
-                pd_VecLookupSource_t *targets = getStakingTargets(ctx);
-                CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_NOMINATE)) {
+                CHECK_PARSER_ERR(parser_validate_staking_targets(ctx))
                 return parser_ok;
             }
         }
     }
     if (hdPath[2] == HDPATH_2_VALIDATOR) {
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_STAKING) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_SET_PAYEE) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_VALIDATE) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_VALIDATE)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_STAKING_CHILL) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
                 return parser_ok;
             }
         }
-        if (ctx->tx_obj->callIndex.moduleIdx == PD_CALL_SESSION) {
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_SESSION_SET_KEYS) {
+        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(SESSION)) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_SET_KEYS)) {
                 return parser_ok;
             }
-            if (ctx->tx_obj->callIndex.idx==PD_CALL_SESSION_PURGE_KEYS) {
+            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_PURGE_KEYS)) {
                 return parser_ok;
             }
         }

@@ -32,7 +32,6 @@ parser_error_t _readAccountVoteSplit_V3(parser_context_t* c, pd_AccountVoteSplit
 parser_error_t _readAccountVoteStandard_V3(parser_context_t* c, pd_AccountVoteStandard_V3_t* v);
 parser_error_t _readAccountVote_V3(parser_context_t* c, pd_AccountVote_V3_t* v);
 parser_error_t _readCallHashOf_V3(parser_context_t* c, pd_CallHashOf_V3_t* v);
-parser_error_t _readCall_V3(parser_context_t* c, pd_Call_V3_t* v);
 parser_error_t _readChangesTrieConfiguration_V3(parser_context_t* c, pd_ChangesTrieConfiguration_V3_t* v);
 parser_error_t _readCompactAssignments_V3(parser_context_t* c, pd_CompactAssignments_V3_t* v);
 parser_error_t _readCompactBountyIndex_V3(parser_context_t* c, pd_CompactBountyIndex_V3_t* v);
@@ -60,6 +59,7 @@ parser_error_t _readKeyOwnerProof_V3(parser_context_t* c, pd_KeyOwnerProof_V3_t*
 parser_error_t _readKeyValue_V3(parser_context_t* c, pd_KeyValue_V3_t* v);
 parser_error_t _readKey_V3(parser_context_t* c, pd_Key_V3_t* v);
 parser_error_t _readKeys_V3(parser_context_t* c, pd_Keys_V3_t* v);
+parser_error_t _readLookupSource_V3(parser_context_t* c, pd_LookupSource_V3_t* v);
 parser_error_t _readMemberCount_V3(parser_context_t* c, pd_MemberCount_V3_t* v);
 parser_error_t _readOpaqueCall_V3(parser_context_t* c, pd_OpaqueCall_V3_t* v);
 parser_error_t _readOptionAccountId_V3(parser_context_t* c, pd_OptionAccountId_V3_t* v);
@@ -88,9 +88,9 @@ parser_error_t _readTupleBalanceOfBalanceOfBlockNumber_V3(parser_context_t* c, p
 parser_error_t _readValidatorIndex_V3(parser_context_t* c, pd_ValidatorIndex_V3_t* v);
 parser_error_t _readValidatorPrefs_V3(parser_context_t* c, pd_ValidatorPrefs_V3_t* v);
 parser_error_t _readVecAccountId_V3(parser_context_t* c, pd_VecAccountId_V3_t* v);
-parser_error_t _readVecCall_V3(parser_context_t* c, pd_VecCall_V3_t* v);
 parser_error_t _readVecKeyValue_V3(parser_context_t* c, pd_VecKeyValue_V3_t* v);
 parser_error_t _readVecKey_V3(parser_context_t* c, pd_VecKey_V3_t* v);
+parser_error_t _readVecLookupSource_V3(parser_context_t* c, pd_VecLookupSource_V3_t* v);
 parser_error_t _readVecTupleAccountIdData_V3(parser_context_t* c, pd_VecTupleAccountIdData_V3_t* v);
 parser_error_t _readVecValidatorIndex_V3(parser_context_t* c, pd_VecValidatorIndex_V3_t* v);
 parser_error_t _readVestingInfo_V3(parser_context_t* c, pd_VestingInfo_V3_t* v);
@@ -136,13 +136,6 @@ parser_error_t _toStringAccountVote_V3(
 
 parser_error_t _toStringCallHashOf_V3(
     const pd_CallHashOf_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringCall_V3(
-    const pd_Call_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -332,6 +325,13 @@ parser_error_t _toStringKey_V3(
 
 parser_error_t _toStringKeys_V3(
     const pd_Keys_V3_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringLookupSource_V3(
+    const pd_LookupSource_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -533,13 +533,6 @@ parser_error_t _toStringVecAccountId_V3(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringVecCall_V3(
-    const pd_VecCall_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringVecKeyValue_V3(
     const pd_VecKeyValue_V3_t* v,
     char* outValue,
@@ -549,6 +542,13 @@ parser_error_t _toStringVecKeyValue_V3(
 
 parser_error_t _toStringVecKey_V3(
     const pd_VecKey_V3_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringVecLookupSource_V3(
+    const pd_VecLookupSource_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -591,14 +591,6 @@ parser_error_t _toStringWeight_V3(
 
 parser_error_t _toStringu8_array_32_V3(
     const pd_u8_array_32_V3_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _readProposal_V3(parser_context_t* c, pd_Proposal_V3_t* v);
-parser_error_t _toStringProposal_V3(
-    const pd_Proposal_V3_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
