@@ -183,6 +183,11 @@ parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
     CHECK_PARSER_ERR(_getValue(&clen, &v->_len));
     v->_ptr = c->buffer + c->offset;
     v->_lenBuffer = c->offset;
+
+    if (v->_len==0) {
+        return parser_unexpected_buffer_end;
+    }
+
     for (uint64_t i = 0; i < v->_len; i++) {
         CHECK_ERROR(_readCall(c, &dummy))
     }
