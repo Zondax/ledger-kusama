@@ -157,7 +157,6 @@ parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v){
 
 parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
 {
-
     pd_Method_t _method;
     CHECK_ERROR(_readCallImpl(c, v, &_method))
     zb_check_canary();
