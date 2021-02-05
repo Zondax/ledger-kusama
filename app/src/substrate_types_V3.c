@@ -221,7 +221,6 @@ parser_error_t _readKeys_V3(parser_context_t* c, pd_Keys_V3_t* v){
 }
 
 parser_error_t _readLookupSource_V3(parser_context_t* c, pd_LookupSource_V3_t* v){
-
     GEN_DEF_READARRAY(32)
 }
 
