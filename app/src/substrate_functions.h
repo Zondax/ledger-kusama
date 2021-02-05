@@ -40,7 +40,6 @@ parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v);
 parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v);
 parser_error_t _readCall(parser_context_t* c, pd_Call_t* v);
 parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v);
-parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v);
 parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_t* v);
 parser_error_t _readVecTupleDataData(parser_context_t* c, pd_VecTupleDataData_t* v);
 parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v);
@@ -51,7 +50,6 @@ parser_error_t _readCompactBlockNumber(parser_context_t* c, pd_CompactBlockNumbe
 parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v);
 parser_error_t _readHeartbeat(parser_context_t* c, pd_Heartbeat_t* v);
 parser_error_t _readVecHeader(parser_context_t* c, pd_VecHeader_t* v);
-parser_error_t _readVecLookupSource(parser_context_t* c, pd_VecLookupSource_t* v);
 parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v);
 
 // Common toString functions
@@ -147,13 +145,6 @@ parser_error_t _toStringHeader(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringLookupSource(
-    const pd_LookupSource_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringOptionu8_array_20(
     const pd_Optionu8_array_20_t* v,
     char* outValue,
@@ -219,13 +210,6 @@ parser_error_t _toStringHeartbeat(
 
 parser_error_t _toStringVecHeader(
     const pd_VecHeader_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringVecLookupSource(
-    const pd_VecLookupSource_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

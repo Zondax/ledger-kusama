@@ -220,6 +220,11 @@ parser_error_t _readKeys_V3(parser_context_t* c, pd_Keys_V3_t* v){
     GEN_DEF_READARRAY(5 * 32)
 }
 
+parser_error_t _readLookupSource_V3(parser_context_t* c, pd_LookupSource_V3_t* v){
+
+    GEN_DEF_READARRAY(32)
+}
+
 parser_error_t _readMemberCount_V3(parser_context_t* c, pd_MemberCount_V3_t* v)
 {
     return _readUInt32(c, &v->value);
@@ -387,6 +392,10 @@ parser_error_t _readVecKeyValue_V3(parser_context_t* c, pd_VecKeyValue_V3_t* v){
 
 parser_error_t _readVecKey_V3(parser_context_t* c, pd_VecKey_V3_t* v){
     GEN_DEF_READVECTOR(Key_V3)
+}
+
+parser_error_t _readVecLookupSource_V3(parser_context_t* c, pd_VecLookupSource_V3_t* v){
+    GEN_DEF_READVECTOR(LookupSource_V3)
 }
 
 parser_error_t _readVecTupleAccountIdData_V3(parser_context_t* c, pd_VecTupleAccountIdData_V3_t* v){
@@ -1075,6 +1084,16 @@ parser_error_t _toStringKeys_V3(
     GEN_DEF_TOSTRING_ARRAY(4 * 32)
 }
 
+parser_error_t _toStringLookupSource_V3(
+    const pd_LookupSource_V3_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
+}
+
 parser_error_t _toStringMemberCount_V3(
     const pd_MemberCount_V3_t* v,
     char* outValue,
@@ -1538,6 +1557,16 @@ parser_error_t _toStringVecKey_V3(
     uint8_t* pageCount)
 {
     GEN_DEF_TOSTRING_VECTOR(Key_V3);
+}
+
+parser_error_t _toStringVecLookupSource_V3(
+    const pd_VecLookupSource_V3_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    GEN_DEF_TOSTRING_VECTOR(LookupSource_V3);
 }
 
 parser_error_t _toStringVecTupleAccountIdData_V3(

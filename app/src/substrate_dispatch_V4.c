@@ -146,7 +146,7 @@ __Z_INLINE parser_error_t _readMethod_indices_freeze_V4(
 __Z_INLINE parser_error_t _readMethod_balances_transfer_V4(
     parser_context_t* c, pd_balances_transfer_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
@@ -154,7 +154,7 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_V4(
 __Z_INLINE parser_error_t _readMethod_balances_set_balance_V4(
     parser_context_t* c, pd_balances_set_balance_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->who))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->who))
     CHECK_ERROR(_readCompactBalance(c, &m->new_free))
     CHECK_ERROR(_readCompactBalance(c, &m->new_reserved))
     return parser_ok;
@@ -163,8 +163,8 @@ __Z_INLINE parser_error_t _readMethod_balances_set_balance_V4(
 __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V4(
     parser_context_t* c, pd_balances_force_transfer_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->source))
-    CHECK_ERROR(_readLookupSource(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->source))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
@@ -172,7 +172,7 @@ __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V4(
 __Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V4(
     parser_context_t* c, pd_balances_transfer_keep_alive_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->dest))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->value))
     return parser_ok;
 }
@@ -187,7 +187,7 @@ __Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V4(
 __Z_INLINE parser_error_t _readMethod_staking_bond_V4(
     parser_context_t* c, pd_staking_bond_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->controller))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->controller))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     CHECK_ERROR(_readRewardDestination_V4(c, &m->payee))
     return parser_ok;
@@ -224,7 +224,7 @@ __Z_INLINE parser_error_t _readMethod_staking_validate_V4(
 __Z_INLINE parser_error_t _readMethod_staking_nominate_V4(
     parser_context_t* c, pd_staking_nominate_V4_t* m)
 {
-    CHECK_ERROR(_readVecLookupSource(c, &m->targets))
+    CHECK_ERROR(_readVecLookupSource_V4(c, &m->targets))
     return parser_ok;
 }
 
@@ -244,7 +244,7 @@ __Z_INLINE parser_error_t _readMethod_staking_set_payee_V4(
 __Z_INLINE parser_error_t _readMethod_staking_set_controller_V4(
     parser_context_t* c, pd_staking_set_controller_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->controller))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->controller))
     return parser_ok;
 }
 
@@ -366,7 +366,7 @@ __Z_INLINE parser_error_t _readMethod_staking_submit_election_solution_unsigned_
 __Z_INLINE parser_error_t _readMethod_staking_kick_V4(
     parser_context_t* c, pd_staking_kick_V4_t* m)
 {
-    CHECK_ERROR(_readVecLookupSource(c, &m->who))
+    CHECK_ERROR(_readVecLookupSource_V4(c, &m->who))
     return parser_ok;
 }
 
@@ -735,7 +735,7 @@ __Z_INLINE parser_error_t _readMethod_electionsphragmen_renounce_candidacy_V4(
 __Z_INLINE parser_error_t _readMethod_electionsphragmen_remove_member_V4(
     parser_context_t* c, pd_electionsphragmen_remove_member_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->who))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->who))
     CHECK_ERROR(_readbool(c, &m->has_replacement))
     return parser_ok;
 }
@@ -801,7 +801,7 @@ __Z_INLINE parser_error_t _readMethod_treasury_propose_spend_V4(
     parser_context_t* c, pd_treasury_propose_spend_V4_t* m)
 {
     CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    CHECK_ERROR(_readLookupSource(c, &m->beneficiary))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -954,7 +954,7 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V4(
     parser_context_t* c, pd_identity_provide_judgement_V4_t* m)
 {
     CHECK_ERROR(_readCompactRegistrarIndex_V4(c, &m->reg_index))
-    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->target))
     CHECK_ERROR(_readJudgement_V4(c, &m->judgement))
     return parser_ok;
 }
@@ -962,14 +962,14 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V4(
 __Z_INLINE parser_error_t _readMethod_identity_kill_identity_V4(
     parser_context_t* c, pd_identity_kill_identity_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_identity_add_sub_V4(
     parser_context_t* c, pd_identity_add_sub_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
@@ -977,7 +977,7 @@ __Z_INLINE parser_error_t _readMethod_identity_add_sub_V4(
 __Z_INLINE parser_error_t _readMethod_identity_rename_sub_V4(
     parser_context_t* c, pd_identity_rename_sub_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
@@ -985,7 +985,7 @@ __Z_INLINE parser_error_t _readMethod_identity_rename_sub_V4(
 __Z_INLINE parser_error_t _readMethod_identity_remove_sub_V4(
     parser_context_t* c, pd_identity_remove_sub_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->sub))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->sub))
     return parser_ok;
 }
 
@@ -1028,7 +1028,7 @@ __Z_INLINE parser_error_t _readMethod_society_unvouch_V4(
 __Z_INLINE parser_error_t _readMethod_society_vote_V4(
     parser_context_t* c, pd_society_vote_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->candidate))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->candidate))
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
@@ -1160,14 +1160,14 @@ __Z_INLINE parser_error_t _readMethod_vesting_vest_V4(
 __Z_INLINE parser_error_t _readMethod_vesting_vest_other_V4(
     parser_context_t* c, pd_vesting_vest_other_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_vesting_vested_transfer_V4(
     parser_context_t* c, pd_vesting_vested_transfer_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->target))
     CHECK_ERROR(_readVestingInfo_V4(c, &m->schedule))
     return parser_ok;
 }
@@ -1175,8 +1175,8 @@ __Z_INLINE parser_error_t _readMethod_vesting_vested_transfer_V4(
 __Z_INLINE parser_error_t _readMethod_vesting_force_vested_transfer_V4(
     parser_context_t* c, pd_vesting_force_vested_transfer_V4_t* m)
 {
-    CHECK_ERROR(_readLookupSource(c, &m->source))
-    CHECK_ERROR(_readLookupSource(c, &m->target))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->source))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->target))
     CHECK_ERROR(_readVestingInfo_V4(c, &m->schedule))
     return parser_ok;
 }
@@ -1385,7 +1385,7 @@ __Z_INLINE parser_error_t _readMethod_bounties_propose_curator_V4(
     parser_context_t* c, pd_bounties_propose_curator_V4_t* m)
 {
     CHECK_ERROR(_readCompactBountyIndex_V4(c, &m->bounty_id))
-    CHECK_ERROR(_readLookupSource(c, &m->curator))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->curator))
     CHECK_ERROR(_readCompactBalanceOf(c, &m->fee))
     return parser_ok;
 }
@@ -1408,7 +1408,7 @@ __Z_INLINE parser_error_t _readMethod_bounties_award_bounty_V4(
     parser_context_t* c, pd_bounties_award_bounty_V4_t* m)
 {
     CHECK_ERROR(_readCompactBountyIndex_V4(c, &m->bounty_id))
-    CHECK_ERROR(_readLookupSource(c, &m->beneficiary))
+    CHECK_ERROR(_readLookupSource_V4(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -4741,7 +4741,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1024: /* module 4 call 0 */
         switch (itemIdx) {
         case 0: /* balances_transfer_V4 - dest */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.balances_transfer_V4.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4756,7 +4756,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1025: /* module 4 call 1 */
         switch (itemIdx) {
         case 0: /* balances_set_balance_V4 - who */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.balances_set_balance_V4.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4776,12 +4776,12 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1026: /* module 4 call 2 */
         switch (itemIdx) {
         case 0: /* balances_force_transfer_V4 - source */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.balances_force_transfer_V4.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* balances_force_transfer_V4 - dest */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.balances_force_transfer_V4.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4796,7 +4796,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1027: /* module 4 call 3 */
         switch (itemIdx) {
         case 0: /* balances_transfer_keep_alive_V4 - dest */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.balances_transfer_keep_alive_V4.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4821,7 +4821,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1536: /* module 6 call 0 */
         switch (itemIdx) {
         case 0: /* staking_bond_V4 - controller */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.staking_bond_V4.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4881,7 +4881,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1541: /* module 6 call 5 */
         switch (itemIdx) {
         case 0: /* staking_nominate_V4 - targets */;
-            return _toStringVecLookupSource(
+            return _toStringVecLookupSource_V4(
                 &m->basic.staking_nominate_V4.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -4906,7 +4906,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1544: /* module 6 call 8 */
         switch (itemIdx) {
         case 0: /* staking_set_controller_V4 - controller */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.staking_set_controller_V4.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5116,7 +5116,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 1560: /* module 6 call 24 */
         switch (itemIdx) {
         case 0: /* staking_kick_V4 - who */;
-            return _toStringVecLookupSource(
+            return _toStringVecLookupSource_V4(
                 &m->basic.staking_kick_V4.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5761,7 +5761,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 4100: /* module 16 call 4 */
         switch (itemIdx) {
         case 0: /* electionsphragmen_remove_member_V4 - who */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.electionsphragmen_remove_member_V4.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -5866,7 +5866,7 @@ parser_error_t _getMethod_ItemValue_V4(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* treasury_propose_spend_V4 - beneficiary */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.treasury_propose_spend_V4.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6131,7 +6131,7 @@ parser_error_t _getMethod_ItemValue_V4(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* identity_provide_judgement_V4 - target */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.identity_provide_judgement_V4.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6146,7 +6146,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 6410: /* module 25 call 10 */
         switch (itemIdx) {
         case 0: /* identity_kill_identity_V4 - target */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.identity_kill_identity_V4.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6156,7 +6156,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 6411: /* module 25 call 11 */
         switch (itemIdx) {
         case 0: /* identity_add_sub_V4 - sub */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.identity_add_sub_V4.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6171,7 +6171,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 6412: /* module 25 call 12 */
         switch (itemIdx) {
         case 0: /* identity_rename_sub_V4 - sub */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.identity_rename_sub_V4.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6186,7 +6186,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 6413: /* module 25 call 13 */
         switch (itemIdx) {
         case 0: /* identity_remove_sub_V4 - sub */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.identity_remove_sub_V4.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6251,7 +6251,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 6660: /* module 26 call 4 */
         switch (itemIdx) {
         case 0: /* society_vote_V4 - candidate */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.society_vote_V4.candidate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6461,7 +6461,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 7169: /* module 28 call 1 */
         switch (itemIdx) {
         case 0: /* vesting_vest_other_V4 - target */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.vesting_vest_other_V4.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6471,7 +6471,7 @@ parser_error_t _getMethod_ItemValue_V4(
     case 7170: /* module 28 call 2 */
         switch (itemIdx) {
         case 0: /* vesting_vested_transfer_V4 - target */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.vesting_vested_transfer_V4.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6486,12 +6486,12 @@ parser_error_t _getMethod_ItemValue_V4(
     case 7171: /* module 28 call 3 */
         switch (itemIdx) {
         case 0: /* vesting_force_vested_transfer_V4 - source */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.vesting_force_vested_transfer_V4.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* vesting_force_vested_transfer_V4 - target */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.vesting_force_vested_transfer_V4.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6961,7 +6961,7 @@ parser_error_t _getMethod_ItemValue_V4(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_propose_curator_V4 - curator */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.bounties_propose_curator_V4.curator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7001,7 +7001,7 @@ parser_error_t _getMethod_ItemValue_V4(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_award_bounty_V4 - beneficiary */;
-            return _toStringLookupSource(
+            return _toStringLookupSource_V4(
                 &m->basic.bounties_award_bounty_V4.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);

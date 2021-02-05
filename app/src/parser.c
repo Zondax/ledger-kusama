@@ -62,32 +62,6 @@ parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t d
     return err;
 }
 
-#if defined(APP_RESTRICTED)
-parser_error_t parser_validate_vecLookupSource(pd_VecLookupSource_t *targets) {
-    if (!allowlist_is_active()) {
-        return parser_not_allowed;
-    }
-
-    parser_context_t ctx;
-    // each look up source is 32 bytes
-    pd_LookupSource_t lookupSource;
-
-    parser_init(&ctx, targets->_ptr, targets->_lenBuffer);
-    for (uint16_t i = 0; i < targets->_len; i++) {
-        CHECK_ERROR(_readLookupSource(&ctx, &lookupSource));
-        char buffer[100];
-        uint8_t dummy;
-        CHECK_ERROR(_toStringLookupSource(&lookupSource, buffer, sizeof(buffer), 0, &dummy));
-
-        if (!allowlist_item_validate(buffer)) {
-            return parser_not_allowed;
-        }
-    }
-
-    return parser_ok;
-}
-#endif
-
 __Z_INLINE bool parser_show_expert_fields() {
     return app_mode_expert();
 }
@@ -126,8 +100,7 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
                 return parser_ok;
             }
             if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_NOMINATE)) {
-                pd_VecLookupSource_t *targets = getStakingTargets(ctx);
-                CHECK_PARSER_ERR(parser_validate_vecLookupSource(targets))
+                CHECK_PARSER_ERR(parser_validate_staking_targets(ctx))
                 return parser_ok;
             }
         }

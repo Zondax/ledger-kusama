@@ -146,7 +146,6 @@ parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
 {
 
     pd_Method_t _method;
-
     CHECK_ERROR(_readCallImpl(c, v, &_method))
     zb_check_canary();
     return parser_ok;
@@ -156,11 +155,6 @@ parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 {
 
     return parser_not_supported;
-}
-
-parser_error_t _readLookupSource(parser_context_t* c, pd_LookupSource_t* v){
-
-    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
@@ -227,10 +221,6 @@ parser_error_t _readVecHeader(parser_context_t* c, pd_VecHeader_t* v){
 
 parser_error_t _readVecTupleDataData(parser_context_t* c, pd_VecTupleDataData_t* v){
     GEN_DEF_READVECTOR(TupleDataData)
-}
-
-parser_error_t _readVecLookupSource(parser_context_t* c, pd_VecLookupSource_t* v){
-    GEN_DEF_READVECTOR(LookupSource)
 }
 
 parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v){
@@ -554,17 +544,6 @@ parser_error_t _toStringHeader(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringLookupSource(
-    const pd_LookupSource_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-
-    return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
-}
-
 parser_error_t _toStringProposal(
     const pd_Proposal_t* v,
     char* outValue,
@@ -691,16 +670,6 @@ parser_error_t _toStringVecTupleDataData(
     uint8_t* pageCount)
 {
     GEN_DEF_TOSTRING_VECTOR(TupleDataData);
-}
-
-parser_error_t _toStringVecLookupSource(
-    const pd_VecLookupSource_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    GEN_DEF_TOSTRING_VECTOR(LookupSource);
 }
 
 parser_error_t _toStringVecu32(

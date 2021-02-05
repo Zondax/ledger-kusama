@@ -94,6 +94,17 @@ GEN_DEC_READFIX_UNSIGNED(64);
     v->_lenBuffer = c->offset - v->_lenBuffer;                      \
     return parser_ok;
 
+#define GEN_DEF_READVECTOR_VERSION(TYPE, VERSION)                                    \
+    pd_##TYPE##_V##VERSION##_t dummy;                                            \
+    compactInt_t clen;                                              \
+    CHECK_PARSER_ERR(_readCompactInt(c, &clen));                    \
+    CHECK_PARSER_ERR(_getValue(&clen, &v->_len));                   \
+    v->_ptr = c->buffer + c->offset;                                \
+    v->_lenBuffer = c->offset;                                      \
+    for (uint64_t i = 0; i < v->_len; i++ ) CHECK_ERROR(_read##TYPE##_V##VERSION (c, &dummy));  \
+    v->_lenBuffer = c->offset - v->_lenBuffer;                      \
+    return parser_ok;
+
 #define GEN_DEF_READVECTOR_ITEM(VEC, TYPE, INDEX, VALUE)            \
     parser_context_t ctx;                                           \
     parser_init(&ctx, VEC._ptr, VEC._lenBuffer);                    \

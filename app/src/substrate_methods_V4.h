@@ -149,27 +149,27 @@ typedef struct {
 
 #define PD_CALL_BALANCES_TRANSFER_V4 0
 typedef struct {
-    pd_LookupSource_t dest;
+    pd_LookupSource_V4_t dest;
     pd_CompactBalance_t value;
 } pd_balances_transfer_V4_t;
 
 #define PD_CALL_BALANCES_SET_BALANCE_V4 1
 typedef struct {
-    pd_LookupSource_t who;
+    pd_LookupSource_V4_t who;
     pd_CompactBalance_t new_free;
     pd_CompactBalance_t new_reserved;
 } pd_balances_set_balance_V4_t;
 
 #define PD_CALL_BALANCES_FORCE_TRANSFER_V4 2
 typedef struct {
-    pd_LookupSource_t source;
-    pd_LookupSource_t dest;
+    pd_LookupSource_V4_t source;
+    pd_LookupSource_V4_t dest;
     pd_CompactBalance_t value;
 } pd_balances_force_transfer_V4_t;
 
 #define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V4 3
 typedef struct {
-    pd_LookupSource_t dest;
+    pd_LookupSource_V4_t dest;
     pd_CompactBalance_t value;
 } pd_balances_transfer_keep_alive_V4_t;
 
@@ -180,7 +180,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_BOND_V4 0
 typedef struct {
-    pd_LookupSource_t controller;
+    pd_LookupSource_V4_t controller;
     pd_CompactBalanceOf_t value;
     pd_RewardDestination_V4_t payee;
 } pd_staking_bond_V4_t;
@@ -207,7 +207,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_NOMINATE_V4 5
 typedef struct {
-    pd_VecLookupSource_t targets;
+    pd_VecLookupSource_V4_t targets;
 } pd_staking_nominate_V4_t;
 
 #define PD_CALL_STAKING_CHILL_V4 6
@@ -221,7 +221,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_SET_CONTROLLER_V4 8
 typedef struct {
-    pd_LookupSource_t controller;
+    pd_LookupSource_V4_t controller;
 } pd_staking_set_controller_V4_t;
 
 #define PD_CALL_STAKING_SET_VALIDATOR_COUNT_V4 9
@@ -311,7 +311,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_KICK_V4 24
 typedef struct {
-    pd_VecLookupSource_t who;
+    pd_VecLookupSource_V4_t who;
 } pd_staking_kick_V4_t;
 
 #define PD_CALL_SESSION_SET_KEYS_V4 0
@@ -584,7 +584,7 @@ typedef struct {
 
 #define PD_CALL_ELECTIONSPHRAGMEN_REMOVE_MEMBER_V4 4
 typedef struct {
-    pd_LookupSource_t who;
+    pd_LookupSource_V4_t who;
     pd_bool_t has_replacement;
 } pd_electionsphragmen_remove_member_V4_t;
 
@@ -632,7 +632,7 @@ typedef struct {
 #define PD_CALL_TREASURY_PROPOSE_SPEND_V4 0
 typedef struct {
     pd_CompactBalanceOf_t value;
-    pd_LookupSource_t beneficiary;
+    pd_LookupSource_V4_t beneficiary;
 } pd_treasury_propose_spend_V4_t;
 
 #define PD_CALL_TREASURY_REJECT_PROPOSAL_V4 1
@@ -745,30 +745,30 @@ typedef struct {
 #define PD_CALL_IDENTITY_PROVIDE_JUDGEMENT_V4 9
 typedef struct {
     pd_CompactRegistrarIndex_V4_t reg_index;
-    pd_LookupSource_t target;
+    pd_LookupSource_V4_t target;
     pd_Judgement_V4_t judgement;
 } pd_identity_provide_judgement_V4_t;
 
 #define PD_CALL_IDENTITY_KILL_IDENTITY_V4 10
 typedef struct {
-    pd_LookupSource_t target;
+    pd_LookupSource_V4_t target;
 } pd_identity_kill_identity_V4_t;
 
 #define PD_CALL_IDENTITY_ADD_SUB_V4 11
 typedef struct {
-    pd_LookupSource_t sub;
+    pd_LookupSource_V4_t sub;
     pd_Data_t data;
 } pd_identity_add_sub_V4_t;
 
 #define PD_CALL_IDENTITY_RENAME_SUB_V4 12
 typedef struct {
-    pd_LookupSource_t sub;
+    pd_LookupSource_V4_t sub;
     pd_Data_t data;
 } pd_identity_rename_sub_V4_t;
 
 #define PD_CALL_IDENTITY_REMOVE_SUB_V4 13
 typedef struct {
-    pd_LookupSource_t sub;
+    pd_LookupSource_V4_t sub;
 } pd_identity_remove_sub_V4_t;
 
 #define PD_CALL_IDENTITY_QUIT_SUB_V4 14
@@ -799,7 +799,7 @@ typedef struct {
 
 #define PD_CALL_SOCIETY_VOTE_V4 4
 typedef struct {
-    pd_LookupSource_t candidate;
+    pd_LookupSource_V4_t candidate;
     pd_bool_t approve;
 } pd_society_vote_V4_t;
 
@@ -895,19 +895,19 @@ typedef struct {
 
 #define PD_CALL_VESTING_VEST_OTHER_V4 1
 typedef struct {
-    pd_LookupSource_t target;
+    pd_LookupSource_V4_t target;
 } pd_vesting_vest_other_V4_t;
 
 #define PD_CALL_VESTING_VESTED_TRANSFER_V4 2
 typedef struct {
-    pd_LookupSource_t target;
+    pd_LookupSource_V4_t target;
     pd_VestingInfo_V4_t schedule;
 } pd_vesting_vested_transfer_V4_t;
 
 #define PD_CALL_VESTING_FORCE_VESTED_TRANSFER_V4 3
 typedef struct {
-    pd_LookupSource_t source;
-    pd_LookupSource_t target;
+    pd_LookupSource_V4_t source;
+    pd_LookupSource_V4_t target;
     pd_VestingInfo_V4_t schedule;
 } pd_vesting_force_vested_transfer_V4_t;
 
@@ -1070,7 +1070,7 @@ typedef struct {
 #define PD_CALL_BOUNTIES_PROPOSE_CURATOR_V4 2
 typedef struct {
     pd_CompactBountyIndex_V4_t bounty_id;
-    pd_LookupSource_t curator;
+    pd_LookupSource_V4_t curator;
     pd_CompactBalanceOf_t fee;
 } pd_bounties_propose_curator_V4_t;
 
@@ -1087,7 +1087,7 @@ typedef struct {
 #define PD_CALL_BOUNTIES_AWARD_BOUNTY_V4 5
 typedef struct {
     pd_CompactBountyIndex_V4_t bounty_id;
-    pd_LookupSource_t beneficiary;
+    pd_LookupSource_V4_t beneficiary;
 } pd_bounties_award_bounty_V4_t;
 
 #define PD_CALL_BOUNTIES_CLAIM_BOUNTY_V4 6

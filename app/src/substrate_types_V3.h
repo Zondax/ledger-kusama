@@ -67,6 +67,10 @@ typedef struct {
 } pd_Key_V3_t;
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_LookupSource_V3_t;
+
+typedef struct {
     uint64_t value;
 } pd_Period_V3_t;
 
@@ -314,6 +318,12 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecKey_V3_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_VecLookupSource_V3_t;
 
 typedef struct {
     uint64_t _len;

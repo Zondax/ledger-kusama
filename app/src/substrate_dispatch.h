@@ -60,7 +60,10 @@ bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uin
 bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
 
 //Special getters
-pd_VecLookupSource_t* getStakingTargets(const parser_context_t* c);
+#if defined(APP_RESTRICTED)
+parser_error_t parser_validate_staking_targets(parser_context_t* c);
+#endif
+
 GEN_DEC_GETCALL(STAKING);
 GEN_DEC_GETCALL(STAKING_VALIDATE);
 GEN_DEC_GETCALL(STAKING_SET_PAYEE);
