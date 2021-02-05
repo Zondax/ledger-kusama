@@ -127,6 +127,11 @@ parser_error_t _readChangesTrieConfiguration_V4(parser_context_t* c, pd_ChangesT
     return parser_ok;
 }
 
+parser_error_t _readCompactAccountIndex_V4(parser_context_t* c, pd_CompactAccountIndex_V4_t* v)
+{
+    return _readCompactInt(c, &v->value);
+}
+
 parser_error_t _readCompactPerBill_V4(parser_context_t* c, pd_CompactPerBill_V4_t* v)
 {
     return _readCompactInt(c, &v->value);
@@ -224,14 +229,14 @@ parser_error_t _readLookupSource_V4(parser_context_t* c, pd_LookupSource_V4_t* v
         CHECK_ERROR(_readAccountId_V4(c, &v->id))
         break;
     case 1: // Index
-        CHECK_ERROR(_readAccountIndex_V4(c, &v->index))
+        CHECK_ERROR(_readCompactAccountIndex_V4(c, &v->index))
         break;
     case 2: // Raw
         CHECK_ERROR(_readBytes(c, &v->raw))
         break;
     case 3: // Address32
         GEN_DEF_READARRAY(32)
-    case 5: // Address20
+    case 4: // Address20
         GEN_DEF_READARRAY(20)
     default:
         return parser_unexpected_value;
@@ -785,6 +790,16 @@ parser_error_t _toStringChangesTrieConfiguration_V4(
     return parser_display_idx_out_of_range;
 }
 
+parser_error_t _toStringCompactAccountIndex_V4(
+    const pd_CompactAccountIndex_V4_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringCompactInt(&v->value, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+}
+
 parser_error_t _toStringCompactPerBill_V4(
     const pd_CompactPerBill_V4_t* v,
     char* outValue,
@@ -1103,7 +1118,7 @@ parser_error_t _toStringLookupSource_V4(
         CHECK_ERROR(_toStringAccountId_V4(&v->id, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 1: // Index
-        CHECK_ERROR(_toStringAccountIndex_V4(&v->index, outValue, outValueLen, pageIdx, pageCount))
+        CHECK_ERROR(_toStringCompactAccountIndex_V4(&v->index, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 2: // Raw
         CHECK_ERROR(_toStringBytes(&v->raw, outValue, outValueLen, pageIdx, pageCount))

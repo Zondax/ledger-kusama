@@ -33,6 +33,7 @@ parser_error_t _readAccountVoteStandard_V4(parser_context_t* c, pd_AccountVoteSt
 parser_error_t _readAccountVote_V4(parser_context_t* c, pd_AccountVote_V4_t* v);
 parser_error_t _readCallHashOf_V4(parser_context_t* c, pd_CallHashOf_V4_t* v);
 parser_error_t _readChangesTrieConfiguration_V4(parser_context_t* c, pd_ChangesTrieConfiguration_V4_t* v);
+parser_error_t _readCompactAccountIndex_V4(parser_context_t* c, pd_CompactAccountIndex_V4_t* v);
 parser_error_t _readCompactAssignments_V4(parser_context_t* c, pd_CompactAssignments_V4_t* v);
 parser_error_t _readCompactBountyIndex_V4(parser_context_t* c, pd_CompactBountyIndex_V4_t* v);
 parser_error_t _readCompactEraIndex_V4(parser_context_t* c, pd_CompactEraIndex_V4_t* v);
@@ -142,6 +143,13 @@ parser_error_t _toStringCallHashOf_V4(
 
 parser_error_t _toStringChangesTrieConfiguration_V4(
     const pd_ChangesTrieConfiguration_V4_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactAccountIndex_V4(
+    const pd_CompactAccountIndex_V4_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

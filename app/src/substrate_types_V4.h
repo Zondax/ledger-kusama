@@ -35,8 +35,8 @@ typedef struct {
 } pd_AccountId_V4_t;
 
 typedef struct {
-    uint32_t value;
-} pd_AccountIndex_V4_t;
+    compactInt_t value;
+} pd_CompactAccountIndex_V4_t;
 
 typedef struct {
     pd_bool_t aye;
@@ -74,7 +74,7 @@ typedef struct {
     uint8_t value;
     union {
         pd_AccountId_V4_t id;
-        pd_AccountIndex_V4_t index;
+        pd_CompactAccountIndex_V4_t index;
         pd_Bytes_t raw;
         const uint8_t* _ptr;
     };
@@ -184,6 +184,10 @@ typedef struct {
     pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_V4_t;
+
+typedef struct {
+    uint32_t value;
+} pd_AccountIndex_V4_t;
 
 typedef struct {
     const uint8_t* _ptr;
