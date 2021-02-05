@@ -172,7 +172,6 @@ parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
 
 parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
 {
-
     return _readCall(c, &v->call);
 }
 
