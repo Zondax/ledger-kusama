@@ -130,7 +130,6 @@ parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v)
 
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
 {
-
     CHECK_INPUT()
 
     compactInt_t clen;
