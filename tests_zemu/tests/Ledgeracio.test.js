@@ -24,11 +24,11 @@ const Resolve = require("path").resolve;
 const APP_PATH = Resolve("../app/bin/app_ledgeracio.elf");
 
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
-const sim_options = {
+const simOptions = {
     logging: true,
     start_delay: 3000,
-    custom: `-s "${APP_SEED}"`
-//    , X11: true
+    custom: `-s "${APP_SEED}"`,
+    //X11: true
 };
 
 jest.setTimeout(30000)
@@ -37,7 +37,7 @@ describe('Ledgeracio', function () {
     test('can start and stop container', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
         } finally {
             await sim.close();
         }
@@ -46,7 +46,7 @@ describe('Ledgeracio', function () {
     test('get app version', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const resp = await app.getVersion();
 
@@ -66,7 +66,7 @@ describe('Ledgeracio', function () {
     test('get allowlist pubkey | unset', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const resp = await app.getAllowlistPubKey();
 
@@ -82,7 +82,7 @@ describe('Ledgeracio', function () {
     test('set allowlist pubkey', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             const pk = Buffer.from("1234000000000000000000000000000000000000000000000000000000000000", "hex")
@@ -116,7 +116,7 @@ describe('Ledgeracio', function () {
     test('get allowlist hash | not set yet', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const resp = await app.getAllowlistHash();
 
@@ -130,9 +130,7 @@ describe('Ledgeracio', function () {
     });
 
     test('create signed allowlist', async function () {
-        const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
         const allowList = dummyAllowlist(0)
-
         console.log(allowList)
         expect(allowList.length).toEqual(4 + 4 + 64 * 3)
     });
@@ -140,7 +138,7 @@ describe('Ledgeracio', function () {
     test('upload allowlist | no pubkey', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             console.log("\n\n------------ Upload allowlist")
@@ -158,7 +156,7 @@ describe('Ledgeracio', function () {
     test('upload allowlist | with pubkey set before', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             console.log("\n\n------------ Set pubkey")

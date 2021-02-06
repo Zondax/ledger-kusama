@@ -47,10 +47,7 @@ void __assert_fail(const char * assertion, const char * file, unsigned int line,
 #define FIELD_ERA_PERIOD    5
 #define FIELD_BLOCK_HASH    6
 
-
 #define EXPERT_FIELDS_TOTAL_COUNT 5
-
-
 
 parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t dataLen, parser_tx_t *tx_obj) {
     CHECK_PARSER_ERR(parser_init(ctx, data, dataLen))
