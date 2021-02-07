@@ -52,7 +52,7 @@ jobs:
       # Docker entrypoint is not considered
       - run: git submodule update --init --recursive
       - run:
-          name: Build
+          name: Build Standard app
           command: |
             source /home/zondax/.cargo/env
             make
