@@ -1,0 +1,172 @@
+[
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/crypto.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/crypto.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/crypto.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/lib/base58.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/lib/base58.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/lib/base58.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/parser.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/parser_impl.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser_impl.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser_impl.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/parser_txdef.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser_txdef.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser_txdef.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/polkadot_dispatch.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/polkadot_dispatch.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/polkadot_dispatch.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/app/src/polkadot_types.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/polkadot_types.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/polkadot_types.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/deps/BLAKE2/ref/blake2b-ref.c.o   -c /home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref/blake2b-ref.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref/blake2b-ref.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/deps/ledger-zxlib/src/bignum.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/bignum.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/bignum.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/deps/ledger-zxlib/src/hexutils.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/hexutils.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/hexutils.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib32.dir/deps/ledger-zxlib/src/zxmacros.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/zxmacros.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/zxmacros.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/tests -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/fuzzing_stub.dir/fuzzing/fuzzingMain.cpp.o -c /home/lenij/zondax/ledger-kusama/fuzzing/fuzzingMain.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/fuzzing/fuzzingMain.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/tests -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/fuzzing_stub.dir/tests/utils/common.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/utils/common.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/utils/common.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/crypto.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/crypto.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/crypto.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/parser_impl.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/parser_impl.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/parser_impl.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/printing_bytes.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/printing_bytes.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/printing_bytes.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/printing_compact.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/printing_compact.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/printing_compact.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/ui_tests.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/ui_tests.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/ui_tests.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/g++-9  -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/lib -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src/common -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/.conan/data/fmt/6.0.0/bincrafters/stable/package/038baac88f4c7bfa972ce5adac1616bed8fe2ef4/include -isystem /home/lenij/.conan/data/jsoncpp/1.9.0/theirix/stable/package/dfe2c959761ac11a1b854db19439f3576ba4b371/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -std=gnu++11 -o CMakeFiles/unittests.dir/tests/utils/common.cpp.o -c /home/lenij/zondax/ledger-kusama/tests/utils/common.cpp",
+  "file": "/home/lenij/zondax/ledger-kusama/tests/utils/common.cpp"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/crypto.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/crypto.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/crypto.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/lib/base58.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/lib/base58.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/lib/base58.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/parser.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/parser_impl.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser_impl.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser_impl.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/parser_txdef.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/parser_txdef.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/parser_txdef.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/polkadot_dispatch.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/polkadot_dispatch.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/polkadot_dispatch.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/app/src/polkadot_types.c.o   -c /home/lenij/zondax/ledger-kusama/app/src/polkadot_types.c",
+  "file": "/home/lenij/zondax/ledger-kusama/app/src/polkadot_types.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/deps/BLAKE2/ref/blake2b-ref.c.o   -c /home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref/blake2b-ref.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref/blake2b-ref.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/deps/ledger-zxlib/src/bignum.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/bignum.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/bignum.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/deps/ledger-zxlib/src/hexutils.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/hexutils.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/hexutils.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build",
+  "command": "/bin/gcc-9 -DAPP_STANDARD -DLEDGER_MAJOR_VERSION=1 -DLEDGER_MINOR_VERSION=2008 -I/home/lenij/zondax/ledger-kusama/deps/BLAKE2/ref -I/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/include -I/home/lenij/zondax/ledger-kusama/app/src -I/home/lenij/zondax/ledger-kusama/app/src/common -I/home/lenij/zondax/ledger-kusama/app/src/lib    -fsanitize=address -fno-omit-frame-pointer -Wno-extern-c-compat -g   -o CMakeFiles/app_lib.dir/deps/ledger-zxlib/src/zxmacros.c.o   -c /home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/zxmacros.c",
+  "file": "/home/lenij/zondax/ledger-kusama/deps/ledger-zxlib/src/zxmacros.c"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build/googletest-build/googlemock",
+  "command": "/bin/g++-9   -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build/googletest-build/googlemock",
+  "command": "/bin/g++-9   -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/include -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/lenij/zondax/ledger-kusama/build/googletest-src/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build/googletest-build/googletest",
+  "command": "/bin/g++-9   -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -isystem /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/src/gtest_main.cc"
+},
+{
+  "directory": "/home/lenij/zondax/ledger-kusama/build/googletest-build/googletest",
+  "command": "/bin/g++-9   -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/include -I/home/lenij/zondax/ledger-kusama/build/googletest-src/googletest    -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++11 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/lenij/zondax/ledger-kusama/build/googletest-src/googletest/src/gtest-all.cc"
+}
+]

@@ -16,38 +16,53 @@
 
 import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
-const {newKusamaApp} = require("@zondax/ledger-polkadot");
-
-const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 
+const {newKusamaApp} = require("@zondax/ledger-polkadot");
+const ed25519 = require("ed25519-supercop");
 const Resolve = require("path").resolve;
-const APP_PATH = Resolve("../app/bin/app.elf");
+const APP_PATH_S = Resolve("../app/bin/app_s.elf");
+const APP_PATH_X = Resolve("../app/bin/app_x.elf");
 
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
-const sim_options = {
+var simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`
     , X11: true
 };
 
+let models = [
+  ['S', { model:'nanos', prefix: 'S', path: APP_PATH_S}],
+//  ['X', { model: 'nanox', prefix: 'X', path: APP_PATH_X}]
+]
+
 jest.setTimeout(60000)
 
 describe('Standard', function () {
-    test('can start and stop container', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('can start and stop container (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
         } finally {
             await sim.close();
         }
     });
 
-    test('get app version', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('main menu (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-mainmenu`, 3);
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test.each(models)('get app version (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
+        try {
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const resp = await app.getVersion();
 
@@ -64,10 +79,10 @@ describe('Standard', function () {
         }
     });
 
-    test('get address', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('get address (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
 
             const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000);
@@ -82,23 +97,22 @@ describe('Standard', function () {
 
             expect(resp.address).toEqual(expected_address);
             expect(resp.pubKey).toEqual(expected_pk);
-
         } finally {
             await sim.close();
         }
     });
 
-    test('show address', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('show address (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "show_address", 3);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-show_address`, 2);
 
             const resp = await respRequest;
             console.log(resp);
@@ -116,17 +130,17 @@ describe('Standard', function () {
         }
     });
 
-    test('show address - reject', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('show address - reject (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true);
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "show_address_reject", 4, 2);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-show_address_reject`, 3, 2);
 
             const resp = await respRequest;
             console.log(resp);
@@ -138,16 +152,16 @@ describe('Standard', function () {
         }
     });
 
-    test('sign basic normal', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('sign basic normal (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
             const pathIndex = 0x80000000;
 
-            let txBlobStr = "0400d401b48506d4de473a04f40ad8114add5eda886068a71efdf95eee616ee4909e33158139ae28a3dfaac5fe1560a5e9e05cd503ae1103006d0fe707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+            let txBlobStr = "0400a03c31b64722c0852992e65493764f31ca55a86a8fa3262ba54381698bcc066133158139ae28a3dfaac5fe1560a5e9e05cd503ae1103008ed73e0dea07000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
 
             const txBlob = Buffer.from(txBlobStr, "hex");
 
@@ -159,56 +173,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "sign_basic_normal", 8);
-
-            let signatureResponse = await signatureRequest;
-            console.log(signatureResponse);
-
-            expect(signatureResponse.return_code).toEqual(0x9000);
-            expect(signatureResponse.error_message).toEqual("No errors");
-
-            // Now verify the signature
-            let prehash = txBlob;
-            if (txBlob.length > 256) {
-                const context = blake2bInit(32, null);
-                blake2bUpdate(context, txBlob);
-                prehash = Buffer.from(blake2bFinal(context));
-            }
-            const valid = ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
-           expect(valid).toEqual(true);
-        } finally {
-            await sim.close();
-        }
-    });
-
-    test('sign basic expert', async function () {
-        const sim = new Zemu(APP_PATH);
-        try {
-            await sim.start(sim_options);
-            const app = newKusamaApp(sim.getTransport());
-            const pathAccount = 0x80000000;
-            const pathChange = 0x80000000;
-            const pathIndex = 0x80000000;
-
-            // Change to expert mode so we can skip fields
-            await sim.clickRight();
-            await sim.clickBoth();
-            await sim.clickLeft();
-
-            let txBlobStr = "0400d401b48506d4de473a04f40ad8114add5eda886068a71efdf95eee616ee4909e33158139ae28a3dfaac5fe1560a5e9e05cd503ae1103006d0fe707000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
-
-            const txBlob = Buffer.from(txBlobStr, "hex");
-
-            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex);
-            const pubKey = Buffer.from(responseAddr.pubKey, "hex");
-
-            // do not wait here.. we need to navigate
-            const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
-
-            // Wait until we are not in the main menu
-            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
-
-            await sim.compareSnapshotsAndAccept(".", "sign_basic_expert", 13);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_normal`, 6);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -230,10 +195,59 @@ describe('Standard', function () {
         }
     });
 
-    test('sign basic expert - accept shortcut', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('sign basic expert (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
+            const app = newKusamaApp(sim.getTransport());
+            const pathAccount = 0x80000000;
+            const pathChange = 0x80000000;
+            const pathIndex = 0x80000000;
+
+            // Change to expert mode so we can skip fields
+            await sim.clickRight();
+            await sim.clickBoth();
+            await sim.clickLeft();
+
+            let txBlobStr = "0400a03c31b64722c0852992e65493764f31ca55a86a8fa3262ba54381698bcc066133158139ae28a3dfaac5fe1560a5e9e05cd503ae1103008ed73e0dea07000003000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe";
+
+            const txBlob = Buffer.from(txBlobStr, "hex");
+
+            const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex);
+            const pubKey = Buffer.from(responseAddr.pubKey, "hex");
+
+            // do not wait here.. we need to navigate
+            const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob);
+
+            // Wait until we are not in the main menu
+            await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
+
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_expert`, 12);
+
+            let signatureResponse = await signatureRequest;
+            console.log(signatureResponse);
+
+            expect(signatureResponse.return_code).toEqual(0x9000);
+            expect(signatureResponse.error_message).toEqual("No errors");
+
+            // Now verify the signature
+            let prehash = txBlob;
+            if (txBlob.length > 256) {
+                const context = blake2bInit(32, null);
+                blake2bUpdate(context, txBlob);
+                prehash = Buffer.from(blake2bFinal(context));
+            }
+            const valid = ed25519.verify(signatureResponse.signature.slice(1), prehash, pubKey);
+            expect(valid).toEqual(true);
+        } finally {
+            await sim.close();
+        }
+    });
+
+    test.each(models)('sign basic expert - accept shortcut (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
+        try {
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -283,10 +297,10 @@ describe('Standard', function () {
         }
     });
 
-    test('sign basic - forward/backward', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('sign basic - forward/backward (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -304,7 +318,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "sign_basic_FB", 8, 4);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB`, 6, 3);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -326,10 +340,10 @@ describe('Standard', function () {
         }
     });
 
-    test('sign basic - forward/backward-reject', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('sign basic - forward/backward-reject (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -347,7 +361,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "sign_basic_FB_reject", 9, 4);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_basic_FB_reject`, 7, 3);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
@@ -359,10 +373,10 @@ describe('Standard', function () {
         }
     });
 
-    test('sign large nomination', async function () {
-        const sim = new Zemu(APP_PATH);
+    test.each(models)('sign large nomination (%s)', async function (_, {model, prefix, path}) {
+        const sim = new Zemu(path);
         try {
-            await sim.start(sim_options);
+            await sim.start({model, ...simOptions});
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -380,7 +394,7 @@ describe('Standard', function () {
             // Wait until we are not in the main menu
             await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot());
 
-            await sim.compareSnapshotsAndAccept(".", "sign_large_nomination", 36);
+            await sim.compareSnapshotsAndAccept(".", `${prefix.toLowerCase()}-sign_large_nomination`, 34);
 
             let signatureResponse = await signatureRequest;
             console.log(signatureResponse);
