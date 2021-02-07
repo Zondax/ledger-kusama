@@ -34,7 +34,9 @@ all: bin/app.elf
 	@echo "\"" >> $(OUTPUT_INSTALLER)
 	@cat $(CURDIR)/../deps/ledger-zxlib/scripts/template.sh >> $(OUTPUT_INSTALLER)
 	@chmod +x $(OUTPUT_INSTALLER)
-	@cp $(CURDIR)/bin/app.elf ${OUTPUT_ELF}
+	@cp $(CURDIR)/bin/* $(CURDIR)/output
+	@cp $(CURDIR)/output/app.elf ${OUTPUT_ELF}
+	@rm $(CURDIR)/output/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
@@ -78,18 +80,18 @@ endef
 $(error "$(error_message)")
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH)
+APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH) --path "44'/354'"
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 SCRIPT_LD:=$(CURDIR)/script.ld
 ICONNAME:=$(CURDIR)/nanos_icon.gif
-OUTPUT_ELF:= $(CURDIR)/bin/app_s.elf
+OUTPUT_ELF:= $(CURDIR)/output/app_s.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_s.sh
 endif
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 ICONNAME:=$(CURDIR)/nanox_icon.gif
-OUTPUT_ELF:= $(CURDIR)/bin/app_x.elf
+OUTPUT_ELF:= $(CURDIR)/output/app_x.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_x.sh
 endif
 
