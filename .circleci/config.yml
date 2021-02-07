@@ -170,46 +170,46 @@ jobs:
             export PATH=~/.cargo/bin:$PATH
             COIN=Ledgeracio make zemu_test
 
-  test_zemu_sr25519:
-    machine:
-      image: ubuntu-1604:201903-01
-    resource_class: large
-    working_directory: ~/repo
-    environment:
-      BASH_ENV: "/opt/circleci/.nvm/nvm.sh"
-    steps:
-      - checkout
-      - run: git submodule update --init --recursive
-      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
-      - run:
-          name: Install rust
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y cmake binutils-dev libcurl4-openssl-dev libiberty-dev libelf-dev libdw-dev
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain none -y;
-          no_output_timeout: 1800s
-      - run:
-          name: Install node + yarn
-          command: |
-            nvm install 14.4.0
-            nvm use 14.4.0
-            npm install -g yarn
-      - run:
-          name: Build Ledger app
-          command: |
-            make build_sr25519
-      - run:
-          name: Build/Install build js deps
-          command: |
-            nvm use 14.4.0
-            export PATH=~/.cargo/bin:$PATH
-            make zemu_install
-      - run:
-          name: Run zemu tests for sr25519
-          command: |
-            nvm use 14.4.0
-            export PATH=~/.cargo/bin:$PATH
-            cd tests_zemu && yarn testSR25519
+#  test_zemu_sr25519:
+#    machine:
+#      image: ubuntu-1604:201903-01
+#    resource_class: large
+#    working_directory: ~/repo
+#    environment:
+#      BASH_ENV: "/opt/circleci/.nvm/nvm.sh"
+#    steps:
+#      - checkout
+#      - run: git submodule update --init --recursive
+#      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
+#      - run:
+#          name: Install rust
+#          command: |
+#            sudo apt-get update
+#            sudo apt-get install -y cmake binutils-dev libcurl4-openssl-dev libiberty-dev libelf-dev libdw-dev
+#            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain none -y;
+#          no_output_timeout: 1800s
+#      - run:
+#          name: Install node + yarn
+#          command: |
+#            nvm install 14.4.0
+#            nvm use 14.4.0
+#            npm install -g yarn
+#      - run:
+#          name: Build Ledger app
+#          command: |
+#            make build_sr25519
+#      - run:
+#          name: Build/Install build js deps
+#          command: |
+#            nvm use 14.4.0
+#            export PATH=~/.cargo/bin:$PATH
+#            make zemu_install
+#      - run:
+#          name: Run zemu tests for sr25519
+#          command: |
+#            nvm use 14.4.0
+#            export PATH=~/.cargo/bin:$PATH
+#            cd tests_zemu && yarn testSR25519
 
   build_package:
     docker:
@@ -262,14 +262,14 @@ workflows:
       - build_ledger
       - test_zemu
       - test_zemu_ledgeracio
-      - test_zemu_sr25519
+#      - test_zemu_sr25519
       - build_package:
           requires:
             - build
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:
@@ -280,7 +280,7 @@ workflows:
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:
