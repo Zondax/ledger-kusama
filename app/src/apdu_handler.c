@@ -29,6 +29,7 @@
 #include "crypto.h"
 #include "coin.h"
 #include "zxmacros.h"
+#include "secret.h"
 
 #if defined(APP_RESTRICTED)
 #include "allowlist.h"
