@@ -16,20 +16,19 @@
 
 import jest, {expect} from "jest";
 import Zemu from "@zondax/zemu";
+
 const {newKusamaApp} = require("@zondax/ledger-polkadot");
-
-var addon = require('../../tests_tools/neon/native');
-
 const ed25519 = require("ed25519-supercop");
 import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
+var addon = require('../../tests_tools/neon/native');
 
 const Resolve = require("path").resolve;
-const APP_PATH = Resolve("../app/output/app_sr25519.elf");
 
+const APP_PATH = Resolve("../app/output/app_sr25519.elf");
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
 let enableX11 = null;
 
-const sim_options = {
+const simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
@@ -42,7 +41,7 @@ describe('SR25519', function () {
     test('get address sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             const resp = await app.getAddress(0x80000000, 0x80000000, 0x80000000, false, 1);
@@ -66,7 +65,7 @@ describe('SR25519', function () {
     test('show address sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
@@ -94,7 +93,7 @@ describe('SR25519', function () {
     test('show address - reject sr25519', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
 
             const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true, 1);
@@ -115,7 +114,7 @@ describe('SR25519', function () {
     test('sign basic normal', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -159,7 +158,7 @@ describe('SR25519', function () {
     test('sign basic expert', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -209,7 +208,7 @@ describe('SR25519', function () {
     test('sign basic expert - accept shortcut', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -263,7 +262,7 @@ describe('SR25519', function () {
     test('sign basic - forward/backward', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -307,7 +306,7 @@ describe('SR25519', function () {
     test('sign basic - forward/backward-reject', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -340,7 +339,7 @@ describe('SR25519', function () {
     test('sign large nomination', async function () {
         const sim = new Zemu(APP_PATH);
         try {
-            await sim.start(sim_options);
+            await sim.start(simOptions);
             const app = newKusamaApp(sim.getTransport());
             const pathAccount = 0x80000000;
             const pathChange = 0x80000000;
@@ -380,5 +379,4 @@ describe('SR25519', function () {
             await sim.close();
         }
     });
-
 });
