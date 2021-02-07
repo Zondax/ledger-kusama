@@ -78,9 +78,13 @@ deps: check_python
 pull:
 	docker pull $(DOCKER_IMAGE)
 
-.PHONY: build_rust
-build_rust:
+.PHONY: build_rustS
+build_rustS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) rust)
+
+.PHONY: build_rustX
+build_rustX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) rust)
 
 .PHONY: convert_icon
 convert_icon:
@@ -97,29 +101,43 @@ build_icon:
 build: buildS buildX
 
 .PHONY: buildS
-buildS: build_icon build_rust
+buildS: build_icon build_rustS
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: buildX
-buildX: build_icon build_rust
+buildX: build_icon build_rustX
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: clean
-clean:
+clean: cleanS cleanX
+
+.PHONY: cleanS
+cleanS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) clean)
+
+.PHONY: cleanX
+cleanX:
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) clean)
 
-.PHONY: clean_rust
-clean_rust:
+.PHONY: clean_rustS
+clean_rustS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) rust_clean)
+
+.PHONY: clean_rustX
+clean_rustX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) rust_clean)
 
 .PHONY: listvariants
 listvariants:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) listvariants)
 
-.PHONY: shell
-shell:
+.PHONY: shellS
+shellS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS) -t,bash)
+
+.PHONY: shellX
+shellX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX) -t,bash)
 
 .PHONY: load
 load:

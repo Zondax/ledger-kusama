@@ -21,7 +21,7 @@ import ed25519 from "ed25519-supercop";
 import {dummyAllowlist, TESTING_ALLOWLIST_SEED} from "./common";
 
 const Resolve = require("path").resolve;
-const APP_PATH = Resolve("../app/bin/app_ledgeracio.elf");
+const APP_PATH = Resolve("../app/output/app_ledgeracio.elf");
 
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
 const simOptions = {

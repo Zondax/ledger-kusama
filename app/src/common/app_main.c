@@ -28,6 +28,7 @@
 #include "crypto.h"
 #include "coin.h"
 #include "zxmacros.h"
+#include "app_mode.h"
 
 unsigned char G_io_seproxyhal_spi_buffer[IO_SEPROXYHAL_BUFFER_SIZE_B];
 
@@ -133,6 +134,8 @@ void app_init() {
     BLE_power(0, NULL);
     BLE_power(1, "Nano X");
 #endif // HAVE_BLE
+
+    app_mode_reset();
     zeroize_sr25519_signdata();
 }
 

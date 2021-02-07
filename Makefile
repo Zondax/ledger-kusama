@@ -35,11 +35,11 @@ endif
 
 build_ledgeracio: COIN=Ledgeracio		# Alternative app purpose
 build_ledgeracio: buildS
-	cp $(CURDIR)/app/bin/app_s.elf $(CURDIR)/app/bin/app_ledgeracio.elf
+	cp $(CURDIR)/app/bin/app.elf $(CURDIR)/app/output/app_ledgeracio.elf
 
 build_sr25519: SUPPORT_SR25519=1		# Alternative app purpose
 build_sr25519: buildS
-	cp $(CURDIR)/app/bin/app_s.elf $(CURDIR)/app/bin/app_sr25519.elf
+	cp $(CURDIR)/app/bin/app.elf $(CURDIR)/app/output/app_sr25519.elf
 
 tests_tools_build:
 	cd tests_tools/neon && yarn install

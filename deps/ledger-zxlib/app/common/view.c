@@ -262,6 +262,7 @@ void io_seproxyhal_display(const bagl_element_t *element) {
 
 void view_init(void) {
     UX_INIT();
+    viewdata.secret_click_count = 0;
 }
 
 void view_idle_show(uint8_t item_idx, char *statusString) {

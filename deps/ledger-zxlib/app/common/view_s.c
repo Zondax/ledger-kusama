@@ -34,6 +34,7 @@ void h_expert_update();
 void h_review_button_left();
 void h_review_button_right();
 void h_review_button_both();
+void h_secret_click();
 
 ux_state_t ux;
 
@@ -45,7 +46,7 @@ const ux_menu_entry_t menu_main[] = {
     {NULL, NULL, 0, &C_icon_app, MENU_MAIN_APP_LINE1, viewdata.key, 33, 12},
     {NULL, h_expert_toggle, 0, &C_icon_app, "Expert mode:", viewdata.value, 33, 12},
     {NULL, NULL, 0, &C_icon_app, APPVERSION_LINE1, APPVERSION_LINE2, 33, 12},
-    {NULL, NULL, 0, &C_icon_app, "Developed by:", "Zondax.ch", 33, 12},
+    {NULL, h_secret_click, 0, &C_icon_app, "Developed by:", "Zondax.ch", 33, 12},
     {NULL, NULL, 0, &C_icon_app, "License: ", "Apache 2.0", 33, 12},
     {NULL, os_exit, 0, &C_icon_dashboard, "Quit", NULL, 50, 29},
     UX_MENU_END
@@ -212,6 +213,24 @@ void view_error_show_impl() {
 void h_expert_toggle() {
     app_mode_set_expert(!app_mode_expert());
     view_idle_show(1, NULL);
+}
+
+void h_secret_click() {
+    if (COIN_SECRET_REQUIRED_CLICKS == 0) {
+        // There is no secret mode
+        return;
+    }
+
+    viewdata.secret_click_count++;
+
+    char buffer[50];
+    snprintf(buffer, sizeof(buffer), "secret click %d\n", viewdata.secret_click_count);
+    zemu_log(buffer);
+
+    if (viewdata.secret_click_count >= COIN_SECRET_REQUIRED_CLICKS) {
+        secret_enabled();
+        viewdata.secret_click_count = 0;
+    }
 }
 
 void h_expert_update() {

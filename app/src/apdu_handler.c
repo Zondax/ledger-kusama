@@ -58,8 +58,11 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
     if (hdPath[4] < 0x80000000 ) {
         THROW(APDU_CODE_DATA_INVALID);
     }
+#else
+    if (app_mode_secret()) {
+        hdPath[1] = HDPATH_1_RECOVERY;
+    }
 #endif
-
 }
 
 __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
@@ -338,8 +341,6 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 #endif
 
 #if defined(APP_TESTING)
-
-
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     THROW(APDU_CODE_OK);
 }

@@ -21,8 +21,8 @@ import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
 const {newKusamaApp} = require("@zondax/ledger-polkadot");
 const ed25519 = require("ed25519-supercop");
 const Resolve = require("path").resolve;
-const APP_PATH_S = Resolve("../app/bin/app_s.elf");
-const APP_PATH_X = Resolve("../app/bin/app_x.elf");
+const APP_PATH_S = Resolve("../app/output/app_s.elf");
+const APP_PATH_X = Resolve("../app/output/app_x.elf");
 
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
 var simOptions = {
@@ -34,7 +34,7 @@ var simOptions = {
 
 let models = [
   ['S', { model:'nanos', prefix: 'S', path: APP_PATH_S}],
-//  ['X', { model: 'nanox', prefix: 'X', path: APP_PATH_X}]
+  ['X', { model: 'nanox', prefix: 'X', path: APP_PATH_X}]
 ]
 
 jest.setTimeout(60000)

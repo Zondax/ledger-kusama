@@ -37,6 +37,8 @@ typedef zxerr_t (*viewfunc_getItem_t)(int8_t displayIdx,
 
 typedef void (*viewfunc_accept_t)();
 
+zxerr_t secret_enabled();
+
 /// view_init (initializes UI)
 void view_init();
 
