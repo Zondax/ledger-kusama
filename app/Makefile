@@ -62,7 +62,7 @@ ifeq ($(COIN),KSM)
 # Main app configuration
 DEFINES += APP_STANDARD
 APPNAME = "Kusama"
-APPPATH = "44'/434'"
+APPPATH = "44'/434'" --path "44'/354'"
 
 else ifeq ($(COIN),Ledgeracio)
 DEFINES += APP_RESTRICTED
@@ -80,7 +80,7 @@ endef
 $(error "$(error_message)")
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH) --path "44'/354'"
+APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH)
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 SCRIPT_LD:=$(CURDIR)/script.ld
