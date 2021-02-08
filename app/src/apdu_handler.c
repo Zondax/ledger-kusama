@@ -62,6 +62,7 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
 #else
     if (app_mode_secret()) {
         hdPath[1] = HDPATH_1_RECOVERY;
+        app_mode_set_secret(false);
     }
 #endif
 }
