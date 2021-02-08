@@ -126,13 +126,14 @@ void app_init() {
 
     USB_power(0);
     USB_power(1);
-    view_idle_show(0);
+    view_idle_show(0, NULL);
 
 #ifdef HAVE_BLE
     // Enable Bluetooth
     BLE_power(0, NULL);
     BLE_power(1, "Nano X");
 #endif // HAVE_BLE
+    zeroize_sr25519_signdata();
 }
 
 #pragma clang diagnostic push

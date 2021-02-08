@@ -63,13 +63,13 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
 }
 
 __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
-    zemu_log("-- process_chunk\n");
+    zemu_log("process_chunk\n");
     const uint8_t payloadType = G_io_apdu_buffer[OFFSET_PAYLOAD_TYPE];
-
+#ifndef SUPPORT_SR25519
     if (G_io_apdu_buffer[OFFSET_P2] != 0) {
         THROW(APDU_CODE_INVALIDP1P2);
     }
-
+#endif
     if (rx < OFFSET_DATA) {
         THROW(APDU_CODE_WRONG_LENGTH);
     }
@@ -77,20 +77,20 @@ __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
     uint32_t added;
     switch (payloadType) {
         case 0:
-            zemu_log("-- process_chunk - init\n");
+            zemu_log("process_chunk - init\n");
             tx_initialize();
             tx_reset();
             extractHDPath(rx, OFFSET_DATA);
             return false;
         case 1:
-            zemu_log("-- process_chunk - add \n");
+            zemu_log("process_chunk - add \n");
             added = tx_append(&(G_io_apdu_buffer[OFFSET_DATA]), rx - OFFSET_DATA);
             if (added != rx - OFFSET_DATA) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
             return false;
         case 2:
-            zemu_log("-- process_chunk - end \n");
+            zemu_log("process_chunk - end \n");
             added = tx_append(&(G_io_apdu_buffer[OFFSET_DATA]), rx - OFFSET_DATA);
             if (added != rx - OFFSET_DATA) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
@@ -166,33 +166,37 @@ __Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *t
 __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     extractHDPath(rx, OFFSET_DATA);
 
-    uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    const uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    const uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
+    const key_kind_e key_type = get_key_type(addr_type);
 
+    zxerr_t zxerr = app_fill_address(key_type);
+    if(zxerr != zxerr_ok){
+        *tx = 0;
+        THROW(APDU_CODE_DATA_INVALID);
+    }
     if (requireConfirmation) {
-        app_fill_address();
-
         view_review_init(addr_getItem, addr_getNumItems, app_reply_address);
         view_review_show();
-
         *flags |= IO_ASYNCH_REPLY;
         return;
     }
-
-    *tx = app_fill_address();
+    *tx = action_addrResponseLen;
     THROW(APDU_CODE_OK);
 }
 
-__Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    zemu_log("-- handleSign\n");
-    if (!process_chunk(tx, rx)) {
-        THROW(APDU_CODE_OK);
+#ifdef SUPPORT_SR25519
+__Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    zxerr_t err = app_sign_sr25519();
+    if(err != zxerr_ok){
+        *tx = 0;
+        THROW(APDU_CODE_DATA_INVALID);
     }
 
     CHECK_APP_CANARY()
 
     const char *error_msg = tx_parse();
     CHECK_APP_CANARY()
-
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
         MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
@@ -200,10 +204,49 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
         THROW(APDU_CODE_DATA_INVALID);
     }
 
-    CHECK_APP_CANARY()
-    view_review_init(tx_getItem, tx_getNumItems, app_sign);
+    view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
     view_review_show();
     *flags |= IO_ASYNCH_REPLY;
+}
+#endif
+
+__Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    const char *error_msg = tx_parse();
+    CHECK_APP_CANARY()
+    if (error_msg != NULL) {
+        int error_msg_length = strlen(error_msg);
+        MEMCPY(G_io_apdu_buffer, error_msg, error_msg_length);
+        *tx += (error_msg_length);
+        THROW(APDU_CODE_DATA_INVALID);
+    }
+
+    view_review_init(tx_getItem, tx_getNumItems, app_sign_ed25519);
+    view_review_show();
+    *flags |= IO_ASYNCH_REPLY;
+}
+
+__Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    zemu_log("handleSign\n");
+    if (!process_chunk(tx, rx)) {
+        THROW(APDU_CODE_OK);
+    }
+    const uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
+    const key_kind_e key_type = get_key_type(addr_type);
+
+    *tx = 0;
+    switch (key_type) {
+        case key_ed25519:
+            handleSignEd25519(flags, tx, rx);
+            break;
+#ifdef SUPPORT_SR25519
+        case key_sr25519:
+            handleSignSr25519(flags, tx, rx);
+            break;
+#endif
+        default: {
+            THROW(APDU_CODE_DATA_INVALID);
+        }
+    }
 }
 
 #if defined(APP_RESTRICTED)
@@ -294,6 +337,14 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 }
 #endif
 
+#if defined(APP_TESTING)
+
+
+void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+    THROW(APDU_CODE_OK);
+}
+#endif
+
 void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     uint16_t sw = 0;
 
@@ -315,12 +366,18 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                     break;
                 }
 
-                case INS_GET_ADDR_ED25519: {
+                case INS_GET_ADDR: {
+                    if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                    }
                     handleGetAddr(flags, tx, rx);
                     break;
                 }
 
-                case INS_SIGN_ED25519: {
+                case INS_SIGN: {
+                    if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                        THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                    }
                     handleSign(flags, tx, rx);
                     break;
                 }
@@ -328,26 +385,44 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
 #if defined(APP_RESTRICTED)
                     // Allow list commands
                     case INS_ALLOWLIST_GET_PUBKEY: {
+                        if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                            THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                        }
                         handleAllowlistGetMasterkey(flags, tx, rx);
                         break;
                     }
 
                     case INS_ALLOWLIST_SET_PUBKEY: {
+                        if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                            THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                        }
                         handleAllowlistSetPublicKey(flags, tx, rx);
                         break;
                     }
 
                     case INS_ALLOWLIST_GET_HASH: {
+                        if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                            THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                        }
                         handleAllowlistGetHash(flags, tx, rx);
                         break;
                     }
 
                     case INS_ALLOWLIST_UPLOAD: {
+                        if( os_global_pin_is_validated() != BOLOS_UX_OK ) {
+                            THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
+                        }
                         handleAllowlistUpload(flags, tx, rx);
                         break;
                     }
 #endif
-
+#if defined(APP_TESTING)
+                    case INS_TEST: {
+                    handleTest(flags, tx, rx);
+                    THROW(APDU_CODE_OK);
+                    break;
+                }
+#endif
                 default:
                     THROW(APDU_CODE_INS_NOT_SUPPORTED);
             }
