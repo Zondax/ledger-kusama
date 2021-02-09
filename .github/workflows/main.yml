@@ -72,17 +72,17 @@ jobs:
       - name: Build Standard app
         shell: bash -l {0}
         run: |
-          export PATH="/home/zondax/.cargo/bin:$PATH"
+          source ~/.cargo/env
           make
       - name: Build SR25519 app
         shell: bash -l {0}
         run: |
-          export PATH="/home/zondax/.cargo/bin:$PATH"
+          source ~/.cargo/env
           SUPPORT_SR25519=1 make
       - name: Build Ledgeracio
         shell: bash -l {0}
         run: |
-          export PATH="/home/zondax/.cargo/bin:$PATH"
+          source ~/.cargo/env
           COIN=Ledgeracio make
 
   test_fuzz_crash_fixes:
