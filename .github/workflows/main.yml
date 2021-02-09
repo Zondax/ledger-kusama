@@ -34,7 +34,7 @@ jobs:
           submodules: true
       - name: Install deps
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       - name: rustfmt
         run: |
           cd ./app/rust
@@ -69,6 +69,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          path: ${{env.working_directory}}
           submodules: true
       - name: Build Standard app
         working-directory: ${{env.working_directory}}
