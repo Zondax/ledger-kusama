@@ -137,7 +137,7 @@ jobs:
           export PATH=~/.cargo/bin:$PATH
           make zemu_install
       - name: Run zemu tests
-          nvm use 14.4.0
+        run: |
           export PATH=~/.cargo/bin:$PATH
           make zemu_test
 
