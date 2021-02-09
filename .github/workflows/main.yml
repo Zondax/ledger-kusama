@@ -84,3 +84,123 @@ jobs:
         run: |
           source /home/zondax/.cargo/env
           COIN=Ledgeracio make
+
+  test_fuzz_crash_fixes:
+    needs: configure
+    runs-on: ubuntu-latest
+    container:
+      image: zondax/circleci@sha256:37f78ab294b35a055768c2305b3f13813e55fb9db4e65f72745ede61dd842c08
+      options: --user ${{ needs.configure.outputs.uid_gid }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: sudo apt update && sudo apt -y install clang-10
+      - name: Build
+        run: |
+          cmake -B build \
+                  -DCMAKE_C_COMPILER=clang-10 \
+                  -DCMAKE_CXX_COMPILER=clang++-10 \
+                  -DCMAKE_BUILD_TYPE=Debug \
+                  -DENABLE_FUZZING=1 \
+                  -DENABLE_SANITIZERS=1 \
+                  .
+          make -C build
+      - run: ./run-fuzz-crashes.py
+
+  test_zemu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
+      - name: Install rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake binutils-dev libcurl4-openssl-dev libiberty-dev libelf-dev libdw-dev
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain none -y;
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.4.0'
+      - name: Install yarn
+        run: |
+          npm install -g yarn
+      - name: Build Ledger app
+        run: |
+          make
+      - name: Build/Install build js deps
+        run: |
+          export PATH=~/.cargo/bin:$PATH
+          make zemu_install
+      - name: Run zemu tests
+          nvm use 14.4.0
+          export PATH=~/.cargo/bin:$PATH
+          make zemu_test
+
+  test_zemu_ledgeracio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
+      - name: Install rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake binutils-dev libcurl4-openssl-dev libiberty-dev libelf-dev libdw-dev
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain none -y;
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.4.0'
+      - name: Install yarn
+        run: |
+          npm install -g yarn
+      - name: Build Ledger app
+        run: |
+          make build_ledgeracio
+      - name: Build/Install build js deps
+        run: |
+          export PATH=~/.cargo/bin:$PATH
+          make zemu_install
+      - name: Run zemu tests for Ledgeracio app
+        run: |
+          export PATH=~/.cargo/bin:$PATH
+          COIN=Ledgeracio make zemu_test
+
+  test_zemu_sr25519:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
+      - name: Install rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake binutils-dev libcurl4-openssl-dev libiberty-dev libelf-dev libdw-dev
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain none -y;
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.4.0'
+      - name: Install yarn
+        run: |
+          npm install -g yarn
+      - name: Build Ledger app
+        run: |
+          make build_sr25519
+      - name: Build/Install build js deps
+        run: |
+          export PATH=~/.cargo/bin:$PATH
+          make zemu_install
+      - name: Run zemu tests for sr25519
+        run: |
+          export PATH=~/.cargo/bin:$PATH
+          cd tests_zemu && yarn testSR25519
