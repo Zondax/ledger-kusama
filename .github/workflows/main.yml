@@ -2,6 +2,14 @@ name: Build
 on: [push]
 
 jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      uid_gid: ${{ steps.get-user.outputs.uid_gid }}
+    steps:
+      - id: get-user
+        run: echo "::set-output name=uid_gid::$(id -u):$(id -g)"
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -24,19 +32,22 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Install deps
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       - name: rustfmt
         run: |
-          cd ~/project/app/rust
+          cd ./app/rust
           cargo fmt --version
           cargo fmt -- --check
       - name: clippy
         run: |
-          cd ~/project/app/rust
+          cd ./app/rust
           cargo clippy --version
           cargo clippy --all-features --all-targets || true
       - name: audit
         run: |
-          cd ~/project/app/rust
+          cd ./app/rust
           cargo audit --version
           cargo audit
       - name: run tests
@@ -45,8 +56,11 @@ jobs:
           cargo test
 
   build_ledger:
+    needs: configure
     runs-on: ubuntu-latest
-    container: zondax/builder-bolos:latest
+    container:
+      image: zondax/builder-bolos:latest
+      options: --user ${{ needs.configure.outputs.uid_gid }}
     env:
       BOLOS_SDK: /home/zondax/project/deps/nanos-secure-sdk
       BOLOS_ENV: /opt/bolos
