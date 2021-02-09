@@ -16,3 +16,54 @@ jobs:
           brew install conan
       - run: cmake -DCMAKE_BUILD_TYPE=Debug . && make
       - run: GTEST_COLOR=1 ASAN_OPTIONS=detect_leaks=0 ctest -VV
+
+  build_only_rust:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: rustfmt
+        run: |
+          cd ~/project/app/rust
+          cargo fmt --version
+          cargo fmt -- --check
+      - name: clippy
+        run: |
+          cd ~/project/app/rust
+          cargo clippy --version
+          cargo clippy --all-features --all-targets || true
+      - name: audit
+        run: |
+          cd ~/project/app/rust
+          cargo audit --version
+          cargo audit
+      - name: run tests
+        run: |
+          cd ~/project/app/rust
+          cargo test
+
+  build_ledger:
+    runs-on: ubuntu-latest
+    container: zondax/builder-bolos:latest
+    env:
+      BOLOS_SDK: /home/zondax/project/deps/nanos-secure-sdk
+      BOLOS_ENV: /opt/bolos
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build Standard app
+        run: |
+          source /home/zondax/.cargo/env
+          make
+      - name: Build SR25519 app
+        run: |
+          source /home/zondax/.cargo/env
+          SUPPORT_SR25519=1 make
+      - name: Build Ledgeracio
+        run: |
+          source /home/zondax/.cargo/env
+          COIN=Ledgeracio make
