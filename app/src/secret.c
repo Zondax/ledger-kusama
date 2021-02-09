@@ -24,12 +24,12 @@
 
 void secret_accept() {
     app_mode_set_secret(true);
-    view_idle_show(0, "DOT RECOVERY");
+    view_idle_show(0, "KSM RECOVERY");
 }
 
 static char *secret_message =
         "USE AT YOUR OWN RISK!! "
-        "You are about to enable the DOT recovery mode."
+        "You are about to enable the KSM recovery mode."
         "If you are not sure why you are here, reject or unplug your device immediately."
         "Activating this mode will temporarily allow you to sign Kusama transactions using Polkadot keys";
 
@@ -54,7 +54,7 @@ zxerr_t secret_getItem(int8_t displayIdx,
 
 zxerr_t secret_enabled() {
 #ifndef APP_RESTRICTED
-    zemu_log("DOT RECOVERY TRIGGERED");
+    zemu_log("KSM RECOVERY TRIGGERED");
     view_review_init(secret_getItem, secret_getNumItems, secret_accept);
     view_review_show();
 #endif
