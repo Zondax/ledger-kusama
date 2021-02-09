@@ -64,22 +64,26 @@ jobs:
     env:
       BOLOS_SDK: /__w/ledger-kusama/ledger-kusama/deps/nanos-secure-sdk
       BOLOS_ENV: /opt/bolos
+      working_directory: "~/project"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: true
       - name: Build Standard app
+        working-directory: ${{env.working_directory}}
         shell: bash -l {0}
         run: |
           source /home/zondax/.cargo/env
           make
       - name: Build SR25519 app
+        working-directory: ${{env.working_directory}}
         shell: bash -l {0}
         run: |
           source /home/zondax/.cargo/env
           SUPPORT_SR25519=1 make
       - name: Build Ledgeracio
+        working-directory: ${{env.working_directory}}
         shell: bash -l {0}
         run: |
           source /home/zondax/.cargo/env
