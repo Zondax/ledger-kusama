@@ -52,7 +52,7 @@ jobs:
           cargo audit
       - name: run tests
         run: |
-          cd ~/project/app/rust
+          cd ./app/rust
           cargo test
 
   build_ledger:
@@ -64,30 +64,32 @@ jobs:
     env:
       BOLOS_SDK: /__w/ledger-kusama/ledger-kusama/deps/nanos-secure-sdk
       BOLOS_ENV: /opt/bolos
-      working_directory: "~/project"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: ${{env.working_directory}}
           submodules: true
+          path: /home/Zondax
       - name: Build Standard app
-        working-directory: ${{env.working_directory}}
         shell: bash -l {0}
+        working-directory: ~/
         run: |
           source /home/zondax/.cargo/env
+          cd /home/zondax/project
           make
       - name: Build SR25519 app
-        working-directory: ${{env.working_directory}}
+        working-directory: ~/
         shell: bash -l {0}
         run: |
           source /home/zondax/.cargo/env
+          cd /home/zondax/project
           SUPPORT_SR25519=1 make
       - name: Build Ledgeracio
-        working-directory: ${{env.working_directory}}
+        working-directory: ~/
         shell: bash -l {0}
         run: |
           source /home/zondax/.cargo/env
+          cd /home/zondax/project
           COIN=Ledgeracio make
 
   test_fuzz_crash_fixes:
