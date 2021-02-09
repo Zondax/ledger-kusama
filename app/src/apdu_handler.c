@@ -234,10 +234,11 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }
+#ifndef APP_RESTRICTED
     if (app_mode_secret()) {
         app_mode_set_secret(false);
     }
-
+#endif
     const uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
     const key_kind_e key_type = get_key_type(addr_type);
 
