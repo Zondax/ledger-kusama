@@ -23,8 +23,10 @@
 #include "app_mode.h"
 
 void secret_accept() {
+#ifdef APP_SECRET_MODE_ENABLED
     app_mode_set_secret(true);
-    view_idle_show(0, "KSM RECOVERY");
+    view_idle_show(0, NULL);
+#endif
 }
 
 static char *secret_message =
@@ -53,10 +55,12 @@ zxerr_t secret_getItem(int8_t displayIdx,
 }
 
 zxerr_t secret_enabled() {
+#ifdef APP_SECRET_MODE_ENABLED
 #ifndef APP_RESTRICTED
     zemu_log("KSM RECOVERY TRIGGERED");
     view_review_init(secret_getItem, secret_getNumItems, secret_accept);
     view_review_show();
+#endif
 #endif
     return zxerr_ok;
 }

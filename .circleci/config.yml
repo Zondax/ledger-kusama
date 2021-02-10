@@ -94,8 +94,9 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            APP_TESTING=1 make buildS
-            APP_TESTING=1 make buildX
+            make buildS
+            make clean
+            make buildX
       - run:
           name: Build/Install build js deps
           command: |
@@ -136,7 +137,7 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            APP_TESTING=1 make build_ledgeracio
+            make build_ledgeracio
       - run:
           name: Build/Install build js deps
           command: |

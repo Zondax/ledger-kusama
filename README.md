@@ -21,7 +21,7 @@ Please:
 
 Tip:
 
-- In releases, you will find a precompiled test app. If you are just curious, you can run `zxtool.sh` and avoid building.
+- In releases, you will find a precompiled test app. If you are just curious, you can run `install_app.sh` and avoid building.
 
 ## Download and install
 
@@ -60,7 +60,7 @@ then run:
   libssl-dev libgmp-dev autoconf libtool
    ```
 
-- Install `node > v13.0`. We typically recommend using `n`
+- Install `node > v14.0`. We typically recommend using `n`
 
 - You will need python 3 and then run
     - `make deps`

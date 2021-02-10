@@ -26,13 +26,12 @@ const Resolve = require("path").resolve;
 
 const APP_PATH = Resolve("../app/output/app_sr25519.elf");
 const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
-let enableX11 = null;
 
 const simOptions = {
     logging: true,
     start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: enableX11 !== null ? enableX11 : !!process.env["$DISPLAY"]
+    X11: false
 };
 
 jest.setTimeout(60000)

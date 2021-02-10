@@ -63,7 +63,9 @@ define run_docker
 	$(DOCKER_IMAGE) "$(2)"
 endef
 
-all: build
+all:
+	@$(MAKE) buildS
+	@$(MAKE) buildX
 
 .PHONY: check_python
 check_python:
@@ -91,21 +93,12 @@ convert_icon:
 	@convert $(LEDGER_SRC)/tmp.gif -monochrome -size 16x16 -depth 1 $(LEDGER_SRC)/nanos_icon.gif
 	@convert $(LEDGER_SRC)/nanos_icon.gif -crop 14x14+1+1 +repage -negate $(LEDGER_SRC)/nanox_icon.gif
 
-.PHONY: build_icon
-build_icon:
-	$(info Replacing app icon)
-	@cp $(LEDGER_SRC)/nanos_icon.gif $(LEDGER_SRC)/glyphs/icon_app.gif
-	@convert $(LEDGER_SRC)/nanos_icon.gif -crop 14x14+1+1 +repage -negate $(LEDGER_SRC)/nanox_icon.gif
-
-.PHONY: build
-build: buildS buildX
-
 .PHONY: buildS
-buildS: build_icon build_rustS
+buildS: build_rustS
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: buildX
-buildX: build_icon build_rustX
+buildX: build_rustX
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: clean

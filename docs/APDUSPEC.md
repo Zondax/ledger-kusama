@@ -86,7 +86,7 @@ The general structure of commands and responses is as follows:
 | Field   | Type      | Content     | Note                     |
 | ------- | --------- | ----------- | ------------------------ |
 | PK      | byte (32) | Public Key  |                          |
-| ADDR    | byte (??) | DOT address |                          |
+| ADDR    | byte (??) | address     |                          |
 | SW1-SW2 | byte (2)  | Return code | see list of return codes |
 
 ---

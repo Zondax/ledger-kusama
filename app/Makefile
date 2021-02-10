@@ -40,6 +40,8 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
+DEFINES = APP_SECRET_MODE_ENABLED
+
 ifeq ($(APP_TESTING),1)
 DEFINES += APP_TESTING
 DEFINES += ZEMU_LOGGING
