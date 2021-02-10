@@ -93,10 +93,17 @@ jobs:
       image: zondax/circleci@sha256:37f78ab294b35a055768c2305b3f13813e55fb9db4e65f72745ede61dd842c08
       options: --user ${{ needs.configure.outputs.uid_gid }}
     steps:
+      - name: Install deps
+        run: |
+          sudo apt update
+          sudo apt -y install clang-10
+          sudo apt -y install software-properties-common
+          sudo add-apt-repository -y ppa:git-core/ppa
+          sudo apt update
+          sudo apt -y install git
       - name: Checkout
         uses: actions/checkout@v2
-      - run: git submodule update --init --recursive
-      - run: sudo apt update && sudo apt -y install clang-10
+          - run: git submodule update --init --recursive
       - name: Build
         run: |
           cmake -B build \
