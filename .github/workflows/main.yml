@@ -95,12 +95,12 @@ jobs:
     steps:
       - name: Install deps
         run: |
-          sudo apt update
-          sudo apt -y install clang-10
-          sudo apt -y install software-properties-common
-          sudo add-apt-repository -y ppa:git-core/ppa
-          sudo apt update
-          sudo apt -y install git
+          apt update
+          apt -y install clang-10
+          apt -y install software-properties-common
+          add-apt-repository -y ppa:git-core/ppa
+          apt update
+          apt -y install git
       - name: Checkout
         uses: actions/checkout@v2
         with:
