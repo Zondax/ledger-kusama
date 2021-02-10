@@ -67,10 +67,6 @@ jobs:
       HOME: /home/zondax_circle
     steps:
       - name: Checkout
-        run: |
-          id
-          echo $HOME
-      - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: true
@@ -99,8 +95,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          submodules: true
+      - run: git submodule update --init --recursive
       - run: sudo apt update && sudo apt -y install clang-10
       - name: Build
         run: |
@@ -117,6 +112,11 @@ jobs:
   test_zemu:
     runs-on: ubuntu-latest
     steps:
+      - name: Test
+        run: |
+          id
+          echo $HOME
+          echo $DISPLAY
       - name: Checkout
         uses: actions/checkout@v2
         with:
