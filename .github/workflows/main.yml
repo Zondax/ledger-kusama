@@ -86,35 +86,6 @@ jobs:
           source $HOME/.cargo/env
           COIN=Ledgeracio make
 
-  test_fuzz_crash_fixes:
-    runs-on: ubuntu-latest
-    container:
-      image: zondax/circleci@sha256:37f78ab294b35a055768c2305b3f13813e55fb9db4e65f72745ede61dd842c08
-    steps:
-      - name: Install deps
-        run: |
-          apt update
-          apt -y install clang-10
-          apt -y install software-properties-common
-          add-apt-repository -y ppa:git-core/ppa
-          apt update
-          apt -y install git
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Build
-        run: |
-          cmake -B build \
-                  -DCMAKE_C_COMPILER=clang-10 \
-                  -DCMAKE_CXX_COMPILER=clang++-10 \
-                  -DCMAKE_BUILD_TYPE=Debug \
-                  -DENABLE_FUZZING=1 \
-                  -DENABLE_SANITIZERS=1 \
-                  .
-          make -C build
-      - run: ./run-fuzz-crashes.py
-
   test_zemu:
     runs-on: ubuntu-latest
     steps:
