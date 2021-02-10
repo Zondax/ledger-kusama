@@ -216,9 +216,9 @@ void h_secret_click() {
 void view_idle_show_impl(uint8_t item_idx, char *statusString) {
     if (statusString == NULL ) {
         if (app_mode_secret()) {
-            snprintf(viewdata.key, MAX_CHARS_PER_VALUE_LINE, "%s", "KSM RECOVERY");
+            snprintf(viewdata.key, MAX_CHARS_PER_KEY_LINE, "%s", "KSM RECOVERY");
         }else{
-            snprintf(viewdata.key, MAX_CHARS_PER_VALUE_LINE, "%s", MENU_MAIN_APP_LINE2);
+            snprintf(viewdata.key, MAX_CHARS_PER_KEY_LINE, "%s", MENU_MAIN_APP_LINE2);
         }
     } else {
         snprintf(viewdata.key, MAX_CHARS_PER_KEY_LINE, "%s", statusString);
