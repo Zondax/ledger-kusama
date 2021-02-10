@@ -127,6 +127,8 @@ void app_init() {
 
     USB_power(0);
     USB_power(1);
+    app_mode_reset();
+    zeroize_sr25519_signdata();
     view_idle_show(0, NULL);
 
 #ifdef HAVE_BLE
@@ -135,8 +137,6 @@ void app_init() {
     BLE_power(1, "Nano X");
 #endif // HAVE_BLE
 
-    app_mode_reset();
-    zeroize_sr25519_signdata();
 }
 
 #pragma clang diagnostic push
