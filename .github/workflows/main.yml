@@ -103,7 +103,8 @@ jobs:
           sudo apt -y install git
       - name: Checkout
         uses: actions/checkout@v2
-          - run: git submodule update --init --recursive
+        with:
+          submodules: true
       - name: Build
         run: |
           cmake -B build \
