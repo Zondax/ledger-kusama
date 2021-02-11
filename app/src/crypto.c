@@ -102,6 +102,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
         messageLen = BLAKE2B_DIGEST_SIZE;
     }
 
+    cx_ecfp_private_key_t cx_privateKey;
     uint8_t privateKeyData[SK_LEN_25519];
     int signatureLength = 0;
     unsigned int info = 0;
@@ -121,7 +122,6 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
                     NULL,
                     0);
 
-            cx_ecfp_private_key_t cx_privateKey;
             cx_ecfp_init_private_key(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey);
 
             // Sign
@@ -136,7 +136,6 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
                                             signature + 1,
                                             signatureMaxlen - 1,
                                             &info);
-            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
 
         }
         CATCH_ALL
@@ -147,6 +146,8 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
         };
         FINALLY
         {
+            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
+            MEMZERO(privateKeyData, SK_LEN_25519);
             MEMZERO(signature + signatureLength + 1, signatureMaxlen - signatureLength - 1);
         }
     }
