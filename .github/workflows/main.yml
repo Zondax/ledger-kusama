@@ -113,7 +113,9 @@ jobs:
           npm install -g yarn
       - name: Build Ledger app
         run: |
-          make
+          make buildS
+          make clean
+          make buildX
       - name: Build/Install build js deps
         run: |
           export PATH=~/.cargo/bin:$PATH

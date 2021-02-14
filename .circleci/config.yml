@@ -94,7 +94,9 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            make
+            make buildS
+            make clean
+            make buildX
       - run:
           name: Build/Install build js deps
           command: |
@@ -241,14 +243,14 @@ workflows:
       - build_ledger
       - test_zemu
       - test_zemu_ledgeracio
-      - test_zemu_sr25519
+#      - test_zemu_sr25519
       - build_package:
           requires:
             - build
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:
@@ -259,7 +261,7 @@ workflows:
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:

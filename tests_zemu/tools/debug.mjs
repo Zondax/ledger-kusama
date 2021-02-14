@@ -2,7 +2,7 @@ import Zemu from "@zondax/zemu";
 import path from "path";
 import newKusamaApp from "@zondax/ledger-polkadot";
 
-const APP_PATH = path.resolve(`./../../app/bin/app.elf`);
+const APP_PATH = path.resolve(`./../../app/output/app_X.elf`);
 import pkg from 'blakejs';
 
 const {blake2bInit, blake2bUpdate, blake2bFinal} = pkg;
@@ -92,12 +92,18 @@ async function debugSchnorrkel(sim, app) {
     console.log(response.toString("hex"));
 }
 
+async function debugX(sim, app) {
+    console.log("Hey!");
+}
+
 async function main() {
     await beforeStart();
 
     if (process.argv.length > 2 && process.argv[2] === "debug") {
         SIM_OPTIONS["custom"] = SIM_OPTIONS["custom"] + " --debug";
     }
+
+    SIM_OPTIONS["model"] = "nanox";
 
     const sim = new Zemu.default(APP_PATH);
 
