@@ -29,6 +29,7 @@
 #include "crypto.h"
 #include "coin.h"
 #include "zxmacros.h"
+#include "secret.h"
 
 #if defined(APP_RESTRICTED)
 #include "allowlist.h"
@@ -58,8 +59,11 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
     if (hdPath[4] < 0x80000000 ) {
         THROW(APDU_CODE_DATA_INVALID);
     }
+#else
+    if (app_mode_secret()) {
+        hdPath[1] = HDPATH_1_RECOVERY;
+    }
 #endif
-
 }
 
 __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
@@ -230,6 +234,11 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }
+#ifndef APP_RESTRICTED
+    if (app_mode_secret()) {
+        app_mode_set_secret(false);
+    }
+#endif
     const uint8_t addr_type = G_io_apdu_buffer[OFFSET_P2];
     const key_kind_e key_type = get_key_type(addr_type);
 
@@ -338,8 +347,6 @@ __Z_INLINE void handleAllowlistUpload(volatile uint32_t *flags, volatile uint32_
 #endif
 
 #if defined(APP_TESTING)
-
-
 void handleTest(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     THROW(APDU_CODE_OK);
 }

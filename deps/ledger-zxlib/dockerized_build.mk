@@ -63,7 +63,9 @@ define run_docker
 	$(DOCKER_IMAGE) "$(2)"
 endef
 
-all: build
+all:
+	@$(MAKE) buildS
+	@$(MAKE) buildX
 
 .PHONY: check_python
 check_python:
@@ -78,48 +80,57 @@ deps: check_python
 pull:
 	docker pull $(DOCKER_IMAGE)
 
-.PHONY: build_rust
-build_rust:
+.PHONY: build_rustS
+build_rustS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) rust)
+
+.PHONY: build_rustX
+build_rustX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) rust)
 
 .PHONY: convert_icon
 convert_icon:
 	@convert $(LEDGER_SRC)/tmp.gif -monochrome -size 16x16 -depth 1 $(LEDGER_SRC)/nanos_icon.gif
 	@convert $(LEDGER_SRC)/nanos_icon.gif -crop 14x14+1+1 +repage -negate $(LEDGER_SRC)/nanox_icon.gif
 
-.PHONY: build_icon
-build_icon:
-	$(info Replacing app icon)
-	@cp $(LEDGER_SRC)/nanos_icon.gif $(LEDGER_SRC)/glyphs/icon_app.gif
-	@convert $(LEDGER_SRC)/nanos_icon.gif -crop 14x14+1+1 +repage -negate $(LEDGER_SRC)/nanox_icon.gif
-
-.PHONY: build
-build: buildS buildX
-
 .PHONY: buildS
-buildS: build_icon build_rust
+buildS: clean build_rustS
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: buildX
-buildX: build_icon build_rust
+buildX: clean build_rustX
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -j `nproc` -C $(DOCKER_APP_SRC))
 
 .PHONY: clean
-clean:
+clean: cleanS cleanX
+
+.PHONY: cleanS
+cleanS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) clean)
+
+.PHONY: cleanX
+cleanX:
 	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) clean)
 
-.PHONY: clean_rust
-clean_rust:
+.PHONY: clean_rustS
+clean_rustS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) rust_clean)
+
+.PHONY: clean_rustX
+clean_rustX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX),make -C $(DOCKER_APP_SRC) rust_clean)
 
 .PHONY: listvariants
 listvariants:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS),make -C $(DOCKER_APP_SRC) listvariants)
 
-.PHONY: shell
-shell:
+.PHONY: shellS
+shellS:
 	$(call run_docker,$(DOCKER_BOLOS_SDKS) -t,bash)
+
+.PHONY: shellX
+shellX:
+	$(call run_docker,$(DOCKER_BOLOS_SDKX) -t,bash)
 
 .PHONY: load
 load:

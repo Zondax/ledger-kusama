@@ -140,6 +140,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
         }
         CATCH_ALL
         {
+            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
             *signatureLen = 0;
             CLOSE_TRY;
             return zxerr_unknown;

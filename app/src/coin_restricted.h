@@ -30,6 +30,7 @@ extern "C" {
 
 #define MENU_MAIN_APP_LINE1                 "Kusama | sec"
 #define MENU_MAIN_APP_LINE2                 "Ledgeracio"
+#define MENU_MAIN_APP_LINE2_SECRET          "??????????"
 #define APPVERSION_LINE1                    "Kusama | sec"
 #define APPVERSION_LINE2                    "v" APPVERSION
 

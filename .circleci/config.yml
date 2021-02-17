@@ -67,26 +67,6 @@ jobs:
             source /home/zondax/.cargo/env
             COIN=Ledgeracio make
 
-  test_fuzz_crash_fixes:
-    docker:
-      - image: zondax/circleci@sha256:37f78ab294b35a055768c2305b3f13813e55fb9db4e65f72745ede61dd842c08
-    steps:
-      - checkout
-      - run: git submodule update --init --recursive
-      - run: sudo apt update && sudo apt -y install clang-10
-      - run:
-          name: Build
-          command: |
-            cmake -B build \
-                    -DCMAKE_C_COMPILER=clang-10 \
-                    -DCMAKE_CXX_COMPILER=clang++-10 \
-                    -DCMAKE_BUILD_TYPE=Debug \
-                    -DENABLE_FUZZING=1 \
-                    -DENABLE_SANITIZERS=1 \
-                    .
-            make -C build
-      - run: ./run-fuzz-crashes.py
-
   test_zemu:
     machine:
       image: ubuntu-1604:201903-01
@@ -114,7 +94,9 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            make
+            make buildS
+            make clean
+            make buildX
       - run:
           name: Build/Install build js deps
           command: |
@@ -261,14 +243,14 @@ workflows:
       - build_ledger
       - test_zemu
       - test_zemu_ledgeracio
-      - test_zemu_sr25519
+#      - test_zemu_sr25519
       - build_package:
           requires:
             - build
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:
@@ -279,7 +261,7 @@ workflows:
             - build_ledger
             - test_zemu
             - test_zemu_ledgeracio
-            - test_zemu_sr25519
+#            - test_zemu_sr25519
           filters:
             branches:
               only:
