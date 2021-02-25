@@ -40,7 +40,7 @@ all: bin/app.elf
 
 include $(BOLOS_SDK)/Makefile.defines
 
-DEFINES = APP_SECRET_MODE_ENABLED
+DEFINES += APP_SECRET_MODE_ENABLED
 
 ifeq ($(APP_TESTING),1)
 DEFINES += APP_TESTING
@@ -85,7 +85,7 @@ endif
 APP_LOAD_PARAMS = --appFlags 0x200 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH)
 
 ifeq ($(TARGET_NAME),TARGET_NANOS)
-SCRIPT_LD:=$(CURDIR)/script.ld
+APP_STACK_SIZE:=2820
 ICONNAME:=$(CURDIR)/nanos_icon.gif
 OUTPUT_ELF:= $(CURDIR)/output/app_s.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_s.sh
