@@ -19,6 +19,52 @@
 #include "zxmacros.h"
 #include <stdint.h>
 
+__Z_INLINE parser_error_t _readMethod_balances_transfer_V5(
+    parser_context_t* c, pd_balances_transfer_V5_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
+    CHECK_ERROR(_readCompactBalance(c, &m->value))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V5(
+    parser_context_t* c, pd_balances_transfer_keep_alive_V5_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
+    CHECK_ERROR(_readCompactBalance(c, &m->value))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_bond_V5(
+    parser_context_t* c, pd_staking_bond_V5_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
+    CHECK_ERROR(_readRewardDestination_V5(c, &m->payee))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_bond_extra_V5(
+    parser_context_t* c, pd_staking_bond_extra_V5_t* m)
+{
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->max_additional))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_unbond_V5(
+    parser_context_t* c, pd_staking_unbond_V5_t* m)
+{
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_withdraw_unbonded_V5(
+    parser_context_t* c, pd_staking_withdraw_unbonded_V5_t* m)
+{
+    CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_staking_validate_V5(
     parser_context_t* c, pd_staking_validate_V5_t* m)
 {
@@ -46,6 +92,21 @@ __Z_INLINE parser_error_t _readMethod_staking_set_payee_V5(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V5(
+    parser_context_t* c, pd_staking_payout_stakers_V5_t* m)
+{
+    CHECK_ERROR(_readAccountId_V5(c, &m->validator_stash))
+    CHECK_ERROR(_readEraIndex_V5(c, &m->era))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_staking_rebond_V5(
+    parser_context_t* c, pd_staking_rebond_V5_t* m)
+{
+    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_session_set_keys_V5(
     parser_context_t* c, pd_session_set_keys_V5_t* m)
 {
@@ -57,6 +118,20 @@ __Z_INLINE parser_error_t _readMethod_session_set_keys_V5(
 __Z_INLINE parser_error_t _readMethod_session_purge_keys_V5(
     parser_context_t* c, pd_session_purge_keys_V5_t* m)
 {
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_utility_batch_V5(
+    parser_context_t* c, pd_utility_batch_V5_t* m)
+{
+    CHECK_ERROR(_readVecCall(c, &m->calls))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_utility_batch_all_V5(
+    parser_context_t* c, pd_utility_batch_all_V5_t* m)
+{
+    CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
@@ -200,14 +275,6 @@ __Z_INLINE parser_error_t _readMethod_indices_freeze_V5(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_balances_transfer_V5(
-    parser_context_t* c, pd_balances_transfer_V5_t* m)
-{
-    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
-    CHECK_ERROR(_readCompactBalance(c, &m->value))
-    return parser_ok;
-}
-
 __Z_INLINE parser_error_t _readMethod_balances_set_balance_V5(
     parser_context_t* c, pd_balances_set_balance_V5_t* m)
 {
@@ -226,48 +293,10 @@ __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V5(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V5(
-    parser_context_t* c, pd_balances_transfer_keep_alive_V5_t* m)
-{
-    CHECK_ERROR(_readLookupSource_V5(c, &m->dest))
-    CHECK_ERROR(_readCompactBalance(c, &m->value))
-    return parser_ok;
-}
-
 __Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V5(
     parser_context_t* c, pd_authorship_set_uncles_V5_t* m)
 {
     CHECK_ERROR(_readVecHeader(c, &m->new_uncles))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_bond_V5(
-    parser_context_t* c, pd_staking_bond_V5_t* m)
-{
-    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
-    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    CHECK_ERROR(_readRewardDestination_V5(c, &m->payee))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_bond_extra_V5(
-    parser_context_t* c, pd_staking_bond_extra_V5_t* m)
-{
-    CHECK_ERROR(_readCompactBalanceOf(c, &m->max_additional))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_unbond_V5(
-    parser_context_t* c, pd_staking_unbond_V5_t* m)
-{
-    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_withdraw_unbonded_V5(
-    parser_context_t* c, pd_staking_withdraw_unbonded_V5_t* m)
-{
-    CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
 
@@ -337,21 +366,6 @@ __Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V5(
 {
     CHECK_ERROR(_readEraIndex_V5(c, &m->era))
     CHECK_ERROR(_readVecu32(c, &m->slash_indices))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V5(
-    parser_context_t* c, pd_staking_payout_stakers_V5_t* m)
-{
-    CHECK_ERROR(_readAccountId_V5(c, &m->validator_stash))
-    CHECK_ERROR(_readEraIndex_V5(c, &m->era))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_rebond_V5(
-    parser_context_t* c, pd_staking_rebond_V5_t* m)
-{
-    CHECK_ERROR(_readCompactBalanceOf(c, &m->value))
     return parser_ok;
 }
 
@@ -856,25 +870,11 @@ __Z_INLINE parser_error_t _readMethod_claims_move_claim_V5(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_utility_batch_V5(
-    parser_context_t* c, pd_utility_batch_V5_t* m)
-{
-    CHECK_ERROR(_readVecCall(c, &m->calls))
-    return parser_ok;
-}
-
 __Z_INLINE parser_error_t _readMethod_utility_as_derivative_V5(
     parser_context_t* c, pd_utility_as_derivative_V5_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCall(c, &m->call))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_utility_batch_all_V5(
-    parser_context_t* c, pd_utility_batch_all_V5_t* m)
-{
-    CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
 }
 
@@ -1494,6 +1494,24 @@ parser_error_t _readMethod_V5(
 
     switch (callPrivIdx) {
 
+    case 1024: /* module 4 call 0 */
+        CHECK_ERROR(_readMethod_balances_transfer_V5(c, &method->basic.balances_transfer_V5))
+        break;
+    case 1027: /* module 4 call 3 */
+        CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V5(c, &method->basic.balances_transfer_keep_alive_V5))
+        break;
+    case 1536: /* module 6 call 0 */
+        CHECK_ERROR(_readMethod_staking_bond_V5(c, &method->basic.staking_bond_V5))
+        break;
+    case 1537: /* module 6 call 1 */
+        CHECK_ERROR(_readMethod_staking_bond_extra_V5(c, &method->basic.staking_bond_extra_V5))
+        break;
+    case 1538: /* module 6 call 2 */
+        CHECK_ERROR(_readMethod_staking_unbond_V5(c, &method->basic.staking_unbond_V5))
+        break;
+    case 1539: /* module 6 call 3 */
+        CHECK_ERROR(_readMethod_staking_withdraw_unbonded_V5(c, &method->basic.staking_withdraw_unbonded_V5))
+        break;
     case 1540: /* module 6 call 4 */
         CHECK_ERROR(_readMethod_staking_validate_V5(c, &method->basic.staking_validate_V5))
         break;
@@ -1506,11 +1524,23 @@ parser_error_t _readMethod_V5(
     case 1543: /* module 6 call 7 */
         CHECK_ERROR(_readMethod_staking_set_payee_V5(c, &method->basic.staking_set_payee_V5))
         break;
+    case 1554: /* module 6 call 18 */
+        CHECK_ERROR(_readMethod_staking_payout_stakers_V5(c, &method->basic.staking_payout_stakers_V5))
+        break;
+    case 1555: /* module 6 call 19 */
+        CHECK_ERROR(_readMethod_staking_rebond_V5(c, &method->basic.staking_rebond_V5))
+        break;
     case 2048: /* module 8 call 0 */
         CHECK_ERROR(_readMethod_session_set_keys_V5(c, &method->basic.session_set_keys_V5))
         break;
     case 2049: /* module 8 call 1 */
         CHECK_ERROR(_readMethod_session_purge_keys_V5(c, &method->basic.session_purge_keys_V5))
+        break;
+    case 6144: /* module 24 call 0 */
+        CHECK_ERROR(_readMethod_utility_batch_V5(c, &method->basic.utility_batch_V5))
+        break;
+    case 6146: /* module 24 call 2 */
+        CHECK_ERROR(_readMethod_utility_batch_all_V5(c, &method->basic.utility_batch_all_V5))
         break;
 
 #ifdef SUBSTRATE_PARSER_FULL
@@ -1571,32 +1601,14 @@ parser_error_t _readMethod_V5(
     case 772: /* module 3 call 4 */
         CHECK_ERROR(_readMethod_indices_freeze_V5(c, &method->basic.indices_freeze_V5))
         break;
-    case 1024: /* module 4 call 0 */
-        CHECK_ERROR(_readMethod_balances_transfer_V5(c, &method->basic.balances_transfer_V5))
-        break;
     case 1025: /* module 4 call 1 */
         CHECK_ERROR(_readMethod_balances_set_balance_V5(c, &method->basic.balances_set_balance_V5))
         break;
     case 1026: /* module 4 call 2 */
         CHECK_ERROR(_readMethod_balances_force_transfer_V5(c, &method->basic.balances_force_transfer_V5))
         break;
-    case 1027: /* module 4 call 3 */
-        CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V5(c, &method->basic.balances_transfer_keep_alive_V5))
-        break;
     case 1280: /* module 5 call 0 */
         CHECK_ERROR(_readMethod_authorship_set_uncles_V5(c, &method->basic.authorship_set_uncles_V5))
-        break;
-    case 1536: /* module 6 call 0 */
-        CHECK_ERROR(_readMethod_staking_bond_V5(c, &method->basic.staking_bond_V5))
-        break;
-    case 1537: /* module 6 call 1 */
-        CHECK_ERROR(_readMethod_staking_bond_extra_V5(c, &method->basic.staking_bond_extra_V5))
-        break;
-    case 1538: /* module 6 call 2 */
-        CHECK_ERROR(_readMethod_staking_unbond_V5(c, &method->basic.staking_unbond_V5))
-        break;
-    case 1539: /* module 6 call 3 */
-        CHECK_ERROR(_readMethod_staking_withdraw_unbonded_V5(c, &method->basic.staking_withdraw_unbonded_V5))
         break;
     case 1544: /* module 6 call 8 */
         CHECK_ERROR(_readMethod_staking_set_controller_V5(c, &method->basic.staking_set_controller_V5))
@@ -1627,12 +1639,6 @@ parser_error_t _readMethod_V5(
         break;
     case 1553: /* module 6 call 17 */
         CHECK_ERROR(_readMethod_staking_cancel_deferred_slash_V5(c, &method->basic.staking_cancel_deferred_slash_V5))
-        break;
-    case 1554: /* module 6 call 18 */
-        CHECK_ERROR(_readMethod_staking_payout_stakers_V5(c, &method->basic.staking_payout_stakers_V5))
-        break;
-    case 1555: /* module 6 call 19 */
-        CHECK_ERROR(_readMethod_staking_rebond_V5(c, &method->basic.staking_rebond_V5))
         break;
     case 1556: /* module 6 call 20 */
         CHECK_ERROR(_readMethod_staking_set_history_depth_V5(c, &method->basic.staking_set_history_depth_V5))
@@ -1829,14 +1835,8 @@ parser_error_t _readMethod_V5(
     case 4868: /* module 19 call 4 */
         CHECK_ERROR(_readMethod_claims_move_claim_V5(c, &method->basic.claims_move_claim_V5))
         break;
-    case 6144: /* module 24 call 0 */
-        CHECK_ERROR(_readMethod_utility_batch_V5(c, &method->basic.utility_batch_V5))
-        break;
     case 6145: /* module 24 call 1 */
         CHECK_ERROR(_readMethod_utility_as_derivative_V5(c, &method->basic.utility_as_derivative_V5))
-        break;
-    case 6146: /* module 24 call 2 */
-        CHECK_ERROR(_readMethod_utility_batch_all_V5(c, &method->basic.utility_batch_all_V5))
         break;
     case 6400: /* module 25 call 0 */
         CHECK_ERROR(_readMethod_identity_add_registrar_V5(c, &method->basic.identity_add_registrar_V5))
@@ -2082,10 +2082,14 @@ parser_error_t _readMethod_V5(
 const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
 {
     switch (moduleIdx) {
+    case 4:
+        return STR_MO_BALANCES;
     case 6:
         return STR_MO_STAKING;
     case 8:
         return STR_MO_SESSION;
+    case 24:
+        return STR_MO_UTILITY;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0:
         return STR_MO_SYSTEM;
@@ -2095,8 +2099,6 @@ const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
         return STR_MO_TIMESTAMP;
     case 3:
         return STR_MO_INDICES;
-    case 4:
-        return STR_MO_BALANCES;
     case 5:
         return STR_MO_AUTHORSHIP;
     case 7:
@@ -2121,8 +2123,6 @@ const char* _getMethod_ModuleName_V5(uint8_t moduleIdx)
         return STR_MO_TREASURY;
     case 19:
         return STR_MO_CLAIMS;
-    case 24:
-        return STR_MO_UTILITY;
     case 25:
         return STR_MO_IDENTITY;
     case 26:
@@ -2156,6 +2156,18 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1024: /* module 4 call 0 */
+        return STR_ME_TRANSFER;
+    case 1027: /* module 4 call 3 */
+        return STR_ME_TRANSFER_KEEP_ALIVE;
+    case 1536: /* module 6 call 0 */
+        return STR_ME_BOND;
+    case 1537: /* module 6 call 1 */
+        return STR_ME_BOND_EXTRA;
+    case 1538: /* module 6 call 2 */
+        return STR_ME_UNBOND;
+    case 1539: /* module 6 call 3 */
+        return STR_ME_WITHDRAW_UNBONDED;
     case 1540: /* module 6 call 4 */
         return STR_ME_VALIDATE;
     case 1541: /* module 6 call 5 */
@@ -2164,10 +2176,18 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_CHILL;
     case 1543: /* module 6 call 7 */
         return STR_ME_SET_PAYEE;
+    case 1554: /* module 6 call 18 */
+        return STR_ME_PAYOUT_STAKERS;
+    case 1555: /* module 6 call 19 */
+        return STR_ME_REBOND;
     case 2048: /* module 8 call 0 */
         return STR_ME_SET_KEYS;
     case 2049: /* module 8 call 1 */
         return STR_ME_PURGE_KEYS;
+    case 6144: /* module 24 call 0 */
+        return STR_ME_BATCH;
+    case 6146: /* module 24 call 2 */
+        return STR_ME_BATCH_ALL;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return STR_ME_FILL_BLOCK;
@@ -2207,24 +2227,12 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_FORCE_TRANSFER;
     case 772: /* module 3 call 4 */
         return STR_ME_FREEZE;
-    case 1024: /* module 4 call 0 */
-        return STR_ME_TRANSFER;
     case 1025: /* module 4 call 1 */
         return STR_ME_SET_BALANCE;
     case 1026: /* module 4 call 2 */
         return STR_ME_FORCE_TRANSFER;
-    case 1027: /* module 4 call 3 */
-        return STR_ME_TRANSFER_KEEP_ALIVE;
     case 1280: /* module 5 call 0 */
         return STR_ME_SET_UNCLES;
-    case 1536: /* module 6 call 0 */
-        return STR_ME_BOND;
-    case 1537: /* module 6 call 1 */
-        return STR_ME_BOND_EXTRA;
-    case 1538: /* module 6 call 2 */
-        return STR_ME_UNBOND;
-    case 1539: /* module 6 call 3 */
-        return STR_ME_WITHDRAW_UNBONDED;
     case 1544: /* module 6 call 8 */
         return STR_ME_SET_CONTROLLER;
     case 1545: /* module 6 call 9 */
@@ -2245,10 +2253,6 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_FORCE_NEW_ERA_ALWAYS;
     case 1553: /* module 6 call 17 */
         return STR_ME_CANCEL_DEFERRED_SLASH;
-    case 1554: /* module 6 call 18 */
-        return STR_ME_PAYOUT_STAKERS;
-    case 1555: /* module 6 call 19 */
-        return STR_ME_REBOND;
     case 1556: /* module 6 call 20 */
         return STR_ME_SET_HISTORY_DEPTH;
     case 1557: /* module 6 call 21 */
@@ -2379,12 +2383,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_ATTEST;
     case 4868: /* module 19 call 4 */
         return STR_ME_MOVE_CLAIM;
-    case 6144: /* module 24 call 0 */
-        return STR_ME_BATCH;
     case 6145: /* module 24 call 1 */
         return STR_ME_AS_DERIVATIVE;
-    case 6146: /* module 24 call 2 */
-        return STR_ME_BATCH_ALL;
     case 6400: /* module 25 call 0 */
         return STR_ME_ADD_REGISTRAR;
     case 6401: /* module 25 call 1 */
@@ -2550,6 +2550,18 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1024: /* module 4 call 0 */
+        return 2;
+    case 1027: /* module 4 call 3 */
+        return 2;
+    case 1536: /* module 6 call 0 */
+        return 3;
+    case 1537: /* module 6 call 1 */
+        return 1;
+    case 1538: /* module 6 call 2 */
+        return 1;
+    case 1539: /* module 6 call 3 */
+        return 1;
     case 1540: /* module 6 call 4 */
         return 1;
     case 1541: /* module 6 call 5 */
@@ -2558,10 +2570,18 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
         return 0;
     case 1543: /* module 6 call 7 */
         return 1;
+    case 1554: /* module 6 call 18 */
+        return 2;
+    case 1555: /* module 6 call 19 */
+        return 1;
     case 2048: /* module 8 call 0 */
         return 2;
     case 2049: /* module 8 call 1 */
         return 0;
+    case 6144: /* module 24 call 0 */
+        return 1;
+    case 6146: /* module 24 call 2 */
+        return 1;
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return 1;
@@ -2601,23 +2621,11 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
         return 3;
     case 772: /* module 3 call 4 */
         return 1;
-    case 1024: /* module 4 call 0 */
-        return 2;
     case 1025: /* module 4 call 1 */
         return 3;
     case 1026: /* module 4 call 2 */
         return 3;
-    case 1027: /* module 4 call 3 */
-        return 2;
     case 1280: /* module 5 call 0 */
-        return 1;
-    case 1536: /* module 6 call 0 */
-        return 3;
-    case 1537: /* module 6 call 1 */
-        return 1;
-    case 1538: /* module 6 call 2 */
-        return 1;
-    case 1539: /* module 6 call 3 */
         return 1;
     case 1544: /* module 6 call 8 */
         return 1;
@@ -2639,10 +2647,6 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
         return 0;
     case 1553: /* module 6 call 17 */
         return 2;
-    case 1554: /* module 6 call 18 */
-        return 2;
-    case 1555: /* module 6 call 19 */
-        return 1;
     case 1556: /* module 6 call 20 */
         return 2;
     case 1557: /* module 6 call 21 */
@@ -2773,12 +2777,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
         return 1;
     case 4868: /* module 19 call 4 */
         return 3;
-    case 6144: /* module 24 call 0 */
-        return 1;
     case 6145: /* module 24 call 1 */
         return 2;
-    case 6146: /* module 24 call 2 */
-        return 1;
     case 6400: /* module 25 call 0 */
         return 1;
     case 6401: /* module 25 call 1 */
@@ -2944,6 +2944,56 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1024: /* module 4 call 0 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_value;
+        default:
+            return NULL;
+        }
+    case 1027: /* module 4 call 3 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_value;
+        default:
+            return NULL;
+        }
+    case 1536: /* module 6 call 0 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_controller;
+        case 1:
+            return STR_IT_value;
+        case 2:
+            return STR_IT_payee;
+        default:
+            return NULL;
+        }
+    case 1537: /* module 6 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_max_additional;
+        default:
+            return NULL;
+        }
+    case 1538: /* module 6 call 2 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_value;
+        default:
+            return NULL;
+        }
+    case 1539: /* module 6 call 3 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_num_slashing_spans;
+        default:
+            return NULL;
+        }
     case 1540: /* module 6 call 4 */
         switch (itemIdx) {
         case 0:
@@ -2970,6 +3020,22 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
+    case 1554: /* module 6 call 18 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_validator_stash;
+        case 1:
+            return STR_IT_era;
+        default:
+            return NULL;
+        }
+    case 1555: /* module 6 call 19 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_value;
+        default:
+            return NULL;
+        }
     case 2048: /* module 8 call 0 */
         switch (itemIdx) {
         case 0:
@@ -2981,6 +3047,20 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         }
     case 2049: /* module 8 call 1 */
         switch (itemIdx) {
+        default:
+            return NULL;
+        }
+    case 6144: /* module 24 call 0 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_calls;
+        default:
+            return NULL;
+        }
+    case 6146: /* module 24 call 2 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_calls;
         default:
             return NULL;
         }
@@ -3130,15 +3210,6 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
-    case 1024: /* module 4 call 0 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_dest;
-        case 1:
-            return STR_IT_value;
-        default:
-            return NULL;
-        }
     case 1025: /* module 4 call 1 */
         switch (itemIdx) {
         case 0:
@@ -3161,51 +3232,10 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
-    case 1027: /* module 4 call 3 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_dest;
-        case 1:
-            return STR_IT_value;
-        default:
-            return NULL;
-        }
     case 1280: /* module 5 call 0 */
         switch (itemIdx) {
         case 0:
             return STR_IT_new_uncles;
-        default:
-            return NULL;
-        }
-    case 1536: /* module 6 call 0 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_controller;
-        case 1:
-            return STR_IT_value;
-        case 2:
-            return STR_IT_payee;
-        default:
-            return NULL;
-        }
-    case 1537: /* module 6 call 1 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_max_additional;
-        default:
-            return NULL;
-        }
-    case 1538: /* module 6 call 2 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_value;
-        default:
-            return NULL;
-        }
-    case 1539: /* module 6 call 3 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_num_slashing_spans;
         default:
             return NULL;
         }
@@ -3274,22 +3304,6 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
             return STR_IT_era;
         case 1:
             return STR_IT_slash_indices;
-        default:
-            return NULL;
-        }
-    case 1554: /* module 6 call 18 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_validator_stash;
-        case 1:
-            return STR_IT_era;
-        default:
-            return NULL;
-        }
-    case 1555: /* module 6 call 19 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_value;
         default:
             return NULL;
         }
@@ -3840,26 +3854,12 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
-    case 6144: /* module 24 call 0 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_calls;
-        default:
-            return NULL;
-        }
     case 6145: /* module 24 call 1 */
         switch (itemIdx) {
         case 0:
             return STR_IT_index;
         case 1:
             return STR_IT_call;
-        default:
-            return NULL;
-        }
-    case 6146: /* module 24 call 2 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_calls;
         default:
             return NULL;
         }
@@ -4556,6 +4556,86 @@ parser_error_t _getMethod_ItemValue_V5(
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1024: /* module 4 call 0 */
+        switch (itemIdx) {
+        case 0: /* balances_transfer_V5 - dest */;
+            return _toStringLookupSource_V5(
+                &m->basic.balances_transfer_V5.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* balances_transfer_V5 - value */;
+            return _toStringCompactBalance(
+                &m->basic.balances_transfer_V5.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1027: /* module 4 call 3 */
+        switch (itemIdx) {
+        case 0: /* balances_transfer_keep_alive_V5 - dest */;
+            return _toStringLookupSource_V5(
+                &m->basic.balances_transfer_keep_alive_V5.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* balances_transfer_keep_alive_V5 - value */;
+            return _toStringCompactBalance(
+                &m->basic.balances_transfer_keep_alive_V5.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1536: /* module 6 call 0 */
+        switch (itemIdx) {
+        case 0: /* staking_bond_V5 - controller */;
+            return _toStringLookupSource_V5(
+                &m->basic.staking_bond_V5.controller,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* staking_bond_V5 - value */;
+            return _toStringCompactBalanceOf(
+                &m->basic.staking_bond_V5.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* staking_bond_V5 - payee */;
+            return _toStringRewardDestination_V5(
+                &m->basic.staking_bond_V5.payee,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1537: /* module 6 call 1 */
+        switch (itemIdx) {
+        case 0: /* staking_bond_extra_V5 - max_additional */;
+            return _toStringCompactBalanceOf(
+                &m->basic.staking_bond_extra_V5.max_additional,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1538: /* module 6 call 2 */
+        switch (itemIdx) {
+        case 0: /* staking_unbond_V5 - value */;
+            return _toStringCompactBalanceOf(
+                &m->basic.staking_unbond_V5.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1539: /* module 6 call 3 */
+        switch (itemIdx) {
+        case 0: /* staking_withdraw_unbonded_V5 - num_slashing_spans */;
+            return _toStringu32(
+                &m->basic.staking_withdraw_unbonded_V5.num_slashing_spans,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 1540: /* module 6 call 4 */
         switch (itemIdx) {
         case 0: /* staking_validate_V5 - prefs */;
@@ -4591,6 +4671,31 @@ parser_error_t _getMethod_ItemValue_V5(
         default:
             return parser_no_data;
         }
+    case 1554: /* module 6 call 18 */
+        switch (itemIdx) {
+        case 0: /* staking_payout_stakers_V5 - validator_stash */;
+            return _toStringAccountId_V5(
+                &m->basic.staking_payout_stakers_V5.validator_stash,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* staking_payout_stakers_V5 - era */;
+            return _toStringEraIndex_V5(
+                &m->basic.staking_payout_stakers_V5.era,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1555: /* module 6 call 19 */
+        switch (itemIdx) {
+        case 0: /* staking_rebond_V5 - value */;
+            return _toStringCompactBalanceOf(
+                &m->basic.staking_rebond_V5.value,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 2048: /* module 8 call 0 */
         switch (itemIdx) {
         case 0: /* session_set_keys_V5 - keys */;
@@ -4608,6 +4713,26 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 2049: /* module 8 call 1 */
         switch (itemIdx) {
+        default:
+            return parser_no_data;
+        }
+    case 6144: /* module 24 call 0 */
+        switch (itemIdx) {
+        case 0: /* utility_batch_V5 - calls */;
+            return _toStringVecCall(
+                &m->basic.utility_batch_V5.calls,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 6146: /* module 24 call 2 */
+        switch (itemIdx) {
+        case 0: /* utility_batch_all_V5 - calls */;
+            return _toStringVecCall(
+                &m->basic.utility_batch_all_V5.calls,
+                outValue, outValueLen,
+                pageIdx, pageCount);
         default:
             return parser_no_data;
         }
@@ -4832,21 +4957,6 @@ parser_error_t _getMethod_ItemValue_V5(
         default:
             return parser_no_data;
         }
-    case 1024: /* module 4 call 0 */
-        switch (itemIdx) {
-        case 0: /* balances_transfer_V5 - dest */;
-            return _toStringLookupSource_V5(
-                &m->basic.balances_transfer_V5.dest,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        case 1: /* balances_transfer_V5 - value */;
-            return _toStringCompactBalance(
-                &m->basic.balances_transfer_V5.value,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
     case 1025: /* module 4 call 1 */
         switch (itemIdx) {
         case 0: /* balances_set_balance_V5 - who */;
@@ -4887,76 +4997,11 @@ parser_error_t _getMethod_ItemValue_V5(
         default:
             return parser_no_data;
         }
-    case 1027: /* module 4 call 3 */
-        switch (itemIdx) {
-        case 0: /* balances_transfer_keep_alive_V5 - dest */;
-            return _toStringLookupSource_V5(
-                &m->basic.balances_transfer_keep_alive_V5.dest,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        case 1: /* balances_transfer_keep_alive_V5 - value */;
-            return _toStringCompactBalance(
-                &m->basic.balances_transfer_keep_alive_V5.value,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
     case 1280: /* module 5 call 0 */
         switch (itemIdx) {
         case 0: /* authorship_set_uncles_V5 - new_uncles */;
             return _toStringVecHeader(
                 &m->basic.authorship_set_uncles_V5.new_uncles,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1536: /* module 6 call 0 */
-        switch (itemIdx) {
-        case 0: /* staking_bond_V5 - controller */;
-            return _toStringLookupSource_V5(
-                &m->basic.staking_bond_V5.controller,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        case 1: /* staking_bond_V5 - value */;
-            return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_V5.value,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        case 2: /* staking_bond_V5 - payee */;
-            return _toStringRewardDestination_V5(
-                &m->basic.staking_bond_V5.payee,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1537: /* module 6 call 1 */
-        switch (itemIdx) {
-        case 0: /* staking_bond_extra_V5 - max_additional */;
-            return _toStringCompactBalanceOf(
-                &m->basic.staking_bond_extra_V5.max_additional,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1538: /* module 6 call 2 */
-        switch (itemIdx) {
-        case 0: /* staking_unbond_V5 - value */;
-            return _toStringCompactBalanceOf(
-                &m->basic.staking_unbond_V5.value,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1539: /* module 6 call 3 */
-        switch (itemIdx) {
-        case 0: /* staking_withdraw_unbonded_V5 - num_slashing_spans */;
-            return _toStringu32(
-                &m->basic.staking_withdraw_unbonded_V5.num_slashing_spans,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -5052,31 +5097,6 @@ parser_error_t _getMethod_ItemValue_V5(
         case 1: /* staking_cancel_deferred_slash_V5 - slash_indices */;
             return _toStringVecu32(
                 &m->basic.staking_cancel_deferred_slash_V5.slash_indices,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1554: /* module 6 call 18 */
-        switch (itemIdx) {
-        case 0: /* staking_payout_stakers_V5 - validator_stash */;
-            return _toStringAccountId_V5(
-                &m->basic.staking_payout_stakers_V5.validator_stash,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        case 1: /* staking_payout_stakers_V5 - era */;
-            return _toStringEraIndex_V5(
-                &m->basic.staking_payout_stakers_V5.era,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1555: /* module 6 call 19 */
-        switch (itemIdx) {
-        case 0: /* staking_rebond_V5 - value */;
-            return _toStringCompactBalanceOf(
-                &m->basic.staking_rebond_V5.value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -5962,16 +5982,6 @@ parser_error_t _getMethod_ItemValue_V5(
         default:
             return parser_no_data;
         }
-    case 6144: /* module 24 call 0 */
-        switch (itemIdx) {
-        case 0: /* utility_batch_V5 - calls */;
-            return _toStringVecCall(
-                &m->basic.utility_batch_V5.calls,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
     case 6145: /* module 24 call 1 */
         switch (itemIdx) {
         case 0: /* utility_as_derivative_V5 - index */;
@@ -5982,16 +5992,6 @@ parser_error_t _getMethod_ItemValue_V5(
         case 1: /* utility_as_derivative_V5 - call */;
             return _toStringCall(
                 &m->basic.utility_as_derivative_V5.call,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 6146: /* module 24 call 2 */
-        switch (itemIdx) {
-        case 0: /* utility_batch_all_V5 - calls */;
-            return _toStringVecCall(
-                &m->basic.utility_batch_all_V5.calls,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:

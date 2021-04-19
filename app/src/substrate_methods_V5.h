@@ -57,6 +57,40 @@ extern "C" {
 #define PD_CALL_TIPS_V5 36
 #define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V5 37
 
+#define PD_CALL_BALANCES_TRANSFER_V5 0
+typedef struct {
+    pd_LookupSource_V5_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_V5_t;
+
+#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V5 3
+typedef struct {
+    pd_LookupSource_V5_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_keep_alive_V5_t;
+
+#define PD_CALL_STAKING_BOND_V5 0
+typedef struct {
+    pd_LookupSource_V5_t controller;
+    pd_CompactBalanceOf_t value;
+    pd_RewardDestination_V5_t payee;
+} pd_staking_bond_V5_t;
+
+#define PD_CALL_STAKING_BOND_EXTRA_V5 1
+typedef struct {
+    pd_CompactBalanceOf_t max_additional;
+} pd_staking_bond_extra_V5_t;
+
+#define PD_CALL_STAKING_UNBOND_V5 2
+typedef struct {
+    pd_CompactBalanceOf_t value;
+} pd_staking_unbond_V5_t;
+
+#define PD_CALL_STAKING_WITHDRAW_UNBONDED_V5 3
+typedef struct {
+    pd_u32_t num_slashing_spans;
+} pd_staking_withdraw_unbonded_V5_t;
+
 #define PD_CALL_STAKING_VALIDATE_V5 4
 typedef struct {
     pd_ValidatorPrefs_V5_t prefs;
@@ -76,6 +110,17 @@ typedef struct {
     pd_RewardDestination_V5_t payee;
 } pd_staking_set_payee_V5_t;
 
+#define PD_CALL_STAKING_PAYOUT_STAKERS_V5 18
+typedef struct {
+    pd_AccountId_V5_t validator_stash;
+    pd_EraIndex_V5_t era;
+} pd_staking_payout_stakers_V5_t;
+
+#define PD_CALL_STAKING_REBOND_V5 19
+typedef struct {
+    pd_CompactBalanceOf_t value;
+} pd_staking_rebond_V5_t;
+
 #define PD_CALL_SESSION_SET_KEYS_V5 0
 typedef struct {
     pd_Keys_V5_t keys;
@@ -85,6 +130,16 @@ typedef struct {
 #define PD_CALL_SESSION_PURGE_KEYS_V5 1
 typedef struct {
 } pd_session_purge_keys_V5_t;
+
+#define PD_CALL_UTILITY_BATCH_V5 0
+typedef struct {
+    pd_VecCall_t calls;
+} pd_utility_batch_V5_t;
+
+#define PD_CALL_UTILITY_BATCH_ALL_V5 2
+typedef struct {
+    pd_VecCall_t calls;
+} pd_utility_batch_all_V5_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_FILL_BLOCK_V5 0
@@ -188,12 +243,6 @@ typedef struct {
     pd_AccountIndex_V5_t index;
 } pd_indices_freeze_V5_t;
 
-#define PD_CALL_BALANCES_TRANSFER_V5 0
-typedef struct {
-    pd_LookupSource_V5_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_V5_t;
-
 #define PD_CALL_BALANCES_SET_BALANCE_V5 1
 typedef struct {
     pd_LookupSource_V5_t who;
@@ -208,38 +257,10 @@ typedef struct {
     pd_CompactBalance_t value;
 } pd_balances_force_transfer_V5_t;
 
-#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V5 3
-typedef struct {
-    pd_LookupSource_V5_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_keep_alive_V5_t;
-
 #define PD_CALL_AUTHORSHIP_SET_UNCLES_V5 0
 typedef struct {
     pd_VecHeader_t new_uncles;
 } pd_authorship_set_uncles_V5_t;
-
-#define PD_CALL_STAKING_BOND_V5 0
-typedef struct {
-    pd_LookupSource_V5_t controller;
-    pd_CompactBalanceOf_t value;
-    pd_RewardDestination_V5_t payee;
-} pd_staking_bond_V5_t;
-
-#define PD_CALL_STAKING_BOND_EXTRA_V5 1
-typedef struct {
-    pd_CompactBalanceOf_t max_additional;
-} pd_staking_bond_extra_V5_t;
-
-#define PD_CALL_STAKING_UNBOND_V5 2
-typedef struct {
-    pd_CompactBalanceOf_t value;
-} pd_staking_unbond_V5_t;
-
-#define PD_CALL_STAKING_WITHDRAW_UNBONDED_V5 3
-typedef struct {
-    pd_u32_t num_slashing_spans;
-} pd_staking_withdraw_unbonded_V5_t;
 
 #define PD_CALL_STAKING_SET_CONTROLLER_V5 8
 typedef struct {
@@ -289,17 +310,6 @@ typedef struct {
     pd_EraIndex_V5_t era;
     pd_Vecu32_t slash_indices;
 } pd_staking_cancel_deferred_slash_V5_t;
-
-#define PD_CALL_STAKING_PAYOUT_STAKERS_V5 18
-typedef struct {
-    pd_AccountId_V5_t validator_stash;
-    pd_EraIndex_V5_t era;
-} pd_staking_payout_stakers_V5_t;
-
-#define PD_CALL_STAKING_REBOND_V5 19
-typedef struct {
-    pd_CompactBalanceOf_t value;
-} pd_staking_rebond_V5_t;
 
 #define PD_CALL_STAKING_SET_HISTORY_DEPTH_V5 20
 typedef struct {
@@ -672,21 +682,11 @@ typedef struct {
     pd_OptionAccountId_V5_t maybe_preclaim;
 } pd_claims_move_claim_V5_t;
 
-#define PD_CALL_UTILITY_BATCH_V5 0
-typedef struct {
-    pd_VecCall_t calls;
-} pd_utility_batch_V5_t;
-
 #define PD_CALL_UTILITY_AS_DERIVATIVE_V5 1
 typedef struct {
     pd_u16_t index;
     pd_Call_t call;
 } pd_utility_as_derivative_V5_t;
-
-#define PD_CALL_UTILITY_BATCH_ALL_V5 2
-typedef struct {
-    pd_VecCall_t calls;
-} pd_utility_batch_all_V5_t;
 
 #define PD_CALL_IDENTITY_ADD_REGISTRAR_V5 0
 typedef struct {
@@ -1143,12 +1143,22 @@ typedef struct {
 #endif
 
 typedef union {
+    pd_balances_transfer_V5_t balances_transfer_V5;
+    pd_balances_transfer_keep_alive_V5_t balances_transfer_keep_alive_V5;
+    pd_staking_bond_V5_t staking_bond_V5;
+    pd_staking_bond_extra_V5_t staking_bond_extra_V5;
+    pd_staking_unbond_V5_t staking_unbond_V5;
+    pd_staking_withdraw_unbonded_V5_t staking_withdraw_unbonded_V5;
     pd_staking_validate_V5_t staking_validate_V5;
     pd_staking_nominate_V5_t staking_nominate_V5;
     pd_staking_chill_V5_t staking_chill_V5;
     pd_staking_set_payee_V5_t staking_set_payee_V5;
+    pd_staking_payout_stakers_V5_t staking_payout_stakers_V5;
+    pd_staking_rebond_V5_t staking_rebond_V5;
     pd_session_set_keys_V5_t session_set_keys_V5;
     pd_session_purge_keys_V5_t session_purge_keys_V5;
+    pd_utility_batch_V5_t utility_batch_V5;
+    pd_utility_batch_all_V5_t utility_batch_all_V5;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_fill_block_V5_t system_fill_block_V5;
     pd_system_remark_V5_t system_remark_V5;
@@ -1169,15 +1179,9 @@ typedef union {
     pd_indices_free_V5_t indices_free_V5;
     pd_indices_force_transfer_V5_t indices_force_transfer_V5;
     pd_indices_freeze_V5_t indices_freeze_V5;
-    pd_balances_transfer_V5_t balances_transfer_V5;
     pd_balances_set_balance_V5_t balances_set_balance_V5;
     pd_balances_force_transfer_V5_t balances_force_transfer_V5;
-    pd_balances_transfer_keep_alive_V5_t balances_transfer_keep_alive_V5;
     pd_authorship_set_uncles_V5_t authorship_set_uncles_V5;
-    pd_staking_bond_V5_t staking_bond_V5;
-    pd_staking_bond_extra_V5_t staking_bond_extra_V5;
-    pd_staking_unbond_V5_t staking_unbond_V5;
-    pd_staking_withdraw_unbonded_V5_t staking_withdraw_unbonded_V5;
     pd_staking_set_controller_V5_t staking_set_controller_V5;
     pd_staking_set_validator_count_V5_t staking_set_validator_count_V5;
     pd_staking_increase_validator_count_V5_t staking_increase_validator_count_V5;
@@ -1188,8 +1192,6 @@ typedef union {
     pd_staking_force_unstake_V5_t staking_force_unstake_V5;
     pd_staking_force_new_era_always_V5_t staking_force_new_era_always_V5;
     pd_staking_cancel_deferred_slash_V5_t staking_cancel_deferred_slash_V5;
-    pd_staking_payout_stakers_V5_t staking_payout_stakers_V5;
-    pd_staking_rebond_V5_t staking_rebond_V5;
     pd_staking_set_history_depth_V5_t staking_set_history_depth_V5;
     pd_staking_reap_stash_V5_t staking_reap_stash_V5;
     pd_staking_kick_V5_t staking_kick_V5;
@@ -1255,9 +1257,7 @@ typedef union {
     pd_claims_claim_attest_V5_t claims_claim_attest_V5;
     pd_claims_attest_V5_t claims_attest_V5;
     pd_claims_move_claim_V5_t claims_move_claim_V5;
-    pd_utility_batch_V5_t utility_batch_V5;
     pd_utility_as_derivative_V5_t utility_as_derivative_V5;
-    pd_utility_batch_all_V5_t utility_batch_all_V5;
     pd_identity_add_registrar_V5_t identity_add_registrar_V5;
     pd_identity_set_identity_V5_t identity_set_identity_V5;
     pd_identity_set_subs_V5_t identity_set_subs_V5;
