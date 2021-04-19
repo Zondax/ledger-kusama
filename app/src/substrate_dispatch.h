@@ -21,8 +21,7 @@ extern "C" {
 
 #include "parser_common.h"
 #include "stdbool.h"
-#include "substrate_dispatch_V3.h"
-#include "substrate_dispatch_V4.h"
+#include "substrate_dispatch_V5.h"
 #include <stddef.h>
 #include <stdint.h>
 
@@ -33,11 +32,8 @@ extern "C" {
     {                                              \
         switch (txVersion) {                       \
                                                    \
-        case 4:                                    \
-            return PD_CALL_##CALL##_V4;            \
-                                                   \
-        case 3:                                    \
-            return PD_CALL_##CALL##_V3;            \
+        case 5:                                    \
+            return PD_CALL_##CALL##_V5;            \
                                                    \
         default:                                   \
             return 0;                              \
@@ -45,7 +41,7 @@ extern "C" {
     }
 
 parser_error_t _readMethod(parser_context_t* c, uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* method);
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, pd_Method_t* method);
+uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
 const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx);
 const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
 const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
@@ -62,8 +58,6 @@ bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleId
 //Special getters
 #if defined(APP_RESTRICTED)
 parser_error_t parser_validate_staking_targets(parser_context_t* c);
-#endif
-
 GEN_DEC_GETCALL(STAKING);
 GEN_DEC_GETCALL(STAKING_VALIDATE);
 GEN_DEC_GETCALL(STAKING_SET_PAYEE);
@@ -72,6 +66,7 @@ GEN_DEC_GETCALL(STAKING_NOMINATE);
 GEN_DEC_GETCALL(SESSION);
 GEN_DEC_GETCALL(SESSION_SET_KEYS);
 GEN_DEC_GETCALL(SESSION_PURGE_KEYS);
+#endif
 
 #ifdef __cplusplus
 }
