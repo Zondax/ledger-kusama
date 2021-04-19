@@ -16,7 +16,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles -t 'Standard'",
     "testLedgeracio": "jest --detectOpenHandles -t 'Ledgeracio'",
-    "testSR25519": "jest --detectOpenHandles --runInBand tests/sr25519.test.js"
+    "testSR25519": "jest --detectOpenHandles --runInBand tests/sr25519.test.ts"
   },
   "dependencies": {
     "@zondax/ledger-polkadot": "^0.13.6",
