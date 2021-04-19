@@ -14,29 +14,20 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import jest, {expect} from "jest";
-import Zemu from "@zondax/zemu";
+import Zemu, {DEFAULT_START_OPTIONS} from "@zondax/zemu";
+import {newKusamaApp} from "@zondax/ledger-polkadot";
+import {APP_SEED, models} from "./common";
 
-const {newKusamaApp} = require("@zondax/ledger-polkadot");
-const Resolve = require("path").resolve;
-
-const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
-
-var simOptions = {
+const defaultOptions = {
+    ...DEFAULT_START_OPTIONS,
     logging: true,
-    start_delay: 3000,
     custom: `-s "${APP_SEED}"`,
-    X11: false
+    X11: false,
 };
-
-let models = [
-    ['S', {model: 'nanos', prefix: 'S', path: Resolve("../app/output/app_s.elf")}],
-    ['X', {model: 'nanox', prefix: 'X', path: Resolve("../app/output/app_x.elf")}]
-]
 
 jest.setTimeout(60000)
 
-async function activateSecretMode(sim) {
+async function activateSecretMode(sim: any) {
     // Get to Zondax.ch menu
     for (let i = 0; i < 3; i += 1) {
         await sim.clickRight();
@@ -62,10 +53,10 @@ async function activateSecretMode(sim) {
 }
 
 describe('Standard', function () {
-    test.each(models)('main secret menu (%s)', async function (_, {model, prefix, path}) {
-        const sim = new Zemu(path);
+    test.each(models)('main secret menu (%s)', async function (m) {
+        const sim = new Zemu(m.path);
         try {
-            await sim.start({model, ...simOptions});
+            await sim.start({...defaultOptions, model: m.name,});
             const app = newKusamaApp(sim.getTransport());
 
             const kusama_expected_address = "JMdbWK5cy3Bm4oCyhWNLQJoC4cczNgJsyk7nLZHMqFT7z7R";
