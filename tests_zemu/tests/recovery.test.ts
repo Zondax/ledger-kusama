@@ -38,8 +38,8 @@ async function activateSecretMode(sim: any) {
         await sim.clickBoth();
     }
 
-    let reviewSteps = 8;
-    if (sim.model === "nanox") {
+    let reviewSteps = 7;
+    if (sim.startOptions.model === "nanox") {
         reviewSteps = 6;
     }
 
