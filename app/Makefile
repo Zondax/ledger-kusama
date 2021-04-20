@@ -53,6 +53,11 @@ DEFINES += SUPPORT_SR25519
 $(info ************  SR25519 ENABLED ************)
 endif
 
+ifeq ($(SUBSTRATE_PARSER_FULL),1)
+DEFINES += SUBSTRATE_PARSER_FULL
+$(info ************ FULL PARSER ENABLED ************)
+endif
+
 ifndef COIN
 COIN=KSM
 endif
@@ -204,6 +209,12 @@ rust:
 
 # Before linking, we need to be sure rust lib is there
 bin/app.elf: rust
+
+build_full_parser_s: SUBSTRATE_PARSER_FULL=1
+build_full_parser_s: buildS
+
+build_full_parser_x: SUBSTRATE_PARSER_FULL=1
+build_full_parser_x: buildX
 
 .PHONY: rust_clean
 rust_clean:
