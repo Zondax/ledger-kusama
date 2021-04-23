@@ -68,11 +68,20 @@ $(info COIN  = [$(COIN)])
 ifeq ($(COIN),KSM)
 # Main app configuration
 DEFINES += APP_STANDARD
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+DEFINES += SUBSTRATE_PARSER_FULL
+endif
 APPNAME = "Kusama"
 APPPATH = "44'/434'" --path "44'/354'"
 
+else ifeq ($(COIN),DOT_XL)
+# XXL app configuration
+DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
+APPNAME = "Kusama XL"
+APPPATH = "44'/434'"  --path "44'/354'"
+
 else ifeq ($(COIN),Ledgeracio)
-DEFINES += APP_RESTRICTED
+DEFINES += APP_RESTRICTED SUBSTRATE_PARSER_FULL
 APPNAME = "Kusama_sec"
 APPPATH = "44'/434'"
 
@@ -239,4 +248,8 @@ dep/%.d: %.c Makefile
 
 .PHONY: listvariants
 listvariants:
+ifeq ($(TARGET_NAME),TARGET_NANOS)
+	@echo VARIANTS COIN KSM KSM_XL Ledgeracio
+else ifeq ($(TARGET_NAME),TARGET_NANOX)
 	@echo VARIANTS COIN KSM Ledgeracio
+endif
