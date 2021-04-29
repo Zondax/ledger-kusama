@@ -194,7 +194,7 @@ jobs:
 
   build_package:
     docker:
-      - image: zondax/builder-bolos@sha256:0e0097c01ef3c6c964fea8d8b6e3a584f4ff209a04ec68b6b2b4aeab64379c23
+      - image: zondax/builder-bolos:latest
     environment:
       BOLOS_SDK: /home/zondax/project/deps/nanos-secure-sdk
       BOLOS_ENV: /opt/bolos
