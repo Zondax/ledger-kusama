@@ -41,7 +41,7 @@ extern "C" {
 #define PD_CALL_DEMOCRACY_V5 13
 #define PD_CALL_COUNCIL_V5 14
 #define PD_CALL_TECHNICALCOMMITTEE_V5 15
-#define PD_CALL_ELECTIONSPHRAGMEN_V5 16
+#define PD_CALL_PHRAGMENELECTION_V5 16
 #define PD_CALL_TECHNICALMEMBERSHIP_V5 17
 #define PD_CALL_TREASURY_V5 18
 #define PD_CALL_CLAIMS_V5 19
@@ -56,6 +56,23 @@ extern "C" {
 #define PD_CALL_BOUNTIES_V5 35
 #define PD_CALL_TIPS_V5 36
 #define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V5 37
+#define PD_CALL_GILT_V5 38
+#define PD_CALL_PARACHAINSCONFIGURATION_V5 51
+#define PD_CALL_PARASSHARED_V5 52
+#define PD_CALL_PARASINCLUSION_V5 53
+#define PD_CALL_PARASINHERENT_V5 54
+#define PD_CALL_PARASSCHEDULER_V5 55
+#define PD_CALL_PARAS_V5 56
+#define PD_CALL_PARASINITIALIZER_V5 57
+#define PD_CALL_PARASDMP_V5 58
+#define PD_CALL_PARASUMP_V5 59
+#define PD_CALL_PARASHRMP_V5 60
+#define PD_CALL_PARASSESSIONINFO_V5 61
+#define PD_CALL_REGISTRAR_V5 70
+#define PD_CALL_SLOTS_V5 71
+#define PD_CALL_AUCTIONS_V5 72
+#define PD_CALL_CROWDLOAN_V5 73
+#define PD_CALL_XCMPALLET_V5 99
 
 #define PD_CALL_BALANCES_TRANSFER_V5 0
 typedef struct {
@@ -566,37 +583,37 @@ typedef struct {
     pd_Hash_t proposal_hash;
 } pd_technicalcommittee_disapprove_proposal_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_VOTE_V5 0
+#define PD_CALL_PHRAGMENELECTION_VOTE_V5 0
 typedef struct {
     pd_VecAccountId_V5_t votes;
     pd_CompactBalanceOf_t value;
-} pd_electionsphragmen_vote_V5_t;
+} pd_phragmenelection_vote_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_REMOVE_VOTER_V5 1
+#define PD_CALL_PHRAGMENELECTION_REMOVE_VOTER_V5 1
 typedef struct {
-} pd_electionsphragmen_remove_voter_V5_t;
+} pd_phragmenelection_remove_voter_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_SUBMIT_CANDIDACY_V5 2
+#define PD_CALL_PHRAGMENELECTION_SUBMIT_CANDIDACY_V5 2
 typedef struct {
     pd_Compactu32_t candidate_count;
-} pd_electionsphragmen_submit_candidacy_V5_t;
+} pd_phragmenelection_submit_candidacy_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_RENOUNCE_CANDIDACY_V5 3
+#define PD_CALL_PHRAGMENELECTION_RENOUNCE_CANDIDACY_V5 3
 typedef struct {
     pd_Renouncing_V5_t renouncing;
-} pd_electionsphragmen_renounce_candidacy_V5_t;
+} pd_phragmenelection_renounce_candidacy_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_REMOVE_MEMBER_V5 4
+#define PD_CALL_PHRAGMENELECTION_REMOVE_MEMBER_V5 4
 typedef struct {
     pd_LookupSource_V5_t who;
     pd_bool_t has_replacement;
-} pd_electionsphragmen_remove_member_V5_t;
+} pd_phragmenelection_remove_member_V5_t;
 
-#define PD_CALL_ELECTIONSPHRAGMEN_CLEAN_DEFUNCT_VOTERS_V5 5
+#define PD_CALL_PHRAGMENELECTION_CLEAN_DEFUNCT_VOTERS_V5 5
 typedef struct {
     pd_u32_t _num_voters;
     pd_u32_t _num_defunct;
-} pd_electionsphragmen_clean_defunct_voters_V5_t;
+} pd_phragmenelection_clean_defunct_voters_V5_t;
 
 #define PD_CALL_TECHNICALMEMBERSHIP_ADD_MEMBER_V5 0
 typedef struct {
@@ -1140,6 +1157,446 @@ typedef struct {
     pd_SolutionOrSnapshotSize_V5_t witness;
 } pd_electionprovidermultiphase_submit_unsigned_V5_t;
 
+#define PD_CALL_GILT_PLACE_BID_V5 0
+typedef struct {
+    pd_CompactBalanceOf_t amount;
+    pd_u32_t duration;
+} pd_gilt_place_bid_V5_t;
+
+#define PD_CALL_GILT_RETRACT_BID_V5 1
+typedef struct {
+    pd_CompactBalanceOf_t amount;
+    pd_u32_t duration;
+} pd_gilt_retract_bid_V5_t;
+
+#define PD_CALL_GILT_SET_TARGET_V5 2
+typedef struct {
+    pd_CompactPerquintill_V5_t target;
+} pd_gilt_set_target_V5_t;
+
+#define PD_CALL_GILT_THAW_V5 3
+typedef struct {
+    pd_CompactActiveIndex_V5_t index;
+} pd_gilt_thaw_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_VALIDATION_UPGRADE_FREQUENCY_V5 0
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_validation_upgrade_frequency_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_VALIDATION_UPGRADE_DELAY_V5 1
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_validation_upgrade_delay_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_CODE_RETENTION_PERIOD_V5 2
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_code_retention_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_CODE_SIZE_V5 3
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_code_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_POV_SIZE_V5 4
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_pov_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_HEAD_DATA_SIZE_V5 5
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_head_data_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_PARATHREAD_CORES_V5 6
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_parathread_cores_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_PARATHREAD_RETRIES_V5 7
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_parathread_retries_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_GROUP_ROTATION_FREQUENCY_V5 8
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_group_rotation_frequency_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_CHAIN_AVAILABILITY_PERIOD_V5 9
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_chain_availability_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_THREAD_AVAILABILITY_PERIOD_V5 10
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_thread_availability_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_SCHEDULING_LOOKAHEAD_V5 11
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_scheduling_lookahead_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_VALIDATORS_PER_CORE_V5 12
+typedef struct {
+    pd_Optionu32_t new_;
+} pd_parachainsconfiguration_set_max_validators_per_core_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_VALIDATORS_V5 13
+typedef struct {
+    pd_Optionu32_t new_;
+} pd_parachainsconfiguration_set_max_validators_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_DISPUTE_PERIOD_V5 14
+typedef struct {
+    pd_SessionIndex_V5_t new_;
+} pd_parachainsconfiguration_set_dispute_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_DISPUTE_POST_CONCLUSION_ACCEPTANCE_PERIOD_V5 15
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_DISPUTE_MAX_SPAM_SLOTS_V5 16
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_dispute_max_spam_slots_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_DISPUTE_CONCLUSION_BY_TIME_OUT_PERIOD_V5 17
+typedef struct {
+    pd_BlockNumber_t new_;
+} pd_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_NO_SHOW_SLOTS_V5 18
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_no_show_slots_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_N_DELAY_TRANCHES_V5 19
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_n_delay_tranches_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_ZEROTH_DELAY_TRANCHE_WIDTH_V5 20
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_zeroth_delay_tranche_width_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_NEEDED_APPROVALS_V5 21
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_needed_approvals_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_RELAY_VRF_MODULO_SAMPLES_V5 22
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_relay_vrf_modulo_samples_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_UPWARD_QUEUE_COUNT_V5 23
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_upward_queue_count_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_UPWARD_QUEUE_SIZE_V5 24
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_upward_queue_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_DOWNWARD_MESSAGE_SIZE_V5 25
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_downward_message_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_PREFERRED_DISPATCHABLE_UPWARD_MESSAGES_STEP_WEIGHT_V5 26
+typedef struct {
+    pd_Weight_V5_t new_;
+} pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_UPWARD_MESSAGE_SIZE_V5 27
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_upward_message_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_UPWARD_MESSAGE_NUM_PER_CANDIDATE_V5 28
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_OPEN_REQUEST_TTL_V5 29
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_open_request_ttl_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_SENDER_DEPOSIT_V5 30
+typedef struct {
+    pd_Balance_t new_;
+} pd_parachainsconfiguration_set_hrmp_sender_deposit_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_RECIPIENT_DEPOSIT_V5 31
+typedef struct {
+    pd_Balance_t new_;
+} pd_parachainsconfiguration_set_hrmp_recipient_deposit_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_CHANNEL_MAX_CAPACITY_V5 32
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_channel_max_capacity_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_CHANNEL_MAX_TOTAL_SIZE_V5 33
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_channel_max_total_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_MAX_PARACHAIN_INBOUND_CHANNELS_V5 34
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_MAX_PARATHREAD_INBOUND_CHANNELS_V5 35
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_CHANNEL_MAX_MESSAGE_SIZE_V5 36
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_channel_max_message_size_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_MAX_PARACHAIN_OUTBOUND_CHANNELS_V5 37
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_MAX_PARATHREAD_OUTBOUND_CHANNELS_V5 38
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5_t;
+
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_HRMP_MAX_MESSAGE_NUM_PER_CANDIDATE_V5 39
+typedef struct {
+    pd_u32_t new_;
+} pd_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5_t;
+
+#define PD_CALL_PARASINHERENT_ENTER_V5 0
+typedef struct {
+    pd_ParachainsInherentData_V5_t data;
+} pd_parasinherent_enter_V5_t;
+
+#define PD_CALL_PARAS_FORCE_SET_CURRENT_CODE_V5 0
+typedef struct {
+    pd_ParaId_V5_t para;
+    pd_ValidationCode_V5_t new_code;
+} pd_paras_force_set_current_code_V5_t;
+
+#define PD_CALL_PARAS_FORCE_SET_CURRENT_HEAD_V5 1
+typedef struct {
+    pd_ParaId_V5_t para;
+    pd_HeadData_V5_t new_head;
+} pd_paras_force_set_current_head_V5_t;
+
+#define PD_CALL_PARAS_FORCE_SCHEDULE_CODE_UPGRADE_V5 2
+typedef struct {
+    pd_ParaId_V5_t para;
+    pd_ValidationCode_V5_t new_code;
+    pd_BlockNumber_t expected_at;
+} pd_paras_force_schedule_code_upgrade_V5_t;
+
+#define PD_CALL_PARAS_FORCE_NOTE_NEW_HEAD_V5 3
+typedef struct {
+    pd_ParaId_V5_t para;
+    pd_HeadData_V5_t new_head;
+} pd_paras_force_note_new_head_V5_t;
+
+#define PD_CALL_PARAS_FORCE_QUEUE_ACTION_V5 4
+typedef struct {
+    pd_ParaId_V5_t para;
+} pd_paras_force_queue_action_V5_t;
+
+#define PD_CALL_PARASINITIALIZER_FORCE_APPROVE_V5 0
+typedef struct {
+    pd_BlockNumber_t up_to;
+} pd_parasinitializer_force_approve_V5_t;
+
+#define PD_CALL_PARASHRMP_HRMP_INIT_OPEN_CHANNEL_V5 0
+typedef struct {
+    pd_ParaId_V5_t recipient;
+    pd_u32_t proposed_max_capacity;
+    pd_u32_t proposed_max_message_size;
+} pd_parashrmp_hrmp_init_open_channel_V5_t;
+
+#define PD_CALL_PARASHRMP_HRMP_ACCEPT_OPEN_CHANNEL_V5 1
+typedef struct {
+    pd_ParaId_V5_t sender;
+} pd_parashrmp_hrmp_accept_open_channel_V5_t;
+
+#define PD_CALL_PARASHRMP_HRMP_CLOSE_CHANNEL_V5 2
+typedef struct {
+    pd_HrmpChannelId_V5_t channel_id;
+} pd_parashrmp_hrmp_close_channel_V5_t;
+
+#define PD_CALL_PARASHRMP_FORCE_CLEAN_HRMP_V5 3
+typedef struct {
+    pd_ParaId_V5_t para;
+} pd_parashrmp_force_clean_hrmp_V5_t;
+
+#define PD_CALL_PARASHRMP_FORCE_PROCESS_HRMP_OPEN_V5 4
+typedef struct {
+} pd_parashrmp_force_process_hrmp_open_V5_t;
+
+#define PD_CALL_PARASHRMP_FORCE_PROCESS_HRMP_CLOSE_V5 5
+typedef struct {
+} pd_parashrmp_force_process_hrmp_close_V5_t;
+
+#define PD_CALL_REGISTRAR_REGISTER_V5 0
+typedef struct {
+    pd_ParaId_V5_t id;
+    pd_HeadData_V5_t genesis_head;
+    pd_ValidationCode_V5_t validation_code;
+} pd_registrar_register_V5_t;
+
+#define PD_CALL_REGISTRAR_FORCE_REGISTER_V5 1
+typedef struct {
+    pd_AccountId_V5_t who;
+    pd_BalanceOf_t deposit;
+    pd_ParaId_V5_t id;
+    pd_HeadData_V5_t genesis_head;
+    pd_ValidationCode_V5_t validation_code;
+} pd_registrar_force_register_V5_t;
+
+#define PD_CALL_REGISTRAR_DEREGISTER_V5 2
+typedef struct {
+    pd_ParaId_V5_t id;
+} pd_registrar_deregister_V5_t;
+
+#define PD_CALL_REGISTRAR_SWAP_V5 3
+typedef struct {
+    pd_ParaId_V5_t id;
+    pd_ParaId_V5_t other;
+} pd_registrar_swap_V5_t;
+
+#define PD_CALL_REGISTRAR_FORCE_REMOVE_LOCK_V5 4
+typedef struct {
+    pd_ParaId_V5_t para;
+} pd_registrar_force_remove_lock_V5_t;
+
+#define PD_CALL_REGISTRAR_RESERVE_V5 5
+typedef struct {
+} pd_registrar_reserve_V5_t;
+
+#define PD_CALL_SLOTS_FORCE_LEASE_V5 0
+typedef struct {
+    pd_ParaId_V5_t para;
+    pd_AccountId_V5_t leaser;
+    pd_BalanceOf_t amount;
+    pd_LeasePeriodOf_V5_t period_begin;
+    pd_LeasePeriodOf_V5_t period_count;
+} pd_slots_force_lease_V5_t;
+
+#define PD_CALL_SLOTS_CLEAR_ALL_LEASES_V5 1
+typedef struct {
+    pd_ParaId_V5_t para;
+} pd_slots_clear_all_leases_V5_t;
+
+#define PD_CALL_SLOTS_TRIGGER_ONBOARD_V5 2
+typedef struct {
+    pd_ParaId_V5_t para;
+} pd_slots_trigger_onboard_V5_t;
+
+#define PD_CALL_AUCTIONS_NEW_AUCTION_V5 0
+typedef struct {
+    pd_CompactBlockNumber_t duration;
+    pd_CompactLeasePeriodOf_V5_t lease_period_index;
+} pd_auctions_new_auction_V5_t;
+
+#define PD_CALL_AUCTIONS_BID_V5 1
+typedef struct {
+    pd_CompactParaId_V5_t para;
+    pd_CompactAuctionIndex_V5_t auction_index;
+    pd_CompactLeasePeriodOf_V5_t first_slot;
+    pd_CompactLeasePeriodOf_V5_t last_slot;
+    pd_CompactBalanceOf_t amount;
+} pd_auctions_bid_V5_t;
+
+#define PD_CALL_AUCTIONS_CANCEL_AUCTION_V5 2
+typedef struct {
+} pd_auctions_cancel_auction_V5_t;
+
+#define PD_CALL_CROWDLOAN_CREATE_V5 0
+typedef struct {
+    pd_CompactParaId_V5_t index;
+    pd_CompactBalanceOf_t cap;
+    pd_CompactLeasePeriodOf_V5_t first_period;
+    pd_CompactLeasePeriodOf_V5_t last_period;
+    pd_CompactBlockNumber_t end;
+    pd_OptionMultiSigner_V5_t verifier;
+} pd_crowdloan_create_V5_t;
+
+#define PD_CALL_CROWDLOAN_CONTRIBUTE_V5 1
+typedef struct {
+    pd_CompactParaId_V5_t index;
+    pd_CompactBalanceOf_t value;
+    pd_OptionMultiSignature_V5_t signature;
+} pd_crowdloan_contribute_V5_t;
+
+#define PD_CALL_CROWDLOAN_WITHDRAW_V5 2
+typedef struct {
+    pd_AccountId_V5_t who;
+    pd_CompactParaId_V5_t index;
+} pd_crowdloan_withdraw_V5_t;
+
+#define PD_CALL_CROWDLOAN_REFUND_V5 3
+typedef struct {
+    pd_CompactParaId_V5_t index;
+} pd_crowdloan_refund_V5_t;
+
+#define PD_CALL_CROWDLOAN_DISSOLVE_V5 4
+typedef struct {
+    pd_CompactParaId_V5_t index;
+} pd_crowdloan_dissolve_V5_t;
+
+#define PD_CALL_CROWDLOAN_EDIT_V5 5
+typedef struct {
+    pd_CompactParaId_V5_t index;
+    pd_CompactBalanceOf_t cap;
+    pd_CompactLeasePeriodOf_V5_t first_period;
+    pd_CompactLeasePeriodOf_V5_t last_period;
+    pd_CompactBlockNumber_t end;
+    pd_OptionMultiSigner_V5_t verifier;
+} pd_crowdloan_edit_V5_t;
+
+#define PD_CALL_CROWDLOAN_ADD_MEMO_V5 6
+typedef struct {
+    pd_ParaId_V5_t index;
+    pd_Bytes_t memo;
+} pd_crowdloan_add_memo_V5_t;
+
+#define PD_CALL_CROWDLOAN_POKE_V5 7
+typedef struct {
+    pd_ParaId_V5_t index;
+} pd_crowdloan_poke_V5_t;
+
+#define PD_CALL_XCMPALLET_SEND_V5 0
+typedef struct {
+    pd_MultiLocation_V5_t dest;
+    pd_Xcm_V5_t message;
+} pd_xcmpallet_send_V5_t;
+
+#define PD_CALL_XCMPALLET_TELEPORT_ASSETS_V5 1
+typedef struct {
+    pd_MultiLocation_V5_t dest;
+    pd_MultiLocation_V5_t beneficiary;
+    pd_VecMultiAsset_V5_t assets;
+    pd_Weight_V5_t dest_weight;
+} pd_xcmpallet_teleport_assets_V5_t;
+
+#define PD_CALL_XCMPALLET_EXECUTE_V5 2
+typedef struct {
+    pd_Xcm_V5_t message;
+    pd_Weight_V5_t max_weight;
+} pd_xcmpallet_execute_V5_t;
+
 #endif
 
 typedef union {
@@ -1236,12 +1693,12 @@ typedef union {
     pd_technicalcommittee_vote_V5_t technicalcommittee_vote_V5;
     pd_technicalcommittee_close_V5_t technicalcommittee_close_V5;
     pd_technicalcommittee_disapprove_proposal_V5_t technicalcommittee_disapprove_proposal_V5;
-    pd_electionsphragmen_vote_V5_t electionsphragmen_vote_V5;
-    pd_electionsphragmen_remove_voter_V5_t electionsphragmen_remove_voter_V5;
-    pd_electionsphragmen_submit_candidacy_V5_t electionsphragmen_submit_candidacy_V5;
-    pd_electionsphragmen_renounce_candidacy_V5_t electionsphragmen_renounce_candidacy_V5;
-    pd_electionsphragmen_remove_member_V5_t electionsphragmen_remove_member_V5;
-    pd_electionsphragmen_clean_defunct_voters_V5_t electionsphragmen_clean_defunct_voters_V5;
+    pd_phragmenelection_vote_V5_t phragmenelection_vote_V5;
+    pd_phragmenelection_remove_voter_V5_t phragmenelection_remove_voter_V5;
+    pd_phragmenelection_submit_candidacy_V5_t phragmenelection_submit_candidacy_V5;
+    pd_phragmenelection_renounce_candidacy_V5_t phragmenelection_renounce_candidacy_V5;
+    pd_phragmenelection_remove_member_V5_t phragmenelection_remove_member_V5;
+    pd_phragmenelection_clean_defunct_voters_V5_t phragmenelection_clean_defunct_voters_V5;
     pd_technicalmembership_add_member_V5_t technicalmembership_add_member_V5;
     pd_technicalmembership_remove_member_V5_t technicalmembership_remove_member_V5;
     pd_technicalmembership_swap_member_V5_t technicalmembership_swap_member_V5;
@@ -1334,6 +1791,86 @@ typedef union {
     pd_tips_close_tip_V5_t tips_close_tip_V5;
     pd_tips_slash_tip_V5_t tips_slash_tip_V5;
     pd_electionprovidermultiphase_submit_unsigned_V5_t electionprovidermultiphase_submit_unsigned_V5;
+    pd_gilt_place_bid_V5_t gilt_place_bid_V5;
+    pd_gilt_retract_bid_V5_t gilt_retract_bid_V5;
+    pd_gilt_set_target_V5_t gilt_set_target_V5;
+    pd_gilt_thaw_V5_t gilt_thaw_V5;
+    pd_parachainsconfiguration_set_validation_upgrade_frequency_V5_t parachainsconfiguration_set_validation_upgrade_frequency_V5;
+    pd_parachainsconfiguration_set_validation_upgrade_delay_V5_t parachainsconfiguration_set_validation_upgrade_delay_V5;
+    pd_parachainsconfiguration_set_code_retention_period_V5_t parachainsconfiguration_set_code_retention_period_V5;
+    pd_parachainsconfiguration_set_max_code_size_V5_t parachainsconfiguration_set_max_code_size_V5;
+    pd_parachainsconfiguration_set_max_pov_size_V5_t parachainsconfiguration_set_max_pov_size_V5;
+    pd_parachainsconfiguration_set_max_head_data_size_V5_t parachainsconfiguration_set_max_head_data_size_V5;
+    pd_parachainsconfiguration_set_parathread_cores_V5_t parachainsconfiguration_set_parathread_cores_V5;
+    pd_parachainsconfiguration_set_parathread_retries_V5_t parachainsconfiguration_set_parathread_retries_V5;
+    pd_parachainsconfiguration_set_group_rotation_frequency_V5_t parachainsconfiguration_set_group_rotation_frequency_V5;
+    pd_parachainsconfiguration_set_chain_availability_period_V5_t parachainsconfiguration_set_chain_availability_period_V5;
+    pd_parachainsconfiguration_set_thread_availability_period_V5_t parachainsconfiguration_set_thread_availability_period_V5;
+    pd_parachainsconfiguration_set_scheduling_lookahead_V5_t parachainsconfiguration_set_scheduling_lookahead_V5;
+    pd_parachainsconfiguration_set_max_validators_per_core_V5_t parachainsconfiguration_set_max_validators_per_core_V5;
+    pd_parachainsconfiguration_set_max_validators_V5_t parachainsconfiguration_set_max_validators_V5;
+    pd_parachainsconfiguration_set_dispute_period_V5_t parachainsconfiguration_set_dispute_period_V5;
+    pd_parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5_t parachainsconfiguration_set_dispute_post_conclusion_acceptance_period_V5;
+    pd_parachainsconfiguration_set_dispute_max_spam_slots_V5_t parachainsconfiguration_set_dispute_max_spam_slots_V5;
+    pd_parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5_t parachainsconfiguration_set_dispute_conclusion_by_time_out_period_V5;
+    pd_parachainsconfiguration_set_no_show_slots_V5_t parachainsconfiguration_set_no_show_slots_V5;
+    pd_parachainsconfiguration_set_n_delay_tranches_V5_t parachainsconfiguration_set_n_delay_tranches_V5;
+    pd_parachainsconfiguration_set_zeroth_delay_tranche_width_V5_t parachainsconfiguration_set_zeroth_delay_tranche_width_V5;
+    pd_parachainsconfiguration_set_needed_approvals_V5_t parachainsconfiguration_set_needed_approvals_V5;
+    pd_parachainsconfiguration_set_relay_vrf_modulo_samples_V5_t parachainsconfiguration_set_relay_vrf_modulo_samples_V5;
+    pd_parachainsconfiguration_set_max_upward_queue_count_V5_t parachainsconfiguration_set_max_upward_queue_count_V5;
+    pd_parachainsconfiguration_set_max_upward_queue_size_V5_t parachainsconfiguration_set_max_upward_queue_size_V5;
+    pd_parachainsconfiguration_set_max_downward_message_size_V5_t parachainsconfiguration_set_max_downward_message_size_V5;
+    pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5;
+    pd_parachainsconfiguration_set_max_upward_message_size_V5_t parachainsconfiguration_set_max_upward_message_size_V5;
+    pd_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5_t parachainsconfiguration_set_max_upward_message_num_per_candidate_V5;
+    pd_parachainsconfiguration_set_hrmp_open_request_ttl_V5_t parachainsconfiguration_set_hrmp_open_request_ttl_V5;
+    pd_parachainsconfiguration_set_hrmp_sender_deposit_V5_t parachainsconfiguration_set_hrmp_sender_deposit_V5;
+    pd_parachainsconfiguration_set_hrmp_recipient_deposit_V5_t parachainsconfiguration_set_hrmp_recipient_deposit_V5;
+    pd_parachainsconfiguration_set_hrmp_channel_max_capacity_V5_t parachainsconfiguration_set_hrmp_channel_max_capacity_V5;
+    pd_parachainsconfiguration_set_hrmp_channel_max_total_size_V5_t parachainsconfiguration_set_hrmp_channel_max_total_size_V5;
+    pd_parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5_t parachainsconfiguration_set_hrmp_max_parachain_inbound_channels_V5;
+    pd_parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5_t parachainsconfiguration_set_hrmp_max_parathread_inbound_channels_V5;
+    pd_parachainsconfiguration_set_hrmp_channel_max_message_size_V5_t parachainsconfiguration_set_hrmp_channel_max_message_size_V5;
+    pd_parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5_t parachainsconfiguration_set_hrmp_max_parachain_outbound_channels_V5;
+    pd_parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5_t parachainsconfiguration_set_hrmp_max_parathread_outbound_channels_V5;
+    pd_parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5_t parachainsconfiguration_set_hrmp_max_message_num_per_candidate_V5;
+    pd_parasinherent_enter_V5_t parasinherent_enter_V5;
+    pd_paras_force_set_current_code_V5_t paras_force_set_current_code_V5;
+    pd_paras_force_set_current_head_V5_t paras_force_set_current_head_V5;
+    pd_paras_force_schedule_code_upgrade_V5_t paras_force_schedule_code_upgrade_V5;
+    pd_paras_force_note_new_head_V5_t paras_force_note_new_head_V5;
+    pd_paras_force_queue_action_V5_t paras_force_queue_action_V5;
+    pd_parasinitializer_force_approve_V5_t parasinitializer_force_approve_V5;
+    pd_parashrmp_hrmp_init_open_channel_V5_t parashrmp_hrmp_init_open_channel_V5;
+    pd_parashrmp_hrmp_accept_open_channel_V5_t parashrmp_hrmp_accept_open_channel_V5;
+    pd_parashrmp_hrmp_close_channel_V5_t parashrmp_hrmp_close_channel_V5;
+    pd_parashrmp_force_clean_hrmp_V5_t parashrmp_force_clean_hrmp_V5;
+    pd_parashrmp_force_process_hrmp_open_V5_t parashrmp_force_process_hrmp_open_V5;
+    pd_parashrmp_force_process_hrmp_close_V5_t parashrmp_force_process_hrmp_close_V5;
+    pd_registrar_register_V5_t registrar_register_V5;
+    pd_registrar_force_register_V5_t registrar_force_register_V5;
+    pd_registrar_deregister_V5_t registrar_deregister_V5;
+    pd_registrar_swap_V5_t registrar_swap_V5;
+    pd_registrar_force_remove_lock_V5_t registrar_force_remove_lock_V5;
+    pd_registrar_reserve_V5_t registrar_reserve_V5;
+    pd_slots_force_lease_V5_t slots_force_lease_V5;
+    pd_slots_clear_all_leases_V5_t slots_clear_all_leases_V5;
+    pd_slots_trigger_onboard_V5_t slots_trigger_onboard_V5;
+    pd_auctions_new_auction_V5_t auctions_new_auction_V5;
+    pd_auctions_bid_V5_t auctions_bid_V5;
+    pd_auctions_cancel_auction_V5_t auctions_cancel_auction_V5;
+    pd_crowdloan_create_V5_t crowdloan_create_V5;
+    pd_crowdloan_contribute_V5_t crowdloan_contribute_V5;
+    pd_crowdloan_withdraw_V5_t crowdloan_withdraw_V5;
+    pd_crowdloan_refund_V5_t crowdloan_refund_V5;
+    pd_crowdloan_dissolve_V5_t crowdloan_dissolve_V5;
+    pd_crowdloan_edit_V5_t crowdloan_edit_V5;
+    pd_crowdloan_add_memo_V5_t crowdloan_add_memo_V5;
+    pd_crowdloan_poke_V5_t crowdloan_poke_V5;
+    pd_xcmpallet_send_V5_t xcmpallet_send_V5;
+    pd_xcmpallet_teleport_assets_V5_t xcmpallet_teleport_assets_V5;
+    pd_xcmpallet_execute_V5_t xcmpallet_execute_V5;
 #endif
 } pd_MethodBasic_V5_t;
 

@@ -82,7 +82,7 @@ bool parser_show_tip(const parser_context_t *ctx){
 parser_error_t parser_validate(const parser_context_t *ctx) {
     // Iterate through all items to check that all can be shown and are valid
     uint8_t numItems = 0;
-    CHECK_PARSER_ERR(parser_getNumItems(ctx, &numItems));
+    CHECK_PARSER_ERR(parser_getNumItems(ctx, &numItems))
 
     char tmpKey[40];
     char tmpVal[40];
@@ -257,7 +257,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                                     outVal, outValLen,
                                     pageIdx, pageCount);
             if( err != parser_ok ) return err;
-            number_inplace_trimming(outVal);
+            number_inplace_trimming(outVal, 1);
             return err;
         }
 
