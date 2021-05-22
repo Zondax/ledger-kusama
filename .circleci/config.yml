@@ -94,9 +94,8 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            SUBSTRATE_PARSER_FULL=1 make buildS
-            make clean
-            SUBSTRATE_PARSER_FULL=1 make buildX
+            make clean && SUBSTRATE_PARSER_FULL=1 make buildS
+            make clean && SUBSTRATE_PARSER_FULL=1 make buildX
       - run:
           name: Build/Install build js deps
           command: |
@@ -137,7 +136,7 @@ jobs:
       - run:
           name: Build Ledger app
           command: |
-            make build_sr25519
+            make SUBSTRATE_PARSER_FULL=1 build_sr25519
       - run:
           name: Build/Install build js deps
           command: |
