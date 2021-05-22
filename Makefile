@@ -36,10 +36,6 @@ default:
 	COIN=$(COIN) $(MAKE) -C app $@
 endif
 
-build_sr25519: SUPPORT_SR25519=1		# Alternative app purpose
-build_sr25519: buildS
-	cp $(CURDIR)/app/bin/app.elf $(CURDIR)/app/output/app_sr25519.elf
-
 tests_tools_build:
 	cd tests_tools/neon && yarn install
 
