@@ -48,6 +48,16 @@
 *.mod*
 *.cmd
 
+##########################
+
+tests_zemu/.yarn/*
+tests_zemu/!.yarn/patches
+tests_zemu/!.yarn/releases
+tests_zemu/!.yarn/plugins
+tests_zemu/!.yarn/sdks
+tests_zemu/!.yarn/versions
+tests_zemu/.pnp.*
+
 #########################
 
 .vscode/*.log
@@ -58,6 +68,7 @@ fuzz/corpora
 
 !build/.gitkeep
 build/*
+cmake-build-debug
 
 tests_zemu/snapshots-tmp
 tests_zemu/yarn.lock

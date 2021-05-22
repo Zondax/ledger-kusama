@@ -55,17 +55,17 @@ jobs:
           name: Build Standard light parser app
           command: |
             source /home/zondax/.cargo/env
-            make
+            make SUBSTRATE_PARSER_FULL=0
       - run:
           name: Build Standard full parser app
           command: |
             source /home/zondax/.cargo/env
-            SUBSTRATE_PARSER_FULL=1 make
+            make SUBSTRATE_PARSER_FULL=1
       - run:
           name: Build SR25519 app
           command: |
             source /home/zondax/.cargo/env
-            SUPPORT_SR25519=1 make
+            make SUPPORT_SR25519=1
 
   test_zemu:
     machine:
@@ -164,8 +164,15 @@ jobs:
           command: |
             source /home/zondax/.cargo/env
             cd /home/zondax/project
-            make
+            make SUBSTRATE_PARSER_FULL=0
       - run: /home/zondax/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $(/home/zondax/project/app/pkg/installer_s.sh version) /home/zondax/project/app/pkg/installer_s.sh
+      - run:
+          name: Clear and rebuild XL version
+          command: |
+            source /home/zondax/.cargo/env
+            cd /home/zondax/project
+            make SUBSTRATE_PARSER_FULL=1
+      - run: /home/zondax/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $(/home/zondax/project/app/pkg/installer_s.sh version) /home/zondax/project/app/pkg/installer_XL_s.sh
 
 workflows:
   version: 2

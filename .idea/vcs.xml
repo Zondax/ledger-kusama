@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/googletest-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-debug/googletest-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake/cmake-modules" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/deps/BLAKE2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/deps/nanos-secure-sdk" vcs="Git" />
