@@ -74,18 +74,6 @@ extern "C" {
 #define PD_CALL_CROWDLOAN_V5 73
 #define PD_CALL_XCMPALLET_V5 99
 
-#define PD_CALL_BALANCES_TRANSFER_V5 0
-typedef struct {
-    pd_LookupSource_V5_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_V5_t;
-
-#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V5 3
-typedef struct {
-    pd_LookupSource_V5_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_transfer_keep_alive_V5_t;
-
 #define PD_CALL_STAKING_BOND_V5 0
 typedef struct {
     pd_LookupSource_V5_t controller;
@@ -159,52 +147,6 @@ typedef struct {
 } pd_utility_batch_all_V5_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
-#define PD_CALL_SYSTEM_FILL_BLOCK_V5 0
-typedef struct {
-    pd_Perbill_V5_t _ratio;
-} pd_system_fill_block_V5_t;
-
-#define PD_CALL_SYSTEM_REMARK_V5 1
-typedef struct {
-    pd_Bytes_t _remark;
-} pd_system_remark_V5_t;
-
-#define PD_CALL_SYSTEM_SET_HEAP_PAGES_V5 2
-typedef struct {
-    pd_u64_t pages;
-} pd_system_set_heap_pages_V5_t;
-
-#define PD_CALL_SYSTEM_SET_CODE_V5 3
-typedef struct {
-    pd_Bytes_t code;
-} pd_system_set_code_V5_t;
-
-#define PD_CALL_SYSTEM_SET_CODE_WITHOUT_CHECKS_V5 4
-typedef struct {
-    pd_Bytes_t code;
-} pd_system_set_code_without_checks_V5_t;
-
-#define PD_CALL_SYSTEM_SET_CHANGES_TRIE_CONFIG_V5 5
-typedef struct {
-    pd_OptionChangesTrieConfiguration_V5_t changes_trie_config;
-} pd_system_set_changes_trie_config_V5_t;
-
-#define PD_CALL_SYSTEM_SET_STORAGE_V5 6
-typedef struct {
-    pd_VecKeyValue_V5_t items;
-} pd_system_set_storage_V5_t;
-
-#define PD_CALL_SYSTEM_KILL_STORAGE_V5 7
-typedef struct {
-    pd_VecKey_V5_t keys;
-} pd_system_kill_storage_V5_t;
-
-#define PD_CALL_SYSTEM_KILL_PREFIX_V5 8
-typedef struct {
-    pd_Key_V5_t prefix;
-    pd_u32_t _subkeys;
-} pd_system_kill_prefix_V5_t;
-
 #define PD_CALL_SYSTEM_REMARK_WITH_EVENT_V5 9
 typedef struct {
     pd_Bytes_t remark;
@@ -259,20 +201,6 @@ typedef struct {
 typedef struct {
     pd_AccountIndex_V5_t index;
 } pd_indices_freeze_V5_t;
-
-#define PD_CALL_BALANCES_SET_BALANCE_V5 1
-typedef struct {
-    pd_LookupSource_V5_t who;
-    pd_CompactBalance_t new_free;
-    pd_CompactBalance_t new_reserved;
-} pd_balances_set_balance_V5_t;
-
-#define PD_CALL_BALANCES_FORCE_TRANSFER_V5 2
-typedef struct {
-    pd_LookupSource_V5_t source;
-    pd_LookupSource_V5_t dest;
-    pd_CompactBalance_t value;
-} pd_balances_force_transfer_V5_t;
 
 #define PD_CALL_AUTHORSHIP_SET_UNCLES_V5 0
 typedef struct {
@@ -967,13 +895,6 @@ typedef struct {
     pd_Call_t call;
 } pd_scheduler_schedule_named_after_V5_t;
 
-#define PD_CALL_PROXY_PROXY_V5 0
-typedef struct {
-    pd_AccountId_V5_t real;
-    pd_OptionProxyType_V5_t force_proxy_type;
-    pd_Call_t call;
-} pd_proxy_proxy_V5_t;
-
 #define PD_CALL_PROXY_ADD_PROXY_V5 1
 typedef struct {
     pd_AccountId_V5_t delegate;
@@ -1033,39 +954,6 @@ typedef struct {
     pd_OptionProxyType_V5_t force_proxy_type;
     pd_Call_t call;
 } pd_proxy_proxy_announced_V5_t;
-
-#define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1_V5 0
-typedef struct {
-    pd_VecAccountId_V5_t other_signatories;
-    pd_Call_t call;
-} pd_multisig_as_multi_threshold_1_V5_t;
-
-#define PD_CALL_MULTISIG_AS_MULTI_V5 1
-typedef struct {
-    pd_u16_t threshold;
-    pd_VecAccountId_V5_t other_signatories;
-    pd_OptionTimepoint_V5_t maybe_timepoint;
-    pd_OpaqueCall_V5_t call;
-    pd_bool_t store_call;
-    pd_Weight_V5_t max_weight;
-} pd_multisig_as_multi_V5_t;
-
-#define PD_CALL_MULTISIG_APPROVE_AS_MULTI_V5 2
-typedef struct {
-    pd_u16_t threshold;
-    pd_VecAccountId_V5_t other_signatories;
-    pd_OptionTimepoint_V5_t maybe_timepoint;
-    pd_u8_array_32_V5_t call_hash;
-    pd_Weight_V5_t max_weight;
-} pd_multisig_approve_as_multi_V5_t;
-
-#define PD_CALL_MULTISIG_CANCEL_AS_MULTI_V5 3
-typedef struct {
-    pd_u16_t threshold;
-    pd_VecAccountId_V5_t other_signatories;
-    pd_Timepoint_V5_t timepoint;
-    pd_u8_array_32_V5_t call_hash;
-} pd_multisig_cancel_as_multi_V5_t;
 
 #define PD_CALL_BOUNTIES_PROPOSE_BOUNTY_V5 0
 typedef struct {
@@ -1600,8 +1488,6 @@ typedef struct {
 #endif
 
 typedef union {
-    pd_balances_transfer_V5_t balances_transfer_V5;
-    pd_balances_transfer_keep_alive_V5_t balances_transfer_keep_alive_V5;
     pd_staking_bond_V5_t staking_bond_V5;
     pd_staking_bond_extra_V5_t staking_bond_extra_V5;
     pd_staking_unbond_V5_t staking_unbond_V5;
@@ -1617,15 +1503,6 @@ typedef union {
     pd_utility_batch_V5_t utility_batch_V5;
     pd_utility_batch_all_V5_t utility_batch_all_V5;
 #ifdef SUBSTRATE_PARSER_FULL
-    pd_system_fill_block_V5_t system_fill_block_V5;
-    pd_system_remark_V5_t system_remark_V5;
-    pd_system_set_heap_pages_V5_t system_set_heap_pages_V5;
-    pd_system_set_code_V5_t system_set_code_V5;
-    pd_system_set_code_without_checks_V5_t system_set_code_without_checks_V5;
-    pd_system_set_changes_trie_config_V5_t system_set_changes_trie_config_V5;
-    pd_system_set_storage_V5_t system_set_storage_V5;
-    pd_system_kill_storage_V5_t system_kill_storage_V5;
-    pd_system_kill_prefix_V5_t system_kill_prefix_V5;
     pd_system_remark_with_event_V5_t system_remark_with_event_V5;
     pd_babe_report_equivocation_V5_t babe_report_equivocation_V5;
     pd_babe_report_equivocation_unsigned_V5_t babe_report_equivocation_unsigned_V5;
@@ -1636,8 +1513,6 @@ typedef union {
     pd_indices_free_V5_t indices_free_V5;
     pd_indices_force_transfer_V5_t indices_force_transfer_V5;
     pd_indices_freeze_V5_t indices_freeze_V5;
-    pd_balances_set_balance_V5_t balances_set_balance_V5;
-    pd_balances_force_transfer_V5_t balances_force_transfer_V5;
     pd_authorship_set_uncles_V5_t authorship_set_uncles_V5;
     pd_staking_set_controller_V5_t staking_set_controller_V5;
     pd_staking_set_validator_count_V5_t staking_set_validator_count_V5;
@@ -1761,7 +1636,6 @@ typedef union {
     pd_scheduler_cancel_named_V5_t scheduler_cancel_named_V5;
     pd_scheduler_schedule_after_V5_t scheduler_schedule_after_V5;
     pd_scheduler_schedule_named_after_V5_t scheduler_schedule_named_after_V5;
-    pd_proxy_proxy_V5_t proxy_proxy_V5;
     pd_proxy_add_proxy_V5_t proxy_add_proxy_V5;
     pd_proxy_remove_proxy_V5_t proxy_remove_proxy_V5;
     pd_proxy_remove_proxies_V5_t proxy_remove_proxies_V5;
@@ -1771,10 +1645,6 @@ typedef union {
     pd_proxy_remove_announcement_V5_t proxy_remove_announcement_V5;
     pd_proxy_reject_announcement_V5_t proxy_reject_announcement_V5;
     pd_proxy_proxy_announced_V5_t proxy_proxy_announced_V5;
-    pd_multisig_as_multi_threshold_1_V5_t multisig_as_multi_threshold_1_V5;
-    pd_multisig_as_multi_V5_t multisig_as_multi_V5;
-    pd_multisig_approve_as_multi_V5_t multisig_approve_as_multi_V5;
-    pd_multisig_cancel_as_multi_V5_t multisig_cancel_as_multi_V5;
     pd_bounties_propose_bounty_V5_t bounties_propose_bounty_V5;
     pd_bounties_approve_bounty_V5_t bounties_approve_bounty_V5;
     pd_bounties_propose_curator_V5_t bounties_propose_curator_V5;
@@ -1874,11 +1744,141 @@ typedef union {
 #endif
 } pd_MethodBasic_V5_t;
 
+#define PD_CALL_BALANCES_TRANSFER_V5 0
+typedef struct {
+    pd_LookupSource_V5_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_V5_t;
+
+#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V5 3
+typedef struct {
+    pd_LookupSource_V5_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_transfer_keep_alive_V5_t;
+
 #ifdef SUBSTRATE_PARSER_FULL
+#define PD_CALL_SYSTEM_FILL_BLOCK_V5 0
+typedef struct {
+    pd_Perbill_V5_t _ratio;
+} pd_system_fill_block_V5_t;
+
+#define PD_CALL_SYSTEM_REMARK_V5 1
+typedef struct {
+    pd_Bytes_t _remark;
+} pd_system_remark_V5_t;
+
+#define PD_CALL_SYSTEM_SET_HEAP_PAGES_V5 2
+typedef struct {
+    pd_u64_t pages;
+} pd_system_set_heap_pages_V5_t;
+
+#define PD_CALL_SYSTEM_SET_CODE_V5 3
+typedef struct {
+    pd_Bytes_t code;
+} pd_system_set_code_V5_t;
+
+#define PD_CALL_SYSTEM_SET_CODE_WITHOUT_CHECKS_V5 4
+typedef struct {
+    pd_Bytes_t code;
+} pd_system_set_code_without_checks_V5_t;
+
+#define PD_CALL_SYSTEM_SET_CHANGES_TRIE_CONFIG_V5 5
+typedef struct {
+    pd_OptionChangesTrieConfiguration_V5_t changes_trie_config;
+} pd_system_set_changes_trie_config_V5_t;
+
+#define PD_CALL_SYSTEM_SET_STORAGE_V5 6
+typedef struct {
+    pd_VecKeyValue_V5_t items;
+} pd_system_set_storage_V5_t;
+
+#define PD_CALL_SYSTEM_KILL_STORAGE_V5 7
+typedef struct {
+    pd_VecKey_V5_t keys;
+} pd_system_kill_storage_V5_t;
+
+#define PD_CALL_SYSTEM_KILL_PREFIX_V5 8
+typedef struct {
+    pd_Key_V5_t prefix;
+    pd_u32_t _subkeys;
+} pd_system_kill_prefix_V5_t;
+
+#define PD_CALL_BALANCES_SET_BALANCE_V5 1
+typedef struct {
+    pd_LookupSource_V5_t who;
+    pd_CompactBalance_t new_free;
+    pd_CompactBalance_t new_reserved;
+} pd_balances_set_balance_V5_t;
+
+#define PD_CALL_BALANCES_FORCE_TRANSFER_V5 2
+typedef struct {
+    pd_LookupSource_V5_t source;
+    pd_LookupSource_V5_t dest;
+    pd_CompactBalance_t value;
+} pd_balances_force_transfer_V5_t;
+
+#define PD_CALL_PROXY_PROXY_V5 0
+typedef struct {
+    pd_AccountId_V5_t real;
+    pd_OptionProxyType_V5_t force_proxy_type;
+    pd_Call_t call;
+} pd_proxy_proxy_V5_t;
+
+#define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1_V5 0
+typedef struct {
+    pd_VecAccountId_V5_t other_signatories;
+    pd_Call_t call;
+} pd_multisig_as_multi_threshold_1_V5_t;
+
+#define PD_CALL_MULTISIG_AS_MULTI_V5 1
+typedef struct {
+    pd_u16_t threshold;
+    pd_VecAccountId_V5_t other_signatories;
+    pd_OptionTimepoint_V5_t maybe_timepoint;
+    pd_OpaqueCall_V5_t call;
+    pd_bool_t store_call;
+    pd_Weight_V5_t max_weight;
+} pd_multisig_as_multi_V5_t;
+
+#define PD_CALL_MULTISIG_APPROVE_AS_MULTI_V5 2
+typedef struct {
+    pd_u16_t threshold;
+    pd_VecAccountId_V5_t other_signatories;
+    pd_OptionTimepoint_V5_t maybe_timepoint;
+    pd_u8_array_32_V5_t call_hash;
+    pd_Weight_V5_t max_weight;
+} pd_multisig_approve_as_multi_V5_t;
+
+#define PD_CALL_MULTISIG_CANCEL_AS_MULTI_V5 3
+typedef struct {
+    pd_u16_t threshold;
+    pd_VecAccountId_V5_t other_signatories;
+    pd_Timepoint_V5_t timepoint;
+    pd_u8_array_32_V5_t call_hash;
+} pd_multisig_cancel_as_multi_V5_t;
+
 #endif
 
 typedef union {
+    pd_balances_transfer_V5_t balances_transfer_V5;
+    pd_balances_transfer_keep_alive_V5_t balances_transfer_keep_alive_V5;
 #ifdef SUBSTRATE_PARSER_FULL
+    pd_system_fill_block_V5_t system_fill_block_V5;
+    pd_system_remark_V5_t system_remark_V5;
+    pd_system_set_heap_pages_V5_t system_set_heap_pages_V5;
+    pd_system_set_code_V5_t system_set_code_V5;
+    pd_system_set_code_without_checks_V5_t system_set_code_without_checks_V5;
+    pd_system_set_changes_trie_config_V5_t system_set_changes_trie_config_V5;
+    pd_system_set_storage_V5_t system_set_storage_V5;
+    pd_system_kill_storage_V5_t system_kill_storage_V5;
+    pd_system_kill_prefix_V5_t system_kill_prefix_V5;
+    pd_balances_set_balance_V5_t balances_set_balance_V5;
+    pd_balances_force_transfer_V5_t balances_force_transfer_V5;
+    pd_proxy_proxy_V5_t proxy_proxy_V5;
+    pd_multisig_as_multi_threshold_1_V5_t multisig_as_multi_threshold_1_V5;
+    pd_multisig_as_multi_V5_t multisig_as_multi_V5;
+    pd_multisig_approve_as_multi_V5_t multisig_approve_as_multi_V5;
+    pd_multisig_cancel_as_multi_V5_t multisig_cancel_as_multi_V5;
 #endif
 } pd_MethodNested_V5_t;
 

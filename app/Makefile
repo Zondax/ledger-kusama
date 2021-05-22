@@ -75,15 +75,10 @@ APPNAME = "Kusama"
 APPPATH = "44'/434'" --path "44'/354'"
 
 else ifeq ($(COIN),KSM_XL)
-# XXL app configuration
+# XL app configuration
 DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
 APPNAME = "Kusama XL"
 APPPATH = "44'/434'"  --path "44'/354'"
-
-else ifeq ($(COIN),Ledgeracio)
-DEFINES += APP_RESTRICTED SUBSTRATE_PARSER_FULL
-APPNAME = "Kusama_sec"
-APPPATH = "44'/434'"
 
 else
 define error_message
@@ -185,7 +180,7 @@ endif
 #########################
 
 CC := $(CLANGPATH)clang
-CFLAGS += -O3 -Os -Wno-unknown-pragmas
+CFLAGS += -O3 -Os -Wno-unknown-pragmas -Wno-unused-parameter
 
 AS := $(GCCPATH)arm-none-eabi-gcc
 AFLAGS +=
@@ -248,7 +243,7 @@ dep/%.d: %.c Makefile
 .PHONY: listvariants
 listvariants:
 ifeq ($(TARGET_NAME),TARGET_NANOS)
-	@echo VARIANTS COIN KSM KSM_XL Ledgeracio
+	@echo VARIANTS COIN KSM KSM_XL
 else ifeq ($(TARGET_NAME),TARGET_NANOX)
-	@echo VARIANTS COIN KSM Ledgeracio
+	@echo VARIANTS COIN KSM
 endif

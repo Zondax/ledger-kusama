@@ -23,13 +23,6 @@
 #include "coin_ss58.h"
 #include "substrate_dispatch.h"
 
-#if defined(APP_RESTRICTED)
-#include "coin.h"
-#include "crypto.h"
-#include "substrate_methods.h"
-#include "allowlist.h"
-#endif
-
 #if defined(TARGET_NANOX)
 // For some reason NanoX requires this function
 void __assert_fail(const char * assertion, const char * file, unsigned int line, const char * function){
@@ -92,44 +85,6 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
         CHECK_PARSER_ERR(parser_getItem(ctx, idx, tmpKey, sizeof(tmpKey), tmpVal, sizeof(tmpVal), 0, &pageCount))
     }
 
-#if defined(APP_RESTRICTED)
-    if (hdPath[2] == HDPATH_2_STASH) {
-        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
-                return parser_ok;
-            }
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
-                return parser_ok;
-            }
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_NOMINATE)) {
-                CHECK_PARSER_ERR(parser_validate_staking_targets(ctx))
-                return parser_ok;
-            }
-        }
-    }
-    if (hdPath[2] == HDPATH_2_VALIDATOR) {
-        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(STAKING)) {
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_SET_PAYEE)) {
-                return parser_ok;
-            }
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_VALIDATE)) {
-                return parser_ok;
-            }
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(STAKING_CHILL)) {
-                return parser_ok;
-            }
-        }
-        if (ctx->tx_obj->callIndex.moduleIdx ==GEN_GETCALL(SESSION)) {
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_SET_KEYS)) {
-                return parser_ok;
-            }
-            if (ctx->tx_obj->callIndex.idx==GEN_GETCALL(SESSION_PURGE_KEYS)) {
-                return parser_ok;
-            }
-        }
-    }
-    return parser_not_allowed;
-#endif
     return parser_ok;
 }
 
