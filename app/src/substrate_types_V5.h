@@ -81,6 +81,21 @@ typedef struct {
 } pd_LookupSource_V5_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_MultiAsset_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_MultiSignature_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_MultiSigner_V5_t;
+
+typedef struct {
     uint64_t value;
 } pd_Period_V5_t;
 
@@ -194,13 +209,23 @@ typedef struct {
     const uint8_t* _ptr;
 } pd_CallHashOf_V5_t;
 
+typedef compactInt_t pd_CompactActiveIndex_V5_t;
+
+typedef compactInt_t pd_CompactAuctionIndex_V5_t;
+
 typedef compactInt_t pd_CompactBountyIndex_V5_t;
 
 typedef compactInt_t pd_CompactEraIndex_V5_t;
 
+typedef compactInt_t pd_CompactLeasePeriodOf_V5_t;
+
 typedef compactInt_t pd_CompactMemberCount_V5_t;
 
 typedef compactInt_t pd_CompactMoment_V5_t;
+
+typedef compactInt_t pd_CompactParaId_V5_t;
+
+typedef compactInt_t pd_CompactPerquintill_V5_t;
 
 typedef compactInt_t pd_CompactPropIndex_V5_t;
 
@@ -232,6 +257,16 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_HeadData_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_HrmpChannelId_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_IdentityFields_V5_t;
 
 typedef struct {
@@ -249,8 +284,18 @@ typedef struct {
 } pd_Keys_V5_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_LeasePeriodOf_V5_t;
+
+typedef struct {
     uint32_t value;
 } pd_MemberCount_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_MultiLocation_V5_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -261,6 +306,16 @@ typedef struct {
     uint8_t some;
     pd_AccountId_V5_t contained;
 } pd_OptionAccountId_V5_t;
+
+typedef struct {
+    uint8_t some;
+    pd_MultiSignature_V5_t contained;
+} pd_OptionMultiSignature_V5_t;
+
+typedef struct {
+    uint8_t some;
+    pd_MultiSigner_V5_t contained;
+} pd_OptionMultiSigner_V5_t;
 
 typedef struct {
     uint8_t some;
@@ -281,6 +336,16 @@ typedef struct {
     uint8_t some;
     pd_StatementKind_V5_t contained;
 } pd_OptionStatementKind_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ParaId_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ParachainsInherentData_V5_t;
 
 typedef struct {
     uint32_t value;
@@ -309,6 +374,11 @@ typedef struct {
 } pd_RewardDestination_V5_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_SessionIndex_V5_t;
+
+typedef struct {
     const uint8_t* _ptr;
 } pd_Signature_V5_t;
 
@@ -321,6 +391,11 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_SolutionOrSnapshotSize_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ValidationCode_V5_t;
 
 typedef struct {
     uint64_t _len;
@@ -344,11 +419,22 @@ typedef struct {
     uint64_t _len;
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
+} pd_VecMultiAsset_V5_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
 } pd_VecTupleAccountIdData_V5_t;
 
 typedef struct {
     uint64_t value;
 } pd_Weight_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Xcm_V5_t;
 
 typedef struct {
     const uint8_t* _ptr;

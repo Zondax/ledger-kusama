@@ -35,11 +35,16 @@ parser_error_t _readBabeEquivocationProof_V5(parser_context_t* c, pd_BabeEquivoc
 parser_error_t _readCallHashOf_V5(parser_context_t* c, pd_CallHashOf_V5_t* v);
 parser_error_t _readChangesTrieConfiguration_V5(parser_context_t* c, pd_ChangesTrieConfiguration_V5_t* v);
 parser_error_t _readCompactAccountIndex_V5(parser_context_t* c, pd_CompactAccountIndex_V5_t* v);
+parser_error_t _readCompactActiveIndex_V5(parser_context_t* c, pd_CompactActiveIndex_V5_t* v);
+parser_error_t _readCompactAuctionIndex_V5(parser_context_t* c, pd_CompactAuctionIndex_V5_t* v);
 parser_error_t _readCompactBountyIndex_V5(parser_context_t* c, pd_CompactBountyIndex_V5_t* v);
 parser_error_t _readCompactEraIndex_V5(parser_context_t* c, pd_CompactEraIndex_V5_t* v);
+parser_error_t _readCompactLeasePeriodOf_V5(parser_context_t* c, pd_CompactLeasePeriodOf_V5_t* v);
 parser_error_t _readCompactMemberCount_V5(parser_context_t* c, pd_CompactMemberCount_V5_t* v);
 parser_error_t _readCompactMoment_V5(parser_context_t* c, pd_CompactMoment_V5_t* v);
+parser_error_t _readCompactParaId_V5(parser_context_t* c, pd_CompactParaId_V5_t* v);
 parser_error_t _readCompactPerBill_V5(parser_context_t* c, pd_CompactPerBill_V5_t* v);
+parser_error_t _readCompactPerquintill_V5(parser_context_t* c, pd_CompactPerquintill_V5_t* v);
 parser_error_t _readCompactPropIndex_V5(parser_context_t* c, pd_CompactPropIndex_V5_t* v);
 parser_error_t _readCompactProposalIndex_V5(parser_context_t* c, pd_CompactProposalIndex_V5_t* v);
 parser_error_t _readCompactReferendumIndex_V5(parser_context_t* c, pd_CompactReferendumIndex_V5_t* v);
@@ -50,6 +55,8 @@ parser_error_t _readEcdsaSignature_V5(parser_context_t* c, pd_EcdsaSignature_V5_
 parser_error_t _readEraIndex_V5(parser_context_t* c, pd_EraIndex_V5_t* v);
 parser_error_t _readEthereumAddress_V5(parser_context_t* c, pd_EthereumAddress_V5_t* v);
 parser_error_t _readGrandpaEquivocationProof_V5(parser_context_t* c, pd_GrandpaEquivocationProof_V5_t* v);
+parser_error_t _readHeadData_V5(parser_context_t* c, pd_HeadData_V5_t* v);
+parser_error_t _readHrmpChannelId_V5(parser_context_t* c, pd_HrmpChannelId_V5_t* v);
 parser_error_t _readIdentityFields_V5(parser_context_t* c, pd_IdentityFields_V5_t* v);
 parser_error_t _readIdentityInfo_V5(parser_context_t* c, pd_IdentityInfo_V5_t* v);
 parser_error_t _readIdentityJudgement_V5(parser_context_t* c, pd_IdentityJudgement_V5_t* v);
@@ -57,18 +64,27 @@ parser_error_t _readKeyOwnerProof_V5(parser_context_t* c, pd_KeyOwnerProof_V5_t*
 parser_error_t _readKeyValue_V5(parser_context_t* c, pd_KeyValue_V5_t* v);
 parser_error_t _readKey_V5(parser_context_t* c, pd_Key_V5_t* v);
 parser_error_t _readKeys_V5(parser_context_t* c, pd_Keys_V5_t* v);
+parser_error_t _readLeasePeriodOf_V5(parser_context_t* c, pd_LeasePeriodOf_V5_t* v);
 parser_error_t _readLookupSource_V5(parser_context_t* c, pd_LookupSource_V5_t* v);
 parser_error_t _readMemberCount_V5(parser_context_t* c, pd_MemberCount_V5_t* v);
+parser_error_t _readMultiAsset_V5(parser_context_t* c, pd_MultiAsset_V5_t* v);
+parser_error_t _readMultiLocation_V5(parser_context_t* c, pd_MultiLocation_V5_t* v);
+parser_error_t _readMultiSignature_V5(parser_context_t* c, pd_MultiSignature_V5_t* v);
+parser_error_t _readMultiSigner_V5(parser_context_t* c, pd_MultiSigner_V5_t* v);
 parser_error_t _readNextConfigDescriptor_V5(parser_context_t* c, pd_NextConfigDescriptor_V5_t* v);
 parser_error_t _readOpaqueCall_V5(parser_context_t* c, pd_OpaqueCall_V5_t* v);
 parser_error_t _readOptionAccountId_V5(parser_context_t* c, pd_OptionAccountId_V5_t* v);
 parser_error_t _readOptionChangesTrieConfiguration_V5(parser_context_t* c, pd_OptionChangesTrieConfiguration_V5_t* v);
+parser_error_t _readOptionMultiSignature_V5(parser_context_t* c, pd_OptionMultiSignature_V5_t* v);
+parser_error_t _readOptionMultiSigner_V5(parser_context_t* c, pd_OptionMultiSigner_V5_t* v);
 parser_error_t _readOptionPeriod_V5(parser_context_t* c, pd_OptionPeriod_V5_t* v);
 parser_error_t _readOptionProxyType_V5(parser_context_t* c, pd_OptionProxyType_V5_t* v);
 parser_error_t _readOptionReferendumIndex_V5(parser_context_t* c, pd_OptionReferendumIndex_V5_t* v);
 parser_error_t _readOptionStatementKind_V5(parser_context_t* c, pd_OptionStatementKind_V5_t* v);
 parser_error_t _readOptionTimepoint_V5(parser_context_t* c, pd_OptionTimepoint_V5_t* v);
 parser_error_t _readOptionTupleBalanceOfBalanceOfBlockNumber_V5(parser_context_t* c, pd_OptionTupleBalanceOfBalanceOfBlockNumber_V5_t* v);
+parser_error_t _readParaId_V5(parser_context_t* c, pd_ParaId_V5_t* v);
+parser_error_t _readParachainsInherentData_V5(parser_context_t* c, pd_ParachainsInherentData_V5_t* v);
 parser_error_t _readPerbill_V5(parser_context_t* c, pd_Perbill_V5_t* v);
 parser_error_t _readPercent_V5(parser_context_t* c, pd_Percent_V5_t* v);
 parser_error_t _readPeriod_V5(parser_context_t* c, pd_Period_V5_t* v);
@@ -79,6 +95,7 @@ parser_error_t _readReferendumIndex_V5(parser_context_t* c, pd_ReferendumIndex_V
 parser_error_t _readRegistrarIndex_V5(parser_context_t* c, pd_RegistrarIndex_V5_t* v);
 parser_error_t _readRenouncing_V5(parser_context_t* c, pd_Renouncing_V5_t* v);
 parser_error_t _readRewardDestination_V5(parser_context_t* c, pd_RewardDestination_V5_t* v);
+parser_error_t _readSessionIndex_V5(parser_context_t* c, pd_SessionIndex_V5_t* v);
 parser_error_t _readSignature_V5(parser_context_t* c, pd_Signature_V5_t* v);
 parser_error_t _readSocietyJudgement_V5(parser_context_t* c, pd_SocietyJudgement_V5_t* v);
 parser_error_t _readSolutionOrSnapshotSize_V5(parser_context_t* c, pd_SolutionOrSnapshotSize_V5_t* v);
@@ -87,15 +104,18 @@ parser_error_t _readStreamDependency_V5(parser_context_t* c, pd_StreamDependency
 parser_error_t _readTimepoint_V5(parser_context_t* c, pd_Timepoint_V5_t* v);
 parser_error_t _readTupleAccountIdData_V5(parser_context_t* c, pd_TupleAccountIdData_V5_t* v);
 parser_error_t _readTupleBalanceOfBalanceOfBlockNumber_V5(parser_context_t* c, pd_TupleBalanceOfBalanceOfBlockNumber_V5_t* v);
+parser_error_t _readValidationCode_V5(parser_context_t* c, pd_ValidationCode_V5_t* v);
 parser_error_t _readValidatorPrefs_V5(parser_context_t* c, pd_ValidatorPrefs_V5_t* v);
 parser_error_t _readVecAccountId_V5(parser_context_t* c, pd_VecAccountId_V5_t* v);
 parser_error_t _readVecKeyValue_V5(parser_context_t* c, pd_VecKeyValue_V5_t* v);
 parser_error_t _readVecKey_V5(parser_context_t* c, pd_VecKey_V5_t* v);
 parser_error_t _readVecLookupSource_V5(parser_context_t* c, pd_VecLookupSource_V5_t* v);
+parser_error_t _readVecMultiAsset_V5(parser_context_t* c, pd_VecMultiAsset_V5_t* v);
 parser_error_t _readVecTupleAccountIdData_V5(parser_context_t* c, pd_VecTupleAccountIdData_V5_t* v);
 parser_error_t _readVestingInfo_V5(parser_context_t* c, pd_VestingInfo_V5_t* v);
 parser_error_t _readVote_V5(parser_context_t* c, pd_Vote_V5_t* v);
 parser_error_t _readWeight_V5(parser_context_t* c, pd_Weight_V5_t* v);
+parser_error_t _readXcm_V5(parser_context_t* c, pd_Xcm_V5_t* v);
 parser_error_t _readu8_array_32_V5(parser_context_t* c, pd_u8_array_32_V5_t* v);
 
 // toString functions
@@ -162,6 +182,20 @@ parser_error_t _toStringCompactAccountIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringCompactActiveIndex_V5(
+    const pd_CompactActiveIndex_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactAuctionIndex_V5(
+    const pd_CompactAuctionIndex_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringCompactBountyIndex_V5(
     const pd_CompactBountyIndex_V5_t* v,
     char* outValue,
@@ -171,6 +205,13 @@ parser_error_t _toStringCompactBountyIndex_V5(
 
 parser_error_t _toStringCompactEraIndex_V5(
     const pd_CompactEraIndex_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactLeasePeriodOf_V5(
+    const pd_CompactLeasePeriodOf_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -190,8 +231,22 @@ parser_error_t _toStringCompactMoment_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringCompactParaId_V5(
+    const pd_CompactParaId_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringCompactPerBill_V5(
     const pd_CompactPerBill_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactPerquintill_V5(
+    const pd_CompactPerquintill_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -267,6 +322,20 @@ parser_error_t _toStringGrandpaEquivocationProof_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringHeadData_V5(
+    const pd_HeadData_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringHrmpChannelId_V5(
+    const pd_HrmpChannelId_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringIdentityFields_V5(
     const pd_IdentityFields_V5_t* v,
     char* outValue,
@@ -316,6 +385,13 @@ parser_error_t _toStringKeys_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringLeasePeriodOf_V5(
+    const pd_LeasePeriodOf_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringLookupSource_V5(
     const pd_LookupSource_V5_t* v,
     char* outValue,
@@ -325,6 +401,34 @@ parser_error_t _toStringLookupSource_V5(
 
 parser_error_t _toStringMemberCount_V5(
     const pd_MemberCount_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringMultiAsset_V5(
+    const pd_MultiAsset_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringMultiLocation_V5(
+    const pd_MultiLocation_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringMultiSignature_V5(
+    const pd_MultiSignature_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringMultiSigner_V5(
+    const pd_MultiSigner_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -353,6 +457,20 @@ parser_error_t _toStringOptionAccountId_V5(
 
 parser_error_t _toStringOptionChangesTrieConfiguration_V5(
     const pd_OptionChangesTrieConfiguration_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringOptionMultiSignature_V5(
+    const pd_OptionMultiSignature_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringOptionMultiSigner_V5(
+    const pd_OptionMultiSigner_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -395,6 +513,20 @@ parser_error_t _toStringOptionTimepoint_V5(
 
 parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V5(
     const pd_OptionTupleBalanceOfBalanceOfBlockNumber_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringParaId_V5(
+    const pd_ParaId_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringParachainsInherentData_V5(
+    const pd_ParachainsInherentData_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -470,6 +602,13 @@ parser_error_t _toStringRewardDestination_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringSessionIndex_V5(
+    const pd_SessionIndex_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringSignature_V5(
     const pd_Signature_V5_t* v,
     char* outValue,
@@ -526,6 +665,13 @@ parser_error_t _toStringTupleBalanceOfBalanceOfBlockNumber_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringValidationCode_V5(
+    const pd_ValidationCode_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringValidatorPrefs_V5(
     const pd_ValidatorPrefs_V5_t* v,
     char* outValue,
@@ -561,6 +707,13 @@ parser_error_t _toStringVecLookupSource_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringVecMultiAsset_V5(
+    const pd_VecMultiAsset_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringVecTupleAccountIdData_V5(
     const pd_VecTupleAccountIdData_V5_t* v,
     char* outValue,
@@ -584,6 +737,13 @@ parser_error_t _toStringVote_V5(
 
 parser_error_t _toStringWeight_V5(
     const pd_Weight_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringXcm_V5(
+    const pd_Xcm_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
