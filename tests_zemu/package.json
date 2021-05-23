@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@zondax/ledger-polkadot": "^0.13.8",
-    "@zondax/zemu": "^0.13.2"
+    "@zondax/zemu": "^0.14.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
