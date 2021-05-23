@@ -42,10 +42,12 @@ include $(BOLOS_SDK)/Makefile.defines
 
 DEFINES += APP_SECRET_MODE_ENABLED
 
+$(info ************ TARGET_NAME  = [$(TARGET_NAME)])
+
 ifeq ($(APP_TESTING),1)
 DEFINES += APP_TESTING
 DEFINES += ZEMU_LOGGING
-$(info ************  LOGGING ENABLED ************)
+$(info ************ LOGGING ENABLED ************)
 endif
 
 ifeq ($(SUPPORT_SR25519),1)
@@ -66,6 +68,7 @@ endif
 include $(CURDIR)/Makefile.version
 
 $(info COIN  = [$(COIN)])
+
 ifeq ($(COIN),KSM)
 # Main app configuration
 DEFINES += APP_STANDARD
@@ -107,7 +110,6 @@ OUTPUT_ELF ?= $(CURDIR)/output/app_x.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_x.sh
 endif
 
-$(info TARGET_NAME  = [$(TARGET_NAME)])
 $(info ICONNAME  = [$(ICONNAME)])
 
 ifndef ICONNAME
