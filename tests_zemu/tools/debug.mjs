@@ -1,14 +1,14 @@
 import Zemu from "@zondax/zemu";
 import path from "path";
 import newKusamaApp from "@zondax/ledger-polkadot";
-import pkg from 'blakejs';
+import pkg from "blakejs";
 import ed25519 from "ed25519-supercop";
 
 const APP_PATH = path.resolve(`./../../app/output/app_X.elf`);
 
-const {blake2bInit, blake2bUpdate, blake2bFinal} = pkg;
+const { blake2bInit, blake2bUpdate, blake2bFinal } = pkg;
 
-const seed = "equip will roof matter pink blind book anxiety banner elbow sun young"
+const seed = "equip will roof matter pink blind book anxiety banner elbow sun young";
 const SIM_OPTIONS = {
   logging: true,
   start_delay: 1000,
@@ -18,7 +18,7 @@ const SIM_OPTIONS = {
 
 async function beforeStart() {
   process.on("SIGINT", () => {
-    Zemu.default.stopAllEmuContainers(function () {
+    Zemu.default.stopAllEmuContainers(function() {
       process.exit();
     });
   });
@@ -29,14 +29,14 @@ async function beforeEnd() {
   await Zemu.default.stopAllEmuContainers();
 }
 
-const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
+const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000";
 
 function dummyAllowlist() {
   const addresses = [
     "HFfvSuhgKycuYVk5YnxdDTmpDnjWsnT76nks8fryfSLaD96",
     "FQr6vFmm8zNFV9m4ZMxKzMdUVUbPtrhxxaVkAybHxsDYMCY",
     "HXAjzUP15goNbAkujFgnNcioHhUGMDMSRdfbSxi11GsCBV6"
-  ]
+  ];
 
   // Prepare len field
   const allowlist_len = Buffer.alloc(4);
@@ -45,8 +45,8 @@ function dummyAllowlist() {
   // Prepare items field
   const addressBuffer = Buffer.alloc(64 * addresses.length, 0);
   for (let i = 0; i < addresses.length; i++) {
-    const tmp = Buffer.from(addresses[i])
-    tmp.copy(addressBuffer, i * 64)
+    const tmp = Buffer.from(addresses[i]);
+    tmp.copy(addressBuffer, i * 64);
   }
 
   // calculate digest
@@ -54,30 +54,30 @@ function dummyAllowlist() {
   blake2bUpdate(context, allowlist_len);
   blake2bUpdate(context, addressBuffer);
   const digest = Buffer.from(blake2bFinal(context));
-  console.log(`-------------------- ${digest.toString("hex")}`)
+  console.log(`-------------------- ${digest.toString("hex")}`);
 
   // sign
-  const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
-  console.log(`PK : ${keypair.publicKey.toString("hex")}`)
-  console.log(`SK : ${keypair.secretKey.toString("hex")}`)
+  const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED);
+  console.log(`PK : ${keypair.publicKey.toString("hex")}`);
+  console.log(`SK : ${keypair.secretKey.toString("hex")}`);
 
-  const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
-  console.log(`SIG: ${allowlist_signature.toString("hex")}`)
+  const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey);
+  console.log(`SIG: ${allowlist_signature.toString("hex")}`);
 
-  return Buffer.concat([allowlist_len, allowlist_signature, addressBuffer])
+  return Buffer.concat([allowlist_len, allowlist_signature, addressBuffer]);
 }
 
 async function debugScenario(sim, app) {
-  const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
+  const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED);
   let resp = await app.setAllowlistPubKey(keypair.publicKey);
-  console.log(resp)
+  console.log(resp);
 
   const allowlist = dummyAllowlist(0);
-  console.log(`\n\n------------ Upload allowlist : ${allowlist.length} bytes`)
+  console.log(`\n\n------------ Upload allowlist : ${allowlist.length} bytes`);
   resp = await app.uploadAllowlist(allowlist);
   console.log(resp);
 
-  console.log("\n\n------------ Get allowlist hash")
+  console.log("\n\n------------ Get allowlist hash");
   resp = await app.getAllowlistHash();
   console.log(resp.hash.toString("hex"));
 }

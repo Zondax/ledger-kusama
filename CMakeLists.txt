@@ -36,6 +36,11 @@ if(ENABLE_FUZZING)
     SET(ENABLE_SANITIZERS ON CACHE BOOL "Sanitizer automatically enabled" FORCE)
     SET(CMAKE_BUILD_TYPE Debug)
 
+    if (DEFINED ENV{FUZZ_LOGGING})
+        add_definitions(-DFUZZING_LOGGING)
+        message(FATAL_ERROR "Fuzz logging enabled")
+    endif()
+
     set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,bugprone-*,cert-*,clang-analyzer-*,-cert-err58-cpp,misc-*)
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
