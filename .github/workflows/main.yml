@@ -140,7 +140,7 @@ jobs:
           npm install -g yarn
       - name: Build Ledger app
         run: |
-          make clean && SUBSTRATE_PARSER_FULL=1 SUPPORT_SR25519=1 make buildS
+          make clean_build && SUBSTRATE_PARSER_FULL=1 SUPPORT_SR25519=1 make buildS
       - name: Build/Install build js deps
         run: |
           export PATH=~/.cargo/bin:$PATH
