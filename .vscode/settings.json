@@ -2,6 +2,9 @@
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
         "crypto_helper.h": "c",
-        "inttypes.h": "c"
+        "inttypes.h": "c",
+        "view.h": "c",
+        "app_main.h": "c",
+        "zxmacros.h": "c"
     }
 }
