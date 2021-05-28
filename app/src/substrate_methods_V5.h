@@ -53,6 +53,7 @@ extern "C" {
 #define PD_CALL_SCHEDULER_V5 29
 #define PD_CALL_PROXY_V5 30
 #define PD_CALL_MULTISIG_V5 31
+#define PD_CALL_EQLOCKDROP_V5 33 // EQ Pallete
 #define PD_CALL_BOUNTIES_V5 35
 #define PD_CALL_TIPS_V5 36
 #define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V5 37
@@ -145,6 +146,11 @@ typedef struct {
 typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_all_V5_t;
+
+#define PD_CALL_EQLOCKDROP_LOCK_V5 0
+typedef struct {
+    pd_Balance_t amount;
+} pd_eqlockdrop_lock_V5_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_REMARK_WITH_EVENT_V5 9
@@ -1502,6 +1508,7 @@ typedef union {
     pd_session_purge_keys_V5_t session_purge_keys_V5;
     pd_utility_batch_V5_t utility_batch_V5;
     pd_utility_batch_all_V5_t utility_batch_all_V5;
+    pd_eqlockdrop_lock_V5_t eqlockdrop_lock_V5;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_remark_with_event_V5_t system_remark_with_event_V5;
     pd_babe_report_equivocation_V5_t babe_report_equivocation_V5;

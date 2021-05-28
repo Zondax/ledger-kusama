@@ -135,6 +135,13 @@ __Z_INLINE parser_error_t _readMethod_utility_batch_all_V5(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_eqlockdrop_lock_V5(
+    parser_context_t* c, pd_eqlockdrop_lock_V5_t* m)
+{
+    CHECK_ERROR(_readBalance(c, &m->amount))
+    return parser_ok;
+}
+
 #ifdef SUBSTRATE_PARSER_FULL
 __Z_INLINE parser_error_t _readMethod_system_fill_block_V5(
     parser_context_t* c, pd_system_fill_block_V5_t* m)
@@ -2141,6 +2148,9 @@ parser_error_t _readMethod_V5(
         break;
     case 6146: /* module 24 call 2 */
         CHECK_ERROR(_readMethod_utility_batch_all_V5(c, &method->basic.utility_batch_all_V5))
+        break;
+    case 8448: /* module 33 call 0 */
+        CHECK_ERROR(_readMethod_eqlockdrop_lock_V5(c, &method->basic.eqlockdrop_lock_V5))
         break;
 
 #ifdef SUBSTRATE_PARSER_FULL
@@ -6565,6 +6575,17 @@ parser_error_t _getMethod_ItemValue_V5(
         case 0: /* utility_batch_all_V5 - calls */;
             return _toStringVecCall(
                 &m->basic.utility_batch_all_V5.calls,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 8448: /* module 33 call 0 */
+        switch (itemIdx)
+        {
+        case 0 /* eqlockdrop_lock_V5 */:
+            return _toStringBalance(
+                &m->basic.eqlockdrop_lock_V5.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:

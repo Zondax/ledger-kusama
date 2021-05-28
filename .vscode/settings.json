@@ -5,6 +5,9 @@
         "inttypes.h": "c",
         "view.h": "c",
         "app_main.h": "c",
-        "zxmacros.h": "c"
+        "zxmacros.h": "c",
+        "substrate_types.h": "c",
+        "substrate_dispatch.h": "c",
+        "substrate_dispatch_v5.h": "c"
     }
 }

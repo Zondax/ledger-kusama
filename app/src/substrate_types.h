@@ -36,7 +36,7 @@ typedef uint8_t pd_u8_t;
 typedef uint16_t pd_u16_t;
 typedef uint32_t pd_u32_t;
 typedef uint64_t pd_u64_t;
-typedef uint32_t pd_BlockNumber_t;
+typedef uint64_t pd_BlockNumber_t;
 
 #define CHECK_ERROR(FUNC_CALL)          \
     {                                   \

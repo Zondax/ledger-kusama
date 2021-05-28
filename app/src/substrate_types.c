@@ -51,7 +51,7 @@ parser_error_t _readu64(parser_context_t* c, pd_u64_t* v)
 
 parser_error_t _readBlockNumber(parser_context_t* c, pd_BlockNumber_t* v)
 {
-    return _readUInt32(c, v);
+    return _readUInt64(c, v);
 }
 
 parser_error_t _readCompactu32(parser_context_t* c, pd_Compactu32_t* v)
@@ -376,7 +376,7 @@ parser_error_t _toStringBlockNumber(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringu32(v, outValue, outValueLen, pageIdx, pageCount);
+    return _toStringu64(v, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactu32(

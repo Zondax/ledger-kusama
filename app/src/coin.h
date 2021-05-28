@@ -23,6 +23,8 @@ extern "C" {
 
 #define HDPATH_LEN_DEFAULT   5
 #define HDPATH_0_DEFAULT     (0x80000000 | 0x2c)
+// #define HDPATH_1_DEFAULT     (0x80000000 | 0x162)       // 354 - Polkadot
+// #define HDPATH_1_RECOVERY    (0x80000000 | 0x1b2)       // 434 - Kusama
 #define HDPATH_1_DEFAULT     (0x80000000 | 0x5f5e0fd)   // 99999997 - Equilibrium
 #define HDPATH_1_RECOVERY    (0x80000000 | 0x162)       // 354 - Polkadot
 
@@ -44,13 +46,13 @@ typedef enum {
 } key_kind_e;
 
 // Coin Specific
-#define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_EQUILIBRIUM
+#define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_POLKADOT
 #define SUPPORTED_TX_VERSION_CURRENT        LEDGER_MAJOR_VERSION
 #define SUPPORTED_TX_VERSION_PREVIOUS       (LEDGER_MAJOR_VERSION - 1)
 #define SUPPORTED_SPEC_VERSION              (LEDGER_MINOR_VERSION + 0)
 #define SUPPORTED_MINIMUM_SPEC_VERSION      9000
 
-#define COIN_AMOUNT_DECIMAL_PLACES          12
+#define COIN_AMOUNT_DECIMAL_PLACES          9
 
 #define COIN_GENESIS_HASH                   "6f1a800de3daff7f5e037ddf66ab22ce03ab91874debeddb1086f5f7dbd48925"
 #define COIN_NAME                           "Equilibrium"
