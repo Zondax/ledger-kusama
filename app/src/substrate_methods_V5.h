@@ -115,6 +115,11 @@ typedef struct {
     pd_RewardDestination_V5_t payee;
 } pd_staking_set_payee_V5_t;
 
+#define PD_CALL_STAKING_SET_CONTROLLER_V5 8
+typedef struct {
+    pd_LookupSource_V5_t controller;
+} pd_staking_set_controller_V5_t;
+
 #define PD_CALL_STAKING_PAYOUT_STAKERS_V5 18
 typedef struct {
     pd_AccountId_V5_t validator_stash;
@@ -206,11 +211,6 @@ typedef struct {
 typedef struct {
     pd_VecHeader_t new_uncles;
 } pd_authorship_set_uncles_V5_t;
-
-#define PD_CALL_STAKING_SET_CONTROLLER_V5 8
-typedef struct {
-    pd_LookupSource_V5_t controller;
-} pd_staking_set_controller_V5_t;
 
 #define PD_CALL_STAKING_SET_VALIDATOR_COUNT_V5 9
 typedef struct {
@@ -1479,7 +1479,15 @@ typedef struct {
     pd_Weight_V5_t dest_weight;
 } pd_xcmpallet_teleport_assets_V5_t;
 
-#define PD_CALL_XCMPALLET_EXECUTE_V5 2
+#define PD_CALL_XCMPALLET_RESERVE_TRANSFER_ASSETS_V5 2
+typedef struct {
+    pd_MultiLocation_V5_t dest;
+    pd_MultiLocation_V5_t beneficiary;
+    pd_VecMultiAsset_V5_t assets;
+    pd_Weight_V5_t dest_weight;
+} pd_xcmpallet_reserve_transfer_assets_V5_t;
+
+#define PD_CALL_XCMPALLET_EXECUTE_V5 3
 typedef struct {
     pd_Xcm_V5_t message;
     pd_Weight_V5_t max_weight;
@@ -1496,6 +1504,7 @@ typedef union {
     pd_staking_nominate_V5_t staking_nominate_V5;
     pd_staking_chill_V5_t staking_chill_V5;
     pd_staking_set_payee_V5_t staking_set_payee_V5;
+    pd_staking_set_controller_V5_t staking_set_controller_V5;
     pd_staking_payout_stakers_V5_t staking_payout_stakers_V5;
     pd_staking_rebond_V5_t staking_rebond_V5;
     pd_session_set_keys_V5_t session_set_keys_V5;
@@ -1514,7 +1523,6 @@ typedef union {
     pd_indices_force_transfer_V5_t indices_force_transfer_V5;
     pd_indices_freeze_V5_t indices_freeze_V5;
     pd_authorship_set_uncles_V5_t authorship_set_uncles_V5;
-    pd_staking_set_controller_V5_t staking_set_controller_V5;
     pd_staking_set_validator_count_V5_t staking_set_validator_count_V5;
     pd_staking_increase_validator_count_V5_t staking_increase_validator_count_V5;
     pd_staking_scale_validator_count_V5_t staking_scale_validator_count_V5;
@@ -1740,6 +1748,7 @@ typedef union {
     pd_crowdloan_poke_V5_t crowdloan_poke_V5;
     pd_xcmpallet_send_V5_t xcmpallet_send_V5;
     pd_xcmpallet_teleport_assets_V5_t xcmpallet_teleport_assets_V5;
+    pd_xcmpallet_reserve_transfer_assets_V5_t xcmpallet_reserve_transfer_assets_V5;
     pd_xcmpallet_execute_V5_t xcmpallet_execute_V5;
 #endif
 } pd_MethodBasic_V5_t;

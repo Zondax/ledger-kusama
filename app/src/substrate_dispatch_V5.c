@@ -92,6 +92,13 @@ __Z_INLINE parser_error_t _readMethod_staking_set_payee_V5(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_staking_set_controller_V5(
+    parser_context_t* c, pd_staking_set_controller_V5_t* m)
+{
+    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V5(
     parser_context_t* c, pd_staking_payout_stakers_V5_t* m)
 {
@@ -297,13 +304,6 @@ __Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V5(
     parser_context_t* c, pd_authorship_set_uncles_V5_t* m)
 {
     CHECK_ERROR(_readVecHeader(c, &m->new_uncles))
-    return parser_ok;
-}
-
-__Z_INLINE parser_error_t _readMethod_staking_set_controller_V5(
-    parser_context_t* c, pd_staking_set_controller_V5_t* m)
-{
-    CHECK_ERROR(_readLookupSource_V5(c, &m->controller))
     return parser_ok;
 }
 
@@ -2074,6 +2074,16 @@ __Z_INLINE parser_error_t _readMethod_xcmpallet_teleport_assets_V5(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_xcmpallet_reserve_transfer_assets_V5(
+    parser_context_t* c, pd_xcmpallet_reserve_transfer_assets_V5_t* m)
+{
+    CHECK_ERROR(_readMultiLocation_V5(c, &m->dest))
+    CHECK_ERROR(_readMultiLocation_V5(c, &m->beneficiary))
+    CHECK_ERROR(_readVecMultiAsset_V5(c, &m->assets))
+    CHECK_ERROR(_readWeight_V5(c, &m->dest_weight))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_xcmpallet_execute_V5(
     parser_context_t* c, pd_xcmpallet_execute_V5_t* m)
 {
@@ -2123,6 +2133,9 @@ parser_error_t _readMethod_V5(
         break;
     case 1543: /* module 6 call 7 */
         CHECK_ERROR(_readMethod_staking_set_payee_V5(c, &method->basic.staking_set_payee_V5))
+        break;
+    case 1544: /* module 6 call 8 */
+        CHECK_ERROR(_readMethod_staking_set_controller_V5(c, &method->basic.staking_set_controller_V5))
         break;
     case 1554: /* module 6 call 18 */
         CHECK_ERROR(_readMethod_staking_payout_stakers_V5(c, &method->basic.staking_payout_stakers_V5))
@@ -2209,9 +2222,6 @@ parser_error_t _readMethod_V5(
         break;
     case 1280: /* module 5 call 0 */
         CHECK_ERROR(_readMethod_authorship_set_uncles_V5(c, &method->basic.authorship_set_uncles_V5))
-        break;
-    case 1544: /* module 6 call 8 */
-        CHECK_ERROR(_readMethod_staking_set_controller_V5(c, &method->basic.staking_set_controller_V5))
         break;
     case 1545: /* module 6 call 9 */
         CHECK_ERROR(_readMethod_staking_set_validator_count_V5(c, &method->basic.staking_set_validator_count_V5))
@@ -2904,6 +2914,9 @@ parser_error_t _readMethod_V5(
         CHECK_ERROR(_readMethod_xcmpallet_teleport_assets_V5(c, &method->basic.xcmpallet_teleport_assets_V5))
         break;
     case 25346: /* module 99 call 2 */
+        CHECK_ERROR(_readMethod_xcmpallet_reserve_transfer_assets_V5(c, &method->basic.xcmpallet_reserve_transfer_assets_V5))
+        break;
+    case 25347: /* module 99 call 3 */
         CHECK_ERROR(_readMethod_xcmpallet_execute_V5(c, &method->basic.xcmpallet_execute_V5))
         break;
 #endif
@@ -3050,6 +3063,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_CHILL;
     case 1543: /* module 6 call 7 */
         return STR_ME_SET_PAYEE;
+    case 1544: /* module 6 call 8 */
+        return STR_ME_SET_CONTROLLER;
     case 1554: /* module 6 call 18 */
         return STR_ME_PAYOUT_STAKERS;
     case 1555: /* module 6 call 19 */
@@ -3107,8 +3122,6 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_FORCE_TRANSFER;
     case 1280: /* module 5 call 0 */
         return STR_ME_SET_UNCLES;
-    case 1544: /* module 6 call 8 */
-        return STR_ME_SET_CONTROLLER;
     case 1545: /* module 6 call 9 */
         return STR_ME_SET_VALIDATOR_COUNT;
     case 1546: /* module 6 call 10 */
@@ -3570,6 +3583,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 25345: /* module 99 call 1 */
         return STR_ME_TELEPORT_ASSETS;
     case 25346: /* module 99 call 2 */
+        return STR_ME_RESERVE_TRANSFER_ASSETS;
+    case 25347: /* module 99 call 3 */
         return STR_ME_EXECUTE;
 #endif
     default:
@@ -3603,6 +3618,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 1542: /* module 6 call 6 */
         return 0;
     case 1543: /* module 6 call 7 */
+        return 1;
+    case 1544: /* module 6 call 8 */
         return 1;
     case 1554: /* module 6 call 18 */
         return 2;
@@ -3660,8 +3677,6 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 1026: /* module 4 call 2 */
         return 3;
     case 1280: /* module 5 call 0 */
-        return 1;
-    case 1544: /* module 6 call 8 */
         return 1;
     case 1545: /* module 6 call 9 */
         return 1;
@@ -4124,6 +4139,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 25345: /* module 99 call 1 */
         return 4;
     case 25346: /* module 99 call 2 */
+        return 4;
+    case 25347: /* module 99 call 3 */
         return 2;
 #endif
     default:
@@ -4211,6 +4228,13 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         switch (itemIdx) {
         case 0:
             return STR_IT_payee;
+        default:
+            return NULL;
+        }
+    case 1544: /* module 6 call 8 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_controller;
         default:
             return NULL;
         }
@@ -4430,13 +4454,6 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         switch (itemIdx) {
         case 0:
             return STR_IT_new_uncles;
-        default:
-            return NULL;
-        }
-    case 1544: /* module 6 call 8 */
-        switch (itemIdx) {
-        case 0:
-            return STR_IT_controller;
         default:
             return NULL;
         }
@@ -6367,6 +6384,19 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
         case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_beneficiary;
+        case 2:
+            return STR_IT_assets;
+        case 3:
+            return STR_IT_dest_weight;
+        default:
+            return NULL;
+        }
+    case 25347: /* module 99 call 3 */
+        switch (itemIdx) {
+        case 0:
             return STR_IT_message;
         case 1:
             return STR_IT_max_weight;
@@ -6500,6 +6530,16 @@ parser_error_t _getMethod_ItemValue_V5(
         case 0: /* staking_set_payee_V5 - payee */;
             return _toStringRewardDestination_V5(
                 &m->basic.staking_set_payee_V5.payee,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 1544: /* module 6 call 8 */
+        switch (itemIdx) {
+        case 0: /* staking_set_controller_V5 - controller */;
+            return _toStringLookupSource_V5(
+                &m->basic.staking_set_controller_V5.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6836,16 +6876,6 @@ parser_error_t _getMethod_ItemValue_V5(
         case 0: /* authorship_set_uncles_V5 - new_uncles */;
             return _toStringVecHeader(
                 &m->basic.authorship_set_uncles_V5.new_uncles,
-                outValue, outValueLen,
-                pageIdx, pageCount);
-        default:
-            return parser_no_data;
-        }
-    case 1544: /* module 6 call 8 */
-        switch (itemIdx) {
-        case 0: /* staking_set_controller_V5 - controller */;
-            return _toStringLookupSource_V5(
-                &m->basic.staking_set_controller_V5.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9938,6 +9968,31 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
+        case 0: /* xcmpallet_reserve_transfer_assets_V5 - dest */;
+            return _toStringMultiLocation_V5(
+                &m->basic.xcmpallet_reserve_transfer_assets_V5.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* xcmpallet_reserve_transfer_assets_V5 - beneficiary */;
+            return _toStringMultiLocation_V5(
+                &m->basic.xcmpallet_reserve_transfer_assets_V5.beneficiary,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* xcmpallet_reserve_transfer_assets_V5 - assets */;
+            return _toStringVecMultiAsset_V5(
+                &m->basic.xcmpallet_reserve_transfer_assets_V5.assets,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* xcmpallet_reserve_transfer_assets_V5 - dest_weight */;
+            return _toStringWeight_V5(
+                &m->basic.xcmpallet_reserve_transfer_assets_V5.dest_weight,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 25347: /* module 99 call 3 */
+        switch (itemIdx) {
         case 0: /* xcmpallet_execute_V5 - message */;
             return _toStringXcm_V5(
                 &m->basic.xcmpallet_execute_V5.message,
@@ -10247,7 +10302,8 @@ bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 18695: // Crowdloan:Poke
     case 25344: // XcmPallet:Send
     case 25345: // XcmPallet:Teleport assets
-    case 25346: // XcmPallet:Execute
+    case 25346: // XcmPallet:Reserve transfer assets
+    case 25347: // XcmPallet:Execute
         return false;
     default:
         return true;
