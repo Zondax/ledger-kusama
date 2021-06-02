@@ -324,6 +324,7 @@ static const char* STR_ME_ADD_MEMO = "Add memo";
 static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_SEND = "Send";
 static const char* STR_ME_TELEPORT_ASSETS = "Teleport assets";
+static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 
 // Items names
 static const char* STR_IT__ratio = "Ratio";
