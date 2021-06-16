@@ -1045,6 +1045,11 @@ typedef struct {
     pd_SolutionOrSnapshotSize_V5_t witness;
 } pd_electionprovidermultiphase_submit_unsigned_V5_t;
 
+#define PD_CALL_ELECTIONPROVIDERMULTIPHASE_SET_MINIMUM_UNTRUSTED_SCORE_V5 1
+typedef struct {
+    pd_OptionElectionScore_V5_t maybe_next_score;
+} pd_electionprovidermultiphase_set_minimum_untrusted_score_V5_t;
+
 #define PD_CALL_GILT_PLACE_BID_V5 0
 typedef struct {
     pd_CompactBalanceOf_t amount;
@@ -1197,10 +1202,10 @@ typedef struct {
     pd_u32_t new_;
 } pd_parachainsconfiguration_set_max_downward_message_size_V5_t;
 
-#define PD_CALL_PARACHAINSCONFIGURATION_SET_PREFERRED_DISPATCHABLE_UPWARD_MESSAGES_STEP_WEIGHT_V5 26
+#define PD_CALL_PARACHAINSCONFIGURATION_SET_UMP_SERVICE_TOTAL_WEIGHT_V5 26
 typedef struct {
     pd_Weight_V5_t new_;
-} pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t;
+} pd_parachainsconfiguration_set_ump_service_total_weight_V5_t;
 
 #define PD_CALL_PARACHAINSCONFIGURATION_SET_MAX_UPWARD_MESSAGE_SIZE_V5 27
 typedef struct {
@@ -1669,6 +1674,7 @@ typedef union {
     pd_tips_close_tip_V5_t tips_close_tip_V5;
     pd_tips_slash_tip_V5_t tips_slash_tip_V5;
     pd_electionprovidermultiphase_submit_unsigned_V5_t electionprovidermultiphase_submit_unsigned_V5;
+    pd_electionprovidermultiphase_set_minimum_untrusted_score_V5_t electionprovidermultiphase_set_minimum_untrusted_score_V5;
     pd_gilt_place_bid_V5_t gilt_place_bid_V5;
     pd_gilt_retract_bid_V5_t gilt_retract_bid_V5;
     pd_gilt_set_target_V5_t gilt_set_target_V5;
@@ -1699,7 +1705,7 @@ typedef union {
     pd_parachainsconfiguration_set_max_upward_queue_count_V5_t parachainsconfiguration_set_max_upward_queue_count_V5;
     pd_parachainsconfiguration_set_max_upward_queue_size_V5_t parachainsconfiguration_set_max_upward_queue_size_V5;
     pd_parachainsconfiguration_set_max_downward_message_size_V5_t parachainsconfiguration_set_max_downward_message_size_V5;
-    pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5;
+    pd_parachainsconfiguration_set_ump_service_total_weight_V5_t parachainsconfiguration_set_ump_service_total_weight_V5;
     pd_parachainsconfiguration_set_max_upward_message_size_V5_t parachainsconfiguration_set_max_upward_message_size_V5;
     pd_parachainsconfiguration_set_max_upward_message_num_per_candidate_V5_t parachainsconfiguration_set_max_upward_message_num_per_candidate_V5;
     pd_parachainsconfiguration_set_hrmp_open_request_ttl_V5_t parachainsconfiguration_set_hrmp_open_request_ttl_V5;

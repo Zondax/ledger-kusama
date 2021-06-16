@@ -63,6 +63,11 @@ typedef struct {
 } pd_CompactPerBill_V5_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ElectionScore_V5_t;
+
+typedef struct {
     const uint8_t* _ptr;
 } pd_KeyValue_V5_t;
 
@@ -306,6 +311,11 @@ typedef struct {
     uint8_t some;
     pd_AccountId_V5_t contained;
 } pd_OptionAccountId_V5_t;
+
+typedef struct {
+    uint8_t some;
+    pd_ElectionScore_V5_t contained;
+} pd_OptionElectionScore_V5_t;
 
 typedef struct {
     uint8_t some;

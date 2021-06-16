@@ -324,6 +324,8 @@ static const char* STR_ME_ADD_MEMO = "Add memo";
 static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_SEND = "Send";
 static const char* STR_ME_TELEPORT_ASSETS = "Teleport assets";
+static const char* STR_ME_SET_MINIMUM_UNTRUSTED_SCORE = "Set minimum untrusted score";
+static const char* STR_ME_SET_UMP_SERVICE_TOTAL_WEIGHT = "Set ump service total weight";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 
 // Items names
@@ -497,6 +499,7 @@ static const char* STR_IT_memo = "Memo";
 static const char* STR_IT_message = "Message";
 static const char* STR_IT_assets = "Assets";
 static const char* STR_IT_dest_weight = "Dest weight";
+static const char* STR_IT_maybe_next_score = "Maybe next score";
 
 #ifdef __cplusplus
 }

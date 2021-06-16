@@ -1482,6 +1482,13 @@ __Z_INLINE parser_error_t _readMethod_electionprovidermultiphase_submit_unsigned
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_electionprovidermultiphase_set_minimum_untrusted_score_V5(
+    parser_context_t* c, pd_electionprovidermultiphase_set_minimum_untrusted_score_V5_t* m)
+{
+    CHECK_ERROR(_readOptionElectionScore_V5(c, &m->maybe_next_score))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_gilt_place_bid_V5(
     parser_context_t* c, pd_gilt_place_bid_V5_t* m)
 {
@@ -1694,8 +1701,8 @@ __Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_max_downward_m
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5(
-    parser_context_t* c, pd_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5_t* m)
+__Z_INLINE parser_error_t _readMethod_parachainsconfiguration_set_ump_service_total_weight_V5(
+    parser_context_t* c, pd_parachainsconfiguration_set_ump_service_total_weight_V5_t* m)
 {
     CHECK_ERROR(_readWeight_V5(c, &m->new_))
     return parser_ok;
@@ -2676,6 +2683,9 @@ parser_error_t _readMethod_V5(
     case 9472: /* module 37 call 0 */
         CHECK_ERROR(_readMethod_electionprovidermultiphase_submit_unsigned_V5(c, &method->basic.electionprovidermultiphase_submit_unsigned_V5))
         break;
+    case 9473: /* module 37 call 1 */
+        CHECK_ERROR(_readMethod_electionprovidermultiphase_set_minimum_untrusted_score_V5(c, &method->basic.electionprovidermultiphase_set_minimum_untrusted_score_V5))
+        break;
     case 9728: /* module 38 call 0 */
         CHECK_ERROR(_readMethod_gilt_place_bid_V5(c, &method->basic.gilt_place_bid_V5))
         break;
@@ -2767,7 +2777,7 @@ parser_error_t _readMethod_V5(
         CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_downward_message_size_V5(c, &method->basic.parachainsconfiguration_set_max_downward_message_size_V5))
         break;
     case 13082: /* module 51 call 26 */
-        CHECK_ERROR(_readMethod_parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5(c, &method->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5))
+        CHECK_ERROR(_readMethod_parachainsconfiguration_set_ump_service_total_weight_V5(c, &method->basic.parachainsconfiguration_set_ump_service_total_weight_V5))
         break;
     case 13083: /* module 51 call 27 */
         CHECK_ERROR(_readMethod_parachainsconfiguration_set_max_upward_message_size_V5(c, &method->basic.parachainsconfiguration_set_max_upward_message_size_V5))
@@ -3424,6 +3434,8 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SLASH_TIP;
     case 9472: /* module 37 call 0 */
         return STR_ME_SUBMIT_UNSIGNED;
+    case 9473: /* module 37 call 1 */
+        return STR_ME_SET_MINIMUM_UNTRUSTED_SCORE;
     case 9728: /* module 38 call 0 */
         return STR_ME_PLACE_BID;
     case 9729: /* module 38 call 1 */
@@ -3485,7 +3497,7 @@ const char* _getMethod_Name_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 13081: /* module 51 call 25 */
         return STR_ME_SET_MAX_DOWNWARD_MESSAGE_SIZE;
     case 13082: /* module 51 call 26 */
-        return STR_ME_SET_PREFERRED_DISPATCHABLE_UPWARD_MESSAGES_STEP_WEIGHT;
+        return STR_ME_SET_UMP_SERVICE_TOTAL_WEIGHT;
     case 13083: /* module 51 call 27 */
         return STR_ME_SET_MAX_UPWARD_MESSAGE_SIZE;
     case 13084: /* module 51 call 28 */
@@ -3980,6 +3992,8 @@ uint8_t _getMethod_NumItems_V5(uint8_t moduleIdx, uint8_t callIdx)
         return 1;
     case 9472: /* module 37 call 0 */
         return 2;
+    case 9473: /* module 37 call 1 */
+        return 1;
     case 9728: /* module 38 call 0 */
         return 2;
     case 9729: /* module 38 call 1 */
@@ -5747,6 +5761,13 @@ const char* _getMethod_ItemName_V5(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
             return STR_IT_solution;
         case 1:
             return STR_IT_witness;
+        default:
+            return NULL;
+        }
+    case 9473: /* module 37 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_maybe_next_score;
         default:
             return NULL;
         }
@@ -8981,6 +9002,16 @@ parser_error_t _getMethod_ItemValue_V5(
         default:
             return parser_no_data;
         }
+    case 9473: /* module 37 call 1 */
+        switch (itemIdx) {
+        case 0: /* electionprovidermultiphase_set_minimum_untrusted_score_V5 - maybe_next_score */;
+            return _toStringOptionElectionScore_V5(
+                &m->basic.electionprovidermultiphase_set_minimum_untrusted_score_V5.maybe_next_score,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 9728: /* module 38 call 0 */
         switch (itemIdx) {
         case 0: /* gilt_place_bid_V5 - amount */;
@@ -9293,9 +9324,9 @@ parser_error_t _getMethod_ItemValue_V5(
         }
     case 13082: /* module 51 call 26 */
         switch (itemIdx) {
-        case 0: /* parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5 - new_ */;
+        case 0: /* parachainsconfiguration_set_ump_service_total_weight_V5 - new_ */;
             return _toStringWeight_V5(
-                &m->basic.parachainsconfiguration_set_preferred_dispatchable_upward_messages_step_weight_V5.new_,
+                &m->basic.parachainsconfiguration_set_ump_service_total_weight_V5.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -10223,6 +10254,7 @@ bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 9220: // Tips:Close tip
     case 9221: // Tips:Slash tip
     case 9472: // ElectionProviderMultiPhase:Submit unsigned
+    case 9473: // ElectionProviderMultiPhase:Set minimum untrusted score
     case 9728: // Gilt:Place bid
     case 9729: // Gilt:Retract bid
     case 9730: // Gilt:Set target
@@ -10253,7 +10285,7 @@ bool _getMethod_IsNestingSupported_V5(uint8_t moduleIdx, uint8_t callIdx)
     case 13079: // ParachainsConfiguration:Set max upward queue count
     case 13080: // ParachainsConfiguration:Set max upward queue size
     case 13081: // ParachainsConfiguration:Set max downward message size
-    case 13082: // ParachainsConfiguration:Set preferred dispatchable upward messages step weight
+    case 13082: // ParachainsConfiguration:Set ump service total weight
     case 13083: // ParachainsConfiguration:Set max upward message size
     case 13084: // ParachainsConfiguration:Set max upward message num per candidate
     case 13085: // ParachainsConfiguration:Set hrmp open request ttl

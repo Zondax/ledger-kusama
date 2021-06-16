@@ -177,6 +177,11 @@ parser_error_t _readEcdsaSignature_V5(parser_context_t* c, pd_EcdsaSignature_V5_
     GEN_DEF_READARRAY(65)
 }
 
+parser_error_t _readElectionScore_V5(parser_context_t* c, pd_ElectionScore_V5_t* v)
+{
+    return parser_not_supported;
+}
+
 parser_error_t _readEraIndex_V5(parser_context_t* c, pd_EraIndex_V5_t* v)
 {
     return _readUInt32(c, &v->value);
@@ -527,6 +532,15 @@ parser_error_t _readOptionChangesTrieConfiguration_V5(parser_context_t* c, pd_Op
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readChangesTrieConfiguration_V5(c, &v->contained))
+    }
+    return parser_ok;
+}
+
+parser_error_t _readOptionElectionScore_V5(parser_context_t* c, pd_OptionElectionScore_V5_t* v)
+{
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readElectionScore_V5(c, &v->contained))
     }
     return parser_ok;
 }
@@ -1008,6 +1022,17 @@ parser_error_t _toStringEcdsaSignature_V5(
     uint8_t pageIdx,
     uint8_t* pageCount) {
     GEN_DEF_TOSTRING_ARRAY(65)
+}
+
+parser_error_t _toStringElectionScore_V5(
+    const pd_ElectionScore_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    return parser_print_not_supported;
 }
 
 parser_error_t _toStringEraIndex_V5(
@@ -1969,6 +1994,27 @@ parser_error_t _toStringOptionChangesTrieConfiguration_V5(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringChangesTrieConfiguration_V5(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringOptionElectionScore_V5(
+    const pd_OptionElectionScore_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringElectionScore_V5(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));
