@@ -26,7 +26,7 @@ Please:
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
 
-# Kusama  5.9010.x
+# Kusama  5.9040.x
 
 ## System
 
@@ -102,13 +102,13 @@ Empty
 |nominate | :heavy_check_mark:  | :heavy_check_mark: |   | `Vec<LookupSource>` targets <br/> |
 |chill | :heavy_check_mark:  | :heavy_check_mark: |   |  |
 |set_payee | :heavy_check_mark:  | :heavy_check_mark: |   | `RewardDestination` payee <br/> |
-|set_controller |    | :heavy_check_mark: |   | `LookupSource` controller <br/> |
+|set_controller | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupSource` controller <br/> |
 |set_validator_count |    | :heavy_check_mark: |   | `Compact<u32>` new <br/> |
 |increase_validator_count |    | :heavy_check_mark: |   | `Compact<u32>` additional <br/> |
 |scale_validator_count |    |   |   | `Percent` factor <br/> |
 |force_no_eras |    | :heavy_check_mark: |   |  |
 |force_new_era |    | :heavy_check_mark: |   |  |
-|set_invulnerables |    | :heavy_check_mark: |   | `Vec<AccountId>` invulnerables <br/> |
+|set_invulnerables |    |   |   | `Vec<AccountId>` invulnerables <br/> |
 |force_unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> |
 |force_new_era_always |    | :heavy_check_mark: |   |  |
 |cancel_deferred_slash |    | :heavy_check_mark: |   | `EraIndex` era <br/>`Vec<u32>` slash_indices <br/> |
@@ -187,7 +187,7 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|set_members |    | :heavy_check_mark: |   | `Vec<AccountId>` new_members <br/>`Option<AccountId>` prime <br/>`MemberCount` old_count <br/> |
+|set_members |    |   |   | `Vec<AccountId>` new_members <br/>`Option<AccountId>` prime <br/>`MemberCount` old_count <br/> |
 |execute |    |   |   | `Proposal` proposal <br/>`Compact<u32>` length_bound <br/> |
 |propose |    |   |   | `Compact<MemberCount>` threshold <br/>`Proposal` proposal <br/>`Compact<u32>` length_bound <br/> |
 |vote |    | :heavy_check_mark: |   | `Hash` proposal <br/>`Compact<ProposalIndex>` index <br/>`bool` approve <br/> |
@@ -379,6 +379,7 @@ Empty
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |submit_unsigned |    |   |   | `RawSolution` solution <br/>`SolutionOrSnapshotSize` witness <br/> |
+|set_minimum_untrusted_score |    |   |   | `Option<ElectionScore>` maybe_next_score <br/> |
 
 ## Gilt
 
@@ -423,7 +424,7 @@ Empty
 |set_max_upward_queue_count |    | :heavy_check_mark: |   | `u32` new <br/> |
 |set_max_upward_queue_size |    | :heavy_check_mark: |   | `u32` new <br/> |
 |set_max_downward_message_size |    | :heavy_check_mark: |   | `u32` new <br/> |
-|set_preferred_dispatchable_upward_messages_step_weight |    | :heavy_check_mark: |   | `Weight` new <br/> |
+|set_ump_service_total_weight |    | :heavy_check_mark: |   | `Weight` new <br/> |
 |set_max_upward_message_size |    | :heavy_check_mark: |   | `u32` new <br/> |
 |set_max_upward_message_num_per_candidate |    | :heavy_check_mark: |   | `u32` new <br/> |
 |set_hrmp_open_request_ttl |    | :heavy_check_mark: |   | `u32` new <br/> |
@@ -547,5 +548,6 @@ Empty
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |send |    |   |   | `MultiLocation` dest <br/>`Xcm` message <br/> |
 |teleport_assets |    |   |   | `MultiLocation` dest <br/>`MultiLocation` beneficiary <br/>`Vec<MultiAsset>` assets <br/>`Weight` dest_weight <br/> |
+|reserve_transfer_assets |    |   |   | `MultiLocation` dest <br/>`MultiLocation` beneficiary <br/>`Vec<MultiAsset>` assets <br/>`Weight` dest_weight <br/> |
 |execute |    |   |   | `Xcm` message <br/>`Weight` max_weight <br/> |
 

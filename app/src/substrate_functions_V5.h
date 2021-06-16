@@ -52,6 +52,7 @@ parser_error_t _readCompactRegistrarIndex_V5(parser_context_t* c, pd_CompactRegi
 parser_error_t _readCompactWeight_V5(parser_context_t* c, pd_CompactWeight_V5_t* v);
 parser_error_t _readConviction_V5(parser_context_t* c, pd_Conviction_V5_t* v);
 parser_error_t _readEcdsaSignature_V5(parser_context_t* c, pd_EcdsaSignature_V5_t* v);
+parser_error_t _readElectionScore_V5(parser_context_t* c, pd_ElectionScore_V5_t* v);
 parser_error_t _readEraIndex_V5(parser_context_t* c, pd_EraIndex_V5_t* v);
 parser_error_t _readEthereumAddress_V5(parser_context_t* c, pd_EthereumAddress_V5_t* v);
 parser_error_t _readGrandpaEquivocationProof_V5(parser_context_t* c, pd_GrandpaEquivocationProof_V5_t* v);
@@ -75,6 +76,7 @@ parser_error_t _readNextConfigDescriptor_V5(parser_context_t* c, pd_NextConfigDe
 parser_error_t _readOpaqueCall_V5(parser_context_t* c, pd_OpaqueCall_V5_t* v);
 parser_error_t _readOptionAccountId_V5(parser_context_t* c, pd_OptionAccountId_V5_t* v);
 parser_error_t _readOptionChangesTrieConfiguration_V5(parser_context_t* c, pd_OptionChangesTrieConfiguration_V5_t* v);
+parser_error_t _readOptionElectionScore_V5(parser_context_t* c, pd_OptionElectionScore_V5_t* v);
 parser_error_t _readOptionMultiSignature_V5(parser_context_t* c, pd_OptionMultiSignature_V5_t* v);
 parser_error_t _readOptionMultiSigner_V5(parser_context_t* c, pd_OptionMultiSigner_V5_t* v);
 parser_error_t _readOptionPeriod_V5(parser_context_t* c, pd_OptionPeriod_V5_t* v);
@@ -301,6 +303,13 @@ parser_error_t _toStringEcdsaSignature_V5(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringElectionScore_V5(
+    const pd_ElectionScore_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringEraIndex_V5(
     const pd_EraIndex_V5_t* v,
     char* outValue,
@@ -457,6 +466,13 @@ parser_error_t _toStringOptionAccountId_V5(
 
 parser_error_t _toStringOptionChangesTrieConfiguration_V5(
     const pd_OptionChangesTrieConfiguration_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringOptionElectionScore_V5(
+    const pd_OptionElectionScore_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
