@@ -32,6 +32,10 @@ const defaultOptions = {
 
 jest.setTimeout(60000)
 
+beforeAll(async () => {
+  await Zemu.checkAndPullImage()
+})
+
 describe('Standard', function () {
   test.each(models)('can start and stop container', async function (m) {
     const sim = new Zemu(m.path)
@@ -176,7 +180,7 @@ describe('Standard', function () {
       // Now verify the signature
       let prehash = txBlob
       if (txBlob.length > 256) {
-        const context = blake2bInit(32, null)
+        const context = blake2bInit(32)
         blake2bUpdate(context, txBlob)
         prehash = Buffer.from(blake2bFinal(context))
       }
@@ -223,7 +227,7 @@ describe('Standard', function () {
       // Now verify the signature
       let prehash = txBlob
       if (txBlob.length > 256) {
-        const context = blake2bInit(32, null)
+        const context = blake2bInit(32)
         blake2bUpdate(context, txBlob)
         prehash = Buffer.from(blake2bFinal(context))
       }
@@ -264,7 +268,7 @@ describe('Standard', function () {
       // Now verify the signature
       let prehash = txBlob
       if (txBlob.length > 256) {
-        const context = blake2bInit(32, null)
+        const context = blake2bInit(32)
         blake2bUpdate(context, txBlob)
         prehash = Buffer.from(blake2bFinal(context))
       }
@@ -307,7 +311,7 @@ test.each(models)('set keys', async function (m) {
     // Now verify the signature
     let prehash = txBlob
     if (txBlob.length > 256) {
-      const context = blake2bInit(32, null)
+      const context = blake2bInit(32)
       blake2bUpdate(context, txBlob)
       prehash = Buffer.from(blake2bFinal(context))
     }
