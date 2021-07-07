@@ -93,6 +93,7 @@ parser_error_t _readPeriod_V5(parser_context_t* c, pd_Period_V5_t* v);
 parser_error_t _readPriority_V5(parser_context_t* c, pd_Priority_V5_t* v);
 parser_error_t _readProxyType_V5(parser_context_t* c, pd_ProxyType_V5_t* v);
 parser_error_t _readRawSolution_V5(parser_context_t* c, pd_RawSolution_V5_t* v);
+parser_error_t _readReadySolution_V5(parser_context_t* c, pd_ReadySolution_V5_t* v);
 parser_error_t _readReferendumIndex_V5(parser_context_t* c, pd_ReferendumIndex_V5_t* v);
 parser_error_t _readRegistrarIndex_V5(parser_context_t* c, pd_RegistrarIndex_V5_t* v);
 parser_error_t _readRenouncing_V5(parser_context_t* c, pd_Renouncing_V5_t* v);
@@ -585,6 +586,13 @@ parser_error_t _toStringProxyType_V5(
 
 parser_error_t _toStringRawSolution_V5(
     const pd_RawSolution_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringReadySolution_V5(
+    const pd_ReadySolution_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

@@ -364,6 +364,11 @@ parser_error_t _readRawSolution_V5(parser_context_t* c, pd_RawSolution_V5_t* v)
     return parser_not_supported;
 }
 
+parser_error_t _readReadySolution_V5(parser_context_t* c, pd_ReadySolution_V5_t* v)
+{
+    return parser_not_supported;
+}
+
 parser_error_t _readReferendumIndex_V5(parser_context_t* c, pd_ReferendumIndex_V5_t* v)
 {
     return _readUInt32(c, &v->value);
@@ -1261,7 +1266,7 @@ parser_error_t _toStringKeys_V5(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(4 * 32)
+    GEN_DEF_TOSTRING_ARRAY(6 * 32)
 }
 
 parser_error_t _toStringLeasePeriodOf_V5(
@@ -1512,6 +1517,17 @@ parser_error_t _toStringProxyType_V5(
 
 parser_error_t _toStringRawSolution_V5(
     const pd_RawSolution_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    return parser_print_not_supported;
+}
+
+parser_error_t _toStringReadySolution_V5(
+    const pd_ReadySolution_V5_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

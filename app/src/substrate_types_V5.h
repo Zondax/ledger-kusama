@@ -371,6 +371,11 @@ typedef struct {
 } pd_RawSolution_V5_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_ReadySolution_V5_t;
+
+typedef struct {
     uint32_t value;
 } pd_RegistrarIndex_V5_t;
 
