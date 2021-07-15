@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest -t 'Standard'",
-    "testSR25519": "jest --runInBand tests/sr25519.test.ts"
+    "testSR25519": "jest tests/sr25519.test.ts"
   },
   "dependencies": {
     "@zondax/ledger-polkadot": "^0.14.0",
