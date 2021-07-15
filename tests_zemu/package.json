@@ -14,12 +14,12 @@
     "Ledger"
   ],
   "scripts": {
-    "test": "jest --detectOpenHandles -t 'Standard'",
-    "testSR25519": "jest --detectOpenHandles --runInBand tests/sr25519.test.ts"
+    "test": "jest -t 'Standard'",
+    "testSR25519": "jest --runInBand tests/sr25519.test.ts"
   },
   "dependencies": {
     "@zondax/ledger-polkadot": "^0.14.0",
-    "@zondax/zemu": "^0.14.4"
+    "@zondax/zemu": "^0.16.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
