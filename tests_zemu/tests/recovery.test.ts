@@ -27,6 +27,10 @@ const defaultOptions = {
 
 jest.setTimeout(60000)
 
+beforeAll(async () => {
+  await Zemu.checkAndPullImage()
+})
+
 async function activateSecretMode(sim: any) {
   // Get to Zondax.ch menu
   for (let i = 0; i < 3; i += 1) {
