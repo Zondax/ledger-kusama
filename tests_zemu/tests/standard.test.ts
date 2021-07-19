@@ -300,7 +300,7 @@ test.each(models)('set keys', async function (m) {
     // Wait until we are not in the main menu
     await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
-    await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-set-keys`, m.name === 'nanos' ? 18 : 13)
+    await sim.compareSnapshotsAndAccept('.', `${m.prefix.toLowerCase()}-set-keys`, m.name === 'nanos' ? 22 : 15)
 
     const signatureResponse = await signatureRequest
     console.log(signatureResponse)
