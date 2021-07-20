@@ -50,7 +50,7 @@ function dummyAllowlist() {
   }
 
   // calculate digest
-  const context = blake2bInit(32, null);
+  const context = blake2bInit(32);
   blake2bUpdate(context, allowlist_len);
   blake2bUpdate(context, addressBuffer);
   const digest = Buffer.from(blake2bFinal(context));
