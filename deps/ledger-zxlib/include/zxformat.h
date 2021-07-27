@@ -43,6 +43,8 @@ extern "C" {
     return NULL;                                    \
 }
 
+NUM_TO_STR(int32)
+
 NUM_TO_STR(int64)
 
 NUM_TO_STR(uint64)

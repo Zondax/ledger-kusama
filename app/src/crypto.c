@@ -36,6 +36,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
         return zxerr_invalid_crypto_settings;
     }
 
+    zxerr_t err = zxerr_ok;
     BEGIN_TRY
     {
         TRY
@@ -72,9 +73,13 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                         break;
 #endif
                 default:
-                    CLOSE_TRY;
-                    return zxerr_invalid_crypto_settings;
+                    err = zxerr_invalid_crypto_settings;
+                    break;
             }
+        }
+        CATCH_ALL
+        {
+            err = zxerr_unknown;
         }
         FINALLY
         {
@@ -84,7 +89,7 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
     }
     END_TRY;
 
-    return zxerr_ok;
+    return err;
 }
 
 zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
@@ -107,6 +112,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
     int signatureLength = 0;
     unsigned int info = 0;
 
+    zxerr_t err = zxerr_ok;
     BEGIN_TRY
     {
         TRY
@@ -140,10 +146,8 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
         }
         CATCH_ALL
         {
-            MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
             *signatureLen = 0;
-            CLOSE_TRY;
-            return zxerr_unknown;
+            err = zxerr_unknown;
         };
         FINALLY
         {
@@ -153,7 +157,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen,
         }
     }
     END_TRY;
-    return zxerr_ok;
+    return err;
 }
 
 #ifdef SUPPORT_SR25519

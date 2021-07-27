@@ -32,6 +32,8 @@
 #include "secret.h"
 #include "app_mode.h"
 
+static bool tx_initialized = false;
+
 void extractHDPath(uint32_t rx, uint32_t offset) {
     if ((rx - offset) < sizeof(uint32_t) * HDPATH_LEN_DEFAULT) {
         THROW(APDU_CODE_WRONG_LENGTH);
@@ -72,27 +74,37 @@ __Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
             tx_initialize();
             tx_reset();
             extractHDPath(rx, OFFSET_DATA);
+            tx_initialized = true;
             return false;
         case 1:
+            if (!tx_initialized) {
+                THROW(APDU_CODE_TX_NOT_INITIALIZED);
+            }
             zemu_log("process_chunk - add \n");
             added = tx_append(&(G_io_apdu_buffer[OFFSET_DATA]), rx - OFFSET_DATA);
             if (added != rx - OFFSET_DATA) {
+                tx_initialized = false;
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
             return false;
         case 2:
+            if (!tx_initialized) {
+                THROW(APDU_CODE_TX_NOT_INITIALIZED);
+            }
             zemu_log("process_chunk - end \n");
             added = tx_append(&(G_io_apdu_buffer[OFFSET_DATA]), rx - OFFSET_DATA);
             if (added != rx - OFFSET_DATA) {
+                tx_initialized = false;
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
+            tx_initialized = false;
             return true;
     }
 
     THROW(APDU_CODE_INVALIDP1P2);
 }
 
-__Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *tx) {
     G_io_apdu_buffer[0] = 0;
 
 #if defined(APP_TESTING)
@@ -142,7 +154,7 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
 }
 
 #ifdef SUPPORT_SR25519
-__Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx) {
     zxerr_t err = app_sign_sr25519();
     if(err != zxerr_ok){
         *tx = 0;
@@ -166,7 +178,7 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
 }
 #endif
 
-__Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
+__Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx) {
     const char *error_msg = tx_parse();
     CHECK_APP_CANARY()
     if (error_msg != NULL) {
@@ -195,11 +207,11 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     *tx = 0;
     switch (key_type) {
         case key_ed25519:
-            handleSignEd25519(flags, tx, rx);
+            handleSignEd25519(flags, tx);
             break;
 #ifdef SUPPORT_SR25519
         case key_sr25519:
-            handleSignSr25519(flags, tx, rx);
+            handleSignSr25519(flags, tx);
             break;
 #endif
         default: {
@@ -231,7 +243,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
 
             switch (G_io_apdu_buffer[OFFSET_INS]) {
                 case INS_GET_VERSION: {
-                    handle_getversion(flags, tx, rx);
+                    handle_getversion(flags, tx);
                     break;
                 }
 
