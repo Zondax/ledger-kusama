@@ -67,3 +67,14 @@ void zemu_log_stack(const char *ctx) {
     (void)ctx;
 #endif
 }
+
+void zemu_trace(const char *file, uint32_t line) {
+#if defined(ZEMU_LOGGING) && (defined (TARGET_NANOS) || defined(TARGET_NANOX))
+    char buf[200];
+    snprintf(buf, sizeof(buf), "|TRACE| %s:%d\n", file, line);
+    zemu_log(buf);
+#else
+    UNUSED(file);
+    UNUSED(line);
+#endif
+}

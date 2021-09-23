@@ -17,6 +17,8 @@
 
 #if !defined (TARGET_NANOS) && !defined(TARGET_NANOX)
 
+// This macros are kept for backwards compatibility
+// the most recent SDK has unified implementations and deprecated the original os_***
 #define MEMMOVE memmove
 #define MEMSET memset
 #define MEMCPY memcpy

@@ -73,35 +73,26 @@ __Z_INLINE void strncpy_s(char *dst, const char *src, size_t dstSize) {
 #define sizeof_field(type, member) sizeof(((type *)0)->member)
 #define array_length(array) (sizeof(array) / sizeof((array)[0]))
 
-#define ZEMU_TRACE_EX(FORMAT, ...) { \
-    char trace_buffer[50];              \
-    snprintf(trace_buffer, sizeof(trace_buffer), FORMAT, __VA_ARGS__); \
-    zemu_log_stack(trace_buffer);                          \
-}
-
-#define ZEMU_TRACE() /*ZEMU_TRACE_EX("%s [%d]\n", __FILE__,  __LINE__)*/
+void zemu_trace(const char *file, uint32_t line);
+#define ZEMU_TRACE() zemu_trace( __func__, __LINE__ );
 
 void check_app_canary();
 void handle_stack_overflow();
 void zemu_log_stack(const char *ctx);
 
-#if defined(ZEMU_LOGGING)
 __Z_INLINE void zemu_log(const char *buf)
 {
-    #if defined (TARGET_NANOS) || defined(TARGET_NANOX)
+#if defined(ZEMU_LOGGING) && (defined (TARGET_NANOS) || defined(TARGET_NANOX))
     asm volatile (
     "movs r0, #0x04\n"
     "movs r1, %0\n"
     "svc      0xab\n"
     :: "r"(buf) : "r0", "r1"
     );
-    #endif
-}
 #else
-__Z_INLINE void zemu_log(const char *unused){
-    (void)unused;
-}
+    UNUSED(buf);
 #endif
+}
 
 #ifdef __cplusplus
 }
