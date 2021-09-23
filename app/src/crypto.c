@@ -234,7 +234,7 @@ zxerr_t crypto_sign_sr25519(uint8_t *signature, uint16_t signatureMaxlen,
 
 zxerr_t crypto_fillAddress(key_kind_e addressKind, uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen) {
     if (bufferLen < PK_LEN_25519 + SS58_ADDRESS_MAX_LEN) {
-        return 0;
+        return zxerr_unknown;
     }
     MEMZERO(buffer, bufferLen);
     CHECK_ZXERR(crypto_extractPublicKey(addressKind, hdPath, buffer, bufferLen));

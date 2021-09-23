@@ -30,6 +30,8 @@
 #include "zxmacros.h"
 #include "app_mode.h"
 
+static bool tx_initialized = false;
+
 unsigned char G_io_seproxyhal_spi_buffer[IO_SEPROXYHAL_BUFFER_SIZE_B];
 
 unsigned char io_event(unsigned char channel) {
