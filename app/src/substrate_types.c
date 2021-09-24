@@ -21,7 +21,6 @@
 #include "substrate_dispatch.h"
 #include <stddef.h>
 #include <stdint.h>
-#include <zbuffer.h>
 #include <zxmacros.h>
 
 parser_error_t _readbool(parser_context_t* c, pd_bool_t* v)
@@ -599,8 +598,6 @@ parser_error_t _toStringCall(
             outValue, outValueLen, 0, &itemPages);
         (*pageCount) += itemPages;
     }
-
-    zb_check_canary();
 
     if (pageIdx == 0) {
         snprintf(outValue, outValueLen, "%s", _getMethod_Name(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx));

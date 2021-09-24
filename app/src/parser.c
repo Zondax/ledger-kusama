@@ -16,7 +16,6 @@
 
 #include <stdio.h>
 #include <zxmacros.h>
-#include "zbuffer.h"
 #include "app_mode.h"
 #include "parser.h"
 #include "coin.h"
@@ -52,7 +51,6 @@ parser_error_t parser_parse(parser_context_t *ctx, const uint8_t *data, size_t d
     ctx->tx_obj->nestCallIdx.isTail = true;
     parser_error_t err = _readTx(ctx, ctx->tx_obj);
     CTX_CHECK_AVAIL(ctx, 0)
-    zb_check_canary();
 
     return err;
 }
@@ -61,11 +59,11 @@ __Z_INLINE bool parser_show_expert_fields() {
     return app_mode_expert();
 }
 
-bool parser_show_tip(const parser_context_t *ctx) {
+bool parser_show_tip(const parser_context_t *ctx){
     if (ctx->tx_obj->tip.value.len <= 4) {
         uint64_t v;
         _getValue(&ctx->tx_obj->tip.value, &v);
-        if (v == 0) {
+        if ( v == 0 ){
             return false;
         }
     }
