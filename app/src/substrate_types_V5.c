@@ -104,21 +104,21 @@ parser_error_t _readAccountIndex_V5(parser_context_t* c, pd_AccountIndex_V5_t* v
 
 parser_error_t _readAccountVoteSplit_V5(parser_context_t* c, pd_AccountVoteSplit_V5_t* v)
 {
-    CHECK_ERROR(_readBalanceOf(c, &v->aye));
-    CHECK_ERROR(_readBalanceOf(c, &v->nay));
+    CHECK_ERROR(_readBalanceOf(c, &v->aye))
+    CHECK_ERROR(_readBalanceOf(c, &v->nay))
     return parser_ok;
 }
 
 parser_error_t _readAccountVoteStandard_V5(parser_context_t* c, pd_AccountVoteStandard_V5_t* v)
 {
-    CHECK_ERROR(_readVote_V5(c, &v->vote));
-    CHECK_ERROR(_readBalanceOf(c, &v->balance));
+    CHECK_ERROR(_readVote_V5(c, &v->vote))
+    CHECK_ERROR(_readBalanceOf(c, &v->balance))
     return parser_ok;
 }
 
 parser_error_t _readAccountVote_V5(parser_context_t* c, pd_AccountVote_V5_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
 
     switch (v->value) {
@@ -213,15 +213,15 @@ parser_error_t _readIdentityFields_V5(parser_context_t* c, pd_IdentityFields_V5_
 
 parser_error_t _readIdentityInfo_V5(parser_context_t* c, pd_IdentityInfo_V5_t* v)
 {
-    CHECK_ERROR(_readVecTupleDataData(c, &v->additional));
-    CHECK_ERROR(_readData(c, &v->display));
-    CHECK_ERROR(_readData(c, &v->legal));
-    CHECK_ERROR(_readData(c, &v->web));
-    CHECK_ERROR(_readData(c, &v->riot));
-    CHECK_ERROR(_readData(c, &v->email));
-    CHECK_ERROR(_readOptionu8_array_20(c, &v->pgp_fingerprint));
-    CHECK_ERROR(_readData(c, &v->image));
-    CHECK_ERROR(_readData(c, &v->twitter));
+    CHECK_ERROR(_readVecTupleDataData(c, &v->additional))
+    CHECK_ERROR(_readData(c, &v->display))
+    CHECK_ERROR(_readData(c, &v->legal))
+    CHECK_ERROR(_readData(c, &v->web))
+    CHECK_ERROR(_readData(c, &v->riot))
+    CHECK_ERROR(_readData(c, &v->email))
+    CHECK_ERROR(_readOptionu8_array_20(c, &v->pgp_fingerprint))
+    CHECK_ERROR(_readData(c, &v->image))
+    CHECK_ERROR(_readData(c, &v->twitter))
     return parser_ok;
 }
 
@@ -254,7 +254,7 @@ parser_error_t _readLeasePeriodOf_V5(parser_context_t* c, pd_LeasePeriodOf_V5_t*
 
 parser_error_t _readLookupSource_V5(parser_context_t* c, pd_LookupSource_V5_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
     switch (v->value) {
     case 0: // Id
@@ -386,7 +386,7 @@ parser_error_t _readRenouncing_V5(parser_context_t* c, pd_Renouncing_V5_t* v)
 
 parser_error_t _readRewardDestination_V5(parser_context_t* c, pd_RewardDestination_V5_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
 
     CHECK_ERROR(_readUInt8(c, &v->value))
     if (v->value > 2) {
@@ -455,8 +455,8 @@ parser_error_t _readValidationCode_V5(parser_context_t* c, pd_ValidationCode_V5_
 
 parser_error_t _readValidatorPrefs_V5(parser_context_t* c, pd_ValidatorPrefs_V5_t* v)
 {
-    CHECK_INPUT();
-    CHECK_ERROR(_readCompactPerBill_V5(c, &v->commission));
+    CHECK_INPUT()
+    CHECK_ERROR(_readCompactPerBill_V5(c, &v->commission))
     CHECK_ERROR(_readbool(c, &v->blocked))
     return parser_ok;
 }
@@ -471,7 +471,7 @@ parser_error_t _readVestingInfo_V5(parser_context_t* c, pd_VestingInfo_V5_t* v)
 
 parser_error_t _readVote_V5(parser_context_t* c, pd_Vote_V5_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
     uint8_t b;
     CHECK_ERROR(_readUInt8(c, &b))
 
@@ -799,7 +799,7 @@ parser_error_t _toStringAccountVoteSplit_V5(
 
     pages[0] = 1;
     CHECK_ERROR(_toStringBalanceOf(&v->aye, outValue, outValueLen, 0, &pages[1]))
-    CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, 0, &pages[2]));
+    CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, 0, &pages[2]))
 
     *pageCount = 0;
     for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
@@ -816,7 +816,7 @@ parser_error_t _toStringAccountVoteSplit_V5(
     /////////
 
     if (pageIdx < pages[1]) {
-        CHECK_ERROR(_toStringBalanceOf(&v->aye, outValue, outValueLen, pageIdx, &pages[1]));
+        CHECK_ERROR(_toStringBalanceOf(&v->aye, outValue, outValueLen, pageIdx, &pages[1]))
         return parser_ok;
     }
     pageIdx -= pages[1];
@@ -825,10 +825,10 @@ parser_error_t _toStringAccountVoteSplit_V5(
     /////////
 
     if (pageIdx < pages[2]) {
-        CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, pageIdx, &pages[2]));
+        CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, pageIdx, &pages[2]))
         return parser_ok;
     }
-    pageIdx -= pages[2];
+    // pageIdx -= pages[2];
 
     /////////
     /////////
@@ -849,7 +849,7 @@ parser_error_t _toStringAccountVoteStandard_V5(
 
     pages[0] = 1;
     CHECK_ERROR(_toStringVote_V5(&v->vote, outValue, outValueLen, 0, &pages[1]))
-    CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, 0, &pages[2]));
+    CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, 0, &pages[2]))
 
     *pageCount = 0;
     for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
@@ -870,7 +870,7 @@ parser_error_t _toStringAccountVoteStandard_V5(
     /////////
 
     if (pageIdx < pages[1]) {
-        CHECK_ERROR(_toStringVote_V5(&v->vote, outValue, outValueLen, pageIdx, &pages[1]));
+        CHECK_ERROR(_toStringVote_V5(&v->vote, outValue, outValueLen, pageIdx, &pages[1]))
         return parser_ok;
     }
     pageIdx -= pages[1];
@@ -879,10 +879,10 @@ parser_error_t _toStringAccountVoteStandard_V5(
     /////////
 
     if (pageIdx < pages[2]) {
-        CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, pageIdx, &pages[2]));
+        CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, pageIdx, &pages[2]))
         return parser_ok;
     }
-    pageIdx -= pages[2];
+    // pageIdx -= pages[2];
 
     /////////
     /////////
@@ -1209,7 +1209,7 @@ parser_error_t _toStringIdentityInfo_V5(
         CHECK_ERROR(_toStringData(&v->twitter, outValue, outValueLen, pageIdx, &pages[8]))
         return parser_ok;
     }
-    pageIdx -= pages[8];
+    // pageIdx -= pages[8];
 
     return parser_display_idx_out_of_range;
 }
@@ -1875,14 +1875,14 @@ parser_error_t _toStringVote_V5(
 {
     CLEAN_AND_CHECK()
 
-    CHECK_PARSER_ERR(_toStringbool(&v->aye, outValue, outValueLen, pageIdx, pageCount));
+    CHECK_PARSER_ERR(_toStringbool(&v->aye, outValue, outValueLen, pageIdx, pageCount))
     uint16_t offset = strlen(outValue);
     outValue[offset++] = ' ';
     CHECK_PARSER_ERR(_toStringConviction_V5(&v->conviction,
         outValue + offset,
         outValueLen - offset,
         pageIdx,
-        pageCount));
+        pageCount))
     *pageCount = 1;
     return parser_ok;
 }
@@ -1924,7 +1924,7 @@ parser_error_t _toStringVecAccountId_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(AccountId_V5);
+    GEN_DEF_TOSTRING_VECTOR(AccountId_V5)
 }
 
 parser_error_t _toStringVecKeyValue_V5(
@@ -1934,7 +1934,7 @@ parser_error_t _toStringVecKeyValue_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(KeyValue_V5);
+    GEN_DEF_TOSTRING_VECTOR(KeyValue_V5)
 }
 
 parser_error_t _toStringVecKey_V5(
@@ -1944,7 +1944,7 @@ parser_error_t _toStringVecKey_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(Key_V5);
+    GEN_DEF_TOSTRING_VECTOR(Key_V5)
 }
 
 parser_error_t _toStringVecLookupSource_V5(
@@ -1954,7 +1954,7 @@ parser_error_t _toStringVecLookupSource_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(LookupSource_V5);
+    GEN_DEF_TOSTRING_VECTOR(LookupSource_V5)
 }
 
 parser_error_t _toStringVecMultiAsset_V5(
@@ -1964,7 +1964,7 @@ parser_error_t _toStringVecMultiAsset_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(MultiAsset_V5);
+    GEN_DEF_TOSTRING_VECTOR(MultiAsset_V5)
 }
 
 parser_error_t _toStringVecTupleAccountIdData_V5(
@@ -1974,7 +1974,7 @@ parser_error_t _toStringVecTupleAccountIdData_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(TupleAccountIdData_V5);
+    GEN_DEF_TOSTRING_VECTOR(TupleAccountIdData_V5)
 }
 
 parser_error_t _toStringOptionAccountId_V5(
@@ -1991,7 +1991,7 @@ parser_error_t _toStringOptionAccountId_V5(
         CHECK_ERROR(_toStringAccountId_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2012,7 +2012,7 @@ parser_error_t _toStringOptionChangesTrieConfiguration_V5(
         CHECK_ERROR(_toStringChangesTrieConfiguration_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2033,7 +2033,7 @@ parser_error_t _toStringOptionElectionScore_V5(
         CHECK_ERROR(_toStringElectionScore_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2054,7 +2054,7 @@ parser_error_t _toStringOptionMultiSignature_V5(
         CHECK_ERROR(_toStringMultiSignature_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2075,7 +2075,7 @@ parser_error_t _toStringOptionMultiSigner_V5(
         CHECK_ERROR(_toStringMultiSigner_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2096,7 +2096,7 @@ parser_error_t _toStringOptionPeriod_V5(
         CHECK_ERROR(_toStringPeriod_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2117,7 +2117,7 @@ parser_error_t _toStringOptionProxyType_V5(
         CHECK_ERROR(_toStringProxyType_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2138,7 +2138,7 @@ parser_error_t _toStringOptionReferendumIndex_V5(
         CHECK_ERROR(_toStringReferendumIndex_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2159,7 +2159,7 @@ parser_error_t _toStringOptionStatementKind_V5(
         CHECK_ERROR(_toStringStatementKind_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2180,7 +2180,7 @@ parser_error_t _toStringOptionTimepoint_V5(
         CHECK_ERROR(_toStringTimepoint_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -2201,7 +2201,7 @@ parser_error_t _toStringOptionTupleBalanceOfBalanceOfBlockNumber_V5(
         CHECK_ERROR(_toStringTupleBalanceOfBalanceOfBlockNumber_V5(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }

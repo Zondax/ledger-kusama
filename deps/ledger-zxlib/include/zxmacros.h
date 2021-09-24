@@ -35,6 +35,7 @@ extern void explicit_bzero(void *s, size_t n) __THROW __nonnull ((1));
 #endif
 
 #define __Z_INLINE inline __attribute__((always_inline)) static
+#define __Z_UNUSED __attribute__((unused))
 #define NV_ALIGN __attribute__ ((aligned(64)))
 
 #if defined(LEDGER_SPECIFIC)
@@ -45,10 +46,6 @@ extern void explicit_bzero(void *s, size_t n) __THROW __nonnull ((1));
 #include "zxmacros_ledger.h"
 #else
 #include "zxmacros_x64.h"
-#endif
-
-#ifndef UNUSED
-#define UNUSED(x) (void)x
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
@@ -76,23 +73,24 @@ __Z_INLINE void strncpy_s(char *dst, const char *src, size_t dstSize) {
 void zemu_trace(const char *file, uint32_t line);
 #define ZEMU_TRACE() zemu_trace( __func__, __LINE__ );
 
-void check_app_canary();
+__attribute__((unused)) void check_app_canary();
 void handle_stack_overflow();
 void zemu_log_stack(const char *ctx);
 
+#if defined(ZEMU_LOGGING) && (defined (TARGET_NANOS) || defined(TARGET_NANOX))
 __Z_INLINE void zemu_log(const char *buf)
 {
-#if defined(ZEMU_LOGGING) && (defined (TARGET_NANOS) || defined(TARGET_NANOX))
     asm volatile (
     "movs r0, #0x04\n"
     "movs r1, %0\n"
     "svc      0xab\n"
     :: "r"(buf) : "r0", "r1"
     );
-#else
-    UNUSED(buf);
-#endif
 }
+#else
+__Z_INLINE void zemu_log(__Z_UNUSED const char *_) {}
+#endif
+
 
 #ifdef __cplusplus
 }
