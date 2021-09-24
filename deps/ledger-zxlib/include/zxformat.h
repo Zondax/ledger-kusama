@@ -169,35 +169,57 @@ __Z_INLINE uint8_t fpstr_to_str(char *out, uint16_t outLen, const char *number, 
         if (digits == 0) {
             snprintf(out, outLen, "0");
             return 0;
-        } else if (outLen < digits) {
+        }
+
+        if (outLen < digits) {
             snprintf(out, outLen, "ERR");
             return 1;
         }
-        strcpy(out, number);
+
+        // No need for formatting
+        snprintf(out, outLen, "%s", number);
         return 0;
     }
 
-    if ((outLen < decimals + 2) ||
-        (outLen < digits + 1)) {
+    if ((outLen < decimals + 2)) {
+        snprintf(out, outLen, "ERR");
+        return 1;
+    }
+
+    if (outLen < digits + 2) {
         snprintf(out, outLen, "ERR");
         return 1;
     }
 
     if (digits <= decimals) {
+        if (outLen <= decimals + 2) {
+            snprintf(out, outLen, "ERR");
+            return 1;
+        }
+
         // First part
-        strcpy(out, "0.");
+        snprintf(out, outLen, "0.");
         out += 2;
+        outLen -= 2;
+
         MEMSET(out, '0', decimals - digits);
         out += decimals - digits;
-    } else {
-        const size_t shift = digits - decimals;
-        strcpy(out, number);
-        number += shift;
-        out += shift;
-        *out++ = '.';
+        outLen -= decimals - digits;
+
+        snprintf(out, outLen, "%s", number);
+        return 0;
     }
 
-    strcpy(out, number);
+    const size_t shift = digits - decimals;
+    snprintf(out, outLen, "%s", number);
+    number += shift;
+
+    out += shift;
+    outLen -= shift;
+
+    *out++ = '.';
+    outLen--;
+    snprintf(out, outLen, "%s", number);
     return 0;
 }
 

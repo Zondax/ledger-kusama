@@ -83,12 +83,12 @@ std::vector<testcase_t> GetJsonTestCases(std::string jsonFile) {
     for (int i = 0; i < obj.size(); i++) {
 
         auto outputs = std::vector<std::string>();
-        for (auto s : obj[i]["output"]) {
+        for (auto s: obj[i]["output"]) {
             outputs.push_back(s.asString());
         }
 
         auto outputs_expert = std::vector<std::string>();
-        for (auto s : obj[i]["output_expert"]) {
+        for (auto s: obj[i]["output_expert"]) {
             outputs_expert.push_back(s.asString());
         }
 
@@ -121,7 +121,7 @@ void check_testcase(const testcase_t &tc, bool expert_mode) {
     auto output = dumpUI(&ctx, 40, 40);
 
     std::cout << std::endl;
-    for (const auto &i : output) {
+    for (const auto &i: output) {
         std::cout << i << std::endl;
     }
     std::cout << std::endl << std::endl;
@@ -138,26 +138,28 @@ void check_testcase(const testcase_t &tc, bool expert_mode) {
 INSTANTIATE_TEST_SUITE_P
 
 (
-    JsonTestCasesCurrentTxVer,
-    JsonTestsA,
-    ::testing::ValuesIn(GetJsonTestCases("testcases_current.json")),
-    JsonTestsA::PrintToStringParamName()
+        JsonTestCasesCurrentTxVer,
+        JsonTestsA,
+        ::testing::ValuesIn(GetJsonTestCases("testcases_current.json")),
+        JsonTestsA::PrintToStringParamName()
 );
 
 
 INSTANTIATE_TEST_SUITE_P
 
 (
-    JsonTestCasesPreviousTxVer,
-    JsonTestsB,
-    ::testing::ValuesIn(GetJsonTestCases("testcases_previous.json")),
-    JsonTestsB::PrintToStringParamName()
+        JsonTestCasesPreviousTxVer,
+        JsonTestsB,
+        ::testing::ValuesIn(GetJsonTestCases("testcases_previous.json")),
+        JsonTestsB::PrintToStringParamName()
 );
 
 // Parametric test using current runtime:
 TEST_P(JsonTestsA, CheckUIOutput_CurrentTX_Normal) { check_testcase(GetParam(), false); }
+
 TEST_P(JsonTestsA, CheckUIOutput_CurrentTX_Expert) { check_testcase(GetParam(), true); }
 
 // Parametric test using previous runtime:
 TEST_P(JsonTestsB, CheckUIOutput_PreviousTX_Normal) { check_testcase(GetParam(), false); }
+
 TEST_P(JsonTestsB, CheckUIOutput_PreviousTX_Expert) { check_testcase(GetParam(), true); }

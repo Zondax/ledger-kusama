@@ -85,7 +85,7 @@ parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_MethodNested_
         return parser_tx_nesting_limit_reached;
     }
 
-    CHECK_ERROR(_readCallIndex(c, &v->callIndex));
+    CHECK_ERROR(_readCallIndex(c, &v->callIndex))
 
     if (!_getMethod_IsNestingSupported(c->tx_obj->transactionVersion, v->callIndex.moduleIdx, v->callIndex.idx)) {
         return parser_not_supported;
@@ -118,7 +118,7 @@ parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v) {
 
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
     MEMZERO(v, sizeof(pd_Data_t));
     CHECK_ERROR(_readUInt8(c, (uint8_t*)&v->type))
 
@@ -143,7 +143,7 @@ parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
             const uint8_t bufferSize = ((uint8_t)v->type - 1);
             v->_ptr = c->buffer + c->offset;
             v->_len = bufferSize;
-            CTX_CHECK_AND_ADVANCE(c, v->_len);
+            CTX_CHECK_AND_ADVANCE(c, v->_len)
             return parser_ok;
         }
         return parser_not_supported;
@@ -165,13 +165,13 @@ parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
     CHECK_ERROR(_getValue(&clen, &v->_len))
 
     v->_ptr = c->buffer + c->offset;
-    CTX_CHECK_AND_ADVANCE(c, v->_len);
+    CTX_CHECK_AND_ADVANCE(c, v->_len)
     return parser_ok;
 }
 
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v)
 {
-    CHECK_INPUT();
+    CHECK_INPUT()
     CHECK_ERROR(_readData(c, &v->data1))
     CHECK_ERROR(_readData(c, &v->data2))
     return parser_ok;
@@ -214,8 +214,8 @@ parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
 {
     compactInt_t clen;
     pd_Call_t dummy;
-    CHECK_PARSER_ERR(_readCompactInt(c, &clen));
-    CHECK_PARSER_ERR(_getValue(&clen, &v->_len));
+    CHECK_PARSER_ERR(_readCompactInt(c, &clen))
+    CHECK_PARSER_ERR(_getValue(&clen, &v->_len))
 
     if (v->_len > MAX_CALL_VEC_SIZE) {
         return parser_tx_call_vec_too_large;
@@ -239,8 +239,8 @@ parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
 
 parser_error_t _readCompactBalanceOf(parser_context_t* c, pd_CompactBalanceOf_t* v)
 {
-    CHECK_INPUT();
-    CHECK_ERROR(_readCompactInt(c, &v->value));
+    CHECK_INPUT()
+    CHECK_ERROR(_readCompactInt(c, &v->value))
     return parser_ok;
 }
 
@@ -434,9 +434,7 @@ parser_error_t _toStringBalance(
     size_t size = strlen(bufferUI) + strlen(COIN_TICKER) + 2;
     char _tmpBuffer[200];
     MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
-    strcat(_tmpBuffer, COIN_TICKER);
-    strcat(_tmpBuffer, " ");
-    strcat(_tmpBuffer, bufferUI);
+    snprintf(_tmpBuffer, sizeof(_tmpBuffer), "%s %s", COIN_TICKER, bufferUI);
     // print length: strlen(value) + strlen(COIN_TICKER) + strlen(" ") + nullChar
     MEMZERO(bufferUI, sizeof(bufferUI));
     snprintf(bufferUI, size, "%s", _tmpBuffer);
@@ -499,7 +497,7 @@ parser_error_t _toStringBytes(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_ARRAY(v->_len);
+    GEN_DEF_TOSTRING_ARRAY(v->_len)
 }
 
 parser_error_t _toStringTupleDataData(
@@ -537,7 +535,7 @@ parser_error_t _toStringTupleDataData(
         CHECK_ERROR(_toStringData(&v->data2, outValue, outValueLen, pageIdx, &pages[1]))
         return parser_ok;
     }
-    pageIdx -= pages[1];
+//    pageIdx -= pages[1];
 
     return parser_display_idx_out_of_range;
 }
@@ -772,7 +770,7 @@ parser_error_t _toStringVecu32(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    GEN_DEF_TOSTRING_VECTOR(u32);
+    GEN_DEF_TOSTRING_VECTOR(u32)
 }
 
 parser_error_t _toStringOptionu8_array_20(
@@ -789,7 +787,7 @@ parser_error_t _toStringOptionu8_array_20(
         CHECK_ERROR(_toStringu8_array_20(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
@@ -810,7 +808,7 @@ parser_error_t _toStringOptionu32(
         CHECK_ERROR(_toStringu32(
             &v->contained,
             outValue, outValueLen,
-            pageIdx, pageCount));
+            pageIdx, pageCount))
     } else {
         snprintf(outValue, outValueLen, "None");
     }
