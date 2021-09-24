@@ -57,9 +57,7 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
 #endif
 }
 
-__Z_INLINE bool process_chunk(volatile uint32_t *tx, uint32_t rx) {
-    UNUSED(tx);
-
+__Z_INLINE bool process_chunk(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
     const uint8_t payloadType = G_io_apdu_buffer[OFFSET_PAYLOAD_TYPE];
 #ifndef SUPPORT_SR25519
     if (G_io_apdu_buffer[OFFSET_P2] != 0) {

@@ -121,7 +121,6 @@ endif
 ############
 # Platform
 
-DEFINES       += UNUSED\(x\)=\(void\)x
 DEFINES       += PRINTF\(...\)=
 
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)

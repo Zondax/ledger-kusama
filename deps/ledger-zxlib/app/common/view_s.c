@@ -108,7 +108,6 @@ static unsigned int view_message_button(unsigned int button_mask, __Z_UNUSED uns
 }
 
 static unsigned int view_review_button(unsigned int button_mask, __Z_UNUSED unsigned int button_mask_counter) {
-    UNUSED(button_mask_counter);
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT | BUTTON_RIGHT:
             h_review_button_both();
