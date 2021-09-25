@@ -1,7 +1,0 @@
-{
-    "makefile.extensionOutputFolder": "./.vscode",
-    "files.associations": {
-        "crypto_helper.h": "c",
-        "inttypes.h": "c"
-    }
-}
