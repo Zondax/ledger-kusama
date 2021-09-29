@@ -20,6 +20,7 @@ extern "C" {
 #endif
 
 #include "zxmacros.h"
+#include "zxerror.h"
 
 #define NUM_TO_STR(TYPE) __Z_INLINE const char * TYPE##_to_str(char *data, int dataLen, TYPE##_t number) { \
     if (dataLen < 2) return "Buffer too small";     \
@@ -48,6 +49,8 @@ NUM_TO_STR(int32)
 NUM_TO_STR(int64)
 
 NUM_TO_STR(uint64)
+
+zxerr_t safeWrap(char *buffer, size_t bufferSize, const char *prefix, char suffix);
 
 __Z_INLINE void bip32_to_str(char *s, uint32_t max, const uint32_t *path, uint8_t pathLen) {
     MEMZERO(s, max);

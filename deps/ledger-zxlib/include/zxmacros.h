@@ -31,7 +31,9 @@ extern "C" {
 #include "string.h"
 
 #ifndef __APPLE__
+
 extern void explicit_bzero(void *s, size_t n) __THROW __nonnull ((1));
+
 #endif
 
 #define __Z_INLINE inline __attribute__((always_inline)) static
@@ -45,7 +47,9 @@ extern void explicit_bzero(void *s, size_t n) __THROW __nonnull ((1));
 #if defined (TARGET_NANOS) || defined(TARGET_NANOX)
 #include "zxmacros_ledger.h"
 #else
+
 #include "zxmacros_x64.h"
+
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
@@ -71,10 +75,13 @@ __Z_INLINE void strncpy_s(char *dst, const char *src, size_t dstSize) {
 #define array_length(array) (sizeof(array) / sizeof((array)[0]))
 
 void zemu_trace(const char *file, uint32_t line);
+
 #define ZEMU_TRACE() zemu_trace( __func__, __LINE__ );
 
 __attribute__((unused)) void check_app_canary();
+
 void handle_stack_overflow();
+
 void zemu_log_stack(const char *ctx);
 
 #if defined(ZEMU_LOGGING) && (defined (TARGET_NANOS) || defined(TARGET_NANOX))
@@ -88,7 +95,9 @@ __Z_INLINE void zemu_log(const char *buf)
     );
 }
 #else
+
 __Z_INLINE void zemu_log(__Z_UNUSED const char *_) {}
+
 #endif
 
 
@@ -97,5 +106,3 @@ __Z_INLINE void zemu_log(__Z_UNUSED const char *_) {}
 #endif
 
 #pragma clang diagnostic pop
-
-#include "zxformat.h"

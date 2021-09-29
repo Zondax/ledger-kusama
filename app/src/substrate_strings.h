@@ -68,6 +68,13 @@ static const char* STR_MO_SLOTS = "Slots";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
+static const char* STR_MO_CONFIGURATION = "Configuration";
+static const char* STR_MO_PARAINCLUSION = "Parainclusion";
+static const char* STR_MO_PARAINHERENT = "Parainherent";
+static const char* STR_MO_INITIALIZER = "Initializer";
+static const char* STR_MO_DMP = "Dmp";
+static const char* STR_MO_UMP = "Ump";
+static const char* STR_MO_HRMP = "Hrmp";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -331,6 +338,8 @@ static const char* STR_ME_TRANSFER_ALL = "Transfer all";
 static const char* STR_ME_UPDATE_STAKING_LIMITS = "Update staking limits";
 static const char* STR_ME_CHILL_OTHER = "Chill other";
 static const char* STR_ME_SET_EMERGENCY_ELECTION_RESULT = "Set emergency election result";
+static const char* STR_ME_SET_STAKING_LIMITS = "Set staking limits";
+static const char* STR_ME_SUBMIT = "Submit";
 
 // Items names
 static const char* STR_IT__ratio = "Ratio";
@@ -509,6 +518,9 @@ static const char* STR_IT_min_nominator_bond = "Min nominator bond";
 static const char* STR_IT_min_validator_bond = "Min validator bond";
 static const char* STR_IT_max_nominator_count = "Max nominator count";
 static const char* STR_IT_max_validator_count = "Max validator count";
+static const char* STR_IT_supports = "Supports";
+static const char* STR_IT_num_signed_submissions = "Num signed submissions";
+static const char* STR_IT_relay_parent_number = "Relay parent number";
 
 #ifdef __cplusplus
 }

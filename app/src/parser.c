@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include <zxmacros.h>
+#include <zxformat.h>
 #include "app_mode.h"
 #include "parser.h"
 #include "coin.h"

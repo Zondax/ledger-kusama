@@ -93,7 +93,7 @@ unsigned short io_exchange_al(unsigned char channel, unsigned short tx_len) {
 }
 
 void handle_generic_apdu(__Z_UNUSED volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
-    if (rx > 4 && MEMCMP(G_io_apdu_buffer, "\xE0\x01\x00\x00", 4) == 0) {
+    if (rx > 4 && memcmp(G_io_apdu_buffer, "\xE0\x01\x00\x00", 4) == 0) {
         // Respond to get device info command
         uint8_t * p = G_io_apdu_buffer;
         // Target ID        4 bytes

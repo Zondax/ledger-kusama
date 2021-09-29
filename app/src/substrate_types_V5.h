@@ -101,6 +101,10 @@ typedef struct {
 } pd_MultiSigner_V5_t;
 
 typedef struct {
+    compactInt_t value;
+} pd_Percent_V5_t;
+
+typedef struct {
     uint64_t value;
 } pd_Period_V5_t;
 
@@ -329,6 +333,11 @@ typedef struct {
 
 typedef struct {
     uint8_t some;
+    pd_Percent_V5_t contained;
+} pd_OptionPercent_V5_t;
+
+typedef struct {
+    uint8_t some;
     pd_Period_V5_t contained;
 } pd_OptionPeriod_V5_t;
 
@@ -362,18 +371,9 @@ typedef struct {
 } pd_Perbill_V5_t;
 
 typedef struct {
-    compactInt_t value;
-} pd_Percent_V5_t;
-
-typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_RawSolution_V5_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ReadySolution_V5_t;
 
 typedef struct {
     uint32_t value;
@@ -406,6 +406,11 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_SolutionOrSnapshotSize_V5_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Supports_V5_t;
 
 typedef struct {
     // TODO: Not implemented

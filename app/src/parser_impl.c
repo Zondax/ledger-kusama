@@ -15,6 +15,7 @@
 ********************************************************************************/
 
 #include <zxmacros.h>
+#include <zxformat.h>
 #include "parser_impl.h"
 #include "parser_txdef.h"
 #include "coin.h"
@@ -59,7 +60,7 @@ const char *parser_getErrorDescription(parser_error_t err) {
             return "display_idx_out_of_range";
         case parser_display_page_out_of_range:
             return "display_page_out_of_range";
-        // Coin specific
+            // Coin specific
         case parser_spec_not_supported:
             return "Spec version not supported";
         case parser_tx_version_not_supported:
@@ -217,21 +218,8 @@ parser_error_t _toStringCompactInt(const compactInt_t *c,
         return parser_unexpected_value;
     }
 
-    // Add prefix
-    if (strlen(prefix) > 0) {
-        size_t size = strlen(bufferUI) + strlen(prefix) + 2;
-        char _tmpBuffer[200];
-        MEMZERO(_tmpBuffer, sizeof(_tmpBuffer));
-        snprintf(_tmpBuffer, sizeof(_tmpBuffer), "%s %s", prefix, bufferUI);
-        // print length: strlen(value) + strlen(prefix) + strlen(" ") + strlen("\0")
-        MEMZERO(bufferUI, sizeof(bufferUI));
-        snprintf(bufferUI, size, "%s", _tmpBuffer);
-    }
-
-    // Add postfix
-    if (postfix > 32 && postfix < 127) {
-        const uint16_t p = strlen(bufferUI);
-        bufferUI[p] = postfix;
+    if (safeWrap(bufferUI, sizeof(bufferUI), prefix, postfix) != zxerr_ok) {
+        return parser_unexpected_buffer_end;
     }
 
     pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
@@ -308,7 +296,10 @@ parser_error_t _toStringCompactIndex(const pd_CompactIndex_t *v,
 parser_error_t _toStringCompactBalance(const pd_CompactBalance_t *v,
                                        char *outValue, uint16_t outValueLen,
                                        uint8_t pageIdx, uint8_t *pageCount) {
-    CHECK_ERROR(_toStringCompactInt(&v->value, COIN_AMOUNT_DECIMAL_PLACES, 0, COIN_TICKER, outValue, outValueLen, pageIdx, pageCount))
+    CHECK_ERROR(_toStringCompactInt(
+            &v->value,
+            COIN_AMOUNT_DECIMAL_PLACES, 0, COIN_TICKER,
+            outValue, outValueLen, pageIdx, pageCount))
     number_inplace_trimming(outValue, 1);
     return parser_ok;
 }
