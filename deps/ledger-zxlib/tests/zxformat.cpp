@@ -15,6 +15,7 @@
 ********************************************************************************/
 #include <gmock/gmock.h>
 #include <zxmacros.h>
+#include <zxformat.h>
 
 namespace {
     TEST(FORMAT, nothingAdded) {
@@ -22,9 +23,8 @@ namespace {
 
         snprintf(buffer, sizeof(buffer), "TEST");
         auto prefix = std::string("");
-        char suffix = 0;
 
-        EXPECT_EQ(zxerr_ok, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
+        EXPECT_EQ(zxerr_ok, z_str3join(buffer, sizeof(buffer), prefix.c_str(), ""));
         EXPECT_STREQ(buffer, "TEST");
     }
 
@@ -33,9 +33,9 @@ namespace {
 
         snprintf(buffer, sizeof(buffer), "TEST");
         auto prefix = std::string("");
-        char suffix = '1';
+        auto suffix = std::string("1");
 
-        EXPECT_EQ(zxerr_ok, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
+        EXPECT_EQ(zxerr_ok, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
         EXPECT_STREQ(buffer, "TEST1");
     }
 
@@ -43,32 +43,43 @@ namespace {
         char buffer[10];
 
         snprintf(buffer, sizeof(buffer), "TEST");
-        auto prefix = std::string("xyz");
-        char suffix = '1';
+        auto prefix = std::string("xyz ");
+        auto suffix = std::string("1");
 
-        EXPECT_EQ(zxerr_ok, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
+        EXPECT_EQ(zxerr_ok, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
         EXPECT_STREQ(buffer, "xyz TEST1");
     }
 
     TEST(FORMAT, limitBuffer0) {
+        char buffer[10];
+
+        snprintf(buffer, sizeof(buffer), "TEST");
+        auto prefix = std::string("xyz");
+        auto suffix = std::string("4");
+
+        EXPECT_EQ(zxerr_ok, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
+        EXPECT_STREQ(buffer, "xyzTEST4");
+    }
+
+    TEST(FORMAT, limitBuffer1) {
         char buffer[9];
 
         snprintf(buffer, sizeof(buffer), "TEST");
         auto prefix = std::string("xyz");
-        char suffix = '4';
+        auto suffix = std::string("4");
 
-        EXPECT_EQ(zxerr_buffer_too_small, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
-        EXPECT_STREQ(buffer, "ERR???");
+        EXPECT_EQ(zxerr_ok, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
+        EXPECT_STREQ(buffer, "xyzTEST4");
     }
 
-    TEST(FORMAT, limitBuffer1) {
+    TEST(FORMAT, limitBuffer2) {
         char buffer[8];
 
         snprintf(buffer, sizeof(buffer), "TEST");
         auto prefix = std::string("xyz");
-        char suffix = '4';
+        auto suffix = std::string("4");
 
-        EXPECT_EQ(zxerr_buffer_too_small, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
+        EXPECT_EQ(zxerr_buffer_too_small, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
         EXPECT_STREQ(buffer, "ERR???");
     }
 
@@ -77,9 +88,9 @@ namespace {
 
         snprintf(buffer, sizeof(buffer), "TEST");
         auto prefix = std::string("xyz");
-        char suffix = '4';
+        auto suffix = std::string("4");
 
-        EXPECT_EQ(zxerr_buffer_too_small, safeWrap(buffer, sizeof(buffer), prefix.c_str(), suffix));
+        EXPECT_EQ(zxerr_buffer_too_small, z_str3join(buffer, sizeof(buffer), prefix.c_str(), suffix.c_str()));
         EXPECT_STREQ(buffer, "ERR???");
     }
 

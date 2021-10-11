@@ -1,14 +1,16 @@
 # Ledger Kusama App (eXpeCT ChAoS)
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GithubActions](https://github.com/zondax/ledger-kusama/actions/workflows/main.yaml/badge.svg)](https://github.com/Zondax/ledger-kusama/blob/main/.github/workflows/main.yaml)
 
--------------------
+---
 
 ![zondax](docs/zondax.jpg)
 
 _Please visit our website at [zondax.ch](zondax.ch)_
 
-------------------
+---
+
 This project contains the Kusama app (https://kusama.network/) for Ledger Nano S and X.
 
 - Ledger Nano S/X BOLOS app

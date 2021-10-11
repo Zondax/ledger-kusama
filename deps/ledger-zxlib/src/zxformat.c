@@ -111,31 +111,33 @@ uint8_t intstr_to_fpstr_inplace(char *number, size_t number_max_size, uint8_t de
     return numChars;
 }
 
-zxerr_t safeWrap(char *buffer, size_t bufferSize, const char *prefix, char suffix) {
-    size_t messageSize = strlen(buffer);
-    const size_t prefixSize = strlen(prefix);
+size_t z_strlen(const char *buffer, size_t maxSize) {
+    if (buffer == NULL) return 0;
+    const size_t tmp = strlen(buffer);
+    return tmp < maxSize ? tmp : maxSize;
+}
 
-    size_t requiredSize = messageSize + prefixSize + 2 /* space + termination */;
-    if (suffix > 32 && suffix < 127) {
-        requiredSize++;
-    }
+zxerr_t z_str3join(char *buffer, size_t bufferSize, const char *prefix, const char *suffix) {
+    size_t messageSize = z_strlen(buffer, bufferSize);
+    const size_t prefixSize = z_strlen(prefix, bufferSize);
+    const size_t suffixSize = z_strlen(suffix, bufferSize);
+
+    size_t requiredSize = 1 /* termination */ + messageSize + prefixSize + suffixSize;
 
     if (bufferSize < requiredSize) {
         snprintf(buffer, bufferSize, "ERR???");
         return zxerr_buffer_too_small;
     }
 
-    // append suffix
-    if (suffix > 32 && suffix < 127) {
-        buffer[messageSize++] = suffix;
-        buffer[messageSize] = 0;
+    if (suffixSize > 0) {
+        memmove(buffer + messageSize, suffix, suffixSize);
+        buffer[messageSize + suffixSize] = 0;
     }
 
     // shift and add prefix
     if (prefixSize > 0) {
-        memmove(buffer + prefixSize + 1, buffer, messageSize);
+        memmove(buffer + prefixSize, buffer, messageSize + suffixSize + 1);
         memmove(buffer, prefix, prefixSize);
-        buffer[prefixSize] = ' ';
     }
 
     return zxerr_ok;
