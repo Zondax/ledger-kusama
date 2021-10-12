@@ -47,8 +47,8 @@ typedef enum {
 #define PK_ADDRESS_TYPE                     COIN_ADDR_TYPE_KUSAMA
 #define SUPPORTED_TX_VERSION_CURRENT        LEDGER_MAJOR_VERSION
 #define SUPPORTED_TX_VERSION_PREVIOUS       (LEDGER_MAJOR_VERSION - 1)
-#define SUPPORTED_SPEC_VERSION              (LEDGER_MINOR_VERSION + 2000)
-#define SUPPORTED_MINIMUM_SPEC_VERSION      2008
+#define SUPPORTED_SPEC_VERSION              (LEDGER_MINOR_VERSION + 0)
+#define SUPPORTED_MINIMUM_SPEC_VERSION      9000
 
 #define COIN_AMOUNT_DECIMAL_PLACES          12
 
@@ -58,13 +58,7 @@ typedef enum {
 
 #define COIN_SECRET_REQUIRED_CLICKS         10
 
-#if defined(APP_STANDARD)
 #include "coin_standard.h"
-#elif defined(APP_RESTRICTED)
-#include "coin_restricted.h"
-#else
-#error "APP VARIANT IS NOT SUPPORTED"
-#endif
 
 #ifdef __cplusplus
 }

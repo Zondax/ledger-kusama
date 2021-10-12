@@ -1,63 +1,19 @@
-// @ts-ignore
-import {blake2bFinal, blake2bInit, blake2bUpdate} from "blakejs";
-// @ts-ignore
-import ed25519 from "ed25519-supercop";
-import {DeviceModel} from "@zondax/zemu";
+import { DeviceModel } from '@zondax/zemu'
 
-const Resolve = require("path").resolve;
+const Resolve = require('path').resolve
 
-export const APP_SEED = "equip will roof matter pink blind book anxiety banner elbow sun young"
+export const APP_SEED = 'equip will roof matter pink blind book anxiety banner elbow sun young'
 
-const APP_PATH_S = Resolve("../app/output/app_s.elf");
-const APP_PATH_X = Resolve("../app/output/app_x.elf");
+const APP_PATH_S = Resolve('../app/output/app_s.elf')
+const APP_PATH_X = Resolve('../app/output/app_x.elf')
 
 export const models: DeviceModel[] = [
-    {name: 'nanos', prefix: 'S', path: APP_PATH_S},
-    {name: 'nanox', prefix: 'X', path: APP_PATH_X}
+  { name: 'nanos', prefix: 'S', path: APP_PATH_S },
+  { name: 'nanox', prefix: 'X', path: APP_PATH_X },
 ]
 
-export const TESTING_ALLOWLIST_SEED = "0000000000000000000000000000000000000000000000000000000000000000"
+export const txBasic =
+  '0400008e730faa8a7827ae61b79ceb78b4e7c1caddf371c740292485a611c35e2bec4500d503046d0f3223000005000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
 
-export function dummyAllowlist(nonce: number) {
-    const addresses = [
-        "Feuf3z71Xs6Fr7XZWvYjUX8RTq439ZAmZ9FLRreKQLwikNt",
-        "GZdWA1i3mEdQAN3fmukkZxp8U7kyxgdVdLiAm4djmAdyniB",
-    ]
-
-    // Prepare len field
-    const nonce_bytes = Buffer.alloc(4);
-    const allowlist_len_bytes = Buffer.alloc(4);
-
-    nonce_bytes.writeUInt32LE(nonce);
-    allowlist_len_bytes.writeUInt32LE(addresses.length);
-
-    // Prepare items field
-    const addressBuffer = Buffer.alloc(64 * addresses.length, 0);
-    for (let i = 0; i < addresses.length; i++) {
-        const tmp = Buffer.from(addresses[i])
-        tmp.copy(addressBuffer, i * 64)
-    }
-
-    // calculate digest
-    const context = blake2bInit(32, null);
-    blake2bUpdate(context, nonce_bytes);
-    blake2bUpdate(context, allowlist_len_bytes);
-    blake2bUpdate(context, addressBuffer);
-    const digest = Buffer.from(blake2bFinal(context));
-    console.log(`-------------------- ${digest.toString("hex")}`)
-
-    // sign
-    const keypair = ed25519.createKeyPair(TESTING_ALLOWLIST_SEED)
-    console.log(`PK : ${keypair.publicKey.toString("hex")}`)
-    console.log(`SK : ${keypair.secretKey.toString("hex")}`)
-
-    const allowlist_signature = ed25519.sign(digest, keypair.publicKey, keypair.secretKey)
-    console.log(`SIG: ${allowlist_signature.toString("hex")}`)
-
-    return Buffer.concat([
-        nonce_bytes,
-        allowlist_len_bytes,
-        allowlist_signature,
-        addressBuffer
-    ])
-}
+export const txNomination =
+  '0605100074dbeae458762c8257fe23d9f05ad82fa994e4f9557800169f1a9b04b3964d6800e46c28d0b59b08570d9b29d470efb5e9ab90c8adc602fd2ff809076ea28bb63b009ac4cd92a3a9f9de8f0af1b6cf6449590de0adbc48ba9c522461c18fe818a32f00522e26c7c869be5d00c45341b6c148e6e4955a60788bc829cd19c2cdec06f80cd5030003d20296493223000005000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
