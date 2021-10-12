@@ -340,6 +340,9 @@ static const char* STR_ME_CHILL_OTHER = "Chill other";
 static const char* STR_ME_SET_EMERGENCY_ELECTION_RESULT = "Set emergency election result";
 static const char* STR_ME_SET_STAKING_LIMITS = "Set staking limits";
 static const char* STR_ME_SUBMIT = "Submit";
+static const char* STR_ME_SET_UMP_MAX_INDIVIDUAL_WEIGHT = "Set ump max individual weight";
+static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
+static const char* STR_ME_HRMP_CANCEL_OPEN_REQUEST = "Hrmp cancel open request";
 
 // Items names
 static const char* STR_IT__ratio = "Ratio";
@@ -521,6 +524,10 @@ static const char* STR_IT_max_validator_count = "Max validator count";
 static const char* STR_IT_supports = "Supports";
 static const char* STR_IT_num_signed_submissions = "Num signed submissions";
 static const char* STR_IT_relay_parent_number = "Relay parent number";
+static const char* STR_IT_raw_solution = "Raw solution";
+static const char* STR_IT__new = "New";
+static const char* STR_IT_weight_limit = "Weight limit";
+static const char* STR_IT_fee_asset_item = "Fee asset item";
 
 #ifdef __cplusplus
 }

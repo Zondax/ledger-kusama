@@ -27,7 +27,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  5.9090.x
+# Kusama  6.9100.x
 
 ## System
 
@@ -376,10 +376,10 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|submit_unsigned |    |   |   | `RawSolution` solution <br/>`SolutionOrSnapshotSize` witness <br/> | 
+|submit_unsigned |    |   |   | `RawSolution` raw_solution <br/>`SolutionOrSnapshotSize` witness <br/> | 
 |set_minimum_untrusted_score |    |   |   | `Option<ElectionScore>` maybe_next_score <br/> | 
 |set_emergency_election_result |    |   |   | `Supports` supports <br/> | 
-|submit |    |   |   | `RawSolution` solution <br/>`u32` num_signed_submissions <br/> | 
+|submit |    |   |   | `RawSolution` raw_solution <br/>`u32` num_signed_submissions <br/> | 
 
 ## Gilt
 
@@ -427,7 +427,7 @@ Empty
 |set_ump_service_total_weight |    | :heavy_check_mark: |   | `Weight` new <br/> | 
 |set_max_upward_message_size |    | :heavy_check_mark: |   | `u32` new <br/> | 
 |set_max_upward_message_num_per_candidate |    | :heavy_check_mark: |   | `u32` new <br/> | 
-|set_hrmp_open_request_ttl |    | :heavy_check_mark: |   | `u32` new <br/> | 
+|set_hrmp_open_request_ttl |    | :heavy_check_mark: |   | `u32` _new <br/> | 
 |set_hrmp_sender_deposit |    | :heavy_check_mark: |   | `Balance` new <br/> | 
 |set_hrmp_recipient_deposit |    | :heavy_check_mark: |   | `Balance` new <br/> | 
 |set_hrmp_channel_max_capacity |    | :heavy_check_mark: |   | `u32` new <br/> | 
@@ -438,6 +438,7 @@ Empty
 |set_hrmp_max_parachain_outbound_channels |    | :heavy_check_mark: |   | `u32` new <br/> | 
 |set_hrmp_max_parathread_outbound_channels |    | :heavy_check_mark: |   | `u32` new <br/> | 
 |set_hrmp_max_message_num_per_candidate |    | :heavy_check_mark: |   | `u32` new <br/> | 
+|set_ump_max_individual_weight |    | :heavy_check_mark: |   | `Weight` new <br/> | 
 
 ## ParasShared
 
@@ -484,6 +485,7 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|service_overweight |    |   |   | `OverweightIndex` index <br/>`Weight` weight_limit <br/> | 
 
 ## Hrmp
 
@@ -495,6 +497,7 @@ Empty
 |force_clean_hrmp |    |   |   | `ParaId` para <br/> | 
 |force_process_hrmp_open |    | :heavy_check_mark: |   |  | 
 |force_process_hrmp_close |    | :heavy_check_mark: |   |  | 
+|hrmp_cancel_open_request |    |   |   | `HrmpChannelId` channel_id <br/> | 
 
 ## ParaSessionInfo
 
@@ -544,8 +547,8 @@ Empty
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|send |    |   |   | `MultiLocation` dest <br/>`Xcm` message <br/> | 
-|teleport_assets |    |   |   | `MultiLocation` dest <br/>`MultiLocation` beneficiary <br/>`Vec<MultiAsset>` assets <br/>`Weight` dest_weight <br/> | 
-|reserve_transfer_assets |    |   |   | `MultiLocation` dest <br/>`MultiLocation` beneficiary <br/>`Vec<MultiAsset>` assets <br/>`Weight` dest_weight <br/> | 
-|execute |    |   |   | `Xcm` message <br/>`Weight` max_weight <br/> | 
+|send |    |   |   | `VersionedMultiLocation` dest <br/>`VersionedXcm` message <br/> | 
+|teleport_assets |    |   |   | `VersionedMultiLocation` dest <br/>`VersionedMultiLocation` beneficiary <br/>`VersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`Weight` dest_weight <br/> | 
+|reserve_transfer_assets |    |   |   | `VersionedMultiLocation` dest <br/>`VersionedMultiLocation` beneficiary <br/>`VersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`Weight` dest_weight <br/> | 
+|execute |    |   |   | `VersionedXcm` message <br/>`Weight` max_weight <br/> | 
 
