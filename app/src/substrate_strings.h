@@ -68,6 +68,13 @@ static const char* STR_MO_SLOTS = "Slots";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
+static const char* STR_MO_CONFIGURATION = "Configuration";
+static const char* STR_MO_PARAINCLUSION = "Parainclusion";
+static const char* STR_MO_PARAINHERENT = "Parainherent";
+static const char* STR_MO_INITIALIZER = "Initializer";
+static const char* STR_MO_DMP = "Dmp";
+static const char* STR_MO_UMP = "Ump";
+static const char* STR_MO_HRMP = "Hrmp";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -327,6 +334,15 @@ static const char* STR_ME_TELEPORT_ASSETS = "Teleport assets";
 static const char* STR_ME_SET_MINIMUM_UNTRUSTED_SCORE = "Set minimum untrusted score";
 static const char* STR_ME_SET_UMP_SERVICE_TOTAL_WEIGHT = "Set ump service total weight";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
+static const char* STR_ME_TRANSFER_ALL = "Transfer all";
+static const char* STR_ME_UPDATE_STAKING_LIMITS = "Update staking limits";
+static const char* STR_ME_CHILL_OTHER = "Chill other";
+static const char* STR_ME_SET_EMERGENCY_ELECTION_RESULT = "Set emergency election result";
+static const char* STR_ME_SET_STAKING_LIMITS = "Set staking limits";
+static const char* STR_ME_SUBMIT = "Submit";
+static const char* STR_ME_SET_UMP_MAX_INDIVIDUAL_WEIGHT = "Set ump max individual weight";
+static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
+static const char* STR_ME_HRMP_CANCEL_OPEN_REQUEST = "Hrmp cancel open request";
 
 // Items names
 static const char* STR_IT__ratio = "Ratio";
@@ -500,6 +516,18 @@ static const char* STR_IT_message = "Message";
 static const char* STR_IT_assets = "Assets";
 static const char* STR_IT_dest_weight = "Dest weight";
 static const char* STR_IT_maybe_next_score = "Maybe next score";
+static const char* STR_IT_keep_alive = "Keep alive";
+static const char* STR_IT_min_nominator_bond = "Min nominator bond";
+static const char* STR_IT_min_validator_bond = "Min validator bond";
+static const char* STR_IT_max_nominator_count = "Max nominator count";
+static const char* STR_IT_max_validator_count = "Max validator count";
+static const char* STR_IT_supports = "Supports";
+static const char* STR_IT_num_signed_submissions = "Num signed submissions";
+static const char* STR_IT_relay_parent_number = "Relay parent number";
+static const char* STR_IT_raw_solution = "Raw solution";
+static const char* STR_IT__new = "New";
+static const char* STR_IT_weight_limit = "Weight limit";
+static const char* STR_IT_fee_asset_item = "Fee asset item";
 
 #ifdef __cplusplus
 }

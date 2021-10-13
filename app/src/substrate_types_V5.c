@@ -21,6 +21,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <zxformat.h>
 #include <zxmacros.h>
 
 parser_error_t _readCompactActiveIndex_V5(parser_context_t* c, pd_CompactActiveIndex_V5_t* v)
@@ -423,6 +424,11 @@ parser_error_t _readStreamDependency_V5(parser_context_t* c, pd_StreamDependency
     return parser_ok;
 }
 
+parser_error_t _readSupports_V5(parser_context_t* c, pd_Supports_V5_t* v)
+{
+    return parser_not_supported;
+}
+
 parser_error_t _readTimepoint_V5(parser_context_t* c, pd_Timepoint_V5_t* v)
 {
     CHECK_ERROR(_readBlockNumber(c, &v->height))
@@ -563,6 +569,15 @@ parser_error_t _readOptionMultiSigner_V5(parser_context_t* c, pd_OptionMultiSign
     return parser_ok;
 }
 
+parser_error_t _readOptionPercent_V5(parser_context_t* c, pd_OptionPercent_V5_t* v)
+{
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readPercent_V5(c, &v->contained))
+    }
+    return parser_ok;
+}
+
 parser_error_t _readOptionPeriod_V5(parser_context_t* c, pd_OptionPeriod_V5_t* v)
 {
     CHECK_ERROR(_readUInt8(c, &v->some))
@@ -628,7 +643,7 @@ parser_error_t _toStringCompactActiveIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactAuctionIndex_V5(
@@ -638,7 +653,7 @@ parser_error_t _toStringCompactAuctionIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactBountyIndex_V5(
@@ -648,7 +663,7 @@ parser_error_t _toStringCompactBountyIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactEraIndex_V5(
@@ -658,7 +673,7 @@ parser_error_t _toStringCompactEraIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactLeasePeriodOf_V5(
@@ -668,7 +683,7 @@ parser_error_t _toStringCompactLeasePeriodOf_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactMemberCount_V5(
@@ -678,7 +693,7 @@ parser_error_t _toStringCompactMemberCount_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactMoment_V5(
@@ -688,7 +703,7 @@ parser_error_t _toStringCompactMoment_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactParaId_V5(
@@ -698,7 +713,7 @@ parser_error_t _toStringCompactParaId_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactPerquintill_V5(
@@ -708,7 +723,7 @@ parser_error_t _toStringCompactPerquintill_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactPropIndex_V5(
@@ -718,7 +733,7 @@ parser_error_t _toStringCompactPropIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactProposalIndex_V5(
@@ -728,7 +743,7 @@ parser_error_t _toStringCompactProposalIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactReferendumIndex_V5(
@@ -738,7 +753,7 @@ parser_error_t _toStringCompactReferendumIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactRegistrarIndex_V5(
@@ -748,7 +763,7 @@ parser_error_t _toStringCompactRegistrarIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactWeight_V5(
@@ -758,7 +773,7 @@ parser_error_t _toStringCompactWeight_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(v, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringAccountId_V5(
@@ -823,7 +838,7 @@ parser_error_t _toStringAccountVoteSplit_V5(
         CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, pageIdx, &pages[2]));
         return parser_ok;
     }
-    pageIdx -= pages[2];
+    // pageIdx -= pages[2];
 
     /////////
     /////////
@@ -877,7 +892,7 @@ parser_error_t _toStringAccountVoteStandard_V5(
         CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, pageIdx, &pages[2]));
         return parser_ok;
     }
-    pageIdx -= pages[2];
+    // pageIdx -= pages[2];
 
     /////////
     /////////
@@ -965,7 +980,7 @@ parser_error_t _toStringCompactAccountIndex_V5(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringCompactInt(&v->value, 0, 0, "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(&v->value, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringCompactPerBill_V5(
@@ -976,7 +991,7 @@ parser_error_t _toStringCompactPerBill_V5(
     uint8_t* pageCount)
 {
     // 9 but shift 2 to show as percentage
-    return _toStringCompactInt(&v->value, 7, '%', "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(&v->value, 7, "%", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringConviction_V5(
@@ -1204,7 +1219,7 @@ parser_error_t _toStringIdentityInfo_V5(
         CHECK_ERROR(_toStringData(&v->twitter, outValue, outValueLen, pageIdx, &pages[8]))
         return parser_ok;
     }
-    pageIdx -= pages[8];
+    // pageIdx -= pages[8];
 
     return parser_display_idx_out_of_range;
 }
@@ -1261,7 +1276,7 @@ parser_error_t _toStringKeys_V5(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(4 * 32)
+    GEN_DEF_TOSTRING_ARRAY(6 * 32)
 }
 
 parser_error_t _toStringLeasePeriodOf_V5(
@@ -1414,9 +1429,9 @@ parser_error_t _toStringPerbill_V5(
 {
     char bufferUI[100];
     char ratioBuffer[80];
-    MEMSET(outValue, 0, outValueLen);
-    MEMSET(ratioBuffer, 0, sizeof(ratioBuffer));
-    MEMSET(bufferUI, 0, sizeof(bufferUI));
+    memset(outValue, 0, outValueLen);
+    memset(ratioBuffer, 0, sizeof(ratioBuffer));
+    memset(bufferUI, 0, sizeof(bufferUI));
     *pageCount = 1;
 
     if (fpuint64_to_str(ratioBuffer, sizeof(ratioBuffer), v->value, 7) == 0) {
@@ -1436,7 +1451,7 @@ parser_error_t _toStringPercent_V5(
     uint8_t* pageCount)
 {
     // 9 but shift 2 to show as percentage
-    return _toStringCompactInt(&v->value, 7, '%', "", outValue, outValueLen, pageIdx, pageCount);
+    return _toStringCompactInt(&v->value, 7, "%", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringPeriod_V5(
@@ -1672,6 +1687,17 @@ parser_error_t _toStringStreamDependency_V5(
     }
 
     return parser_display_idx_out_of_range;
+}
+
+parser_error_t _toStringSupports_V5(
+    const pd_Supports_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    return parser_print_not_supported;
 }
 
 parser_error_t _toStringTimepoint_V5(
@@ -2057,6 +2083,27 @@ parser_error_t _toStringOptionMultiSigner_V5(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringMultiSigner_V5(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringOptionPercent_V5(
+    const pd_OptionPercent_V5_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringPercent_V5(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));
