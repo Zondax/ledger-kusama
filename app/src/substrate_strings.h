@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2021 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2021 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 #pragma once
 
 #ifdef __cplusplus
@@ -27,15 +27,13 @@ static const char* STR_MO_INDICES = "Indices";
 static const char* STR_MO_BALANCES = "Balances";
 static const char* STR_MO_AUTHORSHIP = "Authorship";
 static const char* STR_MO_STAKING = "Staking";
-static const char* STR_MO_OFFENCES = "Offences";
 static const char* STR_MO_SESSION = "Session";
 static const char* STR_MO_GRANDPA = "Grandpa";
 static const char* STR_MO_IMONLINE = "Imonline";
-static const char* STR_MO_AUTHORITYDISCOVERY = "Authoritydiscovery";
 static const char* STR_MO_DEMOCRACY = "Democracy";
 static const char* STR_MO_COUNCIL = "Council";
 static const char* STR_MO_TECHNICALCOMMITTEE = "Technicalcommittee";
-static const char* STR_MO_ELECTIONSPHRAGMEN = "Electionsphragmen";
+static const char* STR_MO_PHRAGMENELECTION = "Phragmenelection";
 static const char* STR_MO_TECHNICALMEMBERSHIP = "Technicalmembership";
 static const char* STR_MO_TREASURY = "Treasury";
 static const char* STR_MO_CLAIMS = "Claims";
@@ -50,31 +48,22 @@ static const char* STR_MO_MULTISIG = "Multisig";
 static const char* STR_MO_BOUNTIES = "Bounties";
 static const char* STR_MO_TIPS = "Tips";
 static const char* STR_MO_ELECTIONPROVIDERMULTIPHASE = "Electionprovidermultiphase";
-static const char* STR_MO_PHRAGMENELECTION = "Phragmenelection";
 static const char* STR_MO_GILT = "Gilt";
-static const char* STR_MO_PARACHAINSCONFIGURATION = "Parachainsconfiguration";
+static const char* STR_MO_BAGSLIST = "Bagslist";
+static const char* STR_MO_CONFIGURATION = "Configuration";
 static const char* STR_MO_PARASSHARED = "Parasshared";
-static const char* STR_MO_PARASINCLUSION = "Parasinclusion";
-static const char* STR_MO_PARASINHERENT = "Parasinherent";
-static const char* STR_MO_PARASSCHEDULER = "Parasscheduler";
+static const char* STR_MO_PARAINCLUSION = "Parainclusion";
+static const char* STR_MO_PARAINHERENT = "Parainherent";
 static const char* STR_MO_PARAS = "Paras";
-static const char* STR_MO_PARASINITIALIZER = "Parasinitializer";
-static const char* STR_MO_PARASDMP = "Parasdmp";
-static const char* STR_MO_PARASUMP = "Parasump";
-static const char* STR_MO_PARASHRMP = "Parashrmp";
-static const char* STR_MO_PARASSESSIONINFO = "Parassessioninfo";
+static const char* STR_MO_INITIALIZER = "Initializer";
+static const char* STR_MO_DMP = "Dmp";
+static const char* STR_MO_UMP = "Ump";
+static const char* STR_MO_HRMP = "Hrmp";
 static const char* STR_MO_REGISTRAR = "Registrar";
 static const char* STR_MO_SLOTS = "Slots";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
-static const char* STR_MO_CONFIGURATION = "Configuration";
-static const char* STR_MO_PARAINCLUSION = "Parainclusion";
-static const char* STR_MO_PARAINHERENT = "Parainherent";
-static const char* STR_MO_INITIALIZER = "Initializer";
-static const char* STR_MO_DMP = "Dmp";
-static const char* STR_MO_UMP = "Ump";
-static const char* STR_MO_HRMP = "Hrmp";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -86,8 +75,10 @@ static const char* STR_ME_SET_CHANGES_TRIE_CONFIG = "Set changes trie config";
 static const char* STR_ME_SET_STORAGE = "Set storage";
 static const char* STR_ME_KILL_STORAGE = "Kill storage";
 static const char* STR_ME_KILL_PREFIX = "Kill prefix";
+static const char* STR_ME_REMARK_WITH_EVENT = "Remark with event";
 static const char* STR_ME_REPORT_EQUIVOCATION = "Report equivocation";
 static const char* STR_ME_REPORT_EQUIVOCATION_UNSIGNED = "Report equivocation unsigned";
+static const char* STR_ME_PLAN_CONFIG_CHANGE = "Plan config change";
 static const char* STR_ME_SET = "Set";
 static const char* STR_ME_CLAIM = "Claim";
 static const char* STR_ME_TRANSFER = "Transfer";
@@ -96,6 +87,8 @@ static const char* STR_ME_FORCE_TRANSFER = "Force transfer";
 static const char* STR_ME_FREEZE = "Freeze";
 static const char* STR_ME_SET_BALANCE = "Set balance";
 static const char* STR_ME_TRANSFER_KEEP_ALIVE = "Transfer keep alive";
+static const char* STR_ME_TRANSFER_ALL = "Transfer all";
+static const char* STR_ME_FORCE_UNRESERVE = "Force unreserve";
 static const char* STR_ME_SET_UNCLES = "Set uncles";
 static const char* STR_ME_BOND = "Bond";
 static const char* STR_ME_BOND_EXTRA = "Bond extra";
@@ -119,9 +112,9 @@ static const char* STR_ME_PAYOUT_STAKERS = "Payout stakers";
 static const char* STR_ME_REBOND = "Rebond";
 static const char* STR_ME_SET_HISTORY_DEPTH = "Set history depth";
 static const char* STR_ME_REAP_STASH = "Reap stash";
-static const char* STR_ME_SUBMIT_ELECTION_SOLUTION = "Submit election solution";
-static const char* STR_ME_SUBMIT_ELECTION_SOLUTION_UNSIGNED = "Submit election solution unsigned";
 static const char* STR_ME_KICK = "Kick";
+static const char* STR_ME_SET_STAKING_LIMITS = "Set staking limits";
+static const char* STR_ME_CHILL_OTHER = "Chill other";
 static const char* STR_ME_SET_KEYS = "Set keys";
 static const char* STR_ME_PURGE_KEYS = "Purge keys";
 static const char* STR_ME_NOTE_STALLED = "Note stalled";
@@ -215,6 +208,7 @@ static const char* STR_ME_VEST = "Vest";
 static const char* STR_ME_VEST_OTHER = "Vest other";
 static const char* STR_ME_VESTED_TRANSFER = "Vested transfer";
 static const char* STR_ME_FORCE_VESTED_TRANSFER = "Force vested transfer";
+static const char* STR_ME_MERGE_SCHEDULES = "Merge schedules";
 static const char* STR_ME_SCHEDULE = "Schedule";
 static const char* STR_ME_CANCEL = "Cancel";
 static const char* STR_ME_SCHEDULE_NAMED = "Schedule named";
@@ -251,12 +245,14 @@ static const char* STR_ME_TIP = "Tip";
 static const char* STR_ME_CLOSE_TIP = "Close tip";
 static const char* STR_ME_SLASH_TIP = "Slash tip";
 static const char* STR_ME_SUBMIT_UNSIGNED = "Submit unsigned";
-static const char* STR_ME_REMARK_WITH_EVENT = "Remark with event";
-static const char* STR_ME_PLAN_CONFIG_CHANGE = "Plan config change";
+static const char* STR_ME_SET_MINIMUM_UNTRUSTED_SCORE = "Set minimum untrusted score";
+static const char* STR_ME_SET_EMERGENCY_ELECTION_RESULT = "Set emergency election result";
+static const char* STR_ME_SUBMIT = "Submit";
 static const char* STR_ME_PLACE_BID = "Place bid";
 static const char* STR_ME_RETRACT_BID = "Retract bid";
 static const char* STR_ME_SET_TARGET = "Set target";
 static const char* STR_ME_THAW = "Thaw";
+static const char* STR_ME_REBAG = "Rebag";
 static const char* STR_ME_SET_VALIDATION_UPGRADE_FREQUENCY = "Set validation upgrade frequency";
 static const char* STR_ME_SET_VALIDATION_UPGRADE_DELAY = "Set validation upgrade delay";
 static const char* STR_ME_SET_CODE_RETENTION_PERIOD = "Set code retention period";
@@ -283,7 +279,7 @@ static const char* STR_ME_SET_RELAY_VRF_MODULO_SAMPLES = "Set relay vrf modulo s
 static const char* STR_ME_SET_MAX_UPWARD_QUEUE_COUNT = "Set max upward queue count";
 static const char* STR_ME_SET_MAX_UPWARD_QUEUE_SIZE = "Set max upward queue size";
 static const char* STR_ME_SET_MAX_DOWNWARD_MESSAGE_SIZE = "Set max downward message size";
-static const char* STR_ME_SET_PREFERRED_DISPATCHABLE_UPWARD_MESSAGES_STEP_WEIGHT = "Set preferred dispatchable upward messages step weight";
+static const char* STR_ME_SET_UMP_SERVICE_TOTAL_WEIGHT = "Set ump service total weight";
 static const char* STR_ME_SET_MAX_UPWARD_MESSAGE_SIZE = "Set max upward message size";
 static const char* STR_ME_SET_MAX_UPWARD_MESSAGE_NUM_PER_CANDIDATE = "Set max upward message num per candidate";
 static const char* STR_ME_SET_HRMP_OPEN_REQUEST_TTL = "Set hrmp open request ttl";
@@ -297,6 +293,7 @@ static const char* STR_ME_SET_HRMP_CHANNEL_MAX_MESSAGE_SIZE = "Set hrmp channel 
 static const char* STR_ME_SET_HRMP_MAX_PARACHAIN_OUTBOUND_CHANNELS = "Set hrmp max parachain outbound channels";
 static const char* STR_ME_SET_HRMP_MAX_PARATHREAD_OUTBOUND_CHANNELS = "Set hrmp max parathread outbound channels";
 static const char* STR_ME_SET_HRMP_MAX_MESSAGE_NUM_PER_CANDIDATE = "Set hrmp max message num per candidate";
+static const char* STR_ME_SET_UMP_MAX_INDIVIDUAL_WEIGHT = "Set ump max individual weight";
 static const char* STR_ME_ENTER = "Enter";
 static const char* STR_ME_FORCE_SET_CURRENT_CODE = "Force set current code";
 static const char* STR_ME_FORCE_SET_CURRENT_HEAD = "Force set current head";
@@ -304,12 +301,14 @@ static const char* STR_ME_FORCE_SCHEDULE_CODE_UPGRADE = "Force schedule code upg
 static const char* STR_ME_FORCE_NOTE_NEW_HEAD = "Force note new head";
 static const char* STR_ME_FORCE_QUEUE_ACTION = "Force queue action";
 static const char* STR_ME_FORCE_APPROVE = "Force approve";
+static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
 static const char* STR_ME_HRMP_INIT_OPEN_CHANNEL = "Hrmp init open channel";
 static const char* STR_ME_HRMP_ACCEPT_OPEN_CHANNEL = "Hrmp accept open channel";
 static const char* STR_ME_HRMP_CLOSE_CHANNEL = "Hrmp close channel";
 static const char* STR_ME_FORCE_CLEAN_HRMP = "Force clean hrmp";
 static const char* STR_ME_FORCE_PROCESS_HRMP_OPEN = "Force process hrmp open";
 static const char* STR_ME_FORCE_PROCESS_HRMP_CLOSE = "Force process hrmp close";
+static const char* STR_ME_HRMP_CANCEL_OPEN_REQUEST = "Hrmp cancel open request";
 static const char* STR_ME_REGISTER = "Register";
 static const char* STR_ME_FORCE_REGISTER = "Force register";
 static const char* STR_ME_DEREGISTER = "Deregister";
@@ -331,45 +330,41 @@ static const char* STR_ME_ADD_MEMO = "Add memo";
 static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_SEND = "Send";
 static const char* STR_ME_TELEPORT_ASSETS = "Teleport assets";
-static const char* STR_ME_SET_MINIMUM_UNTRUSTED_SCORE = "Set minimum untrusted score";
-static const char* STR_ME_SET_UMP_SERVICE_TOTAL_WEIGHT = "Set ump service total weight";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
-static const char* STR_ME_TRANSFER_ALL = "Transfer all";
-static const char* STR_ME_UPDATE_STAKING_LIMITS = "Update staking limits";
-static const char* STR_ME_CHILL_OTHER = "Chill other";
-static const char* STR_ME_SET_EMERGENCY_ELECTION_RESULT = "Set emergency election result";
-static const char* STR_ME_SET_STAKING_LIMITS = "Set staking limits";
-static const char* STR_ME_SUBMIT = "Submit";
-static const char* STR_ME_SET_UMP_MAX_INDIVIDUAL_WEIGHT = "Set ump max individual weight";
-static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
-static const char* STR_ME_HRMP_CANCEL_OPEN_REQUEST = "Hrmp cancel open request";
+static const char* STR_ME_FORCE_XCM_VERSION = "Force xcm version";
+static const char* STR_ME_FORCE_DEFAULT_XCM_VERSION = "Force default xcm version";
+static const char* STR_ME_FORCE_SUBSCRIBE_VERSION_NOTIFY = "Force subscribe version notify";
+static const char* STR_ME_FORCE_UNSUBSCRIBE_VERSION_NOTIFY = "Force unsubscribe version notify";
 
 // Items names
-static const char* STR_IT__ratio = "Ratio";
-static const char* STR_IT__remark = "Remark";
+static const char* STR_IT_ratio = "Ratio";
+static const char* STR_IT_remark = "Remark";
 static const char* STR_IT_pages = "Pages";
 static const char* STR_IT_code = "Code";
 static const char* STR_IT_changes_trie_config = "Changes trie config";
 static const char* STR_IT_items = "Items";
 static const char* STR_IT_keys = "Keys";
 static const char* STR_IT_prefix = "Prefix";
-static const char* STR_IT__subkeys = "Subkeys";
+static const char* STR_IT_subkeys = "Subkeys";
 static const char* STR_IT_equivocation_proof = "Equivocation proof";
 static const char* STR_IT_key_owner_proof = "Key owner proof";
+static const char* STR_IT_config = "Config";
 static const char* STR_IT_now = "Now";
 static const char* STR_IT_index = "Index";
 static const char* STR_IT_new_ = "New";
 static const char* STR_IT_freeze = "Freeze";
 static const char* STR_IT_dest = "Dest";
-static const char* STR_IT_value = "Amount";
+static const char* STR_IT_value = "Value";
 static const char* STR_IT_who = "Who";
 static const char* STR_IT_new_free = "New free";
 static const char* STR_IT_new_reserved = "New reserved";
 static const char* STR_IT_source = "Source";
+static const char* STR_IT_keep_alive = "Keep alive";
+static const char* STR_IT_amount = "Amount";
 static const char* STR_IT_new_uncles = "New uncles";
 static const char* STR_IT_controller = "Controller";
 static const char* STR_IT_payee = "Payee";
-static const char* STR_IT_max_additional = "Amount";
+static const char* STR_IT_max_additional = "Max additional";
 static const char* STR_IT_num_slashing_spans = "Num slashing spans";
 static const char* STR_IT_prefs = "Prefs";
 static const char* STR_IT_targets = "Targets";
@@ -381,16 +376,17 @@ static const char* STR_IT_era = "Era";
 static const char* STR_IT_slash_indices = "Slash indices";
 static const char* STR_IT_validator_stash = "Validator stash";
 static const char* STR_IT_new_history_depth = "New history depth";
-static const char* STR_IT__era_items_deleted = "Era items deleted";
-static const char* STR_IT_winners = "Winners";
-static const char* STR_IT_compact = "Compact";
-static const char* STR_IT_score = "Score";
-static const char* STR_IT_size = "Size";
+static const char* STR_IT_era_items_deleted = "Era items deleted";
+static const char* STR_IT_min_nominator_bond = "Min nominator bond";
+static const char* STR_IT_min_validator_bond = "Min validator bond";
+static const char* STR_IT_max_nominator_count = "Max nominator count";
+static const char* STR_IT_max_validator_count = "Max validator count";
+static const char* STR_IT_threshold = "Threshold";
 static const char* STR_IT_proof = "Proof";
 static const char* STR_IT_delay = "Delay";
 static const char* STR_IT_best_finalized_block_number = "Best finalized block number";
 static const char* STR_IT_heartbeat = "Heartbeat";
-static const char* STR_IT__signature = "Signature";
+static const char* STR_IT_signature = "Signature";
 static const char* STR_IT_proposal_hash = "Proposal hash";
 static const char* STR_IT_proposal = "Proposal";
 static const char* STR_IT_seconds_upper_bound = "Seconds upper bound";
@@ -410,15 +406,14 @@ static const char* STR_IT_new_members = "New members";
 static const char* STR_IT_prime = "Prime";
 static const char* STR_IT_old_count = "Old count";
 static const char* STR_IT_length_bound = "Length bound";
-static const char* STR_IT_threshold = "Threshold";
 static const char* STR_IT_approve = "Approve";
 static const char* STR_IT_proposal_weight_bound = "Proposal weight bound";
 static const char* STR_IT_votes = "Votes";
 static const char* STR_IT_candidate_count = "Candidate count";
 static const char* STR_IT_renouncing = "Renouncing";
 static const char* STR_IT_has_replacement = "Has replacement";
-static const char* STR_IT__num_voters = "Num voters";
-static const char* STR_IT__num_defunct = "Num defunct";
+static const char* STR_IT_num_voters = "Num voters";
+static const char* STR_IT_num_defunct = "Num defunct";
 static const char* STR_IT_remove = "Remove";
 static const char* STR_IT_add = "Add";
 static const char* STR_IT_members = "Members";
@@ -454,6 +449,8 @@ static const char* STR_IT_rescuer = "Rescuer";
 static const char* STR_IT_friends = "Friends";
 static const char* STR_IT_delay_period = "Delay period";
 static const char* STR_IT_schedule = "Schedule";
+static const char* STR_IT_schedule1_index = "Schedule1 index";
+static const char* STR_IT_schedule2_index = "Schedule2 index";
 static const char* STR_IT_when = "When";
 static const char* STR_IT_maybe_periodic = "Maybe periodic";
 static const char* STR_IT_priority = "Priority";
@@ -478,17 +475,19 @@ static const char* STR_IT_curator = "Curator";
 static const char* STR_IT_reason = "Reason";
 static const char* STR_IT_hash = "Hash";
 static const char* STR_IT_tip_value = "Tip value";
-static const char* STR_IT_solution = "Solution";
+static const char* STR_IT_raw_solution = "Raw solution";
 static const char* STR_IT_witness = "Witness";
-static const char* STR_IT_remark = "Remark";
-static const char* STR_IT_config = "Config";
-static const char* STR_IT_amount = "Amount";
+static const char* STR_IT_maybe_next_score = "Maybe next score";
+static const char* STR_IT_supports = "Supports";
+static const char* STR_IT_num_signed_submissions = "Num signed submissions";
 static const char* STR_IT_duration = "Duration";
+static const char* STR_IT_dislocated = "Dislocated";
 static const char* STR_IT_para = "Para";
 static const char* STR_IT_new_code = "New code";
 static const char* STR_IT_new_head = "New head";
-static const char* STR_IT_expected_at = "Expected at";
+static const char* STR_IT_relay_parent_number = "Relay parent number";
 static const char* STR_IT_up_to = "Up to";
+static const char* STR_IT_weight_limit = "Weight limit";
 static const char* STR_IT_recipient = "Recipient";
 static const char* STR_IT_proposed_max_capacity = "Proposed max capacity";
 static const char* STR_IT_proposed_max_message_size = "Proposed max message size";
@@ -510,24 +509,13 @@ static const char* STR_IT_first_period = "First period";
 static const char* STR_IT_last_period = "Last period";
 static const char* STR_IT_end = "End";
 static const char* STR_IT_verifier = "Verifier";
-static const char* STR_IT_signature = "Signature";
 static const char* STR_IT_memo = "Memo";
 static const char* STR_IT_message = "Message";
 static const char* STR_IT_assets = "Assets";
-static const char* STR_IT_dest_weight = "Dest weight";
-static const char* STR_IT_maybe_next_score = "Maybe next score";
-static const char* STR_IT_keep_alive = "Keep alive";
-static const char* STR_IT_min_nominator_bond = "Min nominator bond";
-static const char* STR_IT_min_validator_bond = "Min validator bond";
-static const char* STR_IT_max_nominator_count = "Max nominator count";
-static const char* STR_IT_max_validator_count = "Max validator count";
-static const char* STR_IT_supports = "Supports";
-static const char* STR_IT_num_signed_submissions = "Num signed submissions";
-static const char* STR_IT_relay_parent_number = "Relay parent number";
-static const char* STR_IT_raw_solution = "Raw solution";
-static const char* STR_IT__new = "New";
-static const char* STR_IT_weight_limit = "Weight limit";
 static const char* STR_IT_fee_asset_item = "Fee asset item";
+static const char* STR_IT_location = "Location";
+static const char* STR_IT_xcm_version = "Xcm version";
+static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
 
 #ifdef __cplusplus
 }
