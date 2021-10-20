@@ -1,19 +1,19 @@
 [
   {
     "index": 1,
-    "name": "Balances_transfer",
-    "blob": "0400007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb8384873241eeb3d5038d240b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "name": "System_Fill_block",
+    "blob": "00009352953bd5038d2403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : transfer",
-      "1 | Value : 754683980",
-      "2 | Tip : KSM 5.552342355555"
+      "0 | System : Fill block",
+      "1 | Ratio : 99.9641747%",
+      "2 | Tip : KSM 0.00123456789"
     ],
     "output_expert": [
-      "0 | Balances : transfer",
-      "1 | Value : 754683980",
+      "0 | System : Fill block",
+      "1 | Ratio : 99.9641747%",
       "2 | Chain : Kusama",
       "3 | Nonce : 2339",
-      "4 | Tip : KSM 5.552342355555",
+      "4 | Tip : KSM 0.00123456789",
       "5 | Era Phase : 61",
       "6 | Era Period : 64",
       "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
@@ -22,19 +22,19 @@
   },
   {
     "index": 2,
-    "name": "Balances_setBalance",
-    "blob": "0401007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb8384876e19d8ef6e19d8efd5038d2403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "name": "System_Set_heap_pages",
+    "blob": "00020100000000000000d503040b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : setBalance",
-      "1 | New reserved : 1005979227",
-      "2 | Tip : KSM 0.00123456789"
+      "0 | System : Set heap pages",
+      "1 | Pages : 1",
+      "2 | Tip : KSM 5.552342355555"
     ],
     "output_expert": [
-      "0 | Balances : setBalance",
-      "1 | New reserved : 1005979227",
+      "0 | System : Set heap pages",
+      "1 | Pages : 1",
       "2 | Chain : Kusama",
-      "3 | Nonce : 2339",
-      "4 | Tip : KSM 0.00123456789",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 5.552342355555",
       "5 | Era Phase : 61",
       "6 | Era Period : 64",
       "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
@@ -43,19 +43,19 @@
   },
   {
     "index": 3,
-    "name": "Balances_forceTransfer",
-    "blob": "0402007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb838487007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb8384876e19d8efd503910103d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "name": "Timestamp_Set",
+    "blob": "02000ff93905f973ce65d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : forceTransfer",
-      "1 | Value : 1005979227",
-      "2 | Tip : KSM 0.00123456789"
+      "0 | Timestamp : Set",
+      "1 | Now : 28655970142206457",
+      "2 | Tip : KSM 0.000055555555"
     ],
     "output_expert": [
-      "0 | Balances : forceTransfer",
-      "1 | Value : 1005979227",
+      "0 | Timestamp : Set",
+      "1 | Now : 28655970142206457",
       "2 | Chain : Kusama",
-      "3 | Nonce : 100",
-      "4 | Tip : KSM 0.00123456789",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
       "5 | Era Phase : 61",
       "6 | Era Period : 64",
       "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
@@ -64,17 +64,17 @@
   },
   {
     "index": 4,
-    "name": "Balances_transferKeepAlive",
-    "blob": "0403007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb8384876e19d8efd503ae110300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "name": "Indices_Claim",
+    "blob": "0300145e2819d50300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : transferKeepAlive",
-      "1 | Value : 1005979227"
+      "0 | Indices : Claim",
+      "1 | Index : 422075924"
     ],
     "output_expert": [
-      "0 | Balances : transferKeepAlive",
-      "1 | Value : 1005979227",
+      "0 | Indices : Claim",
+      "1 | Index : 422075924",
       "2 | Chain : Kusama",
-      "3 | Nonce : 50283",
+      "3 | Nonce : 0",
       "4 | Era Phase : 61",
       "5 | Era Period : 64",
       "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
@@ -83,16 +83,663 @@
   },
   {
     "index": 5,
-    "name": "Balances_transferAll",
-    "blob": "0404007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb83848700d503046d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "name": "Indices_Transfer",
+    "blob": "030158b41daf8f3a53272bea536a355a55ca7ab1083625297996089f373fcf37db30145e2819d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : transferAll",
-      "1 | Keep alive : False",
+      "0 | Indices : Transfer",
+      "1 | New [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | New [2/2] : 8cGtXTsXV",
+      "2 | Index : 422075924",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Indices : Transfer",
+      "1 | New [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | New [2/2] : 8cGtXTsXV",
+      "2 | Index : 422075924",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 6,
+    "name": "Indices_Free",
+    "blob": "0302145e2819d503ae1103008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Indices : Free",
+      "1 | Index : 422075924",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Indices : Free",
+      "1 | Index : 422075924",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 7,
+    "name": "Indices_Force_transfer",
+    "blob": "0303f4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b638145e281900d5038d2433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Indices : Force transfer",
+      "1 | New [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | New [2/2] : 4sybUFczx",
+      "2 | Index : 422075924",
+      "3 | Freeze : False",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Indices : Force transfer",
+      "1 | New [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | New [2/2] : 4sybUFczx",
+      "2 | Index : 422075924",
+      "3 | Freeze : False",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 2339",
+      "6 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "6 | Tip [2/2] : 456789",
+      "7 | Era Phase : 61",
+      "8 | Era Period : 64",
+      "9 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "9 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 8,
+    "name": "Indices_Freeze",
+    "blob": "0304145e2819d5038d248ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Indices : Freeze",
+      "1 | Index : 422075924",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Indices : Freeze",
+      "1 | Index : 422075924",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 9,
+    "name": "Balances_Transfer",
+    "blob": "040000157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ade5a926dd503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Transfer",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Value : 459577015",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Balances : Transfer",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Value : 459577015",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 10,
+    "name": "Balances_Set_balance",
+    "blob": "040100157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882a2fa260059f0bc2a23f6cae7320c0159ce4d5038d2403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Set balance",
+      "1 | Who [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Who [2/2] : fw7HmjL6P",
+      "2 | New free : 810439462383683006023022839041712290",
+      "3 | New reserved : 57",
+      "4 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Balances : Set balance",
+      "1 | Who [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Who [2/2] : fw7HmjL6P",
+      "2 | New free : 810439462383683006023022839041712290",
+      "3 | New reserved : 57",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 2339",
+      "6 | Tip : KSM 0.00123456789",
+      "7 | Era Phase : 61",
+      "8 | Era Period : 64",
+      "9 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "9 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 11,
+    "name": "Balances_Force_transfer",
+    "blob": "040200157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882a00157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ade5a926dd5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Force transfer",
+      "1 | Source [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Source [2/2] : fw7HmjL6P",
+      "2 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Dest [2/2] : fw7HmjL6P",
+      "3 | Value : 459577015"
+    ],
+    "output_expert": [
+      "0 | Balances : Force transfer",
+      "1 | Source [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Source [2/2] : fw7HmjL6P",
+      "2 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Dest [2/2] : fw7HmjL6P",
+      "3 | Value : 459577015",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 100",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 12,
+    "name": "Balances_Transfer_keep_alive",
+    "blob": "040300157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ae4d50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Transfer keep alive",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Value : 57",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Balances : Transfer keep alive",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Value : 57",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 13,
+    "name": "Balances_Transfer_all",
+    "blob": "040400157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882a01d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Transfer all",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Keep alive : True",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Balances : Transfer all",
+      "1 | Dest [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Dest [2/2] : fw7HmjL6P",
+      "2 | Keep alive : True",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 14,
+    "name": "Balances_Force_unreserve",
+    "blob": "040500157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad6274117673c22ab208822600a133753d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Balances : Force unreserve",
+      "1 | Who [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Who [2/2] : fw7HmjL6P",
+      "2 | Amount [1/2] : KSM 110611886165183834760151583.997726",
+      "2 | Amount [2/2] : 631894",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Balances : Force unreserve",
+      "1 | Who [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Who [2/2] : fw7HmjL6P",
+      "2 | Amount [1/2] : KSM 110611886165183834760151583.997726",
+      "2 | Amount [2/2] : 631894",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 15,
+    "name": "Staking_Withdraw_Unbonded",
+    "blob": "060334300000d50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Withdraw Unbonded",
+      "1 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Staking : Withdraw Unbonded",
+      "1 | Num slashing spans : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 16,
+    "name": "Staking_Chill",
+    "blob": "0606d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Chill",
+      "1 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Staking : Chill",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip : KSM 0.000055555555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 17,
+    "name": "Staking_Set_validator_count",
+    "blob": "06099139d5038d248ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Set validator count",
+      "1 | New : 3684",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Staking : Set validator count",
+      "1 | New : 3684",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 18,
+    "name": "Staking_Increase_validator_count",
+    "blob": "060a9139d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Increase validator count",
+      "1 | Additional : 3684",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Staking : Increase validator count",
+      "1 | Additional : 3684",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 19,
+    "name": "Staking_Force_no_eras",
+    "blob": "060cd503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Force no eras",
+      "1 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "1 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Staking : Force no eras",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 20,
+    "name": "Staking_Force_new_era",
+    "blob": "060dd503ae1103008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Force new era",
+      "1 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Staking : Force new era",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 50283",
+      "3 | Tip : KSM 0.000055555555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 21,
+    "name": "Staking_Force_new_era_always",
+    "blob": "0610d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Force new era always",
+      "1 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Staking : Force new era always",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip : KSM 0.000055555555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 22,
+    "name": "Staking_Cancel_deferred_slash",
+    "blob": "0611d304000010200000000b000000200000000b000000d503ae110300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Cancel deferred slash",
+      "1 | Era : 1235",
+      "2 | Slash indices [1/4] : 32",
+      "2 | Slash indices [2/4] : 11",
+      "2 | Slash indices [3/4] : 32",
+      "2 | Slash indices [4/4] : 11"
+    ],
+    "output_expert": [
+      "0 | Staking : Cancel deferred slash",
+      "1 | Era : 1235",
+      "2 | Slash indices [1/4] : 32",
+      "2 | Slash indices [2/4] : 11",
+      "2 | Slash indices [3/4] : 32",
+      "2 | Slash indices [4/4] : 11",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 23,
+    "name": "Staking_Set_history_depth",
+    "blob": "06149139d9e7d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Staking : Set history depth",
+      "1 | New history depth : 3684",
+      "2 | Era items deleted : 14838"
+    ],
+    "output_expert": [
+      "0 | Staking : Set history depth",
+      "1 | New history depth : 3684",
+      "2 | Era items deleted : 14838",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 24,
+    "name": "Session_Purge_keys",
+    "blob": "0801d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Session : Purge keys",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Session : Purge keys",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 25,
+    "name": "Grandpa_Note_stalled",
+    "blob": "0a02ac35000001000000d50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Grandpa : Note stalled",
+      "1 | Delay : 13740",
+      "2 | Best finalized block number : 1",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Grandpa : Note stalled",
+      "1 | Delay : 13740",
+      "2 | Best finalized block number : 1",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 26,
+    "name": "Democracy_Second",
+    "blob": "0d01d9e79139d503ae110300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Second",
+      "1 | Proposal : 14838",
+      "2 | Seconds upper bound : 3684"
+    ],
+    "output_expert": [
+      "0 | Democracy : Second",
+      "1 | Proposal : 14838",
+      "2 | Seconds upper bound : 3684",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 27,
+    "name": "Democracy_Emergency_cancel",
+    "blob": "0d0300000000d5038d24009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Emergency cancel",
+      "1 | Ref index : 0"
+    ],
+    "output_expert": [
+      "0 | Democracy : Emergency cancel",
+      "1 | Ref index : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 28,
+    "name": "Democracy_Cancel_referendum",
+    "blob": "0d0942e50003d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Cancel referendum",
+      "1 | Ref index : 12597584",
       "2 | Tip : KSM 0.000000000987"
     ],
     "output_expert": [
-      "0 | Balances : transferAll",
-      "1 | Keep alive : False",
+      "0 | Democracy : Cancel referendum",
+      "1 | Ref index : 12597584",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 29,
+    "name": "Democracy_Cancel_queued",
+    "blob": "0d0a25010000d50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Cancel queued",
+      "1 | Which : 293",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Democracy : Cancel queued",
+      "1 | Which : 293",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 30,
+    "name": "Democracy_Undelegate",
+    "blob": "0d0cd503046d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Undelegate",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Democracy : Undelegate",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 31,
+    "name": "Democracy_Clear_public_proposals",
+    "blob": "0d0dd50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Clear public proposals",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Democracy : Clear public proposals",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 32,
+    "name": "Democracy_Note_preimage",
+    "blob": "0d0e100d0c1323d5038d2433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Note preimage",
+      "1 | Encoded proposal [1/4] : 13",
+      "1 | Encoded proposal [2/4] : 12",
+      "1 | Encoded proposal [3/4] : 19",
+      "1 | Encoded proposal [4/4] : 35",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Democracy : Note preimage",
+      "1 | Encoded proposal [1/4] : 13",
+      "1 | Encoded proposal [2/4] : 12",
+      "1 | Encoded proposal [3/4] : 19",
+      "1 | Encoded proposal [4/4] : 35",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 33,
+    "name": "Democracy_Note_preimage_operational",
+    "blob": "0d0f100d0c1323d503046d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Note preimage operational",
+      "1 | Encoded proposal [1/4] : 13",
+      "1 | Encoded proposal [2/4] : 12",
+      "1 | Encoded proposal [3/4] : 19",
+      "1 | Encoded proposal [4/4] : 35",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Democracy : Note preimage operational",
+      "1 | Encoded proposal [1/4] : 13",
+      "1 | Encoded proposal [2/4] : 12",
+      "1 | Encoded proposal [3/4] : 19",
+      "1 | Encoded proposal [4/4] : 35",
       "2 | Chain : Kusama",
       "3 | Nonce : 1",
       "4 | Tip : KSM 0.000000000987",
@@ -103,24 +750,2436 @@
     ]
   },
   {
-    "index": 6,
-    "name": "Balances_forceUnreserve",
-    "blob": "0405007313598028fc24e0905793f8453be897093030f552715aa4e217cef8cb83848788b5b4979cd2bcc8792b8bfa8c1e9660d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "index": 34,
+    "name": "Democracy_Note_imminent_preimage",
+    "blob": "0d10100e2a0c49d5030433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
     "output": [
-      "0 | Balances : forceUnreserve",
-      "1 | Amount [1/2] : KSM 128385351765902507942707198.373276",
-      "1 | Amount [2/2] : 202376"
+      "0 | Democracy : Note imminent preimage",
+      "1 | Encoded proposal [1/4] : 14",
+      "1 | Encoded proposal [2/4] : 42",
+      "1 | Encoded proposal [3/4] : 12",
+      "1 | Encoded proposal [4/4] : 73",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
     ],
     "output_expert": [
-      "0 | Balances : forceUnreserve",
-      "1 | Amount [1/2] : KSM 128385351765902507942707198.373276",
-      "1 | Amount [2/2] : 202376",
+      "0 | Democracy : Note imminent preimage",
+      "1 | Encoded proposal [1/4] : 14",
+      "1 | Encoded proposal [2/4] : 42",
+      "1 | Encoded proposal [3/4] : 12",
+      "1 | Encoded proposal [4/4] : 73",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 35,
+    "name": "Democracy_Note_imminent_preimage_operational",
+    "blob": "0d11100e2a0c49d503046d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Note imminent preimage operational",
+      "1 | Encoded proposal [1/4] : 14",
+      "1 | Encoded proposal [2/4] : 42",
+      "1 | Encoded proposal [3/4] : 12",
+      "1 | Encoded proposal [4/4] : 73",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Democracy : Note imminent preimage operational",
+      "1 | Encoded proposal [1/4] : 14",
+      "1 | Encoded proposal [2/4] : 42",
+      "1 | Encoded proposal [3/4] : 12",
+      "1 | Encoded proposal [4/4] : 73",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 36,
+    "name": "Democracy_Remove_vote",
+    "blob": "0d14ac350000d5030003d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Remove vote",
+      "1 | Index : 13740",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Democracy : Remove vote",
+      "1 | Index : 13740",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 37,
+    "name": "Democracy_Cancel_proposal",
+    "blob": "0d189139d503040b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Democracy : Cancel proposal",
+      "1 | Prop index : 3684",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Democracy : Cancel proposal",
+      "1 | Prop index : 3684",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 38,
+    "name": "Technicalcommittee_Disapprove_proposal",
+    "blob": "0f05b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafed5030003d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Technicalcommittee : Disapprove proposal",
+      "1 | Proposal hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Proposal hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Technicalcommittee : Disapprove proposal",
+      "1 | Proposal hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Proposal hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 39,
+    "name": "Phragmenelection_Remove_voter",
+    "blob": "1001d503008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Phragmenelection : Remove voter",
+      "1 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Phragmenelection : Remove voter",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 0",
+      "3 | Tip : KSM 0.000055555555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 40,
+    "name": "Phragmenelection_Submit_candidacy",
+    "blob": "10023a3179acd503000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Phragmenelection : Submit candidacy",
+      "1 | Candidate count : 723405902",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Phragmenelection : Submit candidacy",
+      "1 | Candidate count : 723405902",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 41,
+    "name": "Phragmenelection_Clean_defunct_voters",
+    "blob": "10050000000000000000d503ae1103006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Phragmenelection : Clean defunct voters",
+      "1 | Num voters : 0",
+      "2 | Num defunct : 0",
+      "3 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Phragmenelection : Clean defunct voters",
+      "1 | Num voters : 0",
+      "2 | Num defunct : 0",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Tip : KSM 0.000000000987",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 42,
+    "name": "Technicalmembership_Clear_prime",
+    "blob": "1106d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Technicalmembership : Clear prime"
+    ],
+    "output_expert": [
+      "0 | Technicalmembership : Clear prime",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Era Phase : 61",
+      "4 | Era Period : 64",
+      "5 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "5 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 43,
+    "name": "Treasury_Propose_spend",
+    "blob": "12002fa260059f0bc2a23f6cae7320c0159c00157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Treasury : Propose spend",
+      "1 | Value : 810439462383683006023022839041712290",
+      "2 | Beneficiary [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Beneficiary [2/2] : fw7HmjL6P"
+    ],
+    "output_expert": [
+      "0 | Treasury : Propose spend",
+      "1 | Value : 810439462383683006023022839041712290",
+      "2 | Beneficiary [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Beneficiary [2/2] : fw7HmjL6P",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 44,
+    "name": "Treasury_Reject_proposal",
+    "blob": "12019139d503008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Treasury : Reject proposal",
+      "1 | Proposal id : 3684",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Treasury : Reject proposal",
+      "1 | Proposal id : 3684",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 45,
+    "name": "Treasury_Approve_proposal",
+    "blob": "120242e50003d5030003d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Treasury : Approve proposal",
+      "1 | Proposal id : 12597584",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Treasury : Approve proposal",
+      "1 | Proposal id : 12597584",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 46,
+    "name": "Claims_Attest",
+    "blob": "1303100e2a0c49d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Claims : Attest",
+      "1 | Statement [1/4] : 14",
+      "1 | Statement [2/4] : 42",
+      "1 | Statement [3/4] : 12",
+      "1 | Statement [4/4] : 73",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Claims : Attest",
+      "1 | Statement [1/4] : 14",
+      "1 | Statement [2/4] : 42",
+      "1 | Statement [3/4] : 12",
+      "1 | Statement [4/4] : 73",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 47,
+    "name": "Identity_Add_registrar",
+    "blob": "1900f4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b638d5030403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Add registrar",
+      "1 | Account [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | Account [2/2] : 4sybUFczx",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Identity : Add registrar",
+      "1 | Account [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | Account [2/2] : 4sybUFczx",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 48,
+    "name": "Identity_Clear_identity",
+    "blob": "1903d503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Clear identity",
+      "1 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "1 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Identity : Clear identity",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 49,
+    "name": "Identity_Request_judgement",
+    "blob": "19049139e4d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Request judgement",
+      "1 | Reg index : 3684",
+      "2 | Max fee : 57",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Identity : Request judgement",
+      "1 | Reg index : 3684",
+      "2 | Max fee : 57",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 50,
+    "name": "Identity_Cancel_request",
+    "blob": "1905ac350000d5030433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Cancel request",
+      "1 | Reg index : 13740",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Identity : Cancel request",
+      "1 | Reg index : 13740",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 51,
+    "name": "Identity_Set_fee",
+    "blob": "19063a3179ace4d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Set fee",
+      "1 | Index : 723405902",
+      "2 | Fee : 57",
+      "3 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Identity : Set fee",
+      "1 | Index : 723405902",
+      "2 | Fee : 57",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 1",
+      "5 | Tip : KSM 0.000055555555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 52,
+    "name": "Identity_Set_account_id",
+    "blob": "1907d9e7b87df389bb52b464dc669ad572a87d310efacf61d467345b7f3389b410c00876d5038d240b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Set account id",
+      "1 | Index : 14838",
+      "2 | New [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "2 | New [2/2] : DNKZ79ZHp",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Identity : Set account id",
+      "1 | Index : 14838",
+      "2 | New [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "2 | New [2/2] : DNKZ79ZHp",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 2339",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 53,
+    "name": "Identity_Kill_identity",
+    "blob": "190a00157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Kill identity",
+      "1 | Target [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Target [2/2] : fw7HmjL6P",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Identity : Kill identity",
+      "1 | Target [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Target [2/2] : fw7HmjL6P",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 54,
+    "name": "Identity_Remove_sub",
+    "blob": "190d00157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad5038d246d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Remove sub",
+      "1 | Sub [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Sub [2/2] : fw7HmjL6P",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Identity : Remove sub",
+      "1 | Sub [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Sub [2/2] : fw7HmjL6P",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 55,
+    "name": "Identity_Quit_sub",
+    "blob": "190ed50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Identity : Quit sub",
+      "1 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Identity : Quit sub",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip : KSM 5.552342355555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 56,
+    "name": "Society_Unbid",
+    "blob": "1a01f7010000d5038d2403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Unbid",
+      "1 | Pos : 503",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Society : Unbid",
+      "1 | Pos : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 57,
+    "name": "Society_Unvouch",
+    "blob": "1a03f7010000d5030403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Unvouch",
+      "1 | Pos : 503",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Society : Unvouch",
+      "1 | Pos : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 58,
+    "name": "Society_Vote",
+    "blob": "1a0400157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882a00d503ae1103008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Vote",
+      "1 | Candidate [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Candidate [2/2] : fw7HmjL6P",
+      "2 | Approve : False",
+      "3 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Society : Vote",
+      "1 | Candidate [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Candidate [2/2] : fw7HmjL6P",
+      "2 | Approve : False",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Tip : KSM 0.000055555555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 59,
+    "name": "Society_Defender_vote",
+    "blob": "1a0501d5038d24009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Defender vote",
+      "1 | Approve : True"
+    ],
+    "output_expert": [
+      "0 | Society : Defender vote",
+      "1 | Approve : True",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 60,
+    "name": "Society_Payout",
+    "blob": "1a06d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Payout",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Society : Payout",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 61,
+    "name": "Society_Found",
+    "blob": "1a071ad42676fac852bc79cd40607261abcbf507da622cdbb10870b0f11b4d37276400000000100d0c1323d5038d24009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Found",
+      "1 | Founder [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Founder [2/2] : hXxiisqLM",
+      "2 | Max members : 0",
+      "3 | Rules [1/4] : 13",
+      "3 | Rules [2/4] : 12",
+      "3 | Rules [3/4] : 19",
+      "3 | Rules [4/4] : 35"
+    ],
+    "output_expert": [
+      "0 | Society : Found",
+      "1 | Founder [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Founder [2/2] : hXxiisqLM",
+      "2 | Max members : 0",
+      "3 | Rules [1/4] : 13",
+      "3 | Rules [2/4] : 12",
+      "3 | Rules [3/4] : 19",
+      "3 | Rules [4/4] : 35",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 2339",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 62,
+    "name": "Society_Unfound",
+    "blob": "1a08d5030403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Unfound",
+      "1 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Society : Unfound",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip : KSM 0.00123456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 63,
+    "name": "Society_Judge_suspended_member",
+    "blob": "1a0958b41daf8f3a53272bea536a355a55ca7ab1083625297996089f373fcf37db3001d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Judge suspended member",
+      "1 | Who [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Who [2/2] : 8cGtXTsXV",
+      "2 | Forgive : True",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Society : Judge suspended member",
+      "1 | Who [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Who [2/2] : 8cGtXTsXV",
+      "2 | Forgive : True",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 64,
+    "name": "Society_Set_max_members",
+    "blob": "1a0b34300000d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Society : Set max members",
+      "1 | Max : 12340",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Society : Set max members",
+      "1 | Max : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 65,
+    "name": "Recovery_Set_recovered",
+    "blob": "1b011ad42676fac852bc79cd40607261abcbf507da622cdbb10870b0f11b4d3727641ad42676fac852bc79cd40607261abcbf507da622cdbb10870b0f11b4d372764d5038d240b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Set recovered",
+      "1 | Lost [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Lost [2/2] : hXxiisqLM",
+      "2 | Rescuer [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "2 | Rescuer [2/2] : hXxiisqLM",
+      "3 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Recovery : Set recovered",
+      "1 | Lost [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Lost [2/2] : hXxiisqLM",
+      "2 | Rescuer [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "2 | Rescuer [2/2] : hXxiisqLM",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 2339",
+      "5 | Tip : KSM 5.552342355555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 66,
+    "name": "Recovery_Initiate_recovery",
+    "blob": "1b0358b41daf8f3a53272bea536a355a55ca7ab1083625297996089f373fcf37db30d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Initiate recovery",
+      "1 | Account [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Account [2/2] : 8cGtXTsXV"
+    ],
+    "output_expert": [
+      "0 | Recovery : Initiate recovery",
+      "1 | Account [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Account [2/2] : 8cGtXTsXV",
       "2 | Chain : Kusama",
       "3 | Nonce : 100",
       "4 | Era Phase : 61",
       "5 | Era Period : 64",
       "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
       "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 67,
+    "name": "Recovery_Vouch_recovery",
+    "blob": "1b0458b41daf8f3a53272bea536a355a55ca7ab1083625297996089f373fcf37db30f4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b638d503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Vouch recovery",
+      "1 | Lost [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Lost [2/2] : 8cGtXTsXV",
+      "2 | Rescuer [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Rescuer [2/2] : 4sybUFczx",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Recovery : Vouch recovery",
+      "1 | Lost [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Lost [2/2] : 8cGtXTsXV",
+      "2 | Rescuer [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Rescuer [2/2] : 4sybUFczx",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 68,
+    "name": "Recovery_Claim_recovery",
+    "blob": "1b0558b41daf8f3a53272bea536a355a55ca7ab1083625297996089f373fcf37db30d503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Claim recovery",
+      "1 | Account [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Account [2/2] : 8cGtXTsXV",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Recovery : Claim recovery",
+      "1 | Account [1/2] : EadEiP6FLeccgnApewarnQPbGL9ZGvnY2yN38k",
+      "1 | Account [2/2] : 8cGtXTsXV",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 69,
+    "name": "Recovery_Close_recovery",
+    "blob": "1b06b87df389bb52b464dc669ad572a87d310efacf61d467345b7f3389b410c00876d503008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Close recovery",
+      "1 | Rescuer [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "1 | Rescuer [2/2] : DNKZ79ZHp",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Recovery : Close recovery",
+      "1 | Rescuer [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "1 | Rescuer [2/2] : DNKZ79ZHp",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 70,
+    "name": "Recovery_Remove_recovery",
+    "blob": "1b07d50300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Remove recovery"
+    ],
+    "output_expert": [
+      "0 | Recovery : Remove recovery",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 0",
+      "3 | Era Phase : 61",
+      "4 | Era Period : 64",
+      "5 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "5 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 71,
+    "name": "Recovery_Cancel_recovered",
+    "blob": "1b081ad42676fac852bc79cd40607261abcbf507da622cdbb10870b0f11b4d372764d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Recovery : Cancel recovered",
+      "1 | Account [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Account [2/2] : hXxiisqLM",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Recovery : Cancel recovered",
+      "1 | Account [1/2] : DBVnTZzSuGHoomNJEJ7Lfm6f5CWj39oGHHiCUP",
+      "1 | Account [2/2] : hXxiisqLM",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 72,
+    "name": "Vesting_Vest",
+    "blob": "1c00d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Vesting : Vest",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Vesting : Vest",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 100",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 73,
+    "name": "Vesting_Vest_other",
+    "blob": "1c0100157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Vesting : Vest other",
+      "1 | Target [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Target [2/2] : fw7HmjL6P"
+    ],
+    "output_expert": [
+      "0 | Vesting : Vest other",
+      "1 | Target [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "1 | Target [2/2] : fw7HmjL6P",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 74,
+    "name": "Vesting_Merge_schedules",
+    "blob": "1c04f70100009d1c0000d503ae11030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Vesting : Merge schedules",
+      "1 | Schedule1 index : 503",
+      "2 | Schedule2 index : 7325",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Vesting : Merge schedules",
+      "1 | Schedule1 index : 503",
+      "2 | Schedule2 index : 7325",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 50283",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 75,
+    "name": "Proxy_Remove_proxies",
+    "blob": "1e03d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Proxy : Remove proxies",
+      "1 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "1 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Proxy : Remove proxies",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 0",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 76,
+    "name": "Bounties_Propose_bounty",
+    "blob": "2300de5a926d100d0c1323d5030433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Propose bounty",
+      "1 | Value : 459577015",
+      "2 | Description [1/4] : 13",
+      "2 | Description [2/4] : 12",
+      "2 | Description [3/4] : 19",
+      "2 | Description [4/4] : 35",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Bounties : Propose bounty",
+      "1 | Value : 459577015",
+      "2 | Description [1/4] : 13",
+      "2 | Description [2/4] : 12",
+      "2 | Description [3/4] : 19",
+      "2 | Description [4/4] : 35",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 1",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 77,
+    "name": "Bounties_Approve_bounty",
+    "blob": "23013a3179acd503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Approve bounty",
+      "1 | Bounty id : 723405902",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Bounties : Approve bounty",
+      "1 | Bounty id : 723405902",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 78,
+    "name": "Bounties_Propose_curator",
+    "blob": "2302d9e700157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ac53cd5038d24009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Propose curator",
+      "1 | Bounty id : 14838",
+      "2 | Curator [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Curator [2/2] : fw7HmjL6P",
+      "3 | Fee : 3889"
+    ],
+    "output_expert": [
+      "0 | Bounties : Propose curator",
+      "1 | Bounty id : 14838",
+      "2 | Curator [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Curator [2/2] : fw7HmjL6P",
+      "3 | Fee : 3889",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 2339",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 79,
+    "name": "Bounties_Unassign_curator",
+    "blob": "23033a3179acd50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Unassign curator",
+      "1 | Bounty id : 723405902",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Bounties : Unassign curator",
+      "1 | Bounty id : 723405902",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 80,
+    "name": "Bounties_Accept_curator",
+    "blob": "2304d9e7d503ae1103006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Accept curator",
+      "1 | Bounty id : 14838",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Bounties : Accept curator",
+      "1 | Bounty id : 14838",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 81,
+    "name": "Bounties_Award_bounty",
+    "blob": "230542e5000300157be2592c575a6298d39773466a4ae09813fd6ce9e1fccc062d6155b9e9882ad50304009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Award bounty",
+      "1 | Bounty id : 12597584",
+      "2 | Beneficiary [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Beneficiary [2/2] : fw7HmjL6P"
+    ],
+    "output_expert": [
+      "0 | Bounties : Award bounty",
+      "1 | Bounty id : 12597584",
+      "2 | Beneficiary [1/2] : D4VKnNtXubmcQMrFjih973iRXq1e7S8F5zb1RV",
+      "2 | Beneficiary [2/2] : fw7HmjL6P",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 1",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 82,
+    "name": "Bounties_Claim_bounty",
+    "blob": "23069139d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Claim bounty",
+      "1 | Bounty id : 3684",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Bounties : Claim bounty",
+      "1 | Bounty id : 3684",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 83,
+    "name": "Bounties_Close_bounty",
+    "blob": "230742e50003d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Close bounty",
+      "1 | Bounty id : 12597584",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Bounties : Close bounty",
+      "1 | Bounty id : 12597584",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 84,
+    "name": "Bounties_Extend_bounty_expiry",
+    "blob": "2308913910200b200bd503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bounties : Extend bounty expiry",
+      "1 | Bounty id : 3684",
+      "2 | Remark [1/4] : 32",
+      "2 | Remark [2/4] : 11",
+      "2 | Remark [3/4] : 32",
+      "2 | Remark [4/4] : 11",
+      "3 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Bounties : Extend bounty expiry",
+      "1 | Bounty id : 3684",
+      "2 | Remark [1/4] : 32",
+      "2 | Remark [2/4] : 11",
+      "2 | Remark [3/4] : 32",
+      "2 | Remark [4/4] : 11",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 1",
+      "5 | Tip : KSM 0.000055555555",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 85,
+    "name": "Tips_Report_awesome",
+    "blob": "2400100c293435f4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b638d503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Report awesome",
+      "1 | Reason [1/4] : 12",
+      "1 | Reason [2/4] : 41",
+      "1 | Reason [3/4] : 52",
+      "1 | Reason [4/4] : 53",
+      "2 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Who [2/2] : 4sybUFczx",
+      "3 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Tips : Report awesome",
+      "1 | Reason [1/4] : 12",
+      "1 | Reason [2/4] : 41",
+      "1 | Reason [3/4] : 52",
+      "1 | Reason [4/4] : 53",
+      "2 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Who [2/2] : 4sybUFczx",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Tip : KSM 0.000000000987",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 86,
+    "name": "Tips_Retract_tip",
+    "blob": "2401b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafed503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Retract tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Tips : Retract tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 87,
+    "name": "Tips_Tip_new",
+    "blob": "240210200b200bf4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b638de5a926dd503000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Tip new",
+      "1 | Reason [1/4] : 32",
+      "1 | Reason [2/4] : 11",
+      "1 | Reason [3/4] : 32",
+      "1 | Reason [4/4] : 11",
+      "2 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Who [2/2] : 4sybUFczx",
+      "3 | Tip value : 459577015",
+      "4 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Tips : Tip new",
+      "1 | Reason [1/4] : 32",
+      "1 | Reason [2/4] : 11",
+      "1 | Reason [3/4] : 32",
+      "1 | Reason [4/4] : 11",
+      "2 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "2 | Who [2/2] : 4sybUFczx",
+      "3 | Tip value : 459577015",
+      "4 | Chain : Kusama",
+      "5 | Nonce : 0",
+      "6 | Tip : KSM 5.552342355555",
+      "7 | Era Phase : 61",
+      "8 | Era Period : 64",
+      "9 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "9 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 88,
+    "name": "Tips_Tip",
+    "blob": "2403b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafee4d50300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip value : 57"
+    ],
+    "output_expert": [
+      "0 | Tips : Tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip value : 57",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 89,
+    "name": "Tips_Close_tip",
+    "blob": "2404b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafed503ae1103008ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Close tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Tips : Close tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 90,
+    "name": "Tips_Slash_tip",
+    "blob": "2405b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafed503910103d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Tips : Slash tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Tips : Slash tip",
+      "1 | Hash [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "1 | Hash [2/2] : 01197a149ca93654499ea3dafe",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 91,
+    "name": "Gilt_Place_bid",
+    "blob": "2600de5a926d34300000d5030003d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Gilt : Place bid",
+      "1 | Amount : 459577015",
+      "2 | Duration : 12340",
+      "3 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Gilt : Place bid",
+      "1 | Amount : 459577015",
+      "2 | Duration : 12340",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 0",
+      "5 | Tip : KSM 0.00123456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 92,
+    "name": "Gilt_Retract_bid",
+    "blob": "2601e400000000d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Gilt : Retract bid",
+      "1 | Amount : 57",
+      "2 | Duration : 0",
+      "3 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Gilt : Retract bid",
+      "1 | Amount : 57",
+      "2 | Duration : 0",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip : KSM 0.000000000987",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 93,
+    "name": "Bagslist_Rebag",
+    "blob": "2700b87df389bb52b464dc669ad572a87d310efacf61d467345b7f3389b410c00876d50300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Bagslist : Rebag",
+      "1 | Dislocated [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "1 | Dislocated [2/2] : DNKZ79ZHp"
+    ],
+    "output_expert": [
+      "0 | Bagslist : Rebag",
+      "1 | Dislocated [1/2] : GkDk6q2REvXA5fsUQYRFY9jwFwMWyvrpXaderR",
+      "1 | Dislocated [2/2] : DNKZ79ZHp",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 94,
+    "name": "Configuration_Set_validation_upgrade_frequency",
+    "blob": "33007b000000d503ae11030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set validation upgrade frequency",
+      "1 | New : 123",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set validation upgrade frequency",
+      "1 | New : 123",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 95,
+    "name": "Configuration_Set_validation_upgrade_delay",
+    "blob": "3301b3e30100d50304009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set validation upgrade delay",
+      "1 | New : 123827"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set validation upgrade delay",
+      "1 | New : 123827",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 96,
+    "name": "Configuration_Set_code_retention_period",
+    "blob": "330201000000d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set code retention period",
+      "1 | New : 1",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set code retention period",
+      "1 | New : 1",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 97,
+    "name": "Configuration_Set_max_code_size",
+    "blob": "3303f7010000d5038d240b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max code size",
+      "1 | New : 503",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max code size",
+      "1 | New : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 98,
+    "name": "Configuration_Set_max_pov_size",
+    "blob": "330434300000d50391018ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max pov size",
+      "1 | New : 12340",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max pov size",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 99,
+    "name": "Configuration_Set_max_head_data_size",
+    "blob": "3305d3040000d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max head data size",
+      "1 | New : 1235",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max head data size",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 100,
+    "name": "Configuration_Set_parathread_cores",
+    "blob": "330634300000d5030003d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set parathread cores",
+      "1 | New : 12340",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set parathread cores",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 101,
+    "name": "Configuration_Set_parathread_retries",
+    "blob": "330700000000d503ae11030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set parathread retries",
+      "1 | New : 0",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set parathread retries",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 102,
+    "name": "Configuration_Set_group_rotation_frequency",
+    "blob": "330801000000d503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set group rotation frequency",
+      "1 | New : 1",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set group rotation frequency",
+      "1 | New : 1",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 103,
+    "name": "Configuration_Set_chain_availability_period",
+    "blob": "330901000000d5038d240b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set chain availability period",
+      "1 | New : 1",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set chain availability period",
+      "1 | New : 1",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 104,
+    "name": "Configuration_Set_thread_availability_period",
+    "blob": "330a25010000d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set thread availability period",
+      "1 | New : 293"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set thread availability period",
+      "1 | New : 293",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 105,
+    "name": "Configuration_Set_scheduling_lookahead",
+    "blob": "330bf7010000d503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set scheduling lookahead",
+      "1 | New : 503",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set scheduling lookahead",
+      "1 | New : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 106,
+    "name": "Configuration_Set_max_validators_per_core",
+    "blob": "330c01d3040000d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max validators per core",
+      "1 | New : 1235",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max validators per core",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 107,
+    "name": "Configuration_Set_max_validators",
+    "blob": "330d0134300000d5038d24009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max validators",
+      "1 | New : 12340"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max validators",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 108,
+    "name": "Configuration_Set_dispute_post_conclusion_acceptance_period",
+    "blob": "330fac350000d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set dispute post conclusion acceptance",
+      "1 | New : 13740",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set dispute post conclusion acceptance",
+      "1 | New : 13740",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 109,
+    "name": "Configuration_Set_dispute_max_spam_slots",
+    "blob": "331000000000d503040b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set dispute max spam slots",
+      "1 | New : 0",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set dispute max spam slots",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 110,
+    "name": "Configuration_Set_dispute_conclusion_by_time_out_period",
+    "blob": "3311ff030000d5038d2433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set dispute conclusion by time out per",
+      "1 | New : 1023",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set dispute conclusion by time out per",
+      "1 | New : 1023",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 111,
+    "name": "Configuration_Set_no_show_slots",
+    "blob": "3312f7010000d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set no show slots",
+      "1 | New : 503",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set no show slots",
+      "1 | New : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 112,
+    "name": "Configuration_Set_n_delay_tranches",
+    "blob": "331334300000d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set n delay tranches",
+      "1 | New : 12340",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set n delay tranches",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 113,
+    "name": "Configuration_Set_zeroth_delay_tranche_width",
+    "blob": "33149d1c0000d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set zeroth delay tranche width",
+      "1 | New : 7325"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set zeroth delay tranche width",
+      "1 | New : 7325",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 114,
+    "name": "Configuration_Set_needed_approvals",
+    "blob": "331534300000d50391018ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set needed approvals",
+      "1 | New : 12340",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set needed approvals",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 115,
+    "name": "Configuration_Set_relay_vrf_modulo_samples",
+    "blob": "331600000000d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set relay vrf modulo samples",
+      "1 | New : 0",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set relay vrf modulo samples",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 116,
+    "name": "Configuration_Set_max_upward_queue_count",
+    "blob": "3317f7010000d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max upward queue count",
+      "1 | New : 503",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max upward queue count",
+      "1 | New : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 117,
+    "name": "Configuration_Set_max_upward_queue_size",
+    "blob": "3318d3040000d503910103d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max upward queue size",
+      "1 | New : 1235",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max upward queue size",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 118,
+    "name": "Configuration_Set_max_downward_message_size",
+    "blob": "3319d3040000d503ae110300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max downward message size",
+      "1 | New : 1235"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max downward message size",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 119,
+    "name": "Configuration_Set_ump_service_total_weight",
+    "blob": "331a0000000000000000d5039101009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set ump service total weight",
+      "1 | New : 0"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set ump service total weight",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 120,
+    "name": "Configuration_Set_max_upward_message_size",
+    "blob": "331bd3040000d503040b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max upward message size",
+      "1 | New : 1235",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max upward message size",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 121,
+    "name": "Configuration_Set_max_upward_message_num_per_candidate",
+    "blob": "331c00000000d503ae110300009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set max upward message num per candida",
+      "1 | New : 0"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set max upward message num per candida",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 122,
+    "name": "Configuration_Set_hrmp_open_request_ttl",
+    "blob": "331d34300000d5038d2433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp open request ttl",
+      "1 | New : 12340",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp open request ttl",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 123,
+    "name": "Configuration_Set_hrmp_recipient_deposit",
+    "blob": "331fd6274117673c22ab208822600a133753d503910103d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp recipient deposit",
+      "1 | New [1/2] : KSM 110611886165183834760151583.997726",
+      "1 | New [2/2] : 631894",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp recipient deposit",
+      "1 | New [1/2] : KSM 110611886165183834760151583.997726",
+      "1 | New [2/2] : 631894",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 124,
+    "name": "Configuration_Set_hrmp_channel_max_capacity",
+    "blob": "332034300000d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp channel max capacity",
+      "1 | New : 12340",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp channel max capacity",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 125,
+    "name": "Configuration_Set_hrmp_channel_max_total_size",
+    "blob": "3321d3040000d5038d246d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp channel max total size",
+      "1 | New : 1235",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp channel max total size",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 126,
+    "name": "Configuration_Set_hrmp_max_parachain_inbound_channels",
+    "blob": "3322f7010000d503ae1103000b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp max parachain inbound channel",
+      "1 | New : 503",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp max parachain inbound channel",
+      "1 | New : 503",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 127,
+    "name": "Configuration_Set_hrmp_max_parathread_inbound_channels",
+    "blob": "332334300000d50391010b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp max parathread inbound channe",
+      "1 | New : 12340",
+      "2 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp max parathread inbound channe",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 5.552342355555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 128,
+    "name": "Configuration_Set_hrmp_channel_max_message_size",
+    "blob": "332434300000d5030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp channel max message size",
+      "1 | New : 12340",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp channel max message size",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 0",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 129,
+    "name": "Configuration_Set_hrmp_max_parachain_outbound_channels",
+    "blob": "3325d3040000d50391016d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp max parachain outbound channe",
+      "1 | New : 1235",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp max parachain outbound channe",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 100",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 130,
+    "name": "Configuration_Set_hrmp_max_parathread_outbound_channels",
+    "blob": "3326d3040000d503ae11030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp max parathread outbound chann",
+      "1 | New : 1235",
+      "2 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "2 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp max parathread outbound chann",
+      "1 | New : 1235",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 50283",
+      "4 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "4 | Tip [2/2] : 456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 131,
+    "name": "Configuration_Set_hrmp_max_message_num_per_candidate",
+    "blob": "332734300000d5030403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set hrmp max message num per candidate",
+      "1 | New : 12340",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set hrmp max message num per candidate",
+      "1 | New : 12340",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 132,
+    "name": "Configuration_Set_ump_max_individual_weight",
+    "blob": "33280000000000000000d503048ed73e0d9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Configuration : Set ump max individual weight",
+      "1 | New : 0",
+      "2 | Tip : KSM 0.000055555555"
+    ],
+    "output_expert": [
+      "0 | Configuration : Set ump max individual weight",
+      "1 | New : 0",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000055555555",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 133,
+    "name": "Initializer_Force_approve",
+    "blob": "390001000000d50304009723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Initializer : Force approve",
+      "1 | Up to : 1"
+    ],
+    "output_expert": [
+      "0 | Initializer : Force approve",
+      "1 | Up to : 1",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 134,
+    "name": "Hrmp_Force_process_hrmp_open",
+    "blob": "3c04d5030433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Hrmp : Force process hrmp open",
+      "1 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "1 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Hrmp : Force process hrmp open",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 135,
+    "name": "Hrmp_Force_process_hrmp_close",
+    "blob": "3c05d503040b63ce64c10c059723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Hrmp : Force process hrmp close",
+      "1 | Tip : KSM 5.552342355555"
+    ],
+    "output_expert": [
+      "0 | Hrmp : Force process hrmp close",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 1",
+      "3 | Tip : KSM 5.552342355555",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 136,
+    "name": "Registrar_Reserve",
+    "blob": "4605d503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Registrar : Reserve",
+      "1 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Registrar : Reserve",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 0",
+      "3 | Tip : KSM 0.000000000987",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 137,
+    "name": "Auctions_New_auction",
+    "blob": "48009139d9e7d5030433158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Auctions : New auction",
+      "1 | Duration : 3684",
+      "2 | Lease period index : 14838",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Auctions : New auction",
+      "1 | Duration : 3684",
+      "2 | Lease period index : 14838",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 1",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 138,
+    "name": "Auctions_Bid",
+    "blob": "4801d9e742e500033a3179ac3a3179acde5a926dd503006d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Auctions : Bid",
+      "1 | Para : 14838",
+      "2 | Auction index : 12597584",
+      "3 | First slot : 723405902",
+      "4 | Last slot : 723405902",
+      "5 | Amount : 459577015",
+      "6 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Auctions : Bid",
+      "1 | Para : 14838",
+      "2 | Auction index : 12597584",
+      "3 | First slot : 723405902",
+      "4 | Last slot : 723405902",
+      "5 | Amount : 459577015",
+      "6 | Chain : Kusama",
+      "7 | Nonce : 0",
+      "8 | Tip : KSM 0.000000000987",
+      "9 | Era Phase : 61",
+      "10 | Era Period : 64",
+      "11 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "11 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 139,
+    "name": "Auctions_Cancel_auction",
+    "blob": "4802d503ae11030033158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Auctions : Cancel auction",
+      "1 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "1 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Auctions : Cancel auction",
+      "1 | Chain : Kusama",
+      "2 | Nonce : 50283",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789",
+      "4 | Era Phase : 61",
+      "5 | Era Period : 64",
+      "6 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "6 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 140,
+    "name": "Crowdloan_Withdraw",
+    "blob": "4902f4144deaf0af9c7bd1fccbe45abf1439f19f7dcc9fef938d9754cd1a8129b6389139d503910133158139ae28a3dfaac5fe1560a5e9e05c9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Crowdloan : Withdraw",
+      "1 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | Who [2/2] : 4sybUFczx",
+      "2 | Index : 3684",
+      "3 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "3 | Tip [2/2] : 456789"
+    ],
+    "output_expert": [
+      "0 | Crowdloan : Withdraw",
+      "1 | Who [1/2] : J6MEV7ER8bXCs412xQA73RAej859TfAo6F5FRF",
+      "1 | Who [2/2] : 4sybUFczx",
+      "2 | Index : 3684",
+      "3 | Chain : Kusama",
+      "4 | Nonce : 100",
+      "5 | Tip [1/2] : KSM 123456789012345678901234567.890123",
+      "5 | Tip [2/2] : 456789",
+      "6 | Era Phase : 61",
+      "7 | Era Period : 64",
+      "8 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "8 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 141,
+    "name": "Crowdloan_Refund",
+    "blob": "490342e50003d5038d2403d20296499723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Crowdloan : Refund",
+      "1 | Index : 12597584",
+      "2 | Tip : KSM 0.00123456789"
+    ],
+    "output_expert": [
+      "0 | Crowdloan : Refund",
+      "1 | Index : 12597584",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 2339",
+      "4 | Tip : KSM 0.00123456789",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
+    ]
+  },
+  {
+    "index": 142,
+    "name": "Crowdloan_Dissolve",
+    "blob": "490442e50003d503046d0f9723000007000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
+    "output": [
+      "0 | Crowdloan : Dissolve",
+      "1 | Index : 12597584",
+      "2 | Tip : KSM 0.000000000987"
+    ],
+    "output_expert": [
+      "0 | Crowdloan : Dissolve",
+      "1 | Index : 12597584",
+      "2 | Chain : Kusama",
+      "3 | Nonce : 1",
+      "4 | Tip : KSM 0.000000000987",
+      "5 | Era Phase : 61",
+      "6 | Era Period : 64",
+      "7 | Block [1/2] : b0a8d493285c2df73290dfb7e61f870f17b418",
+      "7 | Block [2/2] : 01197a149ca93654499ea3dafe"
     ]
   }
 ]
