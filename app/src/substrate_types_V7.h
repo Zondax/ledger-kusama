@@ -31,29 +31,8 @@ typedef struct {
 } pd_AccountId_V7_t;
 
 typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-} pd_Bytes_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_CallIndex_V7_t;
-
-typedef struct {
     compactInt_t value;
 } pd_CompactAccountIndex_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_NestCallIdx_V7_t;
-
-typedef struct {
-    pd_CallIndex_V7_t callIndex;
-    const uint32_t* _txVerPtr;
-    pd_NestCallIdx_V7_t nestCallIdx;
-} pd_Call_V7_t;
 
 typedef struct {
     pd_u32_t digest_interval;
@@ -70,11 +49,6 @@ typedef struct {
 } pd_ElectionScore_V7_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Header_V7_t;
-
-typedef struct {
     const uint8_t* _ptr;
 } pd_KeyValue_V7_t;
 
@@ -87,7 +61,7 @@ typedef struct {
     union {
         pd_AccountId_V7_t id;
         pd_CompactAccountIndex_V7_t index;
-        pd_Bytes_V7_t raw;
+        pd_Bytes_t raw;
         const uint8_t* _ptr;
     };
 } pd_LookupasStaticLookupSource_V7_t;
@@ -150,7 +124,7 @@ typedef struct {
 } pd_schedulePeriodBlockNumber_V7_t;
 
 typedef struct {
-    pd_Call_V7_t call;
+    pd_Call_t call;
 } pd_OpaqueCall_V7_t;
 
 typedef struct {
@@ -192,15 +166,6 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_BalanceOfT_V7_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_Balance_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BlockNumber_V7_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -264,19 +229,9 @@ typedef struct {
 
 typedef compactInt_t pd_Compactu128_V7_t;
 
-typedef compactInt_t pd_Compactu32_V7_t;
-
-typedef compactInt_t pd_Compactu64_V7_t;
-
 typedef struct {
     uint8_t value;
 } pd_Conviction_V7_t;
-
-typedef struct {
-    uint8_t type;
-    const uint8_t* _ptr;
-    uint8_t _len;
-} pd_Data_V7_t;
 
 typedef struct {
     const uint8_t* _ptr;
@@ -289,10 +244,6 @@ typedef struct {
 typedef struct {
     const uint8_t* _ptr;
 } pd_EthereumAddress_V7_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_Hash_V7_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -408,11 +359,6 @@ typedef struct {
 } pd_OptionschedulePeriodBlockNumber_V7_t;
 
 typedef struct {
-    uint8_t some;
-    pd_u32_V7_t contained;
-} pd_Optionu32_V7_t;
-
-typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_OverweightIndex_V7_t;
@@ -475,12 +421,6 @@ typedef struct {
     uint64_t _len;
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
-} pd_VecHeader_V7_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
 } pd_VecKeyValue_V7_t;
 
 typedef struct {
@@ -500,18 +440,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecTupleAccountIdData_V7_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_Vecu32_V7_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_Vecu8_V7_t;
 
 typedef struct {
     // TODO: Not implemented

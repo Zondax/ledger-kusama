@@ -80,6 +80,59 @@ typedef struct {
 // Common types
 ////////////////////////
 
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+} pd_Bytes_t;
+
+typedef struct {
+    pd_CallIndex_t callIndex;
+    const uint32_t* _txVerPtr;
+    pd_NestCallIdx_t nestCallIdx;
+} pd_Call_t;
+
+typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_Header_t;
+
+typedef struct {
+    const uint8_t* _ptr;
+} pd_Balance_t;
+
+typedef struct {
+    uint8_t type;
+    const uint8_t* _ptr;
+    uint8_t _len;
+} pd_Data_t;
+
+typedef struct {
+    const uint8_t* _ptr;
+} pd_Hash_t;
+
+typedef struct {
+    uint8_t some;
+    pd_u32_t contained;
+} pd_Optionu32_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_VecHeader_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_Vecu32_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_Vecu8_t;
+
 ////////////////////////
 // /Common types
 ////////////////////////

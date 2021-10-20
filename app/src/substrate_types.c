@@ -108,6 +108,107 @@ parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_MethodNested_
 ///////////////////////////////////
 ///////////////////////////////////
 
+parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v)
+{
+    CHECK_INPUT()
+
+    compactInt_t clen;
+    CHECK_ERROR(_readCompactInt(c, &clen))
+    CHECK_ERROR(_getValue(&clen, &v->_len))
+
+    v->_ptr = c->buffer + c->offset;
+    CTX_CHECK_AND_ADVANCE(c, v->_len);
+    return parser_ok;
+}
+
+parser_error_t _readCall(parser_context_t* c, pd_Call_t* v)
+{
+    pd_MethodNested_t _method;
+    if (c->tx_obj->nestCallIdx.isTail) {
+        c->tx_obj->nestCallIdx.isTail = false;
+        v->nestCallIdx.isTail = true;
+    } else {
+        v->nestCallIdx.isTail = false;
+    }
+
+    CHECK_ERROR(_readCallImpl(c, v, &_method))
+    if (c->tx_obj->nestCallIdx._ptr != NULL && c->tx_obj->nestCallIdx._nextPtr != NULL) {
+        v->nestCallIdx._ptr = c->tx_obj->nestCallIdx._ptr;
+        v->nestCallIdx._nextPtr = c->tx_obj->nestCallIdx._nextPtr;
+    }
+    v->nestCallIdx.slotIdx = c->tx_obj->nestCallIdx.slotIdx;
+    return parser_ok;
+}
+
+parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
+{
+    return parser_not_supported;
+}
+
+parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v) {
+    GEN_DEF_READARRAY(16)
+}
+
+parser_error_t _readData(parser_context_t* c, pd_Data_t* v)
+{
+    CHECK_INPUT();
+    MEMZERO(v, sizeof(pd_Data_t));
+    CHECK_ERROR(_readUInt8(c, (uint8_t*)&v->type))
+
+    v->_ptr = NULL;
+    v->_len = 0;
+
+    // based on:
+    // https://github.com/paritytech/substrate/blob/effe489951d1edab9d34846b1eefdfaf9511dab9/frame/identity/src/lib.rs#L139
+    switch (v->type) {
+    case Data_e_NONE: {
+        v->_ptr = NULL;
+        v->_len = 0;
+        return parser_ok;
+    }
+    case Data_e_BLAKETWO256U8_32:
+    case Data_e_SHA256_U8_32:
+    case Data_e_KECCAK256_U8_32:
+    case Data_e_SHATHREE256_U8_32:
+        return parser_not_supported;
+    default: {
+        if (v->type > Data_e_NONE && v->type <= Data_e_RAW_VECU8) {
+            const uint8_t bufferSize = ((uint8_t)v->type - 1);
+            v->_ptr = c->buffer + c->offset;
+            v->_len = bufferSize;
+            CTX_CHECK_AND_ADVANCE(c, v->_len);
+            return parser_ok;
+        }
+        return parser_not_supported;
+    }
+    }
+}
+
+parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v) {
+    GEN_DEF_READARRAY(32)
+}
+
+parser_error_t _readVecHeader(parser_context_t* c, pd_VecHeader_t* v) {
+    GEN_DEF_READVECTOR(Header)
+}
+
+parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v) {
+    GEN_DEF_READVECTOR(u32)
+}
+
+parser_error_t _readVecu8(parser_context_t* c, pd_Vecu8_t* v) {
+    GEN_DEF_READVECTOR(u8)
+}
+
+parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v)
+{
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readu32(c, &v->contained))
+    }
+    return parser_ok;
+}
+
 ///////////////////////////////////
 ///////////////////////////////////
 ///////////////////////////////////
@@ -227,6 +328,240 @@ parser_error_t _toStringCompactu64(
 ///////////////////////////////////
 ///////////////////////////////////
 ///////////////////////////////////
+
+parser_error_t _toStringBytes(
+    const pd_Bytes_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    GEN_DEF_TOSTRING_ARRAY(v->_len);
+}
+
+parser_error_t _toStringCall(
+    const pd_Call_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+
+    parser_context_t ctx;
+
+    const uint8_t* buffer;
+    if (v->nestCallIdx.isTail) {
+        buffer = v->nestCallIdx._ptr;
+    } else {
+        buffer = v->nestCallIdx._nextPtr;
+    }
+
+    parser_init(&ctx, buffer, v->nestCallIdx._lenBuffer);
+    parser_tx_t _txObj;
+
+    pd_Call_t _call;
+    _call.nestCallIdx.isTail = false;
+
+    ctx.tx_obj = &_txObj;
+    _txObj.transactionVersion = *v->_txVerPtr;
+
+    ctx.tx_obj->nestCallIdx._ptr = NULL;
+    ctx.tx_obj->nestCallIdx._nextPtr = NULL;
+    ctx.tx_obj->nestCallIdx._lenBuffer = 0;
+    ctx.tx_obj->nestCallIdx.slotIdx = 0;
+    ctx.tx_obj->nestCallIdx.isTail = false;
+
+    // Read the Call, so we get the contained Method
+    parser_error_t err = _readCallImpl(&ctx, &_call, (pd_MethodNested_t*)&_txObj.method);
+    if (err != parser_ok) {
+        return err;
+    }
+
+    // Get num items of this current Call
+    uint8_t callNumItems = _getMethod_NumItems(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx);
+
+    // Count how many pages this call has (including nested ones if they exists)
+    for (uint8_t i = 0; i < callNumItems; i++) {
+        uint8_t itemPages = 0;
+        _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, _call.callIndex.moduleIdx, _call.callIndex.idx, i,
+            outValue, outValueLen, 0, &itemPages);
+        (*pageCount) += itemPages;
+    }
+
+    if (pageIdx == 0) {
+        snprintf(outValue, outValueLen, "%s", _getMethod_Name(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx));
+        return parser_ok;
+    }
+
+    pageIdx--;
+
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    for (uint8_t i = 0; i < callNumItems; i++) {
+        uint8_t itemPages = 0;
+        _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
+            outValue, outValueLen, 0, &itemPages);
+
+        if (pageIdx < itemPages) {
+            uint8_t tmp;
+            _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
+                outValue, outValueLen, pageIdx, &tmp);
+            return parser_ok;
+        }
+
+        pageIdx -= itemPages;
+    }
+
+    return parser_display_idx_out_of_range;
+}
+
+parser_error_t _toStringHeader(
+    const pd_Header_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    return parser_print_not_supported;
+}
+
+parser_error_t _toStringBalance(
+    const pd_Balance_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    char bufferUI[200];
+    memset(outValue, 0, outValueLen);
+    memset(bufferUI, 0, sizeof(bufferUI));
+    *pageCount = 1;
+
+    uint8_t bcdOut[100];
+    const uint16_t bcdOutLen = sizeof(bcdOut);
+
+    bignumLittleEndian_to_bcd(bcdOut, bcdOutLen, v->_ptr, 16);
+    if (!bignumLittleEndian_bcdprint(bufferUI, sizeof(bufferUI), bcdOut, bcdOutLen)) {
+        return parser_unexpected_buffer_end;
+    }
+
+    // Format number
+    if (intstr_to_fpstr_inplace(bufferUI, sizeof(bufferUI), COIN_AMOUNT_DECIMAL_PLACES) == 0) {
+        return parser_unexpected_value;
+    }
+
+    number_inplace_trimming(bufferUI, 1);
+    number_inplace_trimming(bufferUI, 1);
+    if (z_str3join(bufferUI, sizeof(bufferUI), COIN_TICKER, "") != zxerr_ok) {
+        return parser_print_not_supported;
+    }
+
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+    return parser_ok;
+}
+
+parser_error_t _toStringData(
+    const pd_Data_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    if (v->_ptr == NULL || v->_len == 0) {
+        return parser_unexpected_value;
+    }
+
+    if (v->type > Data_e_NONE && v->type <= Data_e_RAW_VECU8) {
+        const uint8_t bufferSize = ((uint8_t)v->type - 1);
+        GEN_DEF_TOSTRING_ARRAY(bufferSize)
+    }
+
+    switch (v->type) {
+    case Data_e_NONE:
+        *pageCount = 1;
+        snprintf(outValue, outValueLen, "None");
+        return parser_ok;
+    case Data_e_RAW_VECU8:
+        // This should have been handled before (1..33)
+        return parser_unexpected_value;
+    case Data_e_BLAKETWO256U8_32:
+    case Data_e_SHA256_U8_32:
+    case Data_e_KECCAK256_U8_32:
+    case Data_e_SHATHREE256_U8_32:
+    default:
+        break;
+    }
+
+    return parser_print_not_supported;
+}
+
+parser_error_t _toStringHash(
+    const pd_Hash_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(32)
+}
+
+parser_error_t _toStringVecHeader(
+    const pd_VecHeader_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_VECTOR(Header)
+}
+
+parser_error_t _toStringVecu32(
+    const pd_Vecu32_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    GEN_DEF_TOSTRING_VECTOR(u32);
+}
+
+parser_error_t _toStringVecu8(
+    const pd_Vecu8_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    GEN_DEF_TOSTRING_VECTOR(u8);
+}
+
+parser_error_t _toStringOptionu32(
+    const pd_Optionu32_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringu32(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
 
 ///////////////////////////////////
 ///////////////////////////////////
