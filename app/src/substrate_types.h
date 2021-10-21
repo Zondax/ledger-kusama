@@ -107,11 +107,17 @@ typedef struct {
     const uint8_t* _ptr;
 } pd_Balance_t;
 
+typedef compactInt_t pd_Compactu128_t;
+
 typedef struct {
     uint8_t type;
     const uint8_t* _ptr;
     uint8_t _len;
 } pd_Data_t;
+
+typedef struct {
+    const uint8_t* _ptr;
+} pd_H256_t;
 
 typedef struct {
     const uint8_t* _ptr;
@@ -127,12 +133,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecHeader_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_Vecu32_t;
 
 typedef struct {
     uint64_t _len;

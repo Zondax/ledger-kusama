@@ -24,11 +24,6 @@
 #include <zxformat.h>
 #include <zxmacros.h>
 
-parser_error_t _readCompactu128_V7(parser_context_t* c, pd_Compactu128_V7_t* v)
-{
-    return _readCompactInt(c, v);
-}
-
 parser_error_t _readAccountId_V7(parser_context_t* c, pd_AccountId_V7_t* v) {
     GEN_DEF_READARRAY(32)
 }
@@ -69,11 +64,6 @@ parser_error_t _readBoxMultiLocation_V7(parser_context_t* c, pd_BoxMultiLocation
 }
 
 parser_error_t _readBoxRawSolutionSolutionOfT_V7(parser_context_t* c, pd_BoxRawSolutionSolutionOfT_V7_t* v)
-{
-    return parser_not_supported;
-}
-
-parser_error_t _readBoxTasConfigCall_V7(parser_context_t* c, pd_BoxTasConfigCall_V7_t* v)
 {
     return parser_not_supported;
 }
@@ -344,9 +334,11 @@ parser_error_t _readSupportsAccountId_V7(parser_context_t* c, pd_SupportsAccount
     return parser_not_supported;
 }
 
-parser_error_t _readTimepointBlockNumber_V7(parser_context_t* c, pd_TimepointBlockNumber_V7_t* v)
+parser_error_t _readTimepoint_V7(parser_context_t* c, pd_Timepoint_V7_t* v)
 {
-    return parser_not_supported;
+    CHECK_ERROR(_readBlockNumber(c, &v->height))
+    CHECK_ERROR(_readu32(c, &v->index))
+    return parser_ok;
 }
 
 parser_error_t _readTupleAccountIdData_V7(parser_context_t* c, pd_TupleAccountIdData_V7_t* v)
@@ -395,10 +387,6 @@ parser_error_t _readschedulePeriodBlockNumber_V7(parser_context_t* c, pd_schedul
 parser_error_t _readschedulePriority_V7(parser_context_t* c, pd_schedulePriority_V7_t* v)
 {
     return parser_not_supported;
-}
-
-parser_error_t _readu8_array_32_V7(parser_context_t* c, pd_u8_array_32_V7_t* v) {
-    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readVecAccountId_V7(parser_context_t* c, pd_VecAccountId_V7_t* v) {
@@ -502,11 +490,11 @@ parser_error_t _readOptionStatementKind_V7(parser_context_t* c, pd_OptionStateme
     return parser_ok;
 }
 
-parser_error_t _readOptionTimepointBlockNumber_V7(parser_context_t* c, pd_OptionTimepointBlockNumber_V7_t* v)
+parser_error_t _readOptionTimepoint_V7(parser_context_t* c, pd_OptionTimepoint_V7_t* v)
 {
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
-        CHECK_ERROR(_readTimepointBlockNumber_V7(c, &v->contained))
+        CHECK_ERROR(_readTimepoint_V7(c, &v->contained))
     }
     return parser_ok;
 }
@@ -541,16 +529,6 @@ parser_error_t _readOptionschedulePeriodBlockNumber_V7(parser_context_t* c, pd_O
 ///////////////////////////////////
 ///////////////////////////////////
 ///////////////////////////////////
-
-parser_error_t _toStringCompactu128_V7(
-    const pd_Compactu128_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringCompactInt(v, 0, "", "", outValue, outValueLen, pageIdx, pageCount);
-}
 
 parser_error_t _toStringAccountId_V7(
     const pd_AccountId_V7_t* v,
@@ -640,17 +618,6 @@ parser_error_t _toStringBoxMultiLocation_V7(
 
 parser_error_t _toStringBoxRawSolutionSolutionOfT_V7(
     const pd_BoxRawSolutionSolutionOfT_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringBoxTasConfigCall_V7(
-    const pd_BoxTasConfigCall_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1259,15 +1226,38 @@ parser_error_t _toStringSupportsAccountId_V7(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringTimepointBlockNumber_V7(
-    const pd_TimepointBlockNumber_V7_t* v,
+parser_error_t _toStringTimepoint_V7(
+    const pd_Timepoint_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+
+    // Index + count pages
+    uint8_t pages[2];
+    CHECK_ERROR(_toStringBlockNumber(&v->height, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringu32(&v->index, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = pages[0] + pages[1];
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringBlockNumber(&v->height, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    //////
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringu32(&v->index, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
 }
 
 parser_error_t _toStringTupleAccountIdData_V7(
@@ -1391,15 +1381,6 @@ parser_error_t _toStringschedulePriority_V7(
 {
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
-}
-
-parser_error_t _toStringu8_array_32_V7(
-    const pd_u8_array_32_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(32)
 }
 
 parser_error_t _toStringVecAccountId_V7(
@@ -1641,8 +1622,8 @@ parser_error_t _toStringOptionStatementKind_V7(
     return parser_ok;
 }
 
-parser_error_t _toStringOptionTimepointBlockNumber_V7(
-    const pd_OptionTimepointBlockNumber_V7_t* v,
+parser_error_t _toStringOptionTimepoint_V7(
+    const pd_OptionTimepoint_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1652,7 +1633,7 @@ parser_error_t _toStringOptionTimepointBlockNumber_V7(
 
     *pageCount = 1;
     if (v->some > 0) {
-        CHECK_ERROR(_toStringTimepointBlockNumber_V7(
+        CHECK_ERROR(_toStringTimepoint_V7(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));

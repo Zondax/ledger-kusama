@@ -74,13 +74,13 @@ extern "C" {
 #define PD_CALL_STAKING_BOND_V7 0
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t controller;
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
     pd_RewardDestination_V7_t payee;
 } pd_staking_bond_V7_t;
 
 #define PD_CALL_STAKING_UNBOND_V7 2
 typedef struct {
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
 } pd_staking_unbond_V7_t;
 
 #define PD_CALL_STAKING_VALIDATE_V7 4
@@ -99,7 +99,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_REBOND_V7 19
 typedef struct {
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
 } pd_staking_rebond_V7_t;
 
 #define PD_CALL_UTILITY_BATCH_V7 0
@@ -182,7 +182,7 @@ typedef struct {
 
 #define PD_CALL_STAKING_BOND_EXTRA_V7 1
 typedef struct {
-    pd_Compactu128_V7_t max_additional;
+    pd_CompactBalance_t max_additional;
 } pd_staking_bond_extra_V7_t;
 
 #define PD_CALL_STAKING_WITHDRAW_UNBONDED_V7 3
@@ -241,7 +241,7 @@ typedef struct {
 #define PD_CALL_STAKING_CANCEL_DEFERRED_SLASH_V7 17
 typedef struct {
     pd_EraIndex_V7_t era;
-    pd_Vecu32_t slash_indices;
+    pd_Bytes_t slash_indices;
 } pd_staking_cancel_deferred_slash_V7_t;
 
 #define PD_CALL_STAKING_PAYOUT_STAKERS_V7 18
@@ -284,7 +284,7 @@ typedef struct {
 #define PD_CALL_SESSION_SET_KEYS_V7 0
 typedef struct {
     pd_Keys_V7_t keys;
-    pd_Vecu8_t proof;
+    pd_Bytes_t proof;
 } pd_session_set_keys_V7_t;
 
 #define PD_CALL_SESSION_PURGE_KEYS_V7 1
@@ -318,7 +318,7 @@ typedef struct {
 #define PD_CALL_DEMOCRACY_PROPOSE_V7 0
 typedef struct {
     pd_Hash_t proposal_hash;
-    pd_Compactu128_V7_t value;
+    pd_Compactu128_t Amount;
 } pd_democracy_propose_V7_t;
 
 #define PD_CALL_DEMOCRACY_SECOND_V7 1
@@ -392,22 +392,22 @@ typedef struct {
 
 #define PD_CALL_DEMOCRACY_NOTE_PREIMAGE_V7 14
 typedef struct {
-    pd_Vecu8_t encoded_proposal;
+    pd_Bytes_t encoded_proposal;
 } pd_democracy_note_preimage_V7_t;
 
 #define PD_CALL_DEMOCRACY_NOTE_PREIMAGE_OPERATIONAL_V7 15
 typedef struct {
-    pd_Vecu8_t encoded_proposal;
+    pd_Bytes_t encoded_proposal;
 } pd_democracy_note_preimage_operational_V7_t;
 
 #define PD_CALL_DEMOCRACY_NOTE_IMMINENT_PREIMAGE_V7 16
 typedef struct {
-    pd_Vecu8_t encoded_proposal;
+    pd_Bytes_t encoded_proposal;
 } pd_democracy_note_imminent_preimage_V7_t;
 
 #define PD_CALL_DEMOCRACY_NOTE_IMMINENT_PREIMAGE_OPERATIONAL_V7 17
 typedef struct {
-    pd_Vecu8_t encoded_proposal;
+    pd_Bytes_t encoded_proposal;
 } pd_democracy_note_imminent_preimage_operational_V7_t;
 
 #define PD_CALL_DEMOCRACY_REAP_PREIMAGE_V7 18
@@ -532,7 +532,7 @@ typedef struct {
 #define PD_CALL_PHRAGMENELECTION_VOTE_V7 0
 typedef struct {
     pd_VecAccountId_V7_t votes;
-    pd_Compactu128_V7_t value;
+    pd_Compactu128_t Amount;
 } pd_phragmenelection_vote_V7_t;
 
 #define PD_CALL_PHRAGMENELECTION_REMOVE_VOTER_V7 1
@@ -598,7 +598,7 @@ typedef struct {
 
 #define PD_CALL_TREASURY_PROPOSE_SPEND_V7 0
 typedef struct {
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
     pd_LookupasStaticLookupSource_V7_t beneficiary;
 } pd_treasury_propose_spend_V7_t;
 
@@ -630,12 +630,12 @@ typedef struct {
 typedef struct {
     pd_AccountId_V7_t dest;
     pd_EcdsaSignature_V7_t ethereum_signature;
-    pd_Vecu8_t statement;
+    pd_Bytes_t statement;
 } pd_claims_claim_attest_V7_t;
 
 #define PD_CALL_CLAIMS_ATTEST_V7 3
 typedef struct {
-    pd_Vecu8_t statement;
+    pd_Bytes_t statement;
 } pd_claims_attest_V7_t;
 
 #define PD_CALL_CLAIMS_MOVE_CLAIM_V7 4
@@ -648,7 +648,7 @@ typedef struct {
 #define PD_CALL_UTILITY_AS_DERIVATIVE_V7 1
 typedef struct {
     pd_u16_t index;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_utility_as_derivative_V7_t;
 
 #define PD_CALL_UTILITY_BATCH_ALL_V7 2
@@ -678,7 +678,7 @@ typedef struct {
 #define PD_CALL_IDENTITY_REQUEST_JUDGEMENT_V7 4
 typedef struct {
     pd_Compactu32_t reg_index;
-    pd_Compactu128_V7_t max_fee;
+    pd_Compactu128_t max_fee;
 } pd_identity_request_judgement_V7_t;
 
 #define PD_CALL_IDENTITY_CANCEL_REQUEST_V7 5
@@ -689,7 +689,7 @@ typedef struct {
 #define PD_CALL_IDENTITY_SET_FEE_V7 6
 typedef struct {
     pd_Compactu32_t index;
-    pd_Compactu128_V7_t fee;
+    pd_Compactu128_t fee;
 } pd_identity_set_fee_V7_t;
 
 #define PD_CALL_IDENTITY_SET_ACCOUNT_ID_V7 7
@@ -778,7 +778,7 @@ typedef struct {
 typedef struct {
     pd_AccountId_V7_t founder;
     pd_u32_t max_members;
-    pd_Vecu8_t rules;
+    pd_Bytes_t rules;
 } pd_society_found_V7_t;
 
 #define PD_CALL_SOCIETY_UNFOUND_V7 8
@@ -805,7 +805,7 @@ typedef struct {
 #define PD_CALL_RECOVERY_AS_RECOVERED_V7 0
 typedef struct {
     pd_AccountId_V7_t account;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_recovery_as_recovered_V7_t;
 
 #define PD_CALL_RECOVERY_SET_RECOVERED_V7 1
@@ -884,7 +884,7 @@ typedef struct {
     pd_BlockNumber_t when;
     pd_OptionschedulePeriodBlockNumber_V7_t maybe_periodic;
     pd_schedulePriority_V7_t priority;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_scheduler_schedule_V7_t;
 
 #define PD_CALL_SCHEDULER_CANCEL_V7 1
@@ -899,7 +899,7 @@ typedef struct {
     pd_BlockNumber_t when;
     pd_OptionschedulePeriodBlockNumber_V7_t maybe_periodic;
     pd_schedulePriority_V7_t priority;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_scheduler_schedule_named_V7_t;
 
 #define PD_CALL_SCHEDULER_CANCEL_NAMED_V7 3
@@ -912,7 +912,7 @@ typedef struct {
     pd_BlockNumber_t after;
     pd_OptionschedulePeriodBlockNumber_V7_t maybe_periodic;
     pd_schedulePriority_V7_t priority;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_scheduler_schedule_after_V7_t;
 
 #define PD_CALL_SCHEDULER_SCHEDULE_NAMED_AFTER_V7 5
@@ -921,7 +921,7 @@ typedef struct {
     pd_BlockNumber_t after;
     pd_OptionschedulePeriodBlockNumber_V7_t maybe_periodic;
     pd_schedulePriority_V7_t priority;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_scheduler_schedule_named_after_V7_t;
 
 #define PD_CALL_PROXY_ADD_PROXY_V7 1
@@ -981,13 +981,13 @@ typedef struct {
     pd_AccountId_V7_t delegate;
     pd_AccountId_V7_t real;
     pd_OptionProxyType_V7_t force_proxy_type;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_proxy_proxy_announced_V7_t;
 
 #define PD_CALL_BOUNTIES_PROPOSE_BOUNTY_V7 0
 typedef struct {
-    pd_Compactu128_V7_t value;
-    pd_Vecu8_t description;
+    pd_CompactBalance_t Amount;
+    pd_Bytes_t description;
 } pd_bounties_propose_bounty_V7_t;
 
 #define PD_CALL_BOUNTIES_APPROVE_BOUNTY_V7 1
@@ -999,7 +999,7 @@ typedef struct {
 typedef struct {
     pd_Compactu32_t bounty_id;
     pd_LookupasStaticLookupSource_V7_t curator;
-    pd_Compactu128_V7_t fee;
+    pd_CompactBalance_t fee;
 } pd_bounties_propose_curator_V7_t;
 
 #define PD_CALL_BOUNTIES_UNASSIGN_CURATOR_V7 3
@@ -1031,12 +1031,12 @@ typedef struct {
 #define PD_CALL_BOUNTIES_EXTEND_BOUNTY_EXPIRY_V7 8
 typedef struct {
     pd_Compactu32_t bounty_id;
-    pd_Vecu8_t remark;
+    pd_Bytes_t remark;
 } pd_bounties_extend_bounty_expiry_V7_t;
 
 #define PD_CALL_TIPS_REPORT_AWESOME_V7 0
 typedef struct {
-    pd_Vecu8_t reason;
+    pd_Bytes_t reason;
     pd_AccountId_V7_t who;
 } pd_tips_report_awesome_V7_t;
 
@@ -1047,15 +1047,15 @@ typedef struct {
 
 #define PD_CALL_TIPS_TIP_NEW_V7 2
 typedef struct {
-    pd_Vecu8_t reason;
+    pd_Bytes_t reason;
     pd_AccountId_V7_t who;
-    pd_Compactu128_V7_t tip_value;
+    pd_Compactu128_t tip_value;
 } pd_tips_tip_new_V7_t;
 
 #define PD_CALL_TIPS_TIP_V7 3
 typedef struct {
     pd_Hash_t hash;
-    pd_Compactu128_V7_t tip_value;
+    pd_Compactu128_t tip_value;
 } pd_tips_tip_V7_t;
 
 #define PD_CALL_TIPS_CLOSE_TIP_V7 4
@@ -1092,13 +1092,13 @@ typedef struct {
 
 #define PD_CALL_GILT_PLACE_BID_V7 0
 typedef struct {
-    pd_Compactu128_V7_t amount;
+    pd_CompactBalance_t amount;
     pd_u32_t duration;
 } pd_gilt_place_bid_V7_t;
 
 #define PD_CALL_GILT_RETRACT_BID_V7 1
 typedef struct {
-    pd_Compactu128_V7_t amount;
+    pd_CompactBalance_t amount;
     pd_u32_t duration;
 } pd_gilt_retract_bid_V7_t;
 
@@ -1470,7 +1470,7 @@ typedef struct {
     pd_Compactu32_t auction_index;
     pd_Compactu32_t first_slot;
     pd_Compactu32_t last_slot;
-    pd_Compactu128_V7_t amount;
+    pd_CompactBalance_t amount;
 } pd_auctions_bid_V7_t;
 
 #define PD_CALL_AUCTIONS_CANCEL_AUCTION_V7 2
@@ -1480,7 +1480,7 @@ typedef struct {
 #define PD_CALL_CROWDLOAN_CREATE_V7 0
 typedef struct {
     pd_Compactu32_t index;
-    pd_Compactu128_V7_t cap;
+    pd_Compactu128_t cap;
     pd_Compactu32_t first_period;
     pd_Compactu32_t last_period;
     pd_Compactu32_t end;
@@ -1490,7 +1490,7 @@ typedef struct {
 #define PD_CALL_CROWDLOAN_CONTRIBUTE_V7 1
 typedef struct {
     pd_Compactu32_t index;
-    pd_Compactu128_V7_t value;
+    pd_Compactu128_t Amount;
     pd_OptionMultiSignature_V7_t signature;
 } pd_crowdloan_contribute_V7_t;
 
@@ -1513,7 +1513,7 @@ typedef struct {
 #define PD_CALL_CROWDLOAN_EDIT_V7 5
 typedef struct {
     pd_Compactu32_t index;
-    pd_Compactu128_V7_t cap;
+    pd_Compactu128_t cap;
     pd_Compactu32_t first_period;
     pd_Compactu32_t last_period;
     pd_Compactu32_t end;
@@ -1859,7 +1859,7 @@ typedef union {
 #define PD_CALL_BALANCES_TRANSFER_V7 0
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t dest;
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
 } pd_balances_transfer_V7_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
@@ -1912,41 +1912,41 @@ typedef struct {
 #define PD_CALL_BALANCES_SET_BALANCE_V7 1
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t who;
-    pd_Compactu128_V7_t new_free;
-    pd_Compactu128_V7_t new_reserved;
+    pd_CompactBalance_t new_free;
+    pd_CompactBalance_t new_reserved;
 } pd_balances_set_balance_V7_t;
 
 #define PD_CALL_BALANCES_FORCE_TRANSFER_V7 2
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t source;
     pd_LookupasStaticLookupSource_V7_t dest;
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
 } pd_balances_force_transfer_V7_t;
 
 #define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V7 3
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t dest;
-    pd_Compactu128_V7_t value;
+    pd_CompactBalance_t Amount;
 } pd_balances_transfer_keep_alive_V7_t;
 
 #define PD_CALL_PROXY_PROXY_V7 0
 typedef struct {
     pd_AccountId_V7_t real;
     pd_OptionProxyType_V7_t force_proxy_type;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_proxy_proxy_V7_t;
 
 #define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1_V7 0
 typedef struct {
     pd_VecAccountId_V7_t other_signatories;
-    pd_BoxTasConfigCall_V7_t call;
+    pd_Call_t call;
 } pd_multisig_as_multi_threshold_1_V7_t;
 
 #define PD_CALL_MULTISIG_AS_MULTI_V7 1
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_V7_t other_signatories;
-    pd_OptionTimepointBlockNumber_V7_t maybe_timepoint;
+    pd_OptionTimepoint_V7_t maybe_timepoint;
     pd_OpaqueCall_V7_t call;
     pd_bool_t store_call;
     pd_Weight_V7_t max_weight;
@@ -1956,8 +1956,8 @@ typedef struct {
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_V7_t other_signatories;
-    pd_OptionTimepointBlockNumber_V7_t maybe_timepoint;
-    pd_u8_array_32_V7_t call_hash;
+    pd_OptionTimepoint_V7_t maybe_timepoint;
+    pd_H256_t call_hash;
     pd_Weight_V7_t max_weight;
 } pd_multisig_approve_as_multi_V7_t;
 
@@ -1965,8 +1965,8 @@ typedef struct {
 typedef struct {
     pd_u16_t threshold;
     pd_VecAccountId_V7_t other_signatories;
-    pd_TimepointBlockNumber_V7_t timepoint;
-    pd_u8_array_32_V7_t call_hash;
+    pd_Timepoint_V7_t timepoint;
+    pd_H256_t call_hash;
 } pd_multisig_cancel_as_multi_V7_t;
 
 #endif

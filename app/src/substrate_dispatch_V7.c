@@ -23,7 +23,7 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_V7(
     parser_context_t* c, pd_balances_transfer_V7_t* m)
 {
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->dest))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     return parser_ok;
 }
 
@@ -31,7 +31,7 @@ __Z_INLINE parser_error_t _readMethod_staking_bond_V7(
     parser_context_t* c, pd_staking_bond_V7_t* m)
 {
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->controller))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     CHECK_ERROR(_readRewardDestination_V7(c, &m->payee))
     return parser_ok;
 }
@@ -39,7 +39,7 @@ __Z_INLINE parser_error_t _readMethod_staking_bond_V7(
 __Z_INLINE parser_error_t _readMethod_staking_unbond_V7(
     parser_context_t* c, pd_staking_unbond_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     return parser_ok;
 }
 
@@ -66,7 +66,7 @@ __Z_INLINE parser_error_t _readMethod_staking_chill_V7(
 __Z_INLINE parser_error_t _readMethod_staking_rebond_V7(
     parser_context_t* c, pd_staking_rebond_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     return parser_ok;
 }
 
@@ -221,8 +221,8 @@ __Z_INLINE parser_error_t _readMethod_balances_set_balance_V7(
     parser_context_t* c, pd_balances_set_balance_V7_t* m)
 {
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->who))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->new_free))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->new_reserved))
+    CHECK_ERROR(_readCompactBalance(c, &m->new_free))
+    CHECK_ERROR(_readCompactBalance(c, &m->new_reserved))
     return parser_ok;
 }
 
@@ -231,7 +231,7 @@ __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V7(
 {
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->source))
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->dest))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     return parser_ok;
 }
 
@@ -239,7 +239,7 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V7(
     parser_context_t* c, pd_balances_transfer_keep_alive_V7_t* m)
 {
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->dest))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     return parser_ok;
 }
 
@@ -269,7 +269,7 @@ __Z_INLINE parser_error_t _readMethod_authorship_set_uncles_V7(
 __Z_INLINE parser_error_t _readMethod_staking_bond_extra_V7(
     parser_context_t* c, pd_staking_bond_extra_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->max_additional))
+    CHECK_ERROR(_readCompactBalance(c, &m->max_additional))
     return parser_ok;
 }
 
@@ -352,7 +352,7 @@ __Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V7(
     parser_context_t* c, pd_staking_cancel_deferred_slash_V7_t* m)
 {
     CHECK_ERROR(_readEraIndex_V7(c, &m->era))
-    CHECK_ERROR(_readVecu32(c, &m->slash_indices))
+    CHECK_ERROR(_readBytes(c, &m->slash_indices))
     return parser_ok;
 }
 
@@ -409,7 +409,7 @@ __Z_INLINE parser_error_t _readMethod_session_set_keys_V7(
     parser_context_t* c, pd_session_set_keys_V7_t* m)
 {
     CHECK_ERROR(_readKeys_V7(c, &m->keys))
-    CHECK_ERROR(_readVecu8(c, &m->proof))
+    CHECK_ERROR(_readBytes(c, &m->proof))
     return parser_ok;
 }
 
@@ -455,7 +455,7 @@ __Z_INLINE parser_error_t _readMethod_democracy_propose_V7(
     parser_context_t* c, pd_democracy_propose_V7_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactu128(c, &m->Amount))
     return parser_ok;
 }
 
@@ -557,28 +557,28 @@ __Z_INLINE parser_error_t _readMethod_democracy_clear_public_proposals_V7(
 __Z_INLINE parser_error_t _readMethod_democracy_note_preimage_V7(
     parser_context_t* c, pd_democracy_note_preimage_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->encoded_proposal))
+    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_note_preimage_operational_V7(
     parser_context_t* c, pd_democracy_note_preimage_operational_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->encoded_proposal))
+    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_V7(
     parser_context_t* c, pd_democracy_note_imminent_preimage_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->encoded_proposal))
+    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_note_imminent_preimage_operational_V7(
     parser_context_t* c, pd_democracy_note_imminent_preimage_operational_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->encoded_proposal))
+    CHECK_ERROR(_readBytes(c, &m->encoded_proposal))
     return parser_ok;
 }
 
@@ -743,7 +743,7 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V7(
     parser_context_t* c, pd_phragmenelection_vote_V7_t* m)
 {
     CHECK_ERROR(_readVecAccountId_V7(c, &m->votes))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactu128(c, &m->Amount))
     return parser_ok;
 }
 
@@ -835,7 +835,7 @@ __Z_INLINE parser_error_t _readMethod_technicalmembership_clear_prime_V7(
 __Z_INLINE parser_error_t _readMethod_treasury_propose_spend_V7(
     parser_context_t* c, pd_treasury_propose_spend_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->beneficiary))
     return parser_ok;
 }
@@ -877,14 +877,14 @@ __Z_INLINE parser_error_t _readMethod_claims_claim_attest_V7(
 {
     CHECK_ERROR(_readAccountId_V7(c, &m->dest))
     CHECK_ERROR(_readEcdsaSignature_V7(c, &m->ethereum_signature))
-    CHECK_ERROR(_readVecu8(c, &m->statement))
+    CHECK_ERROR(_readBytes(c, &m->statement))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_claims_attest_V7(
     parser_context_t* c, pd_claims_attest_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->statement))
+    CHECK_ERROR(_readBytes(c, &m->statement))
     return parser_ok;
 }
 
@@ -901,7 +901,7 @@ __Z_INLINE parser_error_t _readMethod_utility_as_derivative_V7(
     parser_context_t* c, pd_utility_as_derivative_V7_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->index))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -943,7 +943,7 @@ __Z_INLINE parser_error_t _readMethod_identity_request_judgement_V7(
     parser_context_t* c, pd_identity_request_judgement_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->reg_index))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->max_fee))
+    CHECK_ERROR(_readCompactu128(c, &m->max_fee))
     return parser_ok;
 }
 
@@ -958,7 +958,7 @@ __Z_INLINE parser_error_t _readMethod_identity_set_fee_V7(
     parser_context_t* c, pd_identity_set_fee_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->fee))
+    CHECK_ERROR(_readCompactu128(c, &m->fee))
     return parser_ok;
 }
 
@@ -1079,7 +1079,7 @@ __Z_INLINE parser_error_t _readMethod_society_found_V7(
 {
     CHECK_ERROR(_readAccountId_V7(c, &m->founder))
     CHECK_ERROR(_readu32(c, &m->max_members))
-    CHECK_ERROR(_readVecu8(c, &m->rules))
+    CHECK_ERROR(_readBytes(c, &m->rules))
     return parser_ok;
 }
 
@@ -1116,7 +1116,7 @@ __Z_INLINE parser_error_t _readMethod_recovery_as_recovered_V7(
     parser_context_t* c, pd_recovery_as_recovered_V7_t* m)
 {
     CHECK_ERROR(_readAccountId_V7(c, &m->account))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1223,7 +1223,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_V7(
     CHECK_ERROR(_readBlockNumber(c, &m->when))
     CHECK_ERROR(_readOptionschedulePeriodBlockNumber_V7(c, &m->maybe_periodic))
     CHECK_ERROR(_readschedulePriority_V7(c, &m->priority))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1242,7 +1242,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_V7(
     CHECK_ERROR(_readBlockNumber(c, &m->when))
     CHECK_ERROR(_readOptionschedulePeriodBlockNumber_V7(c, &m->maybe_periodic))
     CHECK_ERROR(_readschedulePriority_V7(c, &m->priority))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1259,7 +1259,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_after_V7(
     CHECK_ERROR(_readBlockNumber(c, &m->after))
     CHECK_ERROR(_readOptionschedulePeriodBlockNumber_V7(c, &m->maybe_periodic))
     CHECK_ERROR(_readschedulePriority_V7(c, &m->priority))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1270,7 +1270,7 @@ __Z_INLINE parser_error_t _readMethod_scheduler_schedule_named_after_V7(
     CHECK_ERROR(_readBlockNumber(c, &m->after))
     CHECK_ERROR(_readOptionschedulePeriodBlockNumber_V7(c, &m->maybe_periodic))
     CHECK_ERROR(_readschedulePriority_V7(c, &m->priority))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1279,7 +1279,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_V7(
 {
     CHECK_ERROR(_readAccountId_V7(c, &m->real))
     CHECK_ERROR(_readOptionProxyType_V7(c, &m->force_proxy_type))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1357,7 +1357,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V7(
     CHECK_ERROR(_readAccountId_V7(c, &m->delegate))
     CHECK_ERROR(_readAccountId_V7(c, &m->real))
     CHECK_ERROR(_readOptionProxyType_V7(c, &m->force_proxy_type))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1365,7 +1365,7 @@ __Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1_V7(
     parser_context_t* c, pd_multisig_as_multi_threshold_1_V7_t* m)
 {
     CHECK_ERROR(_readVecAccountId_V7(c, &m->other_signatories))
-    CHECK_ERROR(_readBoxTasConfigCall_V7(c, &m->call))
+    CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
 
@@ -1374,7 +1374,7 @@ __Z_INLINE parser_error_t _readMethod_multisig_as_multi_V7(
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readVecAccountId_V7(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepointBlockNumber_V7(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readOptionTimepoint_V7(c, &m->maybe_timepoint))
     CHECK_ERROR(_readOpaqueCall_V7(c, &m->call))
     CHECK_ERROR(_readbool(c, &m->store_call))
     CHECK_ERROR(_readWeight_V7(c, &m->max_weight))
@@ -1386,8 +1386,8 @@ __Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi_V7(
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readVecAccountId_V7(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepointBlockNumber_V7(c, &m->maybe_timepoint))
-    CHECK_ERROR(_readu8_array_32_V7(c, &m->call_hash))
+    CHECK_ERROR(_readOptionTimepoint_V7(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readH256(c, &m->call_hash))
     CHECK_ERROR(_readWeight_V7(c, &m->max_weight))
     return parser_ok;
 }
@@ -1397,16 +1397,16 @@ __Z_INLINE parser_error_t _readMethod_multisig_cancel_as_multi_V7(
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
     CHECK_ERROR(_readVecAccountId_V7(c, &m->other_signatories))
-    CHECK_ERROR(_readTimepointBlockNumber_V7(c, &m->timepoint))
-    CHECK_ERROR(_readu8_array_32_V7(c, &m->call_hash))
+    CHECK_ERROR(_readTimepoint_V7(c, &m->timepoint))
+    CHECK_ERROR(_readH256(c, &m->call_hash))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_bounties_propose_bounty_V7(
     parser_context_t* c, pd_bounties_propose_bounty_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
-    CHECK_ERROR(_readVecu8(c, &m->description))
+    CHECK_ERROR(_readCompactBalance(c, &m->Amount))
+    CHECK_ERROR(_readBytes(c, &m->description))
     return parser_ok;
 }
 
@@ -1422,7 +1422,7 @@ __Z_INLINE parser_error_t _readMethod_bounties_propose_curator_V7(
 {
     CHECK_ERROR(_readCompactu32(c, &m->bounty_id))
     CHECK_ERROR(_readLookupasStaticLookupSource_V7(c, &m->curator))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->fee))
+    CHECK_ERROR(_readCompactBalance(c, &m->fee))
     return parser_ok;
 }
 
@@ -1466,14 +1466,14 @@ __Z_INLINE parser_error_t _readMethod_bounties_extend_bounty_expiry_V7(
     parser_context_t* c, pd_bounties_extend_bounty_expiry_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->bounty_id))
-    CHECK_ERROR(_readVecu8(c, &m->remark))
+    CHECK_ERROR(_readBytes(c, &m->remark))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_tips_report_awesome_V7(
     parser_context_t* c, pd_tips_report_awesome_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->reason))
+    CHECK_ERROR(_readBytes(c, &m->reason))
     CHECK_ERROR(_readAccountId_V7(c, &m->who))
     return parser_ok;
 }
@@ -1488,9 +1488,9 @@ __Z_INLINE parser_error_t _readMethod_tips_retract_tip_V7(
 __Z_INLINE parser_error_t _readMethod_tips_tip_new_V7(
     parser_context_t* c, pd_tips_tip_new_V7_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->reason))
+    CHECK_ERROR(_readBytes(c, &m->reason))
     CHECK_ERROR(_readAccountId_V7(c, &m->who))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->tip_value))
+    CHECK_ERROR(_readCompactu128(c, &m->tip_value))
     return parser_ok;
 }
 
@@ -1498,7 +1498,7 @@ __Z_INLINE parser_error_t _readMethod_tips_tip_V7(
     parser_context_t* c, pd_tips_tip_V7_t* m)
 {
     CHECK_ERROR(_readHash(c, &m->hash))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->tip_value))
+    CHECK_ERROR(_readCompactu128(c, &m->tip_value))
     return parser_ok;
 }
 
@@ -1549,7 +1549,7 @@ __Z_INLINE parser_error_t _readMethod_electionprovidermultiphase_submit_V7(
 __Z_INLINE parser_error_t _readMethod_gilt_place_bid_V7(
     parser_context_t* c, pd_gilt_place_bid_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     CHECK_ERROR(_readu32(c, &m->duration))
     return parser_ok;
 }
@@ -1557,7 +1557,7 @@ __Z_INLINE parser_error_t _readMethod_gilt_place_bid_V7(
 __Z_INLINE parser_error_t _readMethod_gilt_retract_bid_V7(
     parser_context_t* c, pd_gilt_retract_bid_V7_t* m)
 {
-    CHECK_ERROR(_readCompactu128_V7(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     CHECK_ERROR(_readu32(c, &m->duration))
     return parser_ok;
 }
@@ -2069,7 +2069,7 @@ __Z_INLINE parser_error_t _readMethod_auctions_bid_V7(
     CHECK_ERROR(_readCompactu32(c, &m->auction_index))
     CHECK_ERROR(_readCompactu32(c, &m->first_slot))
     CHECK_ERROR(_readCompactu32(c, &m->last_slot))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
 
@@ -2083,7 +2083,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_create_V7(
     parser_context_t* c, pd_crowdloan_create_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->cap))
+    CHECK_ERROR(_readCompactu128(c, &m->cap))
     CHECK_ERROR(_readCompactu32(c, &m->first_period))
     CHECK_ERROR(_readCompactu32(c, &m->last_period))
     CHECK_ERROR(_readCompactu32(c, &m->end))
@@ -2095,7 +2095,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_contribute_V7(
     parser_context_t* c, pd_crowdloan_contribute_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->value))
+    CHECK_ERROR(_readCompactu128(c, &m->Amount))
     CHECK_ERROR(_readOptionMultiSignature_V7(c, &m->signature))
     return parser_ok;
 }
@@ -2126,7 +2126,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_edit_V7(
     parser_context_t* c, pd_crowdloan_edit_V7_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readCompactu128_V7(c, &m->cap))
+    CHECK_ERROR(_readCompactu128(c, &m->cap))
     CHECK_ERROR(_readCompactu32(c, &m->first_period))
     CHECK_ERROR(_readCompactu32(c, &m->last_period))
     CHECK_ERROR(_readCompactu32(c, &m->end))
@@ -4388,7 +4388,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_dest;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -4397,7 +4397,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_controller;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         case 2:
             return STR_IT_payee;
         default:
@@ -4406,7 +4406,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1538: /* module 6 call 2 */
         switch (itemIdx) {
         case 0:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -4432,7 +4432,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 1555: /* module 6 call 19 */
         switch (itemIdx) {
         case 0:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -4607,7 +4607,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 1:
             return STR_IT_dest;
         case 2:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -4616,7 +4616,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_dest;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -4845,7 +4845,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_proposal_hash;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -5162,7 +5162,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_votes;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         default:
             return NULL;
         }
@@ -5255,7 +5255,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 4608: /* module 18 call 0 */
         switch (itemIdx) {
         case 0:
-            return STR_IT_value;
+            return STR_IT_Amount;
         case 1:
             return STR_IT_beneficiary;
         default:
@@ -5898,7 +5898,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
     case 8960: /* module 35 call 0 */
         switch (itemIdx) {
         case 0:
-            return STR_IT_value;
+            return STR_IT_Amount;
         case 1:
             return STR_IT_description;
         default:
@@ -6627,7 +6627,7 @@ const char* _getMethod_ItemName_V7(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         case 0:
             return STR_IT_index;
         case 1:
-            return STR_IT_value;
+            return STR_IT_Amount;
         case 2:
             return STR_IT_signature;
         default:
@@ -6787,9 +6787,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->nested.balances_transfer_V7.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_transfer_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->nested.balances_transfer_V7.value,
+        case 1: /* balances_transfer_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->nested.balances_transfer_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6802,9 +6802,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->basic.staking_bond_V7.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* staking_bond_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.staking_bond_V7.value,
+        case 1: /* staking_bond_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->basic.staking_bond_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_bond_V7 - payee */;
@@ -6817,9 +6817,9 @@ parser_error_t _getMethod_ItemValue_V7(
         }
     case 1538: /* module 6 call 2 */
         switch (itemIdx) {
-        case 0: /* staking_unbond_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.staking_unbond_V7.value,
+        case 0: /* staking_unbond_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->basic.staking_unbond_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6852,9 +6852,9 @@ parser_error_t _getMethod_ItemValue_V7(
         }
     case 1555: /* module 6 call 19 */
         switch (itemIdx) {
-        case 0: /* staking_rebond_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.staking_rebond_V7.value,
+        case 0: /* staking_rebond_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->basic.staking_rebond_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7099,12 +7099,12 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* balances_set_balance_V7 - new_free */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->nested.balances_set_balance_V7.new_free,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* balances_set_balance_V7 - new_reserved */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->nested.balances_set_balance_V7.new_reserved,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7123,9 +7123,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->nested.balances_force_transfer_V7.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* balances_force_transfer_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->nested.balances_force_transfer_V7.value,
+        case 2: /* balances_force_transfer_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->nested.balances_force_transfer_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7138,9 +7138,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->nested.balances_transfer_keep_alive_V7.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* balances_transfer_keep_alive_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->nested.balances_transfer_keep_alive_V7.value,
+        case 1: /* balances_transfer_keep_alive_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->nested.balances_transfer_keep_alive_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7189,7 +7189,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 1537: /* module 6 call 1 */
         switch (itemIdx) {
         case 0: /* staking_bond_extra_V7 - max_additional */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->basic.staking_bond_extra_V7.max_additional,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7304,7 +7304,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_cancel_deferred_slash_V7 - slash_indices */;
-            return _toStringVecu32(
+            return _toStringBytes(
                 &m->basic.staking_cancel_deferred_slash_V7.slash_indices,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7414,7 +7414,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* session_set_keys_V7 - proof */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.session_set_keys_V7.proof,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7493,9 +7493,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->basic.democracy_propose_V7.proposal_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* democracy_propose_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.democracy_propose_V7.value,
+        case 1: /* democracy_propose_V7 - Amount */;
+            return _toStringCompactu128(
+                &m->basic.democracy_propose_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7654,7 +7654,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 3342: /* module 13 call 14 */
         switch (itemIdx) {
         case 0: /* democracy_note_preimage_V7 - encoded_proposal */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.democracy_note_preimage_V7.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7664,7 +7664,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 3343: /* module 13 call 15 */
         switch (itemIdx) {
         case 0: /* democracy_note_preimage_operational_V7 - encoded_proposal */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.democracy_note_preimage_operational_V7.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7674,7 +7674,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 3344: /* module 13 call 16 */
         switch (itemIdx) {
         case 0: /* democracy_note_imminent_preimage_V7 - encoded_proposal */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.democracy_note_imminent_preimage_V7.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7684,7 +7684,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 3345: /* module 13 call 17 */
         switch (itemIdx) {
         case 0: /* democracy_note_imminent_preimage_operational_V7 - encoded_proposal */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.democracy_note_imminent_preimage_operational_V7.encoded_proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8008,9 +8008,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->basic.phragmenelection_vote_V7.votes,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* phragmenelection_vote_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.phragmenelection_vote_V7.value,
+        case 1: /* phragmenelection_vote_V7 - Amount */;
+            return _toStringCompactu128(
+                &m->basic.phragmenelection_vote_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8143,9 +8143,9 @@ parser_error_t _getMethod_ItemValue_V7(
         }
     case 4608: /* module 18 call 0 */
         switch (itemIdx) {
-        case 0: /* treasury_propose_spend_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.treasury_propose_spend_V7.value,
+        case 0: /* treasury_propose_spend_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->basic.treasury_propose_spend_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* treasury_propose_spend_V7 - beneficiary */;
@@ -8229,7 +8229,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* claims_claim_attest_V7 - statement */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.claims_claim_attest_V7.statement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8239,7 +8239,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 4867: /* module 19 call 3 */
         switch (itemIdx) {
         case 0: /* claims_attest_V7 - statement */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.claims_attest_V7.statement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8274,7 +8274,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* utility_as_derivative_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.utility_as_derivative_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8334,7 +8334,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* identity_request_judgement_V7 - max_fee */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.identity_request_judgement_V7.max_fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8359,7 +8359,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* identity_set_fee_V7 - fee */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.identity_set_fee_V7.fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8564,7 +8564,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* society_found_V7 - rules */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.society_found_V7.rules,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8624,7 +8624,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* recovery_as_recovered_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.recovery_as_recovered_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8809,7 +8809,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.scheduler_schedule_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8854,7 +8854,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* scheduler_schedule_named_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.scheduler_schedule_named_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8889,7 +8889,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* scheduler_schedule_after_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.scheduler_schedule_after_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8919,7 +8919,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* scheduler_schedule_named_after_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.scheduler_schedule_named_after_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8939,7 +8939,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_proxy_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->nested.proxy_proxy_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9104,7 +9104,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* proxy_proxy_announced_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->basic.proxy_proxy_announced_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9119,7 +9119,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* multisig_as_multi_threshold_1_V7 - call */;
-            return _toStringBoxTasConfigCall_V7(
+            return _toStringCall(
                 &m->nested.multisig_as_multi_threshold_1_V7.call,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9139,7 +9139,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_as_multi_V7 - maybe_timepoint */;
-            return _toStringOptionTimepointBlockNumber_V7(
+            return _toStringOptionTimepoint_V7(
                 &m->nested.multisig_as_multi_V7.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9174,12 +9174,12 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_approve_as_multi_V7 - maybe_timepoint */;
-            return _toStringOptionTimepointBlockNumber_V7(
+            return _toStringOptionTimepoint_V7(
                 &m->nested.multisig_approve_as_multi_V7.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* multisig_approve_as_multi_V7 - call_hash */;
-            return _toStringu8_array_32_V7(
+            return _toStringH256(
                 &m->nested.multisig_approve_as_multi_V7.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9204,12 +9204,12 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_cancel_as_multi_V7 - timepoint */;
-            return _toStringTimepointBlockNumber_V7(
+            return _toStringTimepoint_V7(
                 &m->nested.multisig_cancel_as_multi_V7.timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* multisig_cancel_as_multi_V7 - call_hash */;
-            return _toStringu8_array_32_V7(
+            return _toStringH256(
                 &m->nested.multisig_cancel_as_multi_V7.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9218,13 +9218,13 @@ parser_error_t _getMethod_ItemValue_V7(
         }
     case 8960: /* module 35 call 0 */
         switch (itemIdx) {
-        case 0: /* bounties_propose_bounty_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.bounties_propose_bounty_V7.value,
+        case 0: /* bounties_propose_bounty_V7 - Amount */;
+            return _toStringCompactBalance(
+                &m->basic.bounties_propose_bounty_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_propose_bounty_V7 - description */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.bounties_propose_bounty_V7.description,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9254,7 +9254,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* bounties_propose_curator_V7 - fee */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->basic.bounties_propose_curator_V7.fee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9324,7 +9324,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_extend_bounty_expiry_V7 - remark */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.bounties_extend_bounty_expiry_V7.remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9334,7 +9334,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 9216: /* module 36 call 0 */
         switch (itemIdx) {
         case 0: /* tips_report_awesome_V7 - reason */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.tips_report_awesome_V7.reason,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9359,7 +9359,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 9218: /* module 36 call 2 */
         switch (itemIdx) {
         case 0: /* tips_tip_new_V7 - reason */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->basic.tips_tip_new_V7.reason,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9369,7 +9369,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* tips_tip_new_V7 - tip_value */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.tips_tip_new_V7.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9384,7 +9384,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* tips_tip_V7 - tip_value */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.tips_tip_V7.tip_value,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9464,7 +9464,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 9728: /* module 38 call 0 */
         switch (itemIdx) {
         case 0: /* gilt_place_bid_V7 - amount */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->basic.gilt_place_bid_V7.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9479,7 +9479,7 @@ parser_error_t _getMethod_ItemValue_V7(
     case 9729: /* module 38 call 1 */
         switch (itemIdx) {
         case 0: /* gilt_retract_bid_V7 - amount */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->basic.gilt_retract_bid_V7.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10289,7 +10289,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* auctions_bid_V7 - amount */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactBalance(
                 &m->basic.auctions_bid_V7.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10309,7 +10309,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* crowdloan_create_V7 - cap */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.crowdloan_create_V7.cap,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10343,9 +10343,9 @@ parser_error_t _getMethod_ItemValue_V7(
                 &m->basic.crowdloan_contribute_V7.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* crowdloan_contribute_V7 - value */;
-            return _toStringCompactu128_V7(
-                &m->basic.crowdloan_contribute_V7.value,
+        case 1: /* crowdloan_contribute_V7 - Amount */;
+            return _toStringCompactu128(
+                &m->basic.crowdloan_contribute_V7.Amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* crowdloan_contribute_V7 - signature */;
@@ -10399,7 +10399,7 @@ parser_error_t _getMethod_ItemValue_V7(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* crowdloan_edit_V7 - cap */;
-            return _toStringCompactu128_V7(
+            return _toStringCompactu128(
                 &m->basic.crowdloan_edit_V7.cap,
                 outValue, outValueLen,
                 pageIdx, pageCount);

@@ -94,9 +94,9 @@ typedef struct {
 } pd_StatementKind_V7_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_TimepointBlockNumber_V7_t;
+    pd_BlockNumber_t height;
+    uint32_t index;
+} pd_Timepoint_V7_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -126,6 +126,11 @@ typedef struct {
     uint8_t some;
     pd_ChangesTrieConfiguration_V7_t contained;
 } pd_OptionChangesTrieConfiguration_V7_t;
+
+typedef struct {
+    uint8_t some;
+    pd_Timepoint_V7_t contained;
+} pd_OptionTimepoint_V7_t;
 
 typedef struct {
     pd_CompactPerBill_V7_t commission;
@@ -180,11 +185,6 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxTasConfigCall_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_BoxTasConfigIProposal_V7_t;
 
 typedef struct {
@@ -211,8 +211,6 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_CallHashOfT_V7_t;
-
-typedef compactInt_t pd_Compactu128_V7_t;
 
 typedef struct {
     uint8_t value;
@@ -325,11 +323,6 @@ typedef struct {
 
 typedef struct {
     uint8_t some;
-    pd_TimepointBlockNumber_V7_t contained;
-} pd_OptionTimepointBlockNumber_V7_t;
-
-typedef struct {
-    uint8_t some;
     pd_TupleBalanceOfTBalanceOfTBlockNumber_V7_t contained;
 } pd_OptionTupleBalanceOfTBalanceOfTBlockNumber_V7_t;
 
@@ -432,10 +425,6 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_schedulePriority_V7_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_u8_array_32_V7_t;
 
 #ifdef __cplusplus
 }

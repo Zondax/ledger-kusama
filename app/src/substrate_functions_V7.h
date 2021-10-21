@@ -35,7 +35,6 @@ parser_error_t _readBoxEquivocationProofHeader_V7(parser_context_t* c, pd_BoxEqu
 parser_error_t _readBoxIdentityInfoMaxAdditionalFields_V7(parser_context_t* c, pd_BoxIdentityInfoMaxAdditionalFields_V7_t* v);
 parser_error_t _readBoxMultiLocation_V7(parser_context_t* c, pd_BoxMultiLocation_V7_t* v);
 parser_error_t _readBoxRawSolutionSolutionOfT_V7(parser_context_t* c, pd_BoxRawSolutionSolutionOfT_V7_t* v);
-parser_error_t _readBoxTasConfigCall_V7(parser_context_t* c, pd_BoxTasConfigCall_V7_t* v);
 parser_error_t _readBoxTasConfigIProposal_V7(parser_context_t* c, pd_BoxTasConfigIProposal_V7_t* v);
 parser_error_t _readBoxVersionedMultiAssets_V7(parser_context_t* c, pd_BoxVersionedMultiAssets_V7_t* v);
 parser_error_t _readBoxVersionedMultiLocation_V7(parser_context_t* c, pd_BoxVersionedMultiLocation_V7_t* v);
@@ -45,7 +44,6 @@ parser_error_t _readCallHashOfT_V7(parser_context_t* c, pd_CallHashOfT_V7_t* v);
 parser_error_t _readChangesTrieConfiguration_V7(parser_context_t* c, pd_ChangesTrieConfiguration_V7_t* v);
 parser_error_t _readCompactAccountIndex_V7(parser_context_t* c, pd_CompactAccountIndex_V7_t* v);
 parser_error_t _readCompactPerBill_V7(parser_context_t* c, pd_CompactPerBill_V7_t* v);
-parser_error_t _readCompactu128_V7(parser_context_t* c, pd_Compactu128_V7_t* v);
 parser_error_t _readConviction_V7(parser_context_t* c, pd_Conviction_V7_t* v);
 parser_error_t _readEcdsaSignature_V7(parser_context_t* c, pd_EcdsaSignature_V7_t* v);
 parser_error_t _readElectionScore_V7(parser_context_t* c, pd_ElectionScore_V7_t* v);
@@ -77,7 +75,7 @@ parser_error_t _readOptionPercent_V7(parser_context_t* c, pd_OptionPercent_V7_t*
 parser_error_t _readOptionProxyType_V7(parser_context_t* c, pd_OptionProxyType_V7_t* v);
 parser_error_t _readOptionReferendumIndex_V7(parser_context_t* c, pd_OptionReferendumIndex_V7_t* v);
 parser_error_t _readOptionStatementKind_V7(parser_context_t* c, pd_OptionStatementKind_V7_t* v);
-parser_error_t _readOptionTimepointBlockNumber_V7(parser_context_t* c, pd_OptionTimepointBlockNumber_V7_t* v);
+parser_error_t _readOptionTimepoint_V7(parser_context_t* c, pd_OptionTimepoint_V7_t* v);
 parser_error_t _readOptionTupleBalanceOfTBalanceOfTBlockNumber_V7(parser_context_t* c, pd_OptionTupleBalanceOfTBalanceOfTBlockNumber_V7_t* v);
 parser_error_t _readOptionXcmVersion_V7(parser_context_t* c, pd_OptionXcmVersion_V7_t* v);
 parser_error_t _readOptionschedulePeriodBlockNumber_V7(parser_context_t* c, pd_OptionschedulePeriodBlockNumber_V7_t* v);
@@ -95,7 +93,7 @@ parser_error_t _readSessionIndex_V7(parser_context_t* c, pd_SessionIndex_V7_t* v
 parser_error_t _readSolutionOrSnapshotSize_V7(parser_context_t* c, pd_SolutionOrSnapshotSize_V7_t* v);
 parser_error_t _readStatementKind_V7(parser_context_t* c, pd_StatementKind_V7_t* v);
 parser_error_t _readSupportsAccountId_V7(parser_context_t* c, pd_SupportsAccountId_V7_t* v);
-parser_error_t _readTimepointBlockNumber_V7(parser_context_t* c, pd_TimepointBlockNumber_V7_t* v);
+parser_error_t _readTimepoint_V7(parser_context_t* c, pd_Timepoint_V7_t* v);
 parser_error_t _readTupleAccountIdData_V7(parser_context_t* c, pd_TupleAccountIdData_V7_t* v);
 parser_error_t _readTupleBalanceOfTBalanceOfTBlockNumber_V7(parser_context_t* c, pd_TupleBalanceOfTBalanceOfTBlockNumber_V7_t* v);
 parser_error_t _readValidationCode_V7(parser_context_t* c, pd_ValidationCode_V7_t* v);
@@ -110,7 +108,6 @@ parser_error_t _readWeight_V7(parser_context_t* c, pd_Weight_V7_t* v);
 parser_error_t _readXcmVersion_V7(parser_context_t* c, pd_XcmVersion_V7_t* v);
 parser_error_t _readschedulePeriodBlockNumber_V7(parser_context_t* c, pd_schedulePeriodBlockNumber_V7_t* v);
 parser_error_t _readschedulePriority_V7(parser_context_t* c, pd_schedulePriority_V7_t* v);
-parser_error_t _readu8_array_32_V7(parser_context_t* c, pd_u8_array_32_V7_t* v);
 
 // toString functions
 parser_error_t _toStringAccountId_V7(
@@ -176,13 +173,6 @@ parser_error_t _toStringBoxRawSolutionSolutionOfT_V7(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringBoxTasConfigCall_V7(
-    const pd_BoxTasConfigCall_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringBoxTasConfigIProposal_V7(
     const pd_BoxTasConfigIProposal_V7_t* v,
     char* outValue,
@@ -241,13 +231,6 @@ parser_error_t _toStringCompactAccountIndex_V7(
 
 parser_error_t _toStringCompactPerBill_V7(
     const pd_CompactPerBill_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringCompactu128_V7(
-    const pd_Compactu128_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -470,8 +453,8 @@ parser_error_t _toStringOptionStatementKind_V7(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringOptionTimepointBlockNumber_V7(
-    const pd_OptionTimepointBlockNumber_V7_t* v,
+parser_error_t _toStringOptionTimepoint_V7(
+    const pd_OptionTimepoint_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -596,8 +579,8 @@ parser_error_t _toStringSupportsAccountId_V7(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringTimepointBlockNumber_V7(
-    const pd_TimepointBlockNumber_V7_t* v,
+parser_error_t _toStringTimepoint_V7(
+    const pd_Timepoint_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -696,13 +679,6 @@ parser_error_t _toStringschedulePeriodBlockNumber_V7(
 
 parser_error_t _toStringschedulePriority_V7(
     const pd_schedulePriority_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringu8_array_32_V7(
-    const pd_u8_array_32_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
