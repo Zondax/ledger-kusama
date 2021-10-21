@@ -59,21 +59,21 @@ INSTANTIATE_TEST_SUITE_P
         })
 );
 
-//// Parametric Test. Printing long numbers + paging
-//TEST_P(BytesPrintTests, BytesPrinting) {
-//    parser_context_t ctx;
-//    parser_error_t err;
-//
-//    uint8_t buffer[100];
-//    auto bufferLen = parseHexString(buffer, sizeof(buffer), GetParam().input.c_str());
-//
-//    pd_Bytes_t b = {bufferLen, buffer};
-//
-//    char tmpOut[100];
-//    uint8_t pageCount;
-//    err = _toStringBytes(&b, tmpOut, GetParam().pageSize, GetParam().pageIndex, &pageCount);
-//    EXPECT_EQ(err, parser_ok) << parser_getErrorDescription(err);
-//
-//    EXPECT_EQ(std::string(tmpOut), GetParam().expected);
-//    EXPECT_EQ(pageCount, GetParam().expectedPageCount);
-//}
+// Parametric Test. Printing long numbers + paging
+TEST_P(BytesPrintTests, BytesPrinting) {
+    parser_context_t ctx;
+    parser_error_t err;
+
+    uint8_t buffer[100];
+    auto bufferLen = parseHexString(buffer, sizeof(buffer), GetParam().input.c_str());
+
+    pd_Bytes_t b = {bufferLen, buffer};
+
+    char tmpOut[100];
+    uint8_t pageCount;
+    err = _toStringBytes(&b, tmpOut, GetParam().pageSize, GetParam().pageIndex, &pageCount);
+    EXPECT_EQ(err, parser_ok) << parser_getErrorDescription(err);
+
+    EXPECT_EQ(std::string(tmpOut), GetParam().expected);
+    EXPECT_EQ(pageCount, GetParam().expectedPageCount);
+}
