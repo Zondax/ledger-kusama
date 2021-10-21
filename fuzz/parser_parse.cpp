@@ -15,8 +15,7 @@ using std::size_t;
 static char PARSER_KEY[16384];
 static char PARSER_VALUE[16384];
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
-{
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
     parser_tx_t txObj;
     parser_context_t ctx;
     parser_error_t rc;
@@ -56,8 +55,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
             if (rc != parser_ok) {
                 fprintf(stderr,
                         "error getting item %u at page index %u: %s\n",
-                        (unsigned)i,
-                        (unsigned)page_idx,
+                        (unsigned) i,
+                        (unsigned) page_idx,
                         parser_getErrorDescription(rc));
                 assert(false);
             }
