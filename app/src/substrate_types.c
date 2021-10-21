@@ -145,6 +145,33 @@ parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
     return parser_not_supported;
 }
 
+parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
+{
+    compactInt_t clen;
+    pd_Call_t dummy;
+    CHECK_PARSER_ERR(_readCompactInt(c, &clen));
+    CHECK_PARSER_ERR(_getValue(&clen, &v->_len));
+
+    if (v->_len > MAX_CALL_VEC_SIZE) {
+        return parser_tx_call_vec_too_large;
+    }
+
+    v->_ptr = c->buffer + c->offset;
+    v->_lenBuffer = c->offset;
+    if (v->_len == 0) {
+        return parser_unexpected_buffer_end;
+    }
+
+    for (uint64_t i = 0; i < v->_len; i++) {
+        c->tx_obj->nestCallIdx.slotIdx = 0;
+        CHECK_ERROR(_readCall(c, &dummy))
+    }
+    v->_lenBuffer = c->offset - v->_lenBuffer;
+    v->callTxVersion = c->tx_obj->transactionVersion;
+
+    return parser_ok;
+}
+
 parser_error_t _readBalance(parser_context_t* c, pd_Balance_t* v) {
     GEN_DEF_READARRAY(16)
 }
@@ -427,6 +454,66 @@ parser_error_t _toStringHeader(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    return parser_print_not_supported;
+}
+
+parser_error_t _toStringVecCall(
+    const pd_VecCall_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    /* count number of pages, then output specific */
+    *pageCount = 0;
+    uint8_t chunkPageCount;
+    uint16_t currentPage, currentTotalPage = 0;
+    /* We need to do it twice because there is no memory to keep intermediate results*/
+    /* First count*/
+    parser_context_t ctx;
+    parser_init(&ctx, v->_ptr, v->_lenBuffer);
+    parser_tx_t _txObj;
+    pd_Call_t _call;
+    ctx.tx_obj = &_txObj;
+    _txObj.transactionVersion = v->callTxVersion;
+    _call._txVerPtr = &v->callTxVersion;
+    _call.nestCallIdx.isTail = true;
+
+    ctx.tx_obj->nestCallIdx.slotIdx = 0;
+    ctx.tx_obj->nestCallIdx._lenBuffer = 0;
+    ctx.tx_obj->nestCallIdx._ptr = NULL;
+    ctx.tx_obj->nestCallIdx._nextPtr = NULL;
+    ctx.tx_obj->nestCallIdx.isTail = true;
+
+    for (uint16_t i = 0; i < v->_len; i++) {
+        ctx.tx_obj->nestCallIdx._ptr = NULL;
+        ctx.tx_obj->nestCallIdx._nextPtr = NULL;
+        ctx.tx_obj->nestCallIdx.slotIdx = 0;
+        CHECK_ERROR(_readCallImpl(&ctx, &_call, (pd_MethodNested_t*)&_txObj.method));
+        CHECK_ERROR(_toStringCall(&_call, outValue, outValueLen, 0, &chunkPageCount));
+        (*pageCount) += chunkPageCount;
+    }
+
+    /* Then iterate until we can print the corresponding chunk*/
+    parser_init(&ctx, v->_ptr, v->_lenBuffer);
+    for (uint16_t i = 0; i < v->_len; i++) {
+        ctx.tx_obj->nestCallIdx._ptr = NULL;
+        ctx.tx_obj->nestCallIdx._nextPtr = NULL;
+        ctx.tx_obj->nestCallIdx.slotIdx = 0;
+        CHECK_ERROR(_readCallImpl(&ctx, &_call, (pd_MethodNested_t*)&_txObj.method));
+        chunkPageCount = 1;
+        currentPage = 0;
+        while (currentPage < chunkPageCount) {
+            CHECK_ERROR(_toStringCall(&_call, outValue, outValueLen, currentPage, &chunkPageCount));
+            if (currentTotalPage == pageIdx) {
+                return parser_ok;
+            }
+            currentPage++;
+            currentTotalPage++;
+        }
+    }
+
     return parser_print_not_supported;
 }
 

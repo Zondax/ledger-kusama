@@ -48,16 +48,6 @@ parser_error_t _readAuthorityIdasRuntimeAppPublicSignature_V7(parser_context_t* 
     return parser_not_supported;
 }
 
-parser_error_t _readBalanceOfTI_V7(parser_context_t* c, pd_BalanceOfTI_V7_t* v)
-{
-    return parser_not_supported;
-}
-
-parser_error_t _readBalanceOfT_V7(parser_context_t* c, pd_BalanceOfT_V7_t* v)
-{
-    return parser_not_supported;
-}
-
 parser_error_t _readBoxEquivocationProofHashBlockNumber_V7(parser_context_t* c, pd_BoxEquivocationProofHashBlockNumber_V7_t* v)
 {
     return parser_not_supported;
@@ -322,9 +312,16 @@ parser_error_t _readRenouncing_V7(parser_context_t* c, pd_Renouncing_V7_t* v)
     return parser_not_supported;
 }
 
-parser_error_t _readRewardDestinationAccountId_V7(parser_context_t* c, pd_RewardDestinationAccountId_V7_t* v)
+parser_error_t _readRewardDestination_V7(parser_context_t* c, pd_RewardDestination_V7_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT();
+
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    if (v->value > 2) {
+        return parser_value_out_of_range;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _readSessionIndex_V7(parser_context_t* c, pd_SessionIndex_V7_t* v)
@@ -343,11 +340,6 @@ parser_error_t _readStatementKind_V7(parser_context_t* c, pd_StatementKind_V7_t*
 }
 
 parser_error_t _readSupportsAccountId_V7(parser_context_t* c, pd_SupportsAccountId_V7_t* v)
-{
-    return parser_not_supported;
-}
-
-parser_error_t _readTasConfigCall_V7(parser_context_t* c, pd_TasConfigCall_V7_t* v)
 {
     return parser_not_supported;
 }
@@ -423,10 +415,6 @@ parser_error_t _readVecKey_V7(parser_context_t* c, pd_VecKey_V7_t* v) {
 
 parser_error_t _readVecLookupasStaticLookupSource_V7(parser_context_t* c, pd_VecLookupasStaticLookupSource_V7_t* v) {
     GEN_DEF_READVECTOR(LookupasStaticLookupSource_V7)
-}
-
-parser_error_t _readVecTasConfigCall_V7(parser_context_t* c, pd_VecTasConfigCall_V7_t* v) {
-    GEN_DEF_READVECTOR(TasConfigCall_V7)
 }
 
 parser_error_t _readVecTupleAccountIdData_V7(parser_context_t* c, pd_VecTupleAccountIdData_V7_t* v) {
@@ -597,28 +585,6 @@ parser_error_t _toStringAccountVoteBalanceOfT_V7(
 
 parser_error_t _toStringAuthorityIdasRuntimeAppPublicSignature_V7(
     const pd_AuthorityIdasRuntimeAppPublicSignature_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringBalanceOfTI_V7(
-    const pd_BalanceOfTI_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringBalanceOfT_V7(
-    const pd_BalanceOfT_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1222,15 +1188,31 @@ parser_error_t _toStringRenouncing_V7(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringRewardDestinationAccountId_V7(
-    const pd_RewardDestinationAccountId_V7_t* v,
+parser_error_t _toStringRewardDestination_V7(
+    const pd_RewardDestination_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Staked");
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "Stash");
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Controller");
+        break;
+    default:
+        return parser_print_not_supported;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringSessionIndex_V7(
@@ -1268,17 +1250,6 @@ parser_error_t _toStringStatementKind_V7(
 
 parser_error_t _toStringSupportsAccountId_V7(
     const pd_SupportsAccountId_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringTasConfigCall_V7(
-    const pd_TasConfigCall_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1469,16 +1440,6 @@ parser_error_t _toStringVecLookupasStaticLookupSource_V7(
     uint8_t* pageCount)
 {
     GEN_DEF_TOSTRING_VECTOR(LookupasStaticLookupSource_V7);
-}
-
-parser_error_t _toStringVecTasConfigCall_V7(
-    const pd_VecTasConfigCall_V7_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    GEN_DEF_TOSTRING_VECTOR(TasConfigCall_V7);
 }
 
 parser_error_t _toStringVecTupleAccountIdData_V7(

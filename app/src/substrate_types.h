@@ -97,6 +97,13 @@ typedef struct {
 } pd_Header_t;
 
 typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+    uint32_t callTxVersion;
+} pd_VecCall_t;
+
+typedef struct {
     const uint8_t* _ptr;
 } pd_Balance_t;
 

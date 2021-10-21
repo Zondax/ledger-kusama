@@ -33,9 +33,9 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Fill block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` ratio <br/> | 
+|Fill block |    | :heavy_check_mark: |   | `Perbill` ratio <br/> | 
 |Remark |    |   |   | `Vecu8` remark <br/> | 
-|Set heap pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
+|Set heap pages |    | :heavy_check_mark: |   | `u64` pages <br/> | 
 |Set code |    |   |   | `Vecu8` code <br/> | 
 |Set code without checks |    |   |   | `Vecu8` code <br/> | 
 |Set changes trie config |    |   |   | `OptionChangesTrieConfiguration` changes_trie_config <br/> | 
@@ -73,9 +73,9 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`Compactu128` value <br/> | 
-|Set balance |    | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` who <br/>`Compactu128` new_free <br/>`Compactu128` new_reserved <br/> | 
-|Force transfer |    | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` dest <br/>`Compactu128` value <br/> | 
-|Transfer keep alive | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`Compactu128` value <br/> | 
+|Set balance |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` who <br/>`Compactu128` new_free <br/>`Compactu128` new_reserved <br/> | 
+|Force transfer |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` dest <br/>`Compactu128` value <br/> | 
+|Transfer keep alive | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` dest <br/>`Compactu128` value <br/> | 
 |Transfer all |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` dest <br/>`bool` keep_alive <br/> | 
 |Force unreserve |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` who <br/>`Balance` amount <br/> | 
 
@@ -89,37 +89,37 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Bond | :heavy_check_mark:  |   |   | `LookupasStaticLookupSource` controller <br/>`Compactu128` value <br/>`RewardDestinationAccountId` payee <br/> | 
-|Bond extra | :heavy_check_mark:  |   |   | `Compactu128` max_additional <br/> | 
-|Unbond | :heavy_check_mark:  |   |   | `Compactu128` value <br/> | 
+|Bond | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` controller <br/>`Compactu128` value <br/>`RewardDestination` payee <br/> | 
+|Bond extra | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu128` max_additional <br/> | 
+|Unbond | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu128` value <br/> | 
 |Withdraw Unbonded | :heavy_check_mark:  | :heavy_check_mark: |   | `u32` num_slashing_spans <br/> | 
-|Validate | :heavy_check_mark:  |   |   | `ValidatorPrefs` prefs <br/> | 
-|Nominate | :heavy_check_mark:  |   |   | `VecLookupasStaticLookupSource` targets <br/> | 
+|Validate | :heavy_check_mark:  | :heavy_check_mark: |   | `ValidatorPrefs` prefs <br/> | 
+|Nominate | :heavy_check_mark:  | :heavy_check_mark: |   | `VecLookupasStaticLookupSource` targets <br/> | 
 |Chill | :heavy_check_mark:  | :heavy_check_mark: |   |  | 
-|Set payee | :heavy_check_mark:  |   |   | `RewardDestinationAccountId` payee <br/> | 
-|Set controller | :heavy_check_mark:  |   |   | `LookupasStaticLookupSource` controller <br/> | 
+|Set payee | :heavy_check_mark:  | :heavy_check_mark: |   | `RewardDestination` payee <br/> | 
+|Set controller | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` controller <br/> | 
 |Set validator count |    | :heavy_check_mark: |   | `Compactu32` new_ <br/> | 
 |Increase validator count |    | :heavy_check_mark: |   | `Compactu32` additional <br/> | 
 |Scale validator count |    |   |   | `Percent` factor <br/> | 
 |Force no eras |    | :heavy_check_mark: |   |  | 
 |Force new era |    | :heavy_check_mark: |   |  | 
 |Set invulnerables |    |   |   | `VecAccountId` invulnerables <br/> | 
-|Force unstake |    |   |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
+|Force unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |Force new era always |    | :heavy_check_mark: |   |  | 
 |Cancel deferred slash |    | :heavy_check_mark: |   | `EraIndex` era <br/>`Vecu32` slash_indices <br/> | 
-|Payout stakers | :heavy_check_mark:  |   |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
-|Rebond | :heavy_check_mark:  |   |   | `Compactu128` value <br/> | 
+|Payout stakers | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
+|Rebond | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu128` value <br/> | 
 |Set history depth |    | :heavy_check_mark: |   | `Compactu32` new_history_depth <br/>`Compactu32` era_items_deleted <br/> | 
-|Reap stash |    |   |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
-|Kick |    |   |   | `VecLookupasStaticLookupSource` who <br/> | 
-|Set staking limits |    |   |   | `BalanceOfT` min_nominator_bond <br/>`BalanceOfT` min_validator_bond <br/>`Optionu32` max_nominator_count <br/>`Optionu32` max_validator_count <br/>`OptionPercent` threshold <br/> | 
-|Chill other |    |   |   | `AccountId` controller <br/> | 
+|Reap stash |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
+|Kick |    | :heavy_check_mark: |   | `VecLookupasStaticLookupSource` who <br/> | 
+|Set staking limits |    |   |   | `Balance` min_nominator_bond <br/>`Balance` min_validator_bond <br/>`Optionu32` max_nominator_count <br/>`Optionu32` max_validator_count <br/>`OptionPercent` threshold <br/> | 
+|Chill other |    | :heavy_check_mark: |   | `AccountId` controller <br/> | 
 
 ## SESSION
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Set keys | :heavy_check_mark:  |   |   | `Keys` keys <br/>`Vecu8` proof <br/> | 
+|Set keys | :heavy_check_mark:  | :heavy_check_mark: |   | `Keys` keys <br/>`Vecu8` proof <br/> | 
 |Purge keys | :heavy_check_mark:  | :heavy_check_mark: |   |  | 
 
 ## GRANDPA
@@ -151,7 +151,7 @@ Please:
 |Veto external |    |   |   | `Hash` proposal_hash <br/> | 
 |Cancel referendum |    | :heavy_check_mark: |   | `Compactu32` ref_index <br/> | 
 |Cancel queued |    | :heavy_check_mark: |   | `ReferendumIndex` which <br/> | 
-|Delegate |    |   |   | `AccountId` to <br/>`Conviction` conviction <br/>`BalanceOfT` balance <br/> | 
+|Delegate |    |   |   | `AccountId` to <br/>`Conviction` conviction <br/>`Balance` balance <br/> | 
 |Undelegate |    | :heavy_check_mark: |   |  | 
 |Clear public proposals |    | :heavy_check_mark: |   |  | 
 |Note preimage |    | :heavy_check_mark: |   | `Vecu8` encoded_proposal <br/> | 
@@ -173,9 +173,9 @@ Please:
 |Set members |    |   |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> | 
 |Execute |    |   |   | `BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
 |Propose |    |   |   | `Compactu32` threshold <br/>`BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
-|Vote |    |   |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> | 
-|Close |    |   |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> | 
-|Disapprove proposal |    |   |   | `Hash` proposal_hash <br/> | 
+|Vote |    | :heavy_check_mark: |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> | 
+|Close |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> | 
+|Disapprove proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> | 
 
 ## TECHNICALCOMMITTEE
 
@@ -196,19 +196,19 @@ Please:
 |Remove voter |    | :heavy_check_mark: |   |  | 
 |Submit candidacy |    | :heavy_check_mark: |   | `Compactu32` candidate_count <br/> | 
 |Renounce candidacy |    |   |   | `Renouncing` renouncing <br/> | 
-|Remove member |    |   |   | `LookupasStaticLookupSource` who <br/>`bool` has_replacement <br/> | 
+|Remove member |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` who <br/>`bool` has_replacement <br/> | 
 |Clean defunct voters |    | :heavy_check_mark: |   | `u32` num_voters <br/>`u32` num_defunct <br/> | 
 
 ## TECHNICALMEMBERSHIP
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Add member |    |   |   | `AccountId` who <br/> | 
-|Remove member |    |   |   | `AccountId` who <br/> | 
-|Swap member |    |   |   | `AccountId` remove <br/>`AccountId` add <br/> | 
-|Reset members |    |   |   | `VecAccountId` members <br/> | 
-|Change key |    |   |   | `AccountId` new_ <br/> | 
-|Set prime |    |   |   | `AccountId` who <br/> | 
+|Add member |    | :heavy_check_mark: |   | `AccountId` who <br/> | 
+|Remove member |    | :heavy_check_mark: |   | `AccountId` who <br/> | 
+|Swap member |    | :heavy_check_mark: |   | `AccountId` remove <br/>`AccountId` add <br/> | 
+|Reset members |    | :heavy_check_mark: |   | `VecAccountId` members <br/> | 
+|Change key |    | :heavy_check_mark: |   | `AccountId` new_ <br/> | 
+|Set prime |    | :heavy_check_mark: |   | `AccountId` who <br/> | 
 |Clear prime |    | :heavy_check_mark: |   |  | 
 
 ## TREASURY
@@ -223,19 +223,19 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Claim |    |   |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/> | 
-|Mint claim |    |   |   | `EthereumAddress` who <br/>`BalanceOfT` value <br/>`OptionTupleBalanceOfTBalanceOfTBlockNumber` vesting_schedule <br/>`OptionStatementKind` statement <br/> | 
-|Claim attest |    |   |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/>`Vecu8` statement <br/> | 
+|Claim |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/> | 
+|Mint claim |    |   |   | `EthereumAddress` who <br/>`Balance` Amount <br/>`OptionTupleBalanceOfTBalanceOfTBlockNumber` vesting_schedule <br/>`OptionStatementKind` statement <br/> | 
+|Claim attest |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/>`Vecu8` statement <br/> | 
 |Attest |    | :heavy_check_mark: |   | `Vecu8` statement <br/> | 
-|Move claim |    |   |   | `EthereumAddress` old <br/>`EthereumAddress` new_ <br/>`OptionAccountId` maybe_preclaim <br/> | 
+|Move claim |    | :heavy_check_mark: |   | `EthereumAddress` old <br/>`EthereumAddress` new_ <br/>`OptionAccountId` maybe_preclaim <br/> | 
 
 ## UTILITY
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Batch | :heavy_check_mark:  |   |   | `VecTasConfigCall` calls <br/> | 
+|Batch | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
 |As derivative |    |   |   | `u16` index <br/>`BoxTasConfigCall` call <br/> | 
-|Batch all | :heavy_check_mark:  |   |   | `VecTasConfigCall` calls <br/> | 
+|Batch all | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
 
 ## IDENTITY
 
@@ -261,9 +261,9 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Bid |    |   |   | `BalanceOfTI` value <br/> | 
+|Bid |    | :heavy_check_mark: |   | `Balance` Amount <br/> | 
 |Unbid |    | :heavy_check_mark: |   | `u32` pos <br/> | 
-|Vouch |    |   |   | `AccountId` who <br/>`BalanceOfTI` value <br/>`BalanceOfTI` tip <br/> | 
+|Vouch |    | :heavy_check_mark: |   | `AccountId` who <br/>`Balance` Amount <br/>`Balance` tip <br/> | 
 |Unvouch |    | :heavy_check_mark: |   | `u32` pos <br/> | 
 |Vote |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` candidate <br/>`bool` approve <br/> | 
 |Defender vote |    | :heavy_check_mark: |   | `bool` approve <br/> | 
@@ -488,7 +488,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Register |    |   |   | `ParaId` id <br/>`HeadData` genesis_head <br/>`ValidationCode` validation_code <br/> | 
-|Force register |    |   |   | `AccountId` who <br/>`BalanceOfT` deposit <br/>`ParaId` id <br/>`HeadData` genesis_head <br/>`ValidationCode` validation_code <br/> | 
+|Force register |    |   |   | `AccountId` who <br/>`Balance` deposit <br/>`ParaId` id <br/>`HeadData` genesis_head <br/>`ValidationCode` validation_code <br/> | 
 |Deregister |    |   |   | `ParaId` id <br/> | 
 |Swap |    |   |   | `ParaId` id <br/>`ParaId` other <br/> | 
 |Force remove lock |    |   |   | `ParaId` para <br/> | 
@@ -498,7 +498,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Force lease |    |   |   | `ParaId` para <br/>`AccountId` leaser <br/>`BalanceOfT` amount <br/>`LeasePeriodOfT` period_begin <br/>`LeasePeriodOfT` period_count <br/> | 
+|Force lease |    |   |   | `ParaId` para <br/>`AccountId` leaser <br/>`Balance` amount <br/>`LeasePeriodOfT` period_begin <br/>`LeasePeriodOfT` period_count <br/> | 
 |Clear all leases |    |   |   | `ParaId` para <br/> | 
 |Trigger onboard |    |   |   | `ParaId` para <br/> | 
 

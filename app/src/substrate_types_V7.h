@@ -96,11 +96,6 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_TasConfigCall_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_TimepointBlockNumber_V7_t;
 
 typedef struct {
@@ -156,16 +151,6 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_AuthorityIdasRuntimeAppPublicSignature_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BalanceOfTI_V7_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BalanceOfT_V7_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -387,9 +372,8 @@ typedef struct {
 } pd_Renouncing_V7_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_RewardDestinationAccountId_V7_t;
+    uint8_t value;
+} pd_RewardDestination_V7_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -428,12 +412,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecKey_V7_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecTasConfigCall_V7_t;
 
 typedef struct {
     uint64_t _len;

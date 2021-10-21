@@ -516,6 +516,7 @@ static const char* STR_IT_fee_asset_item = "Fee asset item";
 static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
+static const char* STR_IT_Amount = "Amount";
 
 #ifdef __cplusplus
 }
