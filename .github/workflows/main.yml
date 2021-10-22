@@ -152,7 +152,7 @@ jobs:
 
   build_package:
     needs: [ configure, build, build_ledger, test_zemu, test_zemu_sr25519 ]
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/ma' }}
     runs-on: ubuntu-latest
     container:
       image: zondax/builder-bolos:latest
