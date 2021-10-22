@@ -54,7 +54,7 @@ typedef enum {
 
 #define COIN_GENESIS_HASH                   "b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe"
 #define COIN_NAME                           "Kusama"
-#define COIN_TICKER                         "KSM"
+#define COIN_TICKER                         "KSM "
 
 #define COIN_SECRET_REQUIRED_CLICKS         10
 
