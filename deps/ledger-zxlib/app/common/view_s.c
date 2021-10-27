@@ -224,9 +224,7 @@ max_char_display get_max_char_per_line() {
 }
 
 bool exceed_pixel_in_display(const uint8_t length) {
-    unsigned short strWidth = bagl_compute_line_width((BAGL_FONT_OPEN_SANS_EXTRABOLD_11px
-                                | BAGL_FONT_ALIGNMENT_CENTER |BAGL_FONT_ALIGNMENT_MIDDLE),
-                                200, viewdata.value, length, BAGL_ENCODING_LATIN1);
+    const unsigned short strWidth = zx_compute_line_width_light(viewdata.value, length);
     return (strWidth >= (BAGL_WIDTH - BAGL_WIDTH_MARGIN));
 }
 
