@@ -23,6 +23,7 @@
 #include "bagl.h"
 #include "zxmacros.h"
 #include "view_templates.h"
+#include "zxutils_ledger.h"
 
 #include <string.h>
 #include <stdio.h>
