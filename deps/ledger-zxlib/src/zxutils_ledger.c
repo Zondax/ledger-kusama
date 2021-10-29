@@ -1,4 +1,8 @@
-// #include "zxbagl.h"
+#include "zxutils_ledger.h"
+
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
 
 // We implement a light mecanism in order to be able to retrieve the width of
 // nano S characters, in the two possible fonts:
