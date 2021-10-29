@@ -201,13 +201,13 @@ void splitValueField() {
 void splitValueAddress() {
     uint8_t len = MAX_CHARS_PER_VALUE_LINE;
     bool exceeding_max = exceed_pixel_in_display(len);
-    while(exceeding_max) {
-        len--;
+    while(exceeding_max && len--) {
         exceeding_max = exceed_pixel_in_display(len);
     }
     print_value2("");
     const uint16_t vlen = strlen(viewdata.value);
-    if (vlen > len) {
+    //if viewdata.value == NULL --> len = 0
+    if (vlen > len && len > 0) {
         snprintf(viewdata.value2, MAX_CHARS_PER_VALUE2_LINE, "%s", viewdata.value + len);
         viewdata.value[len] = 0;
     }
@@ -216,12 +216,11 @@ void splitValueAddress() {
 max_char_display get_max_char_per_line() {
     uint8_t len = MAX_CHARS_PER_VALUE_LINE;
     bool exceeding_max = exceed_pixel_in_display(len);
-    while(exceeding_max) {
-        len--;
+    while(exceeding_max && len--) {
         exceeding_max = exceed_pixel_in_display(len);
     }
     //MAX_CHARS_PER_VALUE1_LINE is defined this way
-    return 2 * len + 1;
+    return (len > 0) ? (2 * len + 1) : len;
 }
 
 bool exceed_pixel_in_display(const uint8_t length) {
