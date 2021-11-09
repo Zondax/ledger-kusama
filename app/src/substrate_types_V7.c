@@ -371,7 +371,7 @@ parser_error_t _readVestingInfoBalanceOfTBlockNumber_V7(parser_context_t* c, pd_
 
 parser_error_t _readWeightLimit_V7(parser_context_t* c, pd_WeightLimit_V7_t* v)
 {
-    return parser_not_supported;
+    return _readUInt64(c, &v->value);
 }
 
 parser_error_t _readWeight_V7(parser_context_t* c, pd_Weight_V7_t* v)
@@ -1352,8 +1352,7 @@ parser_error_t _toStringWeightLimit_V7(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    return _toStringu64(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringWeight_V7(
