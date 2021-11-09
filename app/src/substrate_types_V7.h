@@ -418,6 +418,11 @@ typedef struct {
 } pd_VestingInfoBalanceOfTBlockNumber_V7_t;
 
 typedef struct {
+    // TODO: Not implemented
+    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+} pd_WeightLimit_V7_t;
+
+typedef struct {
     uint64_t value;
 } pd_Weight_V7_t;
 
