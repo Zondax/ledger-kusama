@@ -5,7 +5,7 @@
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Fill block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` ratio <br/> | 
-|Set heap pages |    | :heavy_zcheck_mark: | :heavy_check_mark: | `u64` pages <br/> | 
+|Set heap pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
 
 ## BABE
 
