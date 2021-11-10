@@ -1908,20 +1908,14 @@ const char* _getMethod_ModuleName_V7(uint8_t moduleIdx)
 #ifdef SUBSTRATE_PARSER_FULL
     case 0:
         return STR_MO_SYSTEM;
-    case 1:
-        return STR_MO_BABE;
     case 2:
         return STR_MO_TIMESTAMP;
     case 3:
         return STR_MO_INDICES;
-    case 5:
-        return STR_MO_AUTHORSHIP;
     case 8:
         return STR_MO_SESSION;
     case 10:
         return STR_MO_GRANDPA;
-    case 11:
-        return STR_MO_IMONLINE;
     case 13:
         return STR_MO_DEMOCRACY;
     case 14:
@@ -1944,8 +1938,6 @@ const char* _getMethod_ModuleName_V7(uint8_t moduleIdx)
         return STR_MO_RECOVERY;
     case 28:
         return STR_MO_VESTING;
-    case 29:
-        return STR_MO_SCHEDULER;
     case 30:
         return STR_MO_PROXY;
     case 31:
@@ -1954,40 +1946,20 @@ const char* _getMethod_ModuleName_V7(uint8_t moduleIdx)
         return STR_MO_BOUNTIES;
     case 36:
         return STR_MO_TIPS;
-    case 37:
-        return STR_MO_ELECTIONPROVIDERMULTIPHASE;
     case 38:
         return STR_MO_GILT;
     case 39:
         return STR_MO_BAGSLIST;
     case 51:
         return STR_MO_CONFIGURATION;
-    case 52:
-        return STR_MO_PARASSHARED;
-    case 53:
-        return STR_MO_PARAINCLUSION;
-    case 54:
-        return STR_MO_PARAINHERENT;
-    case 56:
-        return STR_MO_PARAS;
     case 57:
         return STR_MO_INITIALIZER;
-    case 58:
-        return STR_MO_DMP;
-    case 59:
-        return STR_MO_UMP;
     case 60:
         return STR_MO_HRMP;
     case 70:
         return STR_MO_REGISTRAR;
-    case 71:
-        return STR_MO_SLOTS;
     case 72:
         return STR_MO_AUCTIONS;
-    case 73:
-        return STR_MO_CROWDLOAN;
-    case 99:
-        return STR_MO_XCMPALLET;
 #endif
     default:
         return NULL;
@@ -2020,8 +1992,30 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return STR_ME_FILL_BLOCK;
+    case 1: /* module 0 call 1 */
+        return STR_ME_REMARK;
     case 2: /* module 0 call 2 */
         return STR_ME_SET_HEAP_PAGES;
+    case 3: /* module 0 call 3 */
+        return STR_ME_SET_CODE;
+    case 4: /* module 0 call 4 */
+        return STR_ME_SET_CODE_WITHOUT_CHECKS;
+    case 5: /* module 0 call 5 */
+        return STR_ME_SET_CHANGES_TRIE_CONFIG;
+    case 6: /* module 0 call 6 */
+        return STR_ME_SET_STORAGE;
+    case 7: /* module 0 call 7 */
+        return STR_ME_KILL_STORAGE;
+    case 8: /* module 0 call 8 */
+        return STR_ME_KILL_PREFIX;
+    case 9: /* module 0 call 9 */
+        return STR_ME_REMARK_WITH_EVENT;
+    case 256: /* module 1 call 0 */
+        return STR_ME_REPORT_EQUIVOCATION;
+    case 257: /* module 1 call 1 */
+        return STR_ME_REPORT_EQUIVOCATION_UNSIGNED;
+    case 258: /* module 1 call 2 */
+        return STR_ME_PLAN_CONFIG_CHANGE;
     case 512: /* module 2 call 0 */
         return STR_ME_SET;
     case 768: /* module 3 call 0 */
@@ -2044,6 +2038,8 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_TRANSFER_ALL;
     case 1029: /* module 4 call 5 */
         return STR_ME_FORCE_UNRESERVE;
+    case 1280: /* module 5 call 0 */
+        return STR_ME_SET_UNCLES;
     case 1537: /* module 6 call 1 */
         return STR_ME_BOND_EXTRA;
     case 1539: /* module 6 call 3 */
@@ -2056,14 +2052,20 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_VALIDATOR_COUNT;
     case 1546: /* module 6 call 10 */
         return STR_ME_INCREASE_VALIDATOR_COUNT;
+    case 1547: /* module 6 call 11 */
+        return STR_ME_SCALE_VALIDATOR_COUNT;
     case 1548: /* module 6 call 12 */
         return STR_ME_FORCE_NO_ERAS;
     case 1549: /* module 6 call 13 */
         return STR_ME_FORCE_NEW_ERA;
+    case 1550: /* module 6 call 14 */
+        return STR_ME_SET_INVULNERABLES;
     case 1551: /* module 6 call 15 */
         return STR_ME_FORCE_UNSTAKE;
     case 1552: /* module 6 call 16 */
         return STR_ME_FORCE_NEW_ERA_ALWAYS;
+    case 1553: /* module 6 call 17 */
+        return STR_ME_CANCEL_DEFERRED_SLASH;
     case 1554: /* module 6 call 18 */
         return STR_ME_PAYOUT_STAKERS;
     case 1556: /* module 6 call 20 */
@@ -2072,22 +2074,46 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_REAP_STASH;
     case 1558: /* module 6 call 22 */
         return STR_ME_KICK;
+    case 1559: /* module 6 call 23 */
+        return STR_ME_SET_STAKING_LIMITS;
     case 1560: /* module 6 call 24 */
         return STR_ME_CHILL_OTHER;
     case 2048: /* module 8 call 0 */
         return STR_ME_SET_KEYS;
     case 2049: /* module 8 call 1 */
         return STR_ME_PURGE_KEYS;
+    case 2560: /* module 10 call 0 */
+        return STR_ME_REPORT_EQUIVOCATION;
+    case 2561: /* module 10 call 1 */
+        return STR_ME_REPORT_EQUIVOCATION_UNSIGNED;
     case 2562: /* module 10 call 2 */
         return STR_ME_NOTE_STALLED;
+    case 2816: /* module 11 call 0 */
+        return STR_ME_HEARTBEAT;
+    case 3328: /* module 13 call 0 */
+        return STR_ME_PROPOSE;
     case 3329: /* module 13 call 1 */
         return STR_ME_SECOND;
+    case 3330: /* module 13 call 2 */
+        return STR_ME_VOTE;
     case 3331: /* module 13 call 3 */
         return STR_ME_EMERGENCY_CANCEL;
+    case 3332: /* module 13 call 4 */
+        return STR_ME_EXTERNAL_PROPOSE;
+    case 3333: /* module 13 call 5 */
+        return STR_ME_EXTERNAL_PROPOSE_MAJORITY;
+    case 3334: /* module 13 call 6 */
+        return STR_ME_EXTERNAL_PROPOSE_DEFAULT;
+    case 3335: /* module 13 call 7 */
+        return STR_ME_FAST_TRACK;
+    case 3336: /* module 13 call 8 */
+        return STR_ME_VETO_EXTERNAL;
     case 3337: /* module 13 call 9 */
         return STR_ME_CANCEL_REFERENDUM;
     case 3338: /* module 13 call 10 */
         return STR_ME_CANCEL_QUEUED;
+    case 3339: /* module 13 call 11 */
+        return STR_ME_DELEGATE;
     case 3340: /* module 13 call 12 */
         return STR_ME_UNDELEGATE;
     case 3341: /* module 13 call 13 */
@@ -2100,22 +2126,52 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_NOTE_IMMINENT_PREIMAGE;
     case 3345: /* module 13 call 17 */
         return STR_ME_NOTE_IMMINENT_PREIMAGE_OPERATIONAL;
+    case 3346: /* module 13 call 18 */
+        return STR_ME_REAP_PREIMAGE;
+    case 3347: /* module 13 call 19 */
+        return STR_ME_UNLOCK;
     case 3348: /* module 13 call 20 */
         return STR_ME_REMOVE_VOTE;
+    case 3349: /* module 13 call 21 */
+        return STR_ME_REMOVE_OTHER_VOTE;
+    case 3350: /* module 13 call 22 */
+        return STR_ME_ENACT_PROPOSAL;
+    case 3351: /* module 13 call 23 */
+        return STR_ME_BLACKLIST;
     case 3352: /* module 13 call 24 */
         return STR_ME_CANCEL_PROPOSAL;
+    case 3584: /* module 14 call 0 */
+        return STR_ME_SET_MEMBERS;
+    case 3585: /* module 14 call 1 */
+        return STR_ME_EXECUTE;
+    case 3586: /* module 14 call 2 */
+        return STR_ME_PROPOSE;
     case 3587: /* module 14 call 3 */
         return STR_ME_VOTE;
     case 3588: /* module 14 call 4 */
         return STR_ME_CLOSE;
     case 3589: /* module 14 call 5 */
         return STR_ME_DISAPPROVE_PROPOSAL;
+    case 3840: /* module 15 call 0 */
+        return STR_ME_SET_MEMBERS;
+    case 3841: /* module 15 call 1 */
+        return STR_ME_EXECUTE;
+    case 3842: /* module 15 call 2 */
+        return STR_ME_PROPOSE;
+    case 3843: /* module 15 call 3 */
+        return STR_ME_VOTE;
+    case 3844: /* module 15 call 4 */
+        return STR_ME_CLOSE;
     case 3845: /* module 15 call 5 */
         return STR_ME_DISAPPROVE_PROPOSAL;
+    case 4096: /* module 16 call 0 */
+        return STR_ME_VOTE;
     case 4097: /* module 16 call 1 */
         return STR_ME_REMOVE_VOTER;
     case 4098: /* module 16 call 2 */
         return STR_ME_SUBMIT_CANDIDACY;
+    case 4099: /* module 16 call 3 */
+        return STR_ME_RENOUNCE_CANDIDACY;
     case 4100: /* module 16 call 4 */
         return STR_ME_REMOVE_MEMBER;
     case 4101: /* module 16 call 5 */
@@ -2142,16 +2198,24 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_APPROVE_PROPOSAL;
     case 4864: /* module 19 call 0 */
         return STR_ME_CLAIM;
+    case 4865: /* module 19 call 1 */
+        return STR_ME_MINT_CLAIM;
     case 4866: /* module 19 call 2 */
         return STR_ME_CLAIM_ATTEST;
     case 4867: /* module 19 call 3 */
         return STR_ME_ATTEST;
     case 4868: /* module 19 call 4 */
         return STR_ME_MOVE_CLAIM;
+    case 6145: /* module 24 call 1 */
+        return STR_ME_AS_DERIVATIVE;
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
     case 6400: /* module 25 call 0 */
         return STR_ME_ADD_REGISTRAR;
+    case 6401: /* module 25 call 1 */
+        return STR_ME_SET_IDENTITY;
+    case 6402: /* module 25 call 2 */
+        return STR_ME_SET_SUBS;
     case 6403: /* module 25 call 3 */
         return STR_ME_CLEAR_IDENTITY;
     case 6404: /* module 25 call 4 */
@@ -2162,8 +2226,16 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_FEE;
     case 6407: /* module 25 call 7 */
         return STR_ME_SET_ACCOUNT_ID;
+    case 6408: /* module 25 call 8 */
+        return STR_ME_SET_FIELDS;
+    case 6409: /* module 25 call 9 */
+        return STR_ME_PROVIDE_JUDGEMENT;
     case 6410: /* module 25 call 10 */
         return STR_ME_KILL_IDENTITY;
+    case 6411: /* module 25 call 11 */
+        return STR_ME_ADD_SUB;
+    case 6412: /* module 25 call 12 */
+        return STR_ME_RENAME_SUB;
     case 6413: /* module 25 call 13 */
         return STR_ME_REMOVE_SUB;
     case 6414: /* module 25 call 14 */
@@ -2188,10 +2260,16 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_UNFOUND;
     case 6665: /* module 26 call 9 */
         return STR_ME_JUDGE_SUSPENDED_MEMBER;
+    case 6666: /* module 26 call 10 */
+        return STR_ME_JUDGE_SUSPENDED_CANDIDATE;
     case 6667: /* module 26 call 11 */
         return STR_ME_SET_MAX_MEMBERS;
+    case 6912: /* module 27 call 0 */
+        return STR_ME_AS_RECOVERED;
     case 6913: /* module 27 call 1 */
         return STR_ME_SET_RECOVERED;
+    case 6914: /* module 27 call 2 */
+        return STR_ME_CREATE_RECOVERY;
     case 6915: /* module 27 call 3 */
         return STR_ME_INITIATE_RECOVERY;
     case 6916: /* module 27 call 4 */
@@ -2208,8 +2286,24 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_VEST;
     case 7169: /* module 28 call 1 */
         return STR_ME_VEST_OTHER;
+    case 7170: /* module 28 call 2 */
+        return STR_ME_VESTED_TRANSFER;
+    case 7171: /* module 28 call 3 */
+        return STR_ME_FORCE_VESTED_TRANSFER;
     case 7172: /* module 28 call 4 */
         return STR_ME_MERGE_SCHEDULES;
+    case 7424: /* module 29 call 0 */
+        return STR_ME_SCHEDULE;
+    case 7425: /* module 29 call 1 */
+        return STR_ME_CANCEL;
+    case 7426: /* module 29 call 2 */
+        return STR_ME_SCHEDULE_NAMED;
+    case 7427: /* module 29 call 3 */
+        return STR_ME_CANCEL_NAMED;
+    case 7428: /* module 29 call 4 */
+        return STR_ME_SCHEDULE_AFTER;
+    case 7429: /* module 29 call 5 */
+        return STR_ME_SCHEDULE_NAMED_AFTER;
     case 7680: /* module 30 call 0 */
         return STR_ME_PROXY;
     case 7681: /* module 30 call 1 */
@@ -2222,8 +2316,16 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_ANONYMOUS;
     case 7685: /* module 30 call 5 */
         return STR_ME_KILL_ANONYMOUS;
+    case 7686: /* module 30 call 6 */
+        return STR_ME_ANNOUNCE;
+    case 7687: /* module 30 call 7 */
+        return STR_ME_REMOVE_ANNOUNCEMENT;
+    case 7688: /* module 30 call 8 */
+        return STR_ME_REJECT_ANNOUNCEMENT;
     case 7689: /* module 30 call 9 */
         return STR_ME_PROXY_ANNOUNCED;
+    case 7936: /* module 31 call 0 */
+        return STR_ME_AS_MULTI_THRESHOLD_1;
     case 7937: /* module 31 call 1 */
         return STR_ME_AS_MULTI;
     case 7938: /* module 31 call 2 */
@@ -2260,10 +2362,22 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_CLOSE_TIP;
     case 9221: /* module 36 call 5 */
         return STR_ME_SLASH_TIP;
+    case 9472: /* module 37 call 0 */
+        return STR_ME_SUBMIT_UNSIGNED;
+    case 9473: /* module 37 call 1 */
+        return STR_ME_SET_MINIMUM_UNTRUSTED_SCORE;
+    case 9474: /* module 37 call 2 */
+        return STR_ME_SET_EMERGENCY_ELECTION_RESULT;
+    case 9475: /* module 37 call 3 */
+        return STR_ME_SUBMIT;
     case 9728: /* module 38 call 0 */
         return STR_ME_PLACE_BID;
     case 9729: /* module 38 call 1 */
         return STR_ME_RETRACT_BID;
+    case 9730: /* module 38 call 2 */
+        return STR_ME_SET_TARGET;
+    case 9731: /* module 38 call 3 */
+        return STR_ME_THAW;
     case 9984: /* module 39 call 0 */
         return STR_ME_REBAG;
     case 13056: /* module 51 call 0 */
@@ -2294,6 +2408,8 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_MAX_VALIDATORS_PER_CORE;
     case 13069: /* module 51 call 13 */
         return STR_ME_SET_MAX_VALIDATORS;
+    case 13070: /* module 51 call 14 */
+        return STR_ME_SET_DISPUTE_PERIOD;
     case 13071: /* module 51 call 15 */
         return STR_ME_SET_DISPUTE_POST_CONCLUSION_ACCEPTANCE_PERIOD;
     case 13072: /* module 51 call 16 */
@@ -2324,6 +2440,8 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_MAX_UPWARD_MESSAGE_NUM_PER_CANDIDATE;
     case 13085: /* module 51 call 29 */
         return STR_ME_SET_HRMP_OPEN_REQUEST_TTL;
+    case 13086: /* module 51 call 30 */
+        return STR_ME_SET_HRMP_SENDER_DEPOSIT;
     case 13087: /* module 51 call 31 */
         return STR_ME_SET_HRMP_RECIPIENT_DEPOSIT;
     case 13088: /* module 51 call 32 */
@@ -2344,20 +2462,96 @@ const char* _getMethod_Name_V7(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_HRMP_MAX_MESSAGE_NUM_PER_CANDIDATE;
     case 13096: /* module 51 call 40 */
         return STR_ME_SET_UMP_MAX_INDIVIDUAL_WEIGHT;
+    case 13824: /* module 54 call 0 */
+        return STR_ME_ENTER;
+    case 14336: /* module 56 call 0 */
+        return STR_ME_FORCE_SET_CURRENT_CODE;
+    case 14337: /* module 56 call 1 */
+        return STR_ME_FORCE_SET_CURRENT_HEAD;
+    case 14338: /* module 56 call 2 */
+        return STR_ME_FORCE_SCHEDULE_CODE_UPGRADE;
+    case 14339: /* module 56 call 3 */
+        return STR_ME_FORCE_NOTE_NEW_HEAD;
+    case 14340: /* module 56 call 4 */
+        return STR_ME_FORCE_QUEUE_ACTION;
     case 14592: /* module 57 call 0 */
         return STR_ME_FORCE_APPROVE;
+    case 15104: /* module 59 call 0 */
+        return STR_ME_SERVICE_OVERWEIGHT;
+    case 15360: /* module 60 call 0 */
+        return STR_ME_HRMP_INIT_OPEN_CHANNEL;
+    case 15361: /* module 60 call 1 */
+        return STR_ME_HRMP_ACCEPT_OPEN_CHANNEL;
+    case 15362: /* module 60 call 2 */
+        return STR_ME_HRMP_CLOSE_CHANNEL;
+    case 15363: /* module 60 call 3 */
+        return STR_ME_FORCE_CLEAN_HRMP;
     case 15364: /* module 60 call 4 */
         return STR_ME_FORCE_PROCESS_HRMP_OPEN;
     case 15365: /* module 60 call 5 */
         return STR_ME_FORCE_PROCESS_HRMP_CLOSE;
+    case 15366: /* module 60 call 6 */
+        return STR_ME_HRMP_CANCEL_OPEN_REQUEST;
+    case 17920: /* module 70 call 0 */
+        return STR_ME_REGISTER;
+    case 17921: /* module 70 call 1 */
+        return STR_ME_FORCE_REGISTER;
+    case 17922: /* module 70 call 2 */
+        return STR_ME_DEREGISTER;
+    case 17923: /* module 70 call 3 */
+        return STR_ME_SWAP;
+    case 17924: /* module 70 call 4 */
+        return STR_ME_FORCE_REMOVE_LOCK;
     case 17925: /* module 70 call 5 */
         return STR_ME_RESERVE;
+    case 18176: /* module 71 call 0 */
+        return STR_ME_FORCE_LEASE;
+    case 18177: /* module 71 call 1 */
+        return STR_ME_CLEAR_ALL_LEASES;
+    case 18178: /* module 71 call 2 */
+        return STR_ME_TRIGGER_ONBOARD;
     case 18432: /* module 72 call 0 */
         return STR_ME_NEW_AUCTION;
     case 18433: /* module 72 call 1 */
         return STR_ME_BID;
     case 18434: /* module 72 call 2 */
         return STR_ME_CANCEL_AUCTION;
+    case 18688: /* module 73 call 0 */
+        return STR_ME_CREATE;
+    case 18689: /* module 73 call 1 */
+        return STR_ME_CONTRIBUTE;
+    case 18690: /* module 73 call 2 */
+        return STR_ME_WITHDRAW;
+    case 18691: /* module 73 call 3 */
+        return STR_ME_REFUND;
+    case 18692: /* module 73 call 4 */
+        return STR_ME_DISSOLVE;
+    case 18693: /* module 73 call 5 */
+        return STR_ME_EDIT;
+    case 18694: /* module 73 call 6 */
+        return STR_ME_ADD_MEMO;
+    case 18695: /* module 73 call 7 */
+        return STR_ME_POKE;
+    case 25344: /* module 99 call 0 */
+        return STR_ME_SEND;
+    case 25345: /* module 99 call 1 */
+        return STR_ME_TELEPORT_ASSETS;
+    case 25346: /* module 99 call 2 */
+        return STR_ME_RESERVE_TRANSFER_ASSETS;
+    case 25347: /* module 99 call 3 */
+        return STR_ME_EXECUTE;
+    case 25348: /* module 99 call 4 */
+        return STR_ME_FORCE_XCM_VERSION;
+    case 25349: /* module 99 call 5 */
+        return STR_ME_FORCE_DEFAULT_XCM_VERSION;
+    case 25350: /* module 99 call 6 */
+        return STR_ME_FORCE_SUBSCRIBE_VERSION_NOTIFY;
+    case 25351: /* module 99 call 7 */
+        return STR_ME_FORCE_UNSUBSCRIBE_VERSION_NOTIFY;
+    case 25352: /* module 99 call 8 */
+        return STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS;
+    case 25353: /* module 99 call 9 */
+        return STR_ME_LIMITED_TELEPORT_ASSETS;
 #endif
     default:
         return NULL;
