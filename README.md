@@ -35,12 +35,23 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Fill block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` ratio <br/> | 
+|Remark |    |   |   | `Vecu8` remark <br/> | 
 |Set heap pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
+|Set code |    |   |   | `Vecu8` code <br/> | 
+|Set code without checks |    |   |   | `Vecu8` code <br/> | 
+|Set changes trie config |    |   |   | `OptionChangesTrieConfiguration` changes_trie_config <br/> | 
+|Set storage |    |   |   | `VecKeyValue` items <br/> | 
+|Kill storage |    |   |   | `VecKey` keys <br/> | 
+|Kill prefix |    |   |   | `Key` prefix <br/>`u32` subkeys <br/> | 
+|Remark with event |    |   |   | `Vecu8` remark <br/> | 
 
 ## BABE
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Report equivocation |    |   |   | `BoxEquivocationProofHeader` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> | 
+|Report equivocation unsigned |    |   |   | `BoxEquivocationProofHeader` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> | 
+|Plan config change |    |   |   | `NextConfigDescriptor` config <br/> | 
 
 ## TIMESTAMP
 
@@ -73,6 +84,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Set uncles |    |   |   | `VecHeader` new_uncles <br/> | 
 
 ## STAKING
 
@@ -89,15 +101,19 @@ Please:
 |Set controller | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` controller <br/> | 
 |Set validator count |    | :heavy_check_mark: |   | `Compactu32` new_ <br/> | 
 |Increase validator count |    | :heavy_check_mark: |   | `Compactu32` additional <br/> | 
+|Scale validator count |    |   |   | `Percent` factor <br/> | 
 |Force no eras |    | :heavy_check_mark: |   |  | 
 |Force new era |    | :heavy_check_mark: |   |  | 
+|Set invulnerables |    |   |   | `VecAccountId` invulnerables <br/> | 
 |Force unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |Force new era always |    | :heavy_check_mark: |   |  | 
+|Cancel deferred slash |    |   |   | `EraIndex` era <br/>`Bytes` slash_indices <br/> | 
 |Payout stakers | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
 |Rebond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` Amount <br/> | 
 |Set history depth |    | :heavy_check_mark: |   | `Compactu32` new_history_depth <br/>`Compactu32` era_items_deleted <br/> | 
 |Reap stash |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |Kick |    | :heavy_check_mark: |   | `VecLookupasStaticLookupSource` who <br/> | 
+|Set staking limits |    |   |   | `Balance` min_nominator_bond <br/>`Balance` min_validator_bond <br/>`Optionu32` max_nominator_count <br/>`Optionu32` max_validator_count <br/>`OptionPercent` threshold <br/> | 
 |Chill other |    | :heavy_check_mark: |   | `AccountId` controller <br/> | 
 
 ## SESSION
@@ -111,34 +127,53 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Report equivocation |    |   |   | `BoxEquivocationProofHashBlockNumber` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> | 
+|Report equivocation unsigned |    |   |   | `BoxEquivocationProofHashBlockNumber` equivocation_proof <br/>`KeyOwnerProof` key_owner_proof <br/> | 
 |Note stalled |    | :heavy_check_mark: |   | `BlockNumber` delay <br/>`BlockNumber` best_finalized_block_number <br/> | 
 
 ## IMONLINE
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Heartbeat |    |   |   | `HeartbeatBlockNumber` heartbeat <br/>`AuthorityIdasRuntimeAppPublicSignature` signature <br/> | 
 
 ## DEMOCRACY
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Propose |    |   |   | `Hash` proposal_hash <br/>`Compactu128` Amount <br/> | 
 |Second |    | :heavy_check_mark: |   | `Compactu32` proposal <br/>`Compactu32` seconds_upper_bound <br/> | 
+|Vote |    |   |   | `Compactu32` ref_index <br/>`AccountVoteBalanceOfT` vote <br/> | 
 |Emergency cancel |    | :heavy_check_mark: |   | `ReferendumIndex` ref_index <br/> | 
+|External propose |    |   |   | `Hash` proposal_hash <br/> | 
+|External propose majority |    |   |   | `Hash` proposal_hash <br/> | 
+|External propose default |    |   |   | `Hash` proposal_hash <br/> | 
+|Fast track |    |   |   | `Hash` proposal_hash <br/>`BlockNumber` voting_period <br/>`BlockNumber` delay <br/> | 
+|Veto external |    |   |   | `Hash` proposal_hash <br/> | 
 |Cancel referendum |    | :heavy_check_mark: |   | `Compactu32` ref_index <br/> | 
 |Cancel queued |    | :heavy_check_mark: |   | `ReferendumIndex` which <br/> | 
+|Delegate |    |   |   | `AccountId` to <br/>`Conviction` conviction <br/>`Balance` balance <br/> | 
 |Undelegate |    | :heavy_check_mark: |   |  | 
 |Clear public proposals |    | :heavy_check_mark: |   |  | 
 |Note preimage |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> | 
 |Note preimage operational |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> | 
 |Note imminent preimage |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> | 
 |Note imminent preimage operational |    | :heavy_check_mark: |   | `Bytes` encoded_proposal <br/> | 
+|Reap preimage |    |   |   | `Hash` proposal_hash <br/>`Compactu32` proposal_len_upper_bound <br/> | 
+|Unlock |    |   |   | `AccountId` target <br/> | 
 |Remove vote |    | :heavy_check_mark: |   | `ReferendumIndex` index <br/> | 
+|Remove other vote |    |   |   | `AccountId` target <br/>`ReferendumIndex` index <br/> | 
+|Enact proposal |    |   |   | `Hash` proposal_hash <br/>`ReferendumIndex` index <br/> | 
+|Blacklist |    |   |   | `Hash` proposal_hash <br/>`OptionReferendumIndex` maybe_ref_index <br/> | 
 |Cancel proposal |    | :heavy_check_mark: |   | `Compactu32` prop_index <br/> | 
 
 ## COUNCIL
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Set members |    |   |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> | 
+|Execute |    |   |   | `BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
+|Propose |    |   |   | `Compactu32` threshold <br/>`BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
 |Vote |    | :heavy_check_mark: |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> | 
 |Close |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> | 
 |Disapprove proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> | 
@@ -147,14 +182,21 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Set members |    |   |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> | 
+|Execute |    |   |   | `BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
+|Propose |    |   |   | `Compactu32` threshold <br/>`BoxTasConfigIProposal` proposal <br/>`Compactu32` length_bound <br/> | 
+|Vote |    |   |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> | 
+|Close |    |   |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> | 
 |Disapprove proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> | 
 
 ## PHRAGMENELECTION
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Vote |    |   |   | `VecAccountId` votes <br/>`Compactu128` Amount <br/> | 
 |Remove voter |    | :heavy_check_mark: |   |  | 
 |Submit candidacy |    | :heavy_check_mark: |   | `Compactu32` candidate_count <br/> | 
+|Renounce candidacy |    |   |   | `Renouncing` renouncing <br/> | 
 |Remove member |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` who <br/>`bool` has_replacement <br/> | 
 |Clean defunct voters |    | :heavy_check_mark: |   | `u32` num_voters <br/>`u32` num_defunct <br/> | 
 
@@ -183,6 +225,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Claim |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/> | 
+|Mint claim |    |   |   | `EthereumAddress` who <br/>`Balance` Amount <br/>`OptionTupleBalanceOfTBalanceOfTBlockNumber` vesting_schedule <br/>`OptionStatementKind` statement <br/> | 
 |Claim attest |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/>`Bytes` statement <br/> | 
 |Attest |    | :heavy_check_mark: |   | `Bytes` statement <br/> | 
 |Move claim |    | :heavy_check_mark: |   | `EthereumAddress` old <br/>`EthereumAddress` new_ <br/>`OptionAccountId` maybe_preclaim <br/> | 
@@ -192,6 +235,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Batch | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
+|As derivative |    |   |   | `u16` index <br/>`Call` call <br/> | 
 |Batch all | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
 
 ## IDENTITY
@@ -199,12 +243,18 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Add registrar |    | :heavy_check_mark: |   | `AccountId` account <br/> | 
+|Set identity |    |   |   | `BoxIdentityInfoMaxAdditionalFields` info <br/> | 
+|Set subs |    |   |   | `VecTupleAccountIdData` subs <br/> | 
 |Clear identity |    | :heavy_check_mark: |   |  | 
 |Request judgement |    | :heavy_check_mark: |   | `Compactu32` reg_index <br/>`Compactu128` max_fee <br/> | 
 |Cancel request |    | :heavy_check_mark: |   | `RegistrarIndex` reg_index <br/> | 
 |Set fee |    | :heavy_check_mark: |   | `Compactu32` index <br/>`Compactu128` fee <br/> | 
 |Set account id |    | :heavy_check_mark: |   | `Compactu32` index <br/>`AccountId` new_ <br/> | 
+|Set fields |    |   |   | `Compactu32` index <br/>`IdentityFields` fields <br/> | 
+|Provide judgement |    |   |   | `Compactu32` reg_index <br/>`LookupasStaticLookupSource` target <br/>`JudgementBalanceOfT` judgement <br/> | 
 |Kill identity |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` target <br/> | 
+|Add sub |    |   |   | `LookupasStaticLookupSource` sub <br/>`Data` data <br/> | 
+|Rename sub |    |   |   | `LookupasStaticLookupSource` sub <br/>`Data` data <br/> | 
 |Remove sub |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` sub <br/> | 
 |Quit sub |    | :heavy_check_mark: |   |  | 
 
@@ -222,13 +272,16 @@ Please:
 |Found |    | :heavy_check_mark: |   | `AccountId` founder <br/>`u32` max_members <br/>`Bytes` rules <br/> | 
 |Unfound |    | :heavy_check_mark: |   |  | 
 |Judge suspended member |    | :heavy_check_mark: |   | `AccountId` who <br/>`bool` forgive <br/> | 
+|Judge suspended candidate |    |   |   | `AccountId` who <br/>`Judgement` judgement <br/> | 
 |Set max members |    | :heavy_check_mark: |   | `u32` max <br/> | 
 
 ## RECOVERY
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|As recovered |    |   |   | `AccountId` account <br/>`Call` call <br/> | 
 |Set recovered |    | :heavy_check_mark: |   | `AccountId` lost <br/>`AccountId` rescuer <br/> | 
+|Create recovery |    |   |   | `VecAccountId` friends <br/>`u16` threshold <br/>`BlockNumber` delay_period <br/> | 
 |Initiate recovery |    | :heavy_check_mark: |   | `AccountId` account <br/> | 
 |Vouch recovery |    | :heavy_check_mark: |   | `AccountId` lost <br/>`AccountId` rescuer <br/> | 
 |Claim recovery |    | :heavy_check_mark: |   | `AccountId` account <br/> | 
@@ -242,12 +295,20 @@ Please:
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Vest |    | :heavy_check_mark: |   |  | 
 |Vest other |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` target <br/> | 
+|Vested transfer |    |   |   | `LookupasStaticLookupSource` target <br/>`VestingInfoBalanceOfTBlockNumber` schedule <br/> | 
+|Force vested transfer |    |   |   | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` target <br/>`VestingInfoBalanceOfTBlockNumber` schedule <br/> | 
 |Merge schedules |    | :heavy_check_mark: |   | `u32` schedule1_index <br/>`u32` schedule2_index <br/> | 
 
 ## SCHEDULER
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Schedule |    |   |   | `BlockNumber` when <br/>`OptionschedulePeriodBlockNumber` maybe_periodic <br/>`schedulePriority` priority <br/>`Call` call <br/> | 
+|Cancel |    |   |   | `BlockNumber` when <br/>`u32` index <br/> | 
+|Schedule named |    |   |   | `Vecu8` id <br/>`BlockNumber` when <br/>`OptionschedulePeriodBlockNumber` maybe_periodic <br/>`schedulePriority` priority <br/>`Call` call <br/> | 
+|Cancel named |    |   |   | `Vecu8` id <br/> | 
+|Schedule after |    |   |   | `BlockNumber` after <br/>`OptionschedulePeriodBlockNumber` maybe_periodic <br/>`schedulePriority` priority <br/>`Call` call <br/> | 
+|Schedule named after |    |   |   | `Vecu8` id <br/>`BlockNumber` after <br/>`OptionschedulePeriodBlockNumber` maybe_periodic <br/>`schedulePriority` priority <br/>`Call` call <br/> | 
 
 ## PROXY
 
@@ -259,12 +320,16 @@ Please:
 |Remove proxies |    | :heavy_check_mark: |   |  | 
 |Anonymous |    | :heavy_check_mark: |   | `ProxyType` proxy_type <br/>`BlockNumber` delay <br/>`u16` index <br/> | 
 |Kill anonymous |    | :heavy_check_mark: |   | `AccountId` spawner <br/>`ProxyType` proxy_type <br/>`u16` index <br/>`Compactu32` height <br/>`Compactu32` ext_index <br/> | 
+|Announce |    |   |   | `AccountId` real <br/>`CallHashOfT` call_hash <br/> | 
+|Remove announcement |    |   |   | `AccountId` real <br/>`CallHashOfT` call_hash <br/> | 
+|Reject announcement |    |   |   | `AccountId` delegate <br/>`CallHashOfT` call_hash <br/> | 
 |Proxy announced |    | :heavy_check_mark: |   | `AccountId` delegate <br/>`AccountId` real <br/>`OptionProxyType` force_proxy_type <br/>`Call` call <br/> | 
 
 ## MULTISIG
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|As multi threshold 1 |    |   |   | `VecAccountId` other_signatories <br/>`Call` call <br/> | 
 |As multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`OptionTimepoint` maybe_timepoint <br/>`OpaqueCall` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> | 
 |Approve as multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`OptionTimepoint` maybe_timepoint <br/>`H256` call_hash <br/>`Weight` max_weight <br/> | 
 |Cancel as multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`Timepoint` timepoint <br/>`H256` call_hash <br/> | 
@@ -298,6 +363,10 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Submit unsigned |    |   |   | `BoxRawSolutionSolutionOfT` raw_solution <br/>`SolutionOrSnapshotSize` witness <br/> | 
+|Set minimum untrusted score |    |   |   | `OptionElectionScore` maybe_next_score <br/> | 
+|Set emergency election result |    |   |   | `SupportsAccountId` supports <br/> | 
+|Submit |    |   |   | `BoxRawSolutionSolutionOfT` raw_solution <br/>`u32` num_signed_submissions <br/> | 
 
 ## GILT
 
@@ -305,6 +374,8 @@ Please:
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Place bid |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`u32` duration <br/> | 
 |Retract bid |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`u32` duration <br/> | 
+|Set target |    |   |   | `Compactu64` target <br/> | 
+|Thaw |    |   |   | `Compactu32` index <br/> | 
 
 ## BAGSLIST
 
@@ -330,6 +401,7 @@ Please:
 |Set scheduling lookahead |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
 |Set max validators per core |    | :heavy_check_mark: |   | `Optionu32` new_ <br/> | 
 |Set max validators |    | :heavy_check_mark: |   | `Optionu32` new_ <br/> | 
+|Set dispute period |    |   |   | `SessionIndex` new_ <br/> | 
 |Set dispute post conclusion acceptance period |    | :heavy_check_mark: |   | `BlockNumber` new_ <br/> | 
 |Set dispute max spam slots |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
 |Set dispute conclusion by time out period |    | :heavy_check_mark: |   | `BlockNumber` new_ <br/> | 
@@ -345,6 +417,7 @@ Please:
 |Set max upward message size |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
 |Set max upward message num per candidate |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
 |Set hrmp open request ttl |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
+|Set hrmp sender deposit |    |   |   | `Balance` new_ <br/> | 
 |Set hrmp recipient deposit |    | :heavy_check_mark: |   | `Balance` new_ <br/> | 
 |Set hrmp channel max capacity |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
 |Set hrmp channel max total size |    | :heavy_check_mark: |   | `u32` new_ <br/> | 
@@ -370,11 +443,17 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Enter |    |   |   | `ParachainsInherentDataHeader` data <br/> | 
 
 ## PARAS
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Force set current code |    |   |   | `ParaId` para <br/>`ValidationCode` new_code <br/> | 
+|Force set current head |    |   |   | `ParaId` para <br/>`HeadData` new_head <br/> | 
+|Force schedule code upgrade |    |   |   | `ParaId` para <br/>`ValidationCode` new_code <br/>`BlockNumber` relay_parent_number <br/> | 
+|Force note new head |    |   |   | `ParaId` para <br/>`HeadData` new_head <br/> | 
+|Force queue action |    |   |   | `ParaId` para <br/> | 
 
 ## INITIALIZER
 
@@ -391,24 +470,38 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Service overweight |    |   |   | `OverweightIndex` index <br/>`Weight` weight_limit <br/> | 
 
 ## HRMP
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Hrmp init open channel |    |   |   | `ParaId` recipient <br/>`u32` proposed_max_capacity <br/>`u32` proposed_max_message_size <br/> | 
+|Hrmp accept open channel |    |   |   | `ParaId` sender <br/> | 
+|Hrmp close channel |    |   |   | `HrmpChannelId` channel_id <br/> | 
+|Force clean hrmp |    |   |   | `ParaId` para <br/> | 
 |Force process hrmp open |    | :heavy_check_mark: |   |  | 
 |Force process hrmp close |    | :heavy_check_mark: |   |  | 
+|Hrmp cancel open request |    |   |   | `HrmpChannelId` channel_id <br/> | 
 
 ## REGISTRAR
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Register |    |   |   | `ParaId` id <br/>`HeadData` genesis_head <br/>`ValidationCode` validation_code <br/> | 
+|Force register |    |   |   | `AccountId` who <br/>`Balance` deposit <br/>`ParaId` id <br/>`HeadData` genesis_head <br/>`ValidationCode` validation_code <br/> | 
+|Deregister |    |   |   | `ParaId` id <br/> | 
+|Swap |    |   |   | `ParaId` id <br/>`ParaId` other <br/> | 
+|Force remove lock |    |   |   | `ParaId` para <br/> | 
 |Reserve |    | :heavy_check_mark: |   |  | 
 
 ## SLOTS
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Force lease |    |   |   | `ParaId` para <br/>`AccountId` leaser <br/>`Balance` amount <br/>`LeasePeriodOfT` period_begin <br/>`LeasePeriodOfT` period_count <br/> | 
+|Clear all leases |    |   |   | `ParaId` para <br/> | 
+|Trigger onboard |    |   |   | `ParaId` para <br/> | 
 
 ## AUCTIONS
 
@@ -422,9 +515,27 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Create |    |   |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> | 
+|Contribute |    |   |   | `Compactu32` index <br/>`Compactu128` Amount <br/>`OptionMultiSignature` signature <br/> | 
+|Withdraw |    |   |   | `AccountId` who <br/>`Compactu32` index <br/> | 
+|Refund |    |   |   | `Compactu32` index <br/> | 
+|Dissolve |    |   |   | `Compactu32` index <br/> | 
+|Edit |    |   |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> | 
+|Add memo |    |   |   | `ParaId` index <br/>`Vecu8` memo <br/> | 
+|Poke |    |   |   | `ParaId` index <br/> | 
 
 ## XCMPALLET
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
+|Send |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedXcmTuple` message <br/> | 
+|Teleport assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/> | 
+|Reserve transfer assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/> | 
+|Execute |    |   |   | `BoxVersionedXcmTasSysConfigCall` message <br/>`Weight` max_weight <br/> | 
+|Force xcm version |    |   |   | `BoxMultiLocation` location <br/>`XcmVersion` xcm_version <br/> | 
+|Force default xcm version |    |   |   | `OptionXcmVersion` maybe_xcm_version <br/> | 
+|Force subscribe version notify |    |   |   | `BoxVersionedMultiLocation` location <br/> | 
+|Force unsubscribe version notify |    |   |   | `BoxVersionedMultiLocation` location <br/> | 
+|Limited reserve transfer assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`WeightLimit` weight_limit <br/> | 
+|Limited teleport assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`WeightLimit` weight_limit <br/> | 
 
