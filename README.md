@@ -1,7 +1,7 @@
 # Ledger Kusama App (eXpeCT ChAoS)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GithubActions](https://github.com/Zondax/ledger-kusama/actions/workflows/main.yml/badge.svg)](https://github.com/Zondax/ledger-kusama/blob/main/.github/workflows/main.yml)
+[![GithubActions](https://github.com/zondax/ledger-kusama/actions/workflows/main.yml/badge.svg)](https://github.com/Zondax/ledger-kusama/blob/main/.github/workflows/main.yaml)
 
 ---
 
@@ -27,7 +27,8 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  7.9111.x
+
+# Kusama  7.9122.x
 
 ## SYSTEM
 
@@ -535,4 +536,6 @@ Please:
 |Force default xcm version |    |   |   | `OptionXcmVersion` maybe_xcm_version <br/> | 
 |Force subscribe version notify |    |   |   | `BoxVersionedMultiLocation` location <br/> | 
 |Force unsubscribe version notify |    |   |   | `BoxVersionedMultiLocation` location <br/> | 
+|Limited reserve transfer assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`WeightLimit` weight_limit <br/> | 
+|Limited teleport assets |    |   |   | `BoxVersionedMultiLocation` dest <br/>`BoxVersionedMultiLocation` beneficiary <br/>`BoxVersionedMultiAssets` assets <br/>`u32` fee_asset_item <br/>`WeightLimit` weight_limit <br/> | 
 
