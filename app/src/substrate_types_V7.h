@@ -419,6 +419,10 @@ typedef struct {
 
 typedef struct {
     uint64_t value;
+} pd_WeightLimit_V7_t;
+
+typedef struct {
+    uint64_t value;
 } pd_Weight_V7_t;
 
 typedef struct {

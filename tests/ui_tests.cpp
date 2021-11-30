@@ -62,7 +62,7 @@ public:
 };
 
 // Retrieve testcases from json file
-std::vector<testcase_t> GetJsonTestCases(std::string jsonFile) {
+std::vector<testcase_t> GetJsonTestCases(const std::string &jsonFile) {
     auto answer = std::vector<testcase_t>();
 
     Json::CharReaderBuilder builder;

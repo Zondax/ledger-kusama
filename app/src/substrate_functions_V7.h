@@ -104,6 +104,7 @@ parser_error_t _readVecKey_V7(parser_context_t* c, pd_VecKey_V7_t* v);
 parser_error_t _readVecLookupasStaticLookupSource_V7(parser_context_t* c, pd_VecLookupasStaticLookupSource_V7_t* v);
 parser_error_t _readVecTupleAccountIdData_V7(parser_context_t* c, pd_VecTupleAccountIdData_V7_t* v);
 parser_error_t _readVestingInfoBalanceOfTBlockNumber_V7(parser_context_t* c, pd_VestingInfoBalanceOfTBlockNumber_V7_t* v);
+parser_error_t _readWeightLimit_V7(parser_context_t* c, pd_WeightLimit_V7_t* v);
 parser_error_t _readWeight_V7(parser_context_t* c, pd_Weight_V7_t* v);
 parser_error_t _readXcmVersion_V7(parser_context_t* c, pd_XcmVersion_V7_t* v);
 parser_error_t _readschedulePeriodBlockNumber_V7(parser_context_t* c, pd_schedulePeriodBlockNumber_V7_t* v);
@@ -651,6 +652,13 @@ parser_error_t _toStringVecTupleAccountIdData_V7(
 
 parser_error_t _toStringVestingInfoBalanceOfTBlockNumber_V7(
     const pd_VestingInfoBalanceOfTBlockNumber_V7_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringWeightLimit_V7(
+    const pd_WeightLimit_V7_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
