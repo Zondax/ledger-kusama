@@ -190,6 +190,11 @@ zxerr_t h_review_update_data() {
         return zxerr_no_data;
     }
 
+    if (viewdata.viewfuncGetItem == NULL) {
+        zemu_log_stack("h_review_update_data - GetItem==NULL");
+        return zxerr_no_data;
+    }
+
     char buffer[20];
     snprintf(buffer, sizeof(buffer), "update Idx %d/%d", viewdata.itemIdx, viewdata.pageIdx);
     zemu_log_stack(buffer);
