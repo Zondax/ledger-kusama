@@ -1,18 +1,18 @@
 /*******************************************************************************
- *  (c) 2019 Zondax GmbH
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- ********************************************************************************/
+*  (c) 2019 Zondax GmbH
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+********************************************************************************/
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
@@ -57,6 +57,12 @@ extern "C" {
 #define PD_CALL_REGISTRAR_V7 70
 #define PD_CALL_AUCTIONS_V7 72
 
+#define PD_CALL_BALANCES_TRANSFER_ALL_V7 4
+typedef struct {
+    pd_LookupasStaticLookupSource_V7_t dest;
+    pd_bool_t keep_alive;
+} pd_balances_transfer_all_V7_t;
+
 #define PD_CALL_STAKING_BOND_V7 0
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t controller;
@@ -64,10 +70,20 @@ typedef struct {
     pd_RewardDestination_V7_t payee;
 } pd_staking_bond_V7_t;
 
+#define PD_CALL_STAKING_BOND_EXTRA_V7 1
+typedef struct {
+    pd_CompactBalance_t Amount;
+} pd_staking_bond_extra_V7_t;
+
 #define PD_CALL_STAKING_UNBOND_V7 2
 typedef struct {
     pd_CompactBalance_t Amount;
 } pd_staking_unbond_V7_t;
+
+#define PD_CALL_STAKING_WITHDRAW_UNBONDED_V7 3
+typedef struct {
+    pd_u32_t num_slashing_spans;
+} pd_staking_withdraw_unbonded_V7_t;
 
 #define PD_CALL_STAKING_VALIDATE_V7 4
 typedef struct {
@@ -83,15 +99,46 @@ typedef struct {
 typedef struct {
 } pd_staking_chill_V7_t;
 
+#define PD_CALL_STAKING_SET_PAYEE_V7 7
+typedef struct {
+    pd_RewardDestination_V7_t payee;
+} pd_staking_set_payee_V7_t;
+
+#define PD_CALL_STAKING_SET_CONTROLLER_V7 8
+typedef struct {
+    pd_LookupasStaticLookupSource_V7_t controller;
+} pd_staking_set_controller_V7_t;
+
+#define PD_CALL_STAKING_PAYOUT_STAKERS_V7 18
+typedef struct {
+    pd_AccountId_V7_t validator_stash;
+    pd_EraIndex_V7_t era;
+} pd_staking_payout_stakers_V7_t;
+
 #define PD_CALL_STAKING_REBOND_V7 19
 typedef struct {
     pd_CompactBalance_t Amount;
 } pd_staking_rebond_V7_t;
 
+#define PD_CALL_SESSION_SET_KEYS_V7 0
+typedef struct {
+    pd_Keys_V7_t keys;
+    pd_Bytes_t proof;
+} pd_session_set_keys_V7_t;
+
+#define PD_CALL_SESSION_PURGE_KEYS_V7 1
+typedef struct {
+} pd_session_purge_keys_V7_t;
+
 #define PD_CALL_UTILITY_BATCH_V7 0
 typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_V7_t;
+
+#define PD_CALL_UTILITY_BATCH_ALL_V7 2
+typedef struct {
+    pd_VecCall_t calls;
+} pd_utility_batch_all_V7_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
 
@@ -128,37 +175,11 @@ typedef struct {
     pd_AccountIndex_V7_t index;
 } pd_indices_freeze_V7_t;
 
-#define PD_CALL_BALANCES_TRANSFER_ALL_V7 4
-typedef struct {
-    pd_LookupasStaticLookupSource_V7_t dest;
-    pd_bool_t keep_alive;
-} pd_balances_transfer_all_V7_t;
-
 #define PD_CALL_BALANCES_FORCE_UNRESERVE_V7 5
 typedef struct {
     pd_LookupasStaticLookupSource_V7_t who;
     pd_Balance_t amount;
 } pd_balances_force_unreserve_V7_t;
-
-#define PD_CALL_STAKING_BOND_EXTRA_V7 1
-typedef struct {
-    pd_CompactBalance_t max_additional;
-} pd_staking_bond_extra_V7_t;
-
-#define PD_CALL_STAKING_WITHDRAW_UNBONDED_V7 3
-typedef struct {
-    pd_u32_t num_slashing_spans;
-} pd_staking_withdraw_unbonded_V7_t;
-
-#define PD_CALL_STAKING_SET_PAYEE_V7 7
-typedef struct {
-    pd_RewardDestination_V7_t payee;
-} pd_staking_set_payee_V7_t;
-
-#define PD_CALL_STAKING_SET_CONTROLLER_V7 8
-typedef struct {
-    pd_LookupasStaticLookupSource_V7_t controller;
-} pd_staking_set_controller_V7_t;
 
 #define PD_CALL_STAKING_SET_VALIDATOR_COUNT_V7 9
 typedef struct {
@@ -188,12 +209,6 @@ typedef struct {
 typedef struct {
 } pd_staking_force_new_era_always_V7_t;
 
-#define PD_CALL_STAKING_PAYOUT_STAKERS_V7 18
-typedef struct {
-    pd_AccountId_V7_t validator_stash;
-    pd_EraIndex_V7_t era;
-} pd_staking_payout_stakers_V7_t;
-
 #define PD_CALL_STAKING_SET_HISTORY_DEPTH_V7 20
 typedef struct {
     pd_Compactu32_t new_history_depth;
@@ -215,16 +230,6 @@ typedef struct {
 typedef struct {
     pd_AccountId_V7_t controller;
 } pd_staking_chill_other_V7_t;
-
-#define PD_CALL_SESSION_SET_KEYS_V7 0
-typedef struct {
-    pd_Keys_V7_t keys;
-    pd_Bytes_t proof;
-} pd_session_set_keys_V7_t;
-
-#define PD_CALL_SESSION_PURGE_KEYS_V7 1
-typedef struct {
-} pd_session_purge_keys_V7_t;
 
 #define PD_CALL_GRANDPA_NOTE_STALLED_V7 2
 typedef struct {
@@ -412,11 +417,6 @@ typedef struct {
     pd_EthereumAddress_V7_t new_;
     pd_OptionAccountId_V7_t maybe_preclaim;
 } pd_claims_move_claim_V7_t;
-
-#define PD_CALL_UTILITY_BATCH_ALL_V7 2
-typedef struct {
-    pd_VecCall_t calls;
-} pd_utility_batch_all_V7_t;
 
 #define PD_CALL_IDENTITY_ADD_REGISTRAR_V7 0
 typedef struct {
@@ -951,13 +951,22 @@ typedef struct {
 #endif
 
 typedef union {
+    pd_balances_transfer_all_V7_t balances_transfer_all_V7;
     pd_staking_bond_V7_t staking_bond_V7;
+    pd_staking_bond_extra_V7_t staking_bond_extra_V7;
     pd_staking_unbond_V7_t staking_unbond_V7;
+    pd_staking_withdraw_unbonded_V7_t staking_withdraw_unbonded_V7;
     pd_staking_validate_V7_t staking_validate_V7;
     pd_staking_nominate_V7_t staking_nominate_V7;
     pd_staking_chill_V7_t staking_chill_V7;
+    pd_staking_set_payee_V7_t staking_set_payee_V7;
+    pd_staking_set_controller_V7_t staking_set_controller_V7;
+    pd_staking_payout_stakers_V7_t staking_payout_stakers_V7;
     pd_staking_rebond_V7_t staking_rebond_V7;
+    pd_session_set_keys_V7_t session_set_keys_V7;
+    pd_session_purge_keys_V7_t session_purge_keys_V7;
     pd_utility_batch_V7_t utility_batch_V7;
+    pd_utility_batch_all_V7_t utility_batch_all_V7;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_timestamp_set_V7_t timestamp_set_V7;
     pd_indices_claim_V7_t indices_claim_V7;
@@ -965,25 +974,17 @@ typedef union {
     pd_indices_free_V7_t indices_free_V7;
     pd_indices_force_transfer_V7_t indices_force_transfer_V7;
     pd_indices_freeze_V7_t indices_freeze_V7;
-    pd_balances_transfer_all_V7_t balances_transfer_all_V7;
     pd_balances_force_unreserve_V7_t balances_force_unreserve_V7;
-    pd_staking_bond_extra_V7_t staking_bond_extra_V7;
-    pd_staking_withdraw_unbonded_V7_t staking_withdraw_unbonded_V7;
-    pd_staking_set_payee_V7_t staking_set_payee_V7;
-    pd_staking_set_controller_V7_t staking_set_controller_V7;
     pd_staking_set_validator_count_V7_t staking_set_validator_count_V7;
     pd_staking_increase_validator_count_V7_t staking_increase_validator_count_V7;
     pd_staking_force_no_eras_V7_t staking_force_no_eras_V7;
     pd_staking_force_new_era_V7_t staking_force_new_era_V7;
     pd_staking_force_unstake_V7_t staking_force_unstake_V7;
     pd_staking_force_new_era_always_V7_t staking_force_new_era_always_V7;
-    pd_staking_payout_stakers_V7_t staking_payout_stakers_V7;
     pd_staking_set_history_depth_V7_t staking_set_history_depth_V7;
     pd_staking_reap_stash_V7_t staking_reap_stash_V7;
     pd_staking_kick_V7_t staking_kick_V7;
     pd_staking_chill_other_V7_t staking_chill_other_V7;
-    pd_session_set_keys_V7_t session_set_keys_V7;
-    pd_session_purge_keys_V7_t session_purge_keys_V7;
     pd_grandpa_note_stalled_V7_t grandpa_note_stalled_V7;
     pd_democracy_second_V7_t democracy_second_V7;
     pd_democracy_emergency_cancel_V7_t democracy_emergency_cancel_V7;
@@ -1019,7 +1020,6 @@ typedef union {
     pd_claims_claim_attest_V7_t claims_claim_attest_V7;
     pd_claims_attest_V7_t claims_attest_V7;
     pd_claims_move_claim_V7_t claims_move_claim_V7;
-    pd_utility_batch_all_V7_t utility_batch_all_V7;
     pd_identity_add_registrar_V7_t identity_add_registrar_V7;
     pd_identity_clear_identity_V7_t identity_clear_identity_V7;
     pd_identity_request_judgement_V7_t identity_request_judgement_V7;
@@ -1129,6 +1129,19 @@ typedef struct {
     pd_CompactBalance_t Amount;
 } pd_balances_transfer_V7_t;
 
+#define PD_CALL_BALANCES_FORCE_TRANSFER_V7 2
+typedef struct {
+    pd_LookupasStaticLookupSource_V7_t source;
+    pd_LookupasStaticLookupSource_V7_t dest;
+    pd_CompactBalance_t Amount;
+} pd_balances_force_transfer_V7_t;
+
+#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V7 3
+typedef struct {
+    pd_LookupasStaticLookupSource_V7_t dest;
+    pd_CompactBalance_t Amount;
+} pd_balances_transfer_keep_alive_V7_t;
+
 #ifdef SUBSTRATE_PARSER_FULL
 #define PD_CALL_SYSTEM_FILL_BLOCK_V7 0
 typedef struct {
@@ -1146,19 +1159,6 @@ typedef struct {
     pd_CompactBalance_t new_free;
     pd_CompactBalance_t new_reserved;
 } pd_balances_set_balance_V7_t;
-
-#define PD_CALL_BALANCES_FORCE_TRANSFER_V7 2
-typedef struct {
-    pd_LookupasStaticLookupSource_V7_t source;
-    pd_LookupasStaticLookupSource_V7_t dest;
-    pd_CompactBalance_t Amount;
-} pd_balances_force_transfer_V7_t;
-
-#define PD_CALL_BALANCES_TRANSFER_KEEP_ALIVE_V7 3
-typedef struct {
-    pd_LookupasStaticLookupSource_V7_t dest;
-    pd_CompactBalance_t Amount;
-} pd_balances_transfer_keep_alive_V7_t;
 
 #define PD_CALL_PROXY_PROXY_V7 0
 typedef struct {
@@ -1198,12 +1198,12 @@ typedef struct {
 
 typedef union {
     pd_balances_transfer_V7_t balances_transfer_V7;
+    pd_balances_force_transfer_V7_t balances_force_transfer_V7;
+    pd_balances_transfer_keep_alive_V7_t balances_transfer_keep_alive_V7;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_system_fill_block_V7_t system_fill_block_V7;
     pd_system_set_heap_pages_V7_t system_set_heap_pages_V7;
     pd_balances_set_balance_V7_t balances_set_balance_V7;
-    pd_balances_force_transfer_V7_t balances_force_transfer_V7;
-    pd_balances_transfer_keep_alive_V7_t balances_transfer_keep_alive_V7;
     pd_proxy_proxy_V7_t proxy_proxy_V7;
     pd_multisig_as_multi_V7_t multisig_as_multi_V7;
     pd_multisig_approve_as_multi_V7_t multisig_approve_as_multi_V7;
