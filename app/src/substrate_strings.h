@@ -64,6 +64,7 @@ static const char* STR_MO_SLOTS = "Slots";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
+static const char* STR_MO_PARASDISPUTES = "Parasdisputes";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -335,6 +336,8 @@ static const char* STR_ME_FORCE_XCM_VERSION = "Force xcm version";
 static const char* STR_ME_FORCE_DEFAULT_XCM_VERSION = "Force default xcm version";
 static const char* STR_ME_FORCE_SUBSCRIBE_VERSION_NOTIFY = "Force subscribe version notify";
 static const char* STR_ME_FORCE_UNSUBSCRIBE_VERSION_NOTIFY = "Force unsubscribe version notify";
+static const char* STR_ME_DISPATCH_AS = "Dispatch as";
+static const char* STR_ME_FORCE_UNFREEZE = "Force unfreeze";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
 static const char* STR_ME_LIMITED_TELEPORT_ASSETS = "Limited teleport assets";
 
@@ -519,6 +522,7 @@ static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
 static const char* STR_IT_Amount = "Amount";
+static const char* STR_IT_as_origin = "As origin";
 
 #ifdef __cplusplus
 }

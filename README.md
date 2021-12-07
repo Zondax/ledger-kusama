@@ -28,7 +28,7 @@ Please:
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
 
-# Kusama  7.9122.x
+# Kusama  8.9130.x
 
 ## System
 
@@ -39,7 +39,6 @@ Please:
 |Set heap pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
 |Set code |    |   |   | `Vecu8` code <br/> | 
 |Set code without checks |    |   |   | `Vecu8` code <br/> | 
-|Set changes trie config |    |   |   | `OptionChangesTrieConfiguration` changes_trie_config <br/> | 
 |Set storage |    |   |   | `VecKeyValue` items <br/> | 
 |Kill storage |    |   |   | `VecKey` keys <br/> | 
 |Kill prefix |    |   |   | `Key` prefix <br/>`u32` subkeys <br/> | 
@@ -73,10 +72,10 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`CompactBalance` Amount <br/> | 
+|Transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`CompactBalance` amount <br/> | 
 |Set balance |    | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` who <br/>`CompactBalance` new_free <br/>`CompactBalance` new_reserved <br/> | 
-|Force transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` dest <br/>`CompactBalance` Amount <br/> | 
-|Transfer keep alive | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`CompactBalance` Amount <br/> | 
+|Force transfer | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` dest <br/>`CompactBalance` amount <br/> | 
+|Transfer keep alive | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | `LookupasStaticLookupSource` dest <br/>`CompactBalance` amount <br/> | 
 |Transfer all | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` dest <br/>`bool` keep_alive <br/> | 
 |Force unreserve |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` who <br/>`Balance` amount <br/> | 
 
@@ -90,9 +89,9 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Bond | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` controller <br/>`CompactBalance` Amount <br/>`RewardDestination` payee <br/> | 
-|Bond extra | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` Amount <br/> | 
-|Unbond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` Amount <br/> | 
+|Bond | :heavy_check_mark:  | :heavy_check_mark: |   | `LookupasStaticLookupSource` controller <br/>`CompactBalance` amount <br/>`RewardDestination` payee <br/> | 
+|Bond extra | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` amount <br/> | 
+|Unbond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` amount <br/> | 
 |Withdraw Unbonded | :heavy_check_mark:  | :heavy_check_mark: |   | `u32` num_slashing_spans <br/> | 
 |Validate | :heavy_check_mark:  | :heavy_check_mark: |   | `ValidatorPrefs` prefs <br/> | 
 |Nominate | :heavy_check_mark:  | :heavy_check_mark: |   | `VecLookupasStaticLookupSource` targets <br/> | 
@@ -109,7 +108,7 @@ Please:
 |Force new era always |    | :heavy_check_mark: |   |  | 
 |Cancel deferred slash |    |   |   | `EraIndex` era <br/>`Bytes` slash_indices <br/> | 
 |Payout stakers | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> | 
-|Rebond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` Amount <br/> | 
+|Rebond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` amount <br/> | 
 |Set history depth |    | :heavy_check_mark: |   | `Compactu32` new_history_depth <br/>`Compactu32` era_items_deleted <br/> | 
 |Reap stash |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> | 
 |Kick |    | :heavy_check_mark: |   | `VecLookupasStaticLookupSource` who <br/> | 
@@ -141,7 +140,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Propose |    |   |   | `Hash` proposal_hash <br/>`Compactu128` Amount <br/> | 
+|Propose |    |   |   | `Hash` proposal_hash <br/>`Compactu128` amount <br/> | 
 |Second |    | :heavy_check_mark: |   | `Compactu32` proposal <br/>`Compactu32` seconds_upper_bound <br/> | 
 |Vote |    |   |   | `Compactu32` ref_index <br/>`AccountVoteBalanceOfT` vote <br/> | 
 |Emergency cancel |    | :heavy_check_mark: |   | `ReferendumIndex` ref_index <br/> | 
@@ -193,7 +192,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Vote |    |   |   | `VecAccountId` votes <br/>`Compactu128` Amount <br/> | 
+|Vote |    |   |   | `VecAccountId` votes <br/>`Compactu128` amount <br/> | 
 |Remove voter |    | :heavy_check_mark: |   |  | 
 |Submit candidacy |    | :heavy_check_mark: |   | `Compactu32` candidate_count <br/> | 
 |Renounce candidacy |    |   |   | `Renouncing` renouncing <br/> | 
@@ -216,7 +215,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Propose spend |    | :heavy_check_mark: |   | `CompactBalance` Amount <br/>`LookupasStaticLookupSource` beneficiary <br/> | 
+|Propose spend |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`LookupasStaticLookupSource` beneficiary <br/> | 
 |Reject proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> | 
 |Approve proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> | 
 
@@ -225,7 +224,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Claim |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/> | 
-|Mint claim |    |   |   | `EthereumAddress` who <br/>`Balance` Amount <br/>`OptionTupleBalanceOfTBalanceOfTBlockNumber` vesting_schedule <br/>`OptionStatementKind` statement <br/> | 
+|Mint claim |    |   |   | `EthereumAddress` who <br/>`Balance` amount <br/>`OptionTupleBalanceOfTBalanceOfTBlockNumber` vesting_schedule <br/>`OptionStatementKind` statement <br/> | 
 |Claim attest |    | :heavy_check_mark: |   | `AccountId` dest <br/>`EcdsaSignature` ethereum_signature <br/>`Bytes` statement <br/> | 
 |Attest |    | :heavy_check_mark: |   | `Bytes` statement <br/> | 
 |Move claim |    | :heavy_check_mark: |   | `EthereumAddress` old <br/>`EthereumAddress` new_ <br/>`OptionAccountId` maybe_preclaim <br/> | 
@@ -237,6 +236,7 @@ Please:
 |Batch | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
 |As derivative |    |   |   | `u16` index <br/>`Call` call <br/> | 
 |Batch all | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> | 
+|Dispatch as |    |   |   | `BoxPalletsOrigin` as_origin <br/>`Call` call <br/> | 
 
 ## Identity
 
@@ -262,9 +262,9 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Bid |    | :heavy_check_mark: |   | `Balance` Amount <br/> | 
+|Bid |    | :heavy_check_mark: |   | `Balance` amount <br/> | 
 |Unbid |    | :heavy_check_mark: |   | `u32` pos <br/> | 
-|Vouch |    | :heavy_check_mark: |   | `AccountId` who <br/>`Balance` Amount <br/>`Balance` tip <br/> | 
+|Vouch |    | :heavy_check_mark: |   | `AccountId` who <br/>`Balance` amount <br/>`Balance` tip <br/> | 
 |Unvouch |    | :heavy_check_mark: |   | `u32` pos <br/> | 
 |Vote |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` candidate <br/>`bool` approve <br/> | 
 |Defender vote |    | :heavy_check_mark: |   | `bool` approve <br/> | 
@@ -330,7 +330,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |As multi threshold 1 |    |   |   | `VecAccountId` other_signatories <br/>`Call` call <br/> | 
-|As multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`OptionTimepoint` maybe_timepoint <br/>`OpaqueCall` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> | 
+|As multi |    |   |   | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`OptionTimepoint` maybe_timepoint <br/>`OpaqueCallT` call <br/>`bool` store_call <br/>`Weight` max_weight <br/> | 
 |Approve as multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`OptionTimepoint` maybe_timepoint <br/>`H256` call_hash <br/>`Weight` max_weight <br/> | 
 |Cancel as multi |    | :heavy_check_mark: | :heavy_check_mark: | `u16` threshold <br/>`VecAccountId` other_signatories <br/>`Timepoint` timepoint <br/>`H256` call_hash <br/> | 
 
@@ -338,7 +338,7 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Propose bounty |    | :heavy_check_mark: |   | `CompactBalance` Amount <br/>`Bytes` description <br/> | 
+|Propose bounty |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`Bytes` description <br/> | 
 |Approve bounty |    | :heavy_check_mark: |   | `Compactu32` bounty_id <br/> | 
 |Propose curator |    | :heavy_check_mark: |   | `Compactu32` bounty_id <br/>`LookupasStaticLookupSource` curator <br/>`CompactBalance` fee <br/> | 
 |Unassign curator |    | :heavy_check_mark: |   | `Compactu32` bounty_id <br/> | 
@@ -484,6 +484,12 @@ Please:
 |Force process hrmp close |    | :heavy_check_mark: |   |  | 
 |Hrmp cancel open request |    |   |   | `HrmpChannelId` channel_id <br/> | 
 
+## ParasDisputes
+
+| Name        | Light | XL | Nesting | Arguments | 
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|Force unfreeze |    | :heavy_check_mark: |   |  | 
+
 ## Registrar
 
 | Name        | Light | XL | Nesting | Arguments | 
@@ -516,7 +522,7 @@ Please:
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Create |    |   |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> | 
-|Contribute |    |   |   | `Compactu32` index <br/>`Compactu128` Amount <br/>`OptionMultiSignature` signature <br/> | 
+|Contribute |    |   |   | `Compactu32` index <br/>`Compactu128` amount <br/>`OptionMultiSignature` signature <br/> | 
 |Withdraw |    |   |   | `AccountId` who <br/>`Compactu32` index <br/> | 
 |Refund |    |   |   | `Compactu32` index <br/> | 
 |Dissolve |    |   |   | `Compactu32` index <br/> | 
