@@ -167,10 +167,38 @@ __Z_INLINE parser_error_t _readMethod_system_fill_block_V8(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_system_remark_V8(
+    parser_context_t* c, pd_system_remark_V8_t* m)
+{
+    CHECK_ERROR(_readVecu8(c, &m->remark))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_system_set_heap_pages_V8(
     parser_context_t* c, pd_system_set_heap_pages_V8_t* m)
 {
     CHECK_ERROR(_readu64(c, &m->pages))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_system_set_code_V8(
+    parser_context_t* c, pd_system_set_code_V8_t* m)
+{
+    CHECK_ERROR(_readVecu8(c, &m->code))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_system_set_code_without_checks_V8(
+    parser_context_t* c, pd_system_set_code_without_checks_V8_t* m)
+{
+    CHECK_ERROR(_readVecu8(c, &m->code))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_system_remark_with_event_V8(
+    parser_context_t* c, pd_system_remark_with_event_V8_t* m)
+{
+    CHECK_ERROR(_readVecu8(c, &m->remark))
     return parser_ok;
 }
 
@@ -1403,8 +1431,20 @@ parser_error_t _readMethod_V8(
     case 0: /* module 0 call 0 */
         CHECK_ERROR(_readMethod_system_fill_block_V8(c, &method->nested.system_fill_block_V8))
         break;
+    case 1: /* module 0 call 1 */
+        CHECK_ERROR(_readMethod_system_remark_V8(c, &method->nested.system_remark_V8))
+        break;
     case 2: /* module 0 call 2 */
         CHECK_ERROR(_readMethod_system_set_heap_pages_V8(c, &method->nested.system_set_heap_pages_V8))
+        break;
+    case 3: /* module 0 call 3 */
+        CHECK_ERROR(_readMethod_system_set_code_V8(c, &method->nested.system_set_code_V8))
+        break;
+    case 4: /* module 0 call 4 */
+        CHECK_ERROR(_readMethod_system_set_code_without_checks_V8(c, &method->nested.system_set_code_without_checks_V8))
+        break;
+    case 8: /* module 0 call 8 */
+        CHECK_ERROR(_readMethod_system_remark_with_event_V8(c, &method->nested.system_remark_with_event_V8))
         break;
     case 512: /* module 2 call 0 */
         CHECK_ERROR(_readMethod_timestamp_set_V8(c, &method->basic.timestamp_set_V8))
@@ -2604,7 +2644,15 @@ uint8_t _getMethod_NumItems_V8(uint8_t moduleIdx, uint8_t callIdx)
 #ifdef SUBSTRATE_PARSER_FULL
     case 0: /* module 0 call 0 */
         return 1;
+    case 1: /* module 0 call 1 */
+        return 1;
     case 2: /* module 0 call 2 */
+        return 1;
+    case 3: /* module 0 call 3 */
+        return 1;
+    case 4: /* module 0 call 4 */
+        return 1;
+    case 8: /* module 0 call 8 */
         return 1;
     case 512: /* module 2 call 0 */
         return 1;
@@ -3088,10 +3136,38 @@ const char* _getMethod_ItemName_V8(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
+    case 1: /* module 0 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_remark;
+        default:
+            return NULL;
+        }
     case 2: /* module 0 call 2 */
         switch (itemIdx) {
         case 0:
             return STR_IT_pages;
+        default:
+            return NULL;
+        }
+    case 3: /* module 0 call 3 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_code;
+        default:
+            return NULL;
+        }
+    case 4: /* module 0 call 4 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_code;
+        default:
+            return NULL;
+        }
+    case 8: /* module 0 call 8 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_remark;
         default:
             return NULL;
         }
@@ -4559,11 +4635,51 @@ parser_error_t _getMethod_ItemValue_V8(
         default:
             return parser_no_data;
         }
+    case 1: /* module 0 call 1 */
+        switch (itemIdx) {
+        case 0: /* system_remark_V8 - remark */;
+            return _toStringVecu8(
+                &m->nested.system_remark_V8.remark,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 2: /* module 0 call 2 */
         switch (itemIdx) {
         case 0: /* system_set_heap_pages_V8 - pages */;
             return _toStringu64(
                 &m->nested.system_set_heap_pages_V8.pages,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 3: /* module 0 call 3 */
+        switch (itemIdx) {
+        case 0: /* system_set_code_V8 - code */;
+            return _toStringVecu8(
+                &m->nested.system_set_code_V8.code,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 4: /* module 0 call 4 */
+        switch (itemIdx) {
+        case 0: /* system_set_code_without_checks_V8 - code */;
+            return _toStringVecu8(
+                &m->nested.system_set_code_without_checks_V8.code,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 8: /* module 0 call 8 */
+        switch (itemIdx) {
+        case 0: /* system_remark_with_event_V8 - remark */;
+            return _toStringVecu8(
+                &m->nested.system_remark_with_event_V8.remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
