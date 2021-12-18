@@ -28,7 +28,7 @@ extern "C" {
 // Read functions
 parser_error_t _readAccountId_V8(parser_context_t* c, pd_AccountId_V8_t* v);
 parser_error_t _readAccountIndex_V8(parser_context_t* c, pd_AccountIndex_V8_t* v);
-parser_error_t _readAccountVoteBalanceOfT_V8(parser_context_t* c, pd_AccountVoteBalanceOfT_V8_t* v);
+parser_error_t _readAccountVoteBalanceOf_V8(parser_context_t* c, pd_AccountVoteBalanceOf_V8_t* v);
 parser_error_t _readAuthorityIdasRuntimeAppPublicSignature_V8(parser_context_t* c, pd_AuthorityIdasRuntimeAppPublicSignature_V8_t* v);
 parser_error_t _readBoxEquivocationProofHashBlockNumber_V8(parser_context_t* c, pd_BoxEquivocationProofHashBlockNumber_V8_t* v);
 parser_error_t _readBoxEquivocationProofHeader_V8(parser_context_t* c, pd_BoxEquivocationProofHeader_V8_t* v);
@@ -41,7 +41,7 @@ parser_error_t _readBoxVersionedMultiAssets_V8(parser_context_t* c, pd_BoxVersio
 parser_error_t _readBoxVersionedMultiLocation_V8(parser_context_t* c, pd_BoxVersionedMultiLocation_V8_t* v);
 parser_error_t _readBoxVersionedXcmTasSysConfigCall_V8(parser_context_t* c, pd_BoxVersionedXcmTasSysConfigCall_V8_t* v);
 parser_error_t _readBoxVersionedXcmTuple_V8(parser_context_t* c, pd_BoxVersionedXcmTuple_V8_t* v);
-parser_error_t _readCallHashOfT_V8(parser_context_t* c, pd_CallHashOfT_V8_t* v);
+parser_error_t _readCallHashOf_V8(parser_context_t* c, pd_CallHashOf_V8_t* v);
 parser_error_t _readCompactAccountIndex_V8(parser_context_t* c, pd_CompactAccountIndex_V8_t* v);
 parser_error_t _readCompactPerBill_V8(parser_context_t* c, pd_CompactPerBill_V8_t* v);
 parser_error_t _readConviction_V8(parser_context_t* c, pd_Conviction_V8_t* v);
@@ -124,8 +124,8 @@ parser_error_t _toStringAccountIndex_V8(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringAccountVoteBalanceOfT_V8(
-    const pd_AccountVoteBalanceOfT_V8_t* v,
+parser_error_t _toStringAccountVoteBalanceOf_V8(
+    const pd_AccountVoteBalanceOf_V8_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -215,8 +215,8 @@ parser_error_t _toStringBoxVersionedXcmTuple_V8(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringCallHashOfT_V8(
-    const pd_CallHashOfT_V8_t* v,
+parser_error_t _toStringCallHashOf_V8(
+    const pd_CallHashOf_V8_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

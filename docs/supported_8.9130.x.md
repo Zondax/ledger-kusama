@@ -5,14 +5,14 @@
 | Name        | Light | XL | Nesting | Arguments | 
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Fill block |    | :heavy_check_mark: | :heavy_check_mark: | `Perbill` ratio <br/> | 
-|Remark |    |   |   | `Vecu8` remark <br/> | 
+|Remark |    | :heavy_check_mark: | :heavy_check_mark: | `Vecu8` remark <br/> | 
 |Set heap pages |    | :heavy_check_mark: | :heavy_check_mark: | `u64` pages <br/> | 
-|Set code |    |   |   | `Vecu8` code <br/> | 
-|Set code without checks |    |   |   | `Vecu8` code <br/> | 
+|Set code |    | :heavy_check_mark: | :heavy_check_mark: | `Vecu8` code <br/> | 
+|Set code without checks |    | :heavy_check_mark: | :heavy_check_mark: | `Vecu8` code <br/> | 
 |Set storage |    |   |   | `VecKeyValue` items <br/> | 
 |Kill storage |    |   |   | `VecKey` keys <br/> | 
 |Kill prefix |    |   |   | `Key` prefix <br/>`u32` subkeys <br/> | 
-|Remark with event |    |   |   | `Vecu8` remark <br/> | 
+|Remark with event |    | :heavy_check_mark: | :heavy_check_mark: | `Vecu8` remark <br/> | 
 
 ## Babe
 
@@ -112,7 +112,7 @@
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Propose |    |   |   | `Hash` proposal_hash <br/>`Compactu128` amount <br/> | 
 |Second |    | :heavy_check_mark: |   | `Compactu32` proposal <br/>`Compactu32` seconds_upper_bound <br/> | 
-|Vote |    |   |   | `Compactu32` ref_index <br/>`AccountVoteBalanceOfT` vote <br/> | 
+|Vote |    |   |   | `Compactu32` ref_index <br/>`AccountVoteBalanceOf` vote <br/> | 
 |Emergency cancel |    | :heavy_check_mark: |   | `ReferendumIndex` ref_index <br/> | 
 |External propose |    |   |   | `Hash` proposal_hash <br/> | 
 |External propose majority |    |   |   | `Hash` proposal_hash <br/> | 
@@ -290,9 +290,9 @@
 |Remove proxies |    | :heavy_check_mark: |   |  | 
 |Anonymous |    | :heavy_check_mark: |   | `ProxyType` proxy_type <br/>`BlockNumber` delay <br/>`u16` index <br/> | 
 |Kill anonymous |    | :heavy_check_mark: |   | `AccountId` spawner <br/>`ProxyType` proxy_type <br/>`u16` index <br/>`Compactu32` height <br/>`Compactu32` ext_index <br/> | 
-|Announce |    |   |   | `AccountId` real <br/>`CallHashOfT` call_hash <br/> | 
-|Remove announcement |    |   |   | `AccountId` real <br/>`CallHashOfT` call_hash <br/> | 
-|Reject announcement |    |   |   | `AccountId` delegate <br/>`CallHashOfT` call_hash <br/> | 
+|Announce |    |   |   | `AccountId` real <br/>`CallHashOf` call_hash <br/> | 
+|Remove announcement |    |   |   | `AccountId` real <br/>`CallHashOf` call_hash <br/> | 
+|Reject announcement |    |   |   | `AccountId` delegate <br/>`CallHashOf` call_hash <br/> | 
 |Proxy announced |    | :heavy_check_mark: |   | `AccountId` delegate <br/>`AccountId` real <br/>`OptionProxyType` force_proxy_type <br/>`Call` call <br/> | 
 
 ## Multisig

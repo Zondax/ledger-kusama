@@ -136,7 +136,7 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_AccountVoteBalanceOfT_V8_t;
+} pd_AccountVoteBalanceOf_V8_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -199,9 +199,8 @@ typedef struct {
 } pd_BoxVersionedXcmTuple_V8_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_CallHashOfT_V8_t;
+    const uint8_t* _ptr;
+} pd_CallHashOf_V8_t;
 
 typedef struct {
     uint8_t value;

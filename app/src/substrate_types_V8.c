@@ -33,7 +33,7 @@ parser_error_t _readAccountIndex_V8(parser_context_t* c, pd_AccountIndex_V8_t* v
     return _readUInt32(c, &v->value);
 }
 
-parser_error_t _readAccountVoteBalanceOfT_V8(parser_context_t* c, pd_AccountVoteBalanceOfT_V8_t* v)
+parser_error_t _readAccountVoteBalanceOf_V8(parser_context_t* c, pd_AccountVoteBalanceOf_V8_t* v)
 {
     return parser_not_supported;
 }
@@ -98,9 +98,8 @@ parser_error_t _readBoxVersionedXcmTuple_V8(parser_context_t* c, pd_BoxVersioned
     return parser_not_supported;
 }
 
-parser_error_t _readCallHashOfT_V8(parser_context_t* c, pd_CallHashOfT_V8_t* v)
-{
-    return parser_not_supported;
+parser_error_t _readCallHashOf_V8(parser_context_t* c, pd_CallHashOf_V8_t* v) {
+    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readCompactAccountIndex_V8(parser_context_t* c, pd_CompactAccountIndex_V8_t* v)
@@ -541,8 +540,8 @@ parser_error_t _toStringAccountIndex_V8(
     return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
-parser_error_t _toStringAccountVoteBalanceOfT_V8(
-    const pd_AccountVoteBalanceOfT_V8_t* v,
+parser_error_t _toStringAccountVoteBalanceOf_V8(
+    const pd_AccountVoteBalanceOf_V8_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -684,15 +683,13 @@ parser_error_t _toStringBoxVersionedXcmTuple_V8(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringCallHashOfT_V8(
-    const pd_CallHashOfT_V8_t* v,
+parser_error_t _toStringCallHashOf_V8(
+    const pd_CallHashOf_V8_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(32)
 }
 
 parser_error_t _toStringCompactAccountIndex_V8(
