@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  (c) 2020 Zondax GmbH
+*  (c) 2019 - 2022 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -13,17 +13,33 @@
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 ********************************************************************************/
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define COIN_ADDR_TYPE_POLKADOT         0
-#define COIN_ADDR_TYPE_KUSAMA           2
-#define COIN_ADDR_TYPE_EDGEWARE         7
-#define COIN_ADDR_TYPE_KULUPU           16
-#define COIN_ADDR_TYPE_DOTHEREUM        20
+#include <stddef.h>
+#include <stdint.h>
+
+#define GET_PD_CALL(CALL, VERSION) (PD_CALL_##CALL##_V##VERSION)
+
+#include "substrate_methods_V8.h"
+#include "substrate_methods_V9.h"
+#include "substrate_types_V8.h"
+#include "substrate_types_V9.h"
+
+typedef union {
+    pd_Method_V9_t V9;
+    pd_Method_V8_t V8;
+} pd_Method_t;
+
+typedef union {
+    pd_MethodNested_V9_t V9;
+    pd_MethodNested_V8_t V8;
+} pd_MethodNested_t;
 
 #ifdef __cplusplus
 }

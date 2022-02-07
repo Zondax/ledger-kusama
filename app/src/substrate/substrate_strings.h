@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  (c) 2021 Zondax GmbH
+*  (c) 2019 - 2022 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -65,6 +65,7 @@ static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
 static const char* STR_MO_PARASDISPUTES = "Parasdisputes";
+static const char* STR_MO_PREIMAGE = "Preimage";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -340,6 +341,20 @@ static const char* STR_ME_DISPATCH_AS = "Dispatch as";
 static const char* STR_ME_FORCE_UNFREEZE = "Force unfreeze";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
 static const char* STR_ME_LIMITED_TELEPORT_ASSETS = "Limited teleport assets";
+static const char* STR_ME_SET_STAKING_CONFIGS = "Set staking configs";
+static const char* STR_ME_UNNOTE_PREIMAGE = "Unnote preimage";
+static const char* STR_ME_REQUEST_PREIMAGE = "Request preimage";
+static const char* STR_ME_UNREQUEST_PREIMAGE = "Unrequest preimage";
+static const char* STR_ME_PUT_IN_FRONT_OF = "Put in front of";
+static const char* STR_ME_SET_VALIDATION_UPGRADE_COOLDOWN = "Set validation upgrade cooldown";
+static const char* STR_ME_SET_PVF_CHECKING_ENABLED = "Set pvf checking enabled";
+static const char* STR_ME_SET_PVF_VOTING_TTL = "Set pvf voting ttl";
+static const char* STR_ME_SET_MINIMUM_VALIDATION_UPGRADE_DELAY = "Set minimum validation upgrade delay";
+static const char* STR_ME_SET_BYPASS_CONSISTENCY_CHECK = "Set bypass consistency check";
+static const char* STR_ME_ADD_TRUSTED_VALIDATION_CODE = "Add trusted validation code";
+static const char* STR_ME_POKE_UNUSED_VALIDATION_CODE = "Poke unused validation code";
+static const char* STR_ME_INCLUDE_PVF_CHECK_STATEMENT = "Include pvf check statement";
+static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
 
 // Items names
 static const char* STR_IT_ratio = "Ratio";
@@ -523,6 +538,12 @@ static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
 static const char* STR_IT_Amount = "Amount";
 static const char* STR_IT_as_origin = "As origin";
+static const char* STR_IT_chill_threshold = "Chill threshold";
+static const char* STR_IT_min_commission = "Min commission";
+static const char* STR_IT_bytes = "Bytes";
+static const char* STR_IT_lighter = "Lighter";
+static const char* STR_IT_validation_code_hash = "Validation code hash";
+static const char* STR_IT_stmt = "Stmt";
 
 #ifdef __cplusplus
 }

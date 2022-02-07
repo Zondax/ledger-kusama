@@ -21,7 +21,6 @@
 #include "coin.h"
 #include "crypto_helper.h"
 #include "bignum.h"
-#include "coin_ss58.h"
 #include "substrate_types.h"
 #include "substrate_dispatch.h"
 
@@ -85,6 +84,8 @@ const char *parser_getErrorDescription(parser_error_t err) {
             return "Unexpected unparsed bytes";
         case parser_print_not_supported:
             return "Value cannot be printed";
+        case parser_tx_nesting_not_supported:
+            return "Call nesting not supported";
         case parser_tx_nesting_limit_reached:
             return "Max nested calls reached";
         case parser_tx_call_vec_too_large:
