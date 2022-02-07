@@ -24,8 +24,8 @@ extern "C" {
 
 #define HDPATH_LEN_DEFAULT 5
 #define HDPATH_0_DEFAULT (0x80000000 | 0x2c)
-#define HDPATH_1_DEFAULT (0x80000000 | 0x1b2)
-#define HDPATH_1_RECOVERY (0x80000000 | 0x162)
+#define HDPATH_1_DEFAULT     (0x80000000 | 0x1b2)       // 434 - Kusama
+#define HDPATH_1_RECOVERY    (0x80000000 | 0x162)       // 354 - Polkadot
 
 #define HDPATH_2_DEFAULT (0x80000000u | 0u)
 #define HDPATH_3_DEFAULT (0u)
