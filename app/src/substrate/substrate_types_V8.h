@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  (c) 2019 Zondax GmbH
+*  (c) 2019 - 2022 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -112,6 +112,10 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_schedulePeriodBlockNumber_V8_t;
+
+typedef struct {
+    pd_Call_t call;
+} pd_OpaqueCall_V8_t;
 
 typedef struct {
     uint8_t some;
@@ -272,11 +276,6 @@ typedef struct {
 } pd_NextConfigDescriptor_V8_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_OpaqueCallT_V8_t;
-
-typedef struct {
     uint8_t some;
     pd_AccountId_V8_t contained;
 } pd_OptionAccountId_V8_t;
@@ -364,8 +363,7 @@ typedef struct {
 } pd_RewardDestination_V8_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint32_t value;
 } pd_SessionIndex_V8_t;
 
 typedef struct {

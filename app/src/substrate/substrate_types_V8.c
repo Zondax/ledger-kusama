@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  (c) 2019 Zondax GmbH
+*  (c) 2019 - 2022 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -239,9 +239,12 @@ parser_error_t _readNextConfigDescriptor_V8(parser_context_t* c, pd_NextConfigDe
     return parser_not_supported;
 }
 
-parser_error_t _readOpaqueCallT_V8(parser_context_t* c, pd_OpaqueCallT_V8_t* v)
+parser_error_t _readOpaqueCall_V8(parser_context_t* c, pd_OpaqueCall_V8_t* v)
 {
-    return parser_not_supported;
+    // Encoded as Byte[], array size comes first
+    uint8_t size;
+    CHECK_ERROR(_readUInt8(c, &size))
+    return _readCall(c, &v->call);
 }
 
 parser_error_t _readOverweightIndex_V8(parser_context_t* c, pd_OverweightIndex_V8_t* v)
@@ -310,7 +313,7 @@ parser_error_t _readRewardDestination_V8(parser_context_t* c, pd_RewardDestinati
 
 parser_error_t _readSessionIndex_V8(parser_context_t* c, pd_SessionIndex_V8_t* v)
 {
-    return parser_not_supported;
+    return _readUInt32(c, &v->value);
 }
 
 parser_error_t _readSolutionOrSnapshotSize_V8(parser_context_t* c, pd_SolutionOrSnapshotSize_V8_t* v)
@@ -936,7 +939,7 @@ parser_error_t _toStringLookupasStaticLookupSource_V8(
         GEN_DEF_TOSTRING_ARRAY(20)
     }
     default:
-        return parser_not_supported;
+        return parser_unexpected_address_type;
     }
 
     return parser_ok;
@@ -985,15 +988,14 @@ parser_error_t _toStringNextConfigDescriptor_V8(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringOpaqueCallT_V8(
-    const pd_OpaqueCallT_V8_t* v,
+parser_error_t _toStringOpaqueCall_V8(
+    const pd_OpaqueCall_V8_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringOverweightIndex_V8(
@@ -1158,8 +1160,7 @@ parser_error_t _toStringSessionIndex_V8(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringSolutionOrSnapshotSize_V8(

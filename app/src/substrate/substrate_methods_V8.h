@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  (c) 2019 Zondax GmbH
+*  (c) 2019 - 2022 Zondax GmbH
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
 *  you may not use this file except in compliance with the License.
@@ -1193,6 +1193,16 @@ typedef struct {
     pd_Call_t call;
 } pd_proxy_proxy_V8_t;
 
+#define PD_CALL_MULTISIG_AS_MULTI_V8 1
+typedef struct {
+    pd_u16_t threshold;
+    pd_VecAccountId_V8_t other_signatories;
+    pd_OptionTimepoint_V8_t maybe_timepoint;
+    pd_OpaqueCall_V8_t call;
+    pd_bool_t store_call;
+    pd_Weight_V8_t max_weight;
+} pd_multisig_as_multi_V8_t;
+
 #define PD_CALL_MULTISIG_APPROVE_AS_MULTI_V8 2
 typedef struct {
     pd_u16_t threshold;
@@ -1225,6 +1235,7 @@ typedef union {
     pd_system_remark_with_event_V8_t system_remark_with_event_V8;
     pd_balances_set_balance_V8_t balances_set_balance_V8;
     pd_proxy_proxy_V8_t proxy_proxy_V8;
+    pd_multisig_as_multi_V8_t multisig_as_multi_V8;
     pd_multisig_approve_as_multi_V8_t multisig_approve_as_multi_V8;
     pd_multisig_cancel_as_multi_V8_t multisig_cancel_as_multi_V8;
 #endif

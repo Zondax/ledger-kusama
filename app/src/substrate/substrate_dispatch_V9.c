@@ -870,6 +870,18 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V9(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_multisig_as_multi_V9(
+    parser_context_t* c, pd_multisig_as_multi_V9_t* m)
+{
+    CHECK_ERROR(_readu16(c, &m->threshold))
+    CHECK_ERROR(_readVecAccountId_V9(c, &m->other_signatories))
+    CHECK_ERROR(_readOptionTimepoint_V9(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readOpaqueCall_V9(c, &m->call))
+    CHECK_ERROR(_readbool(c, &m->store_call))
+    CHECK_ERROR(_readWeight_V9(c, &m->max_weight))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi_V9(
     parser_context_t* c, pd_multisig_approve_as_multi_V9_t* m)
 {
@@ -1792,6 +1804,9 @@ parser_error_t _readMethod_V9(
         break;
     case 7689: /* module 30 call 9 */
         CHECK_ERROR(_readMethod_proxy_proxy_announced_V9(c, &method->basic.proxy_proxy_announced_V9))
+        break;
+    case 7937: /* module 31 call 1 */
+        CHECK_ERROR(_readMethod_multisig_as_multi_V9(c, &method->nested.multisig_as_multi_V9))
         break;
     case 7938: /* module 31 call 2 */
         CHECK_ERROR(_readMethod_multisig_approve_as_multi_V9(c, &method->nested.multisig_approve_as_multi_V9))
@@ -2972,6 +2987,8 @@ uint8_t _getMethod_NumItems_V9(uint8_t moduleIdx, uint8_t callIdx)
         return 5;
     case 7689: /* module 30 call 9 */
         return 4;
+    case 7937: /* module 31 call 1 */
+        return 6;
     case 7938: /* module 31 call 2 */
         return 5;
     case 7939: /* module 31 call 3 */
@@ -4034,6 +4051,23 @@ const char* _getMethod_ItemName_V9(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
             return STR_IT_force_proxy_type;
         case 3:
             return STR_IT_call;
+        default:
+            return NULL;
+        }
+    case 7937: /* module 31 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_threshold;
+        case 1:
+            return STR_IT_other_signatories;
+        case 2:
+            return STR_IT_maybe_timepoint;
+        case 3:
+            return STR_IT_call;
+        case 4:
+            return STR_IT_store_call;
+        case 5:
+            return STR_IT_max_weight;
         default:
             return NULL;
         }
@@ -6007,6 +6041,41 @@ parser_error_t _getMethod_ItemValue_V9(
         case 3: /* proxy_proxy_announced_V9 - call */;
             return _toStringCall(
                 &m->basic.proxy_proxy_announced_V9.call,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 7937: /* module 31 call 1 */
+        switch (itemIdx) {
+        case 0: /* multisig_as_multi_V9 - threshold */;
+            return _toStringu16(
+                &m->nested.multisig_as_multi_V9.threshold,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* multisig_as_multi_V9 - other_signatories */;
+            return _toStringVecAccountId_V9(
+                &m->nested.multisig_as_multi_V9.other_signatories,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* multisig_as_multi_V9 - maybe_timepoint */;
+            return _toStringOptionTimepoint_V9(
+                &m->nested.multisig_as_multi_V9.maybe_timepoint,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* multisig_as_multi_V9 - call */;
+            return _toStringOpaqueCall_V9(
+                &m->nested.multisig_as_multi_V9.call,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 4: /* multisig_as_multi_V9 - store_call */;
+            return _toStringbool(
+                &m->nested.multisig_as_multi_V9.store_call,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 5: /* multisig_as_multi_V9 - max_weight */;
+            return _toStringWeight_V9(
+                &m->nested.multisig_as_multi_V9.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
