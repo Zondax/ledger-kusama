@@ -26,19 +26,19 @@ extern "C" {
 
 #define GET_PD_CALL(CALL, VERSION) (PD_CALL_##CALL##_V##VERSION)
 
-#include "substrate_methods_V8.h"
+#include "substrate_methods_V10.h"
 #include "substrate_methods_V9.h"
-#include "substrate_types_V8.h"
+#include "substrate_types_V10.h"
 #include "substrate_types_V9.h"
 
 typedef union {
+    pd_Method_V10_t V10;
     pd_Method_V9_t V9;
-    pd_Method_V8_t V8;
 } pd_Method_t;
 
 typedef union {
+    pd_MethodNested_V10_t V10;
     pd_MethodNested_V9_t V9;
-    pd_MethodNested_V8_t V8;
 } pd_MethodNested_t;
 
 #ifdef __cplusplus
