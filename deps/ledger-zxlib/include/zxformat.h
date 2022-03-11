@@ -147,11 +147,11 @@ __Z_INLINE int64_t str_to_int64(const char *start, const char *end, char *error)
     }
 
     int64_t value = 0;
-    uint64_t multiplier = 1;
+    int64_t multiplier = 1;
     for (const char *s = end - 1; s >= start; s--) {
-        int delta = (*s - '0');
+        int64_t delta = (*s - '0');
         if (delta >= 0 && delta <= 9) {
-            value += (delta * multiplier);
+            value += delta * multiplier;
             multiplier *= 10;
         } else {
             if (error != NULL) {
@@ -318,6 +318,44 @@ __Z_INLINE void pageString(char *outValue, uint16_t outValueLen,
                            const char *inValue,
                            uint8_t pageIdx, uint8_t *pageCount) {
     pageStringExt(outValue, outValueLen, inValue, (uint16_t) strlen(inValue), pageIdx, pageCount);
+}
+
+__Z_INLINE zxerr_t formatBufferData(
+        const uint8_t *ptr,
+        uint64_t len,
+        char *outValue,
+        uint16_t outValueLen,
+        uint8_t pageIdx,
+        uint8_t *pageCount) {
+    char bufferUI[500 + 1];
+    MEMZERO(bufferUI, sizeof(bufferUI));
+    MEMZERO(outValue, 0);
+    CHECK_APP_CANARY()
+
+    if (len >= sizeof(bufferUI)) {
+        return zxerr_buffer_too_small;
+    }
+    memcpy(bufferUI, ptr, len);
+
+    // Check we have all ascii
+    uint8_t allAscii = 1;
+    for (size_t i = 0; i < len && allAscii; i++) {
+        if (bufferUI[i] < 32 || bufferUI[i] > 127) {
+            allAscii = 0;
+        }
+    }
+
+    if (!allAscii) {
+        bufferUI[0] = '0';
+        bufferUI[1] = 'x';
+        if (array_to_hexstr(bufferUI + 2, sizeof(bufferUI) - 2, ptr, len) == 0) {
+            return zxerr_buffer_too_small;
+        }
+    }
+
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+
+    return zxerr_ok;
 }
 
 size_t asciify(char *utf8_in);
