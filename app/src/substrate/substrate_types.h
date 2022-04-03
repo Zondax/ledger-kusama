@@ -81,6 +81,14 @@ typedef struct {
 ////////////////////////
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_Balance_t;
+
+typedef struct {
+    pd_Balance_t value;
+} pd_BalanceOf_t;
+
+typedef struct {
     uint64_t _len;
     const uint8_t* _ptr;
 } pd_Bytes_t;
@@ -102,10 +110,6 @@ typedef struct {
     uint64_t _lenBuffer;
     uint32_t callTxVersion;
 } pd_VecCall_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_Balance_t;
 
 typedef compactInt_t pd_Compactu128_t;
 

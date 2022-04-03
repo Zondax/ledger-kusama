@@ -35,9 +35,37 @@ parser_error_t _readAccountIndex_V11(parser_context_t* c, pd_AccountIndex_V11_t*
     return parser_ok;
 }
 
-parser_error_t _readAccountVoteBalanceOf_V11(parser_context_t* c, pd_AccountVoteBalanceOf_V11_t* v)
+parser_error_t _readAccountVoteSplit_V11(parser_context_t* c, pd_AccountVoteSplit_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_ERROR(_readBalanceOf(c, &v->aye));
+    CHECK_ERROR(_readBalanceOf(c, &v->nay));
+    return parser_ok;
+}
+
+parser_error_t _readAccountVoteStandard_V11(parser_context_t* c, pd_AccountVoteStandard_V11_t* v)
+{
+    CHECK_ERROR(_readVote_V11(c, &v->vote));
+    CHECK_ERROR(_readBalanceOf(c, &v->balance));
+    return parser_ok;
+}
+
+parser_error_t _readAccountVote_V11(parser_context_t* c, pd_AccountVote_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+
+    switch (v->value) {
+    case 0:
+        CHECK_ERROR(_readAccountVoteStandard_V11(c, &v->voteStandard))
+        break;
+    case 1:
+        CHECK_ERROR(_readAccountVoteSplit_V11(c, &v->voteSplit))
+        break;
+    default:
+        break;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _readAuthorityIdasRuntimeAppPublicSignature_V11(parser_context_t* c, pd_AuthorityIdasRuntimeAppPublicSignature_V11_t* v)
@@ -412,6 +440,19 @@ parser_error_t _readVestingInfoBalanceOfTBlockNumber_V11(parser_context_t* c, pd
     return parser_not_supported;
 }
 
+parser_error_t _readVote_V11(parser_context_t* c, pd_Vote_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+
+    if (v->value & 0x7F) {
+        return parser_value_out_of_range;
+    }
+    v->value = (v->value & 0x80u) >> 7u;
+
+    return parser_ok;
+}
+
 parser_error_t _readWeightLimit_V11(parser_context_t* c, pd_WeightLimit_V11_t* v)
 {
     CHECK_INPUT()
@@ -584,15 +625,119 @@ parser_error_t _toStringAccountIndex_V11(
     return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
-parser_error_t _toStringAccountVoteBalanceOf_V11(
-    const pd_AccountVoteBalanceOf_V11_t* v,
+parser_error_t _toStringAccountVoteSplit_V11(
+    const pd_AccountVoteSplit_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    // First measure number of pages
+    uint8_t pages[3];
+
+    pages[0] = 1;
+    CHECK_ERROR(_toStringBalanceOf(&v->aye, outValue, outValueLen, 0, &pages[1]))
+    CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, 0, &pages[2]));
+
+    *pageCount = 0;
+    for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
+        *pageCount += pages[i];
+    }
+
+    if (pageIdx < pages[0]) {
+        snprintf(outValue, outValueLen, "Split");
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    /////////
+    /////////
+
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringBalanceOf(&v->aye, outValue, outValueLen, pageIdx, &pages[1]));
+        return parser_ok;
+    }
+    pageIdx -= pages[1];
+
+    /////////
+    /////////
+
+    if (pageIdx < pages[2]) {
+        CHECK_ERROR(_toStringBalanceOf(&v->nay, outValue, outValueLen, pageIdx, &pages[2]));
+        return parser_ok;
+    }
+
+    /////////
+    /////////
+
+    return parser_display_idx_out_of_range;
+}
+
+parser_error_t _toStringAccountVoteStandard_V11(
+    const pd_AccountVoteStandard_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    // First measure number of pages
+    uint8_t pages[3];
+
+    pages[0] = 1;
+    CHECK_ERROR(_toStringVote_V11(&v->vote, outValue, outValueLen, 0, &pages[1]))
+    CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, 0, &pages[2]));
+
+    *pageCount = 0;
+    for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
+        *pageCount += pages[i];
+    }
+
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        snprintf(outValue, outValueLen, "Standard");
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringVote_V11(&v->vote, outValue, outValueLen, pageIdx, &pages[1]));
+        return parser_ok;
+    }
+    pageIdx -= pages[1];
+
+    if (pageIdx < pages[2]) {
+        CHECK_ERROR(_toStringBalanceOf(&v->balance, outValue, outValueLen, pageIdx, &pages[2]));
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
+}
+
+parser_error_t _toStringAccountVote_V11(
+    const pd_AccountVote_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    switch (v->value) {
+    case 0:
+        _toStringAccountVoteStandard_V11(&v->voteStandard, outValue, outValueLen, pageIdx, pageCount);
+        break;
+    case 1:
+        _toStringAccountVoteSplit_V11(&v->voteSplit, outValue, outValueLen, pageIdx, pageCount);
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringAuthorityIdasRuntimeAppPublicSignature_V11(
@@ -1441,6 +1586,30 @@ parser_error_t _toStringVestingInfoBalanceOfTBlockNumber_V11(
 {
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
+}
+
+parser_error_t _toStringVote_V11(
+    const pd_Vote_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Nay");
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "Aye");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringWeightLimit_V11(
