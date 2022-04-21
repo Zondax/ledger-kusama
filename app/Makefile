@@ -1,7 +1,7 @@
 #*******************************************************************************
-#   Ledger App
-#   (c) 2018 - 2022 Zondax GmbH
-#   (c) 2017 Ledger
+#  Ledger App
+#  (c) 2019 - 2022 Zondax GmbH
+#  (c) 2017 Ledger
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ ifneq ($(TARGET_NAME),TARGET_NANOS)
 DEFINES += SUBSTRATE_PARSER_FULL
 endif
 APPNAME = "Kusama"
-APPPATH = "44'/434'" --path "44'/354'"
+APPPATH = "44'/434'"  --path "44'/354'"
 
 else ifeq ($(COIN),KSM_XL)
 # XL app configuration
