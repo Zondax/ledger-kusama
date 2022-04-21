@@ -158,6 +158,11 @@ parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v)
     return parser_not_supported;
 }
 
+parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
+{
+    return _readCall(c, &v->call);
+}
+
 parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v)
 {
     compactInt_t clen;
@@ -521,6 +526,16 @@ parser_error_t _toStringHeader(
 {
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
+}
+
+parser_error_t _toStringProposal(
+    const pd_Proposal_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringVecCall(

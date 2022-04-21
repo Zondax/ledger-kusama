@@ -108,11 +108,6 @@ parser_error_t _readBoxRawSolutionSolutionOfT_V11(parser_context_t* c, pd_BoxRaw
     return parser_not_supported;
 }
 
-parser_error_t _readBoxTasConfigIProposal_V11(parser_context_t* c, pd_BoxTasConfigIProposal_V11_t* v)
-{
-    return parser_not_supported;
-}
-
 parser_error_t _readBoxVersionedMultiAssets_V11(parser_context_t* c, pd_BoxVersionedMultiAssets_V11_t* v)
 {
     return parser_not_supported;
@@ -819,17 +814,6 @@ parser_error_t _toStringBoxPalletsOrigin_V11(
 
 parser_error_t _toStringBoxRawSolutionSolutionOfT_V11(
     const pd_BoxRawSolutionSolutionOfT_V11_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
-}
-
-parser_error_t _toStringBoxTasConfigIProposal_V11(
-    const pd_BoxTasConfigIProposal_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

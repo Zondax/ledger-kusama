@@ -39,6 +39,7 @@ parser_error_t _readBalanceOf(parser_context_t* c, pd_BalanceOf_t* v);
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v);
 parser_error_t _readCall(parser_context_t* c, pd_Call_t* v);
 parser_error_t _readHeader(parser_context_t* c, pd_Header_t* v);
+parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v);
 parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v);
 parser_error_t _readCompactu128(parser_context_t* c, pd_Compactu128_t* v);
 parser_error_t _readData(parser_context_t* c, pd_Data_t* v);
@@ -136,6 +137,13 @@ parser_error_t _toStringCall(
 
 parser_error_t _toStringHeader(
     const pd_Header_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringProposal(
+    const pd_Proposal_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
