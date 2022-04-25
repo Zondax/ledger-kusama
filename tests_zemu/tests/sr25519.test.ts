@@ -16,8 +16,8 @@
 
 import Zemu, { DEFAULT_START_OPTIONS } from '@zondax/zemu'
 import { newKusamaApp } from '@zondax/ledger-substrate'
-import {APP_SEED} from './common'
-import {txBalances_transfer, txStaking_nominate} from './zemu_blobs'
+import { APP_SEED } from './common'
+import { txBalances_transfer, txStaking_nominate } from './zemu_blobs'
 
 // @ts-ignore
 import { blake2bFinal, blake2bInit, blake2bUpdate } from 'blakejs'
