@@ -157,6 +157,12 @@ typedef struct {
 } pd_VecLookupasStaticLookupSource_V11_t;
 
 typedef struct {
+    pd_BalanceOf_t locked;
+    pd_BalanceOf_t per_block;
+    pd_BlockNumber_t starting_block;
+} pd_VestingInfo_V11_t;
+
+typedef struct {
     uint32_t value;
 } pd_AccountIndex_V11_t;
 
@@ -452,11 +458,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecTupleAccountIdData_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_VestingInfoBalanceOfTBlockNumber_V11_t;
 
 typedef struct {
     uint64_t value;
