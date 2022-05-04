@@ -141,6 +141,11 @@ typedef struct {
 } pd_OptionTimepoint_V11_t;
 
 typedef struct {
+    uint8_t value;
+    pd_AccountId_V11_t accountId;
+} pd_RewardDestination_V11_t;
+
+typedef struct {
     pd_CompactPerBill_V11_t commission;
     pd_bool_t blocked;
 } pd_ValidatorPrefs_V11_t;
@@ -150,6 +155,12 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecLookupasStaticLookupSource_V11_t;
+
+typedef struct {
+    pd_BalanceOf_t locked;
+    pd_BalanceOf_t per_block;
+    pd_BlockNumber_t starting_block;
+} pd_VestingInfo_V11_t;
 
 typedef struct {
     uint32_t value;
@@ -396,10 +407,6 @@ typedef struct {
 } pd_Renouncing_V11_t;
 
 typedef struct {
-    uint8_t value;
-} pd_RewardDestination_V11_t;
-
-typedef struct {
     uint32_t value;
 } pd_SessionIndex_V11_t;
 
@@ -451,11 +458,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecTupleAccountIdData_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_VestingInfoBalanceOfTBlockNumber_V11_t;
 
 typedef struct {
     uint64_t value;
