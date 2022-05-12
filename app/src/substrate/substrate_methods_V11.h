@@ -1,18 +1,18 @@
 /*******************************************************************************
- *  (c) 2019 - 2022 Zondax GmbH
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- ********************************************************************************/
+*  (c) 2019 - 2022 Zondax GmbH
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+********************************************************************************/
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
@@ -60,6 +60,7 @@ extern "C" {
 #define PD_CALL_PARASDISPUTES_V11 62
 #define PD_CALL_REGISTRAR_V11 70
 #define PD_CALL_AUCTIONS_V11 72
+#define PD_CALL_CROWDLOAN_V11 73
 
 #define PD_CALL_BALANCES_TRANSFER_ALL_V11 4
 typedef struct {
@@ -143,6 +144,66 @@ typedef struct {
 typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_all_V11_t;
+
+#define PD_CALL_CROWDLOAN_CREATE_V11 0
+typedef struct {
+    pd_Compactu32_t index;
+    pd_Compactu128_t cap;
+    pd_Compactu32_t first_period;
+    pd_Compactu32_t last_period;
+    pd_Compactu32_t end;
+    pd_OptionMultiSigner_V11_t verifier;
+} pd_crowdloan_create_V11_t;
+
+#define PD_CALL_CROWDLOAN_CONTRIBUTE_V11 1
+typedef struct {
+    pd_Compactu32_t index;
+    pd_Compactu128_t amount;
+    pd_OptionMultiSignature_V11_t signature;
+} pd_crowdloan_contribute_V11_t;
+
+#define PD_CALL_CROWDLOAN_WITHDRAW_V11 2
+typedef struct {
+    pd_AccountId_V11_t who;
+    pd_Compactu32_t index;
+} pd_crowdloan_withdraw_V11_t;
+
+#define PD_CALL_CROWDLOAN_REFUND_V11 3
+typedef struct {
+    pd_Compactu32_t index;
+} pd_crowdloan_refund_V11_t;
+
+#define PD_CALL_CROWDLOAN_DISSOLVE_V11 4
+typedef struct {
+    pd_Compactu32_t index;
+} pd_crowdloan_dissolve_V11_t;
+
+#define PD_CALL_CROWDLOAN_EDIT_V11 5
+typedef struct {
+    pd_Compactu32_t index;
+    pd_Compactu128_t cap;
+    pd_Compactu32_t first_period;
+    pd_Compactu32_t last_period;
+    pd_Compactu32_t end;
+    pd_OptionMultiSigner_V11_t verifier;
+} pd_crowdloan_edit_V11_t;
+
+#define PD_CALL_CROWDLOAN_ADD_MEMO_V11 6
+typedef struct {
+    pd_ParaId_V11_t index;
+    pd_Vecu8_t memo;
+} pd_crowdloan_add_memo_V11_t;
+
+#define PD_CALL_CROWDLOAN_POKE_V11 7
+typedef struct {
+    pd_ParaId_V11_t index;
+} pd_crowdloan_poke_V11_t;
+
+#define PD_CALL_CROWDLOAN_CONTRIBUTE_ALL_V11 8
+typedef struct {
+    pd_Compactu32_t index;
+    pd_OptionMultiSignature_V11_t signature;
+} pd_crowdloan_contribute_all_V11_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
 
@@ -373,6 +434,26 @@ typedef struct {
 typedef struct {
     pd_Compactu32_t prop_index;
 } pd_democracy_cancel_proposal_V11_t;
+
+#define PD_CALL_COUNCIL_SET_MEMBERS_V11 0
+typedef struct {
+    pd_VecAccountId_V11_t new_members;
+    pd_OptionAccountId_V11_t prime;
+    pd_MemberCount_V11_t old_count;
+} pd_council_set_members_V11_t;
+
+#define PD_CALL_COUNCIL_EXECUTE_V11 1
+typedef struct {
+    pd_Proposal_t proposal;
+    pd_Compactu32_t length_bound;
+} pd_council_execute_V11_t;
+
+#define PD_CALL_COUNCIL_PROPOSE_V11 2
+typedef struct {
+    pd_Compactu32_t threshold;
+    pd_Proposal_t proposal;
+    pd_Compactu32_t length_bound;
+} pd_council_propose_V11_t;
 
 #define PD_CALL_COUNCIL_VOTE_V11 3
 typedef struct {
@@ -862,6 +943,16 @@ typedef struct {
     pd_u32_t duration;
 } pd_gilt_retract_bid_V11_t;
 
+#define PD_CALL_GILT_SET_TARGET_V11 2
+typedef struct {
+    pd_Compactu64_t target;
+} pd_gilt_set_target_V11_t;
+
+#define PD_CALL_GILT_THAW_V11 3
+typedef struct {
+    pd_Compactu32_t index;
+} pd_gilt_thaw_V11_t;
+
 #define PD_CALL_BAGSLIST_REBAG_V11 0
 typedef struct {
     pd_AccountId_V11_t dislocated;
@@ -1158,6 +1249,15 @@ typedef union {
     pd_session_purge_keys_V11_t session_purge_keys_V11;
     pd_utility_batch_V11_t utility_batch_V11;
     pd_utility_batch_all_V11_t utility_batch_all_V11;
+    pd_crowdloan_create_V11_t crowdloan_create_V11;
+    pd_crowdloan_contribute_V11_t crowdloan_contribute_V11;
+    pd_crowdloan_withdraw_V11_t crowdloan_withdraw_V11;
+    pd_crowdloan_refund_V11_t crowdloan_refund_V11;
+    pd_crowdloan_dissolve_V11_t crowdloan_dissolve_V11;
+    pd_crowdloan_edit_V11_t crowdloan_edit_V11;
+    pd_crowdloan_add_memo_V11_t crowdloan_add_memo_V11;
+    pd_crowdloan_poke_V11_t crowdloan_poke_V11;
+    pd_crowdloan_contribute_all_V11_t crowdloan_contribute_all_V11;
 #ifdef SUBSTRATE_PARSER_FULL
     pd_timestamp_set_V11_t timestamp_set_V11;
     pd_indices_claim_V11_t indices_claim_V11;
@@ -1202,6 +1302,9 @@ typedef union {
     pd_democracy_remove_other_vote_V11_t democracy_remove_other_vote_V11;
     pd_democracy_enact_proposal_V11_t democracy_enact_proposal_V11;
     pd_democracy_cancel_proposal_V11_t democracy_cancel_proposal_V11;
+    pd_council_set_members_V11_t council_set_members_V11;
+    pd_council_execute_V11_t council_execute_V11;
+    pd_council_propose_V11_t council_propose_V11;
     pd_council_vote_V11_t council_vote_V11;
     pd_council_close_V11_t council_close_V11;
     pd_council_disapprove_proposal_V11_t council_disapprove_proposal_V11;
@@ -1289,6 +1392,8 @@ typedef union {
     pd_electionprovidermultiphase_governance_fallback_V11_t electionprovidermultiphase_governance_fallback_V11;
     pd_gilt_place_bid_V11_t gilt_place_bid_V11;
     pd_gilt_retract_bid_V11_t gilt_retract_bid_V11;
+    pd_gilt_set_target_V11_t gilt_set_target_V11;
+    pd_gilt_thaw_V11_t gilt_thaw_V11;
     pd_bagslist_rebag_V11_t bagslist_rebag_V11;
     pd_bagslist_put_in_front_of_V11_t bagslist_put_in_front_of_V11;
     pd_configuration_set_validation_upgrade_cooldown_V11_t configuration_set_validation_upgrade_cooldown_V11;

@@ -1,18 +1,18 @@
 /*******************************************************************************
- *  (c) 2019 - 2022 Zondax GmbH
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- ********************************************************************************/
+*  (c) 2019 - 2022 Zondax GmbH
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+********************************************************************************/
 #include "bignum.h"
 #include "coin.h"
 #include "parser_impl.h"
@@ -172,8 +172,20 @@ parser_error_t _readConviction_V11(parser_context_t* c, pd_Conviction_V11_t* v)
     return parser_ok;
 }
 
+parser_error_t _readEcdsaPublic_V11(parser_context_t* c, pd_EcdsaPublic_V11_t* v) {
+    GEN_DEF_READARRAY(33)
+}
+
 parser_error_t _readEcdsaSignature_V11(parser_context_t* c, pd_EcdsaSignature_V11_t* v) {
     GEN_DEF_READARRAY(65)
+}
+
+parser_error_t _readEd25519Public_V11(parser_context_t* c, pd_Ed25519Public_V11_t* v) {
+    GEN_DEF_READARRAY(32)
+}
+
+parser_error_t _readEd25519Signature_V11(parser_context_t* c, pd_Ed25519Signature_V11_t* v) {
+    GEN_DEF_READARRAY(64)
 }
 
 parser_error_t _readElectionScore_V11(parser_context_t* c, pd_ElectionScore_V11_t* v)
@@ -280,12 +292,44 @@ parser_error_t _readMemberCount_V11(parser_context_t* c, pd_MemberCount_V11_t* v
 
 parser_error_t _readMultiSignature_V11(parser_context_t* c, pd_MultiSignature_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Ed25519
+        CHECK_ERROR(_readEd25519Signature_V11(c, &v->ed25519))
+        break;
+    case 1: // Sr25519
+        CHECK_ERROR(_readSr25519Signature_V11(c, &v->sr25519))
+        break;
+    case 2: // Ecdsa
+        CHECK_ERROR(_readEcdsaSignature_V11(c, &v->ecdsa))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _readMultiSigner_V11(parser_context_t* c, pd_MultiSigner_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Ed25519
+        CHECK_ERROR(_readEd25519Public_V11(c, &v->ed25519))
+        break;
+    case 1: // Sr25519
+        CHECK_ERROR(_readSr25519Public_V11(c, &v->sr25519))
+        break;
+    case 2: // Ecdsa
+        CHECK_ERROR(_readEcdsaPublic_V11(c, &v->ecdsa))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _readNextConfigDescriptor_V11(parser_context_t* c, pd_NextConfigDescriptor_V11_t* v)
@@ -308,7 +352,9 @@ parser_error_t _readOverweightIndex_V11(parser_context_t* c, pd_OverweightIndex_
 
 parser_error_t _readParaId_V11(parser_context_t* c, pd_ParaId_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
 }
 
 parser_error_t _readParachainsInherentDataHeader_V11(parser_context_t* c, pd_ParachainsInherentDataHeader_V11_t* v)
@@ -330,10 +376,9 @@ parser_error_t _readPercent_V11(parser_context_t* c, pd_Percent_V11_t* v)
 
 parser_error_t _readProxyType_V11(parser_context_t* c, pd_ProxyType_V11_t* v)
 {
-    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
-    if (v->value > 3) {
-        return parser_value_out_of_range;
+    if (v->value > 7) {
+        return parser_unexpected_value;
     }
     return parser_ok;
 }
@@ -383,6 +428,14 @@ parser_error_t _readSessionIndex_V11(parser_context_t* c, pd_SessionIndex_V11_t*
 parser_error_t _readSolutionOrSnapshotSize_V11(parser_context_t* c, pd_SolutionOrSnapshotSize_V11_t* v)
 {
     return parser_not_supported;
+}
+
+parser_error_t _readSr25519Public_V11(parser_context_t* c, pd_Sr25519Public_V11_t* v) {
+    GEN_DEF_READARRAY(32)
+}
+
+parser_error_t _readSr25519Signature_V11(parser_context_t* c, pd_Sr25519Signature_V11_t* v) {
+    GEN_DEF_READARRAY(64)
 }
 
 parser_error_t _readStatementKind_V11(parser_context_t* c, pd_StatementKind_V11_t* v)
@@ -985,6 +1038,15 @@ parser_error_t _toStringConviction_V11(
     return parser_ok;
 }
 
+parser_error_t _toStringEcdsaPublic_V11(
+    const pd_EcdsaPublic_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(33)
+}
+
 parser_error_t _toStringEcdsaSignature_V11(
     const pd_EcdsaSignature_V11_t* v,
     char* outValue,
@@ -992,6 +1054,24 @@ parser_error_t _toStringEcdsaSignature_V11(
     uint8_t pageIdx,
     uint8_t* pageCount) {
     GEN_DEF_TOSTRING_ARRAY(65)
+}
+
+parser_error_t _toStringEd25519Public_V11(
+    const pd_Ed25519Public_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(32)
+}
+
+parser_error_t _toStringEd25519Signature_V11(
+    const pd_Ed25519Signature_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(64)
 }
 
 parser_error_t _toStringElectionScore_V11(
@@ -1196,7 +1276,21 @@ parser_error_t _toStringMultiSignature_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    switch (v->value) {
+    case 0: // Ed25519
+        CHECK_ERROR(_toStringEd25519Signature_V11(&v->ed25519, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 1: // Sr25519
+        CHECK_ERROR(_toStringSr25519Signature_V11(&v->sr25519, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2: // Ecdsa
+        CHECK_ERROR(_toStringEcdsaSignature_V11(&v->ecdsa, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    default:
+        return parser_not_supported;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringMultiSigner_V11(
@@ -1207,7 +1301,21 @@ parser_error_t _toStringMultiSigner_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    switch (v->value) {
+    case 0: // Ed25519
+        CHECK_ERROR(_toStringEd25519Public_V11(&v->ed25519, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 1: // Sr25519
+        CHECK_ERROR(_toStringSr25519Public_V11(&v->sr25519, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2: // Ecdsa
+        CHECK_ERROR(_toStringEcdsaPublic_V11(&v->ecdsa, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    default:
+        return parser_not_supported;
+    }
+
+    return parser_ok;
 }
 
 parser_error_t _toStringNextConfigDescriptor_V11(
@@ -1249,8 +1357,7 @@ parser_error_t _toStringParaId_V11(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringParachainsInherentDataHeader_V11(
@@ -1320,6 +1427,18 @@ parser_error_t _toStringProxyType_V11(
         break;
     case 3:
         snprintf(outValue, outValueLen, "Staking");
+        break;
+    case 4:
+        snprintf(outValue, outValueLen, "IdentityJudgement");
+        break;
+    case 5:
+        snprintf(outValue, outValueLen, "CancelProxy");
+        break;
+    case 6:
+        snprintf(outValue, outValueLen, "Auction");
+        break;
+    case 7:
+        snprintf(outValue, outValueLen, "Society");
         break;
     default:
         return parser_print_not_supported;
@@ -1422,6 +1541,24 @@ parser_error_t _toStringSolutionOrSnapshotSize_V11(
 {
     CLEAN_AND_CHECK()
     return parser_print_not_supported;
+}
+
+parser_error_t _toStringSr25519Public_V11(
+    const pd_Sr25519Public_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(32)
+}
+
+parser_error_t _toStringSr25519Signature_V11(
+    const pd_Sr25519Signature_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(64)
 }
 
 parser_error_t _toStringStatementKind_V11(

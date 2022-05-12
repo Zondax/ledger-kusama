@@ -141,9 +141,9 @@
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Set members |    |   |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> |
-|Execute |    |   |   | `Proposal` proposal <br/>`Compactu32` length_bound <br/> |
-|Propose |    |   |   | `Compactu32` threshold <br/>`Proposal` proposal <br/>`Compactu32` length_bound <br/> |
+|Set members |    | :heavy_check_mark: |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> |
+|Execute |    | :heavy_check_mark: |   | `Proposal` proposal <br/>`Compactu32` length_bound <br/> |
+|Propose |    | :heavy_check_mark: |   | `Compactu32` threshold <br/>`Proposal` proposal <br/>`Compactu32` length_bound <br/> |
 |Vote |    | :heavy_check_mark: |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> |
 |Close |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> |
 |Disapprove proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
@@ -367,8 +367,8 @@
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Place bid |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`u32` duration <br/> |
 |Retract bid |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`u32` duration <br/> |
-|Set target |    |   |   | `Compactu64` target <br/> |
-|Thaw |    |   |   | `Compactu32` index <br/> |
+|Set target |    | :heavy_check_mark: |   | `Compactu64` target <br/> |
+|Thaw |    | :heavy_check_mark: |   | `Compactu32` index <br/> |
 
 ## BagsList
 
@@ -522,15 +522,15 @@
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Create |    |   |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> |
-|Contribute |    |   |   | `Compactu32` index <br/>`Compactu128` amount <br/>`OptionMultiSignature` signature <br/> |
-|Withdraw |    |   |   | `AccountId` who <br/>`Compactu32` index <br/> |
-|Refund |    |   |   | `Compactu32` index <br/> |
-|Dissolve |    |   |   | `Compactu32` index <br/> |
-|Edit |    |   |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> |
-|Add memo |    |   |   | `ParaId` index <br/>`Vecu8` memo <br/> |
-|Poke |    |   |   | `ParaId` index <br/> |
-|Contribute all |    |   |   | `Compactu32` index <br/>`OptionMultiSignature` signature <br/> |
+|Create | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> |
+|Contribute | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/>`Compactu128` amount <br/>`OptionMultiSignature` signature <br/> |
+|Withdraw | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` who <br/>`Compactu32` index <br/> |
+|Refund | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/> |
+|Dissolve | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/> |
+|Edit | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/>`Compactu128` cap <br/>`Compactu32` first_period <br/>`Compactu32` last_period <br/>`Compactu32` end <br/>`OptionMultiSigner` verifier <br/> |
+|Add memo | :heavy_check_mark:  | :heavy_check_mark: |   | `ParaId` index <br/>`Vecu8` memo <br/> |
+|Poke | :heavy_check_mark:  | :heavy_check_mark: |   | `ParaId` index <br/> |
+|Contribute all | :heavy_check_mark:  | :heavy_check_mark: |   | `Compactu32` index <br/>`OptionMultiSignature` signature <br/> |
 
 ## XcmPallet
 
