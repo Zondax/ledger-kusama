@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2019 - 2022 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2019 - 2022 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 
 #include "substrate_dispatch_V11.h"
 #include "substrate_strings.h"
@@ -154,6 +154,13 @@ __Z_INLINE parser_error_t _readMethod_utility_batch_V11(
 
 __Z_INLINE parser_error_t _readMethod_utility_batch_all_V11(
     parser_context_t* c, pd_utility_batch_all_V11_t* m)
+{
+    CHECK_ERROR(_readVecCall(c, &m->calls))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_utility_force_batch_V11(
+    parser_context_t* c, pd_utility_force_batch_V11_t* m)
 {
     CHECK_ERROR(_readVecCall(c, &m->calls))
     return parser_ok;
@@ -762,6 +769,13 @@ __Z_INLINE parser_error_t _readMethod_treasury_approve_proposal_V11(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_treasury_remove_approval_V11(
+    parser_context_t* c, pd_treasury_remove_approval_V11_t* m)
+{
+    CHECK_ERROR(_readCompactu32(c, &m->proposal_id))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_claims_claim_V11(
     parser_context_t* c, pd_claims_claim_V11_t* m)
 {
@@ -862,7 +876,7 @@ __Z_INLINE parser_error_t _readMethod_identity_quit_sub_V11(
 __Z_INLINE parser_error_t _readMethod_society_bid_V11(
     parser_context_t* c, pd_society_bid_V11_t* m)
 {
-    CHECK_ERROR(_readBalance(c, &m->amount))
+    CHECK_ERROR(_readBalanceOf(c, &m->amount))
     return parser_ok;
 }
 
@@ -877,8 +891,8 @@ __Z_INLINE parser_error_t _readMethod_society_vouch_V11(
     parser_context_t* c, pd_society_vouch_V11_t* m)
 {
     CHECK_ERROR(_readAccountId_V11(c, &m->who))
-    CHECK_ERROR(_readBalance(c, &m->amount))
-    CHECK_ERROR(_readBalance(c, &m->tip))
+    CHECK_ERROR(_readBalanceOf(c, &m->amount))
+    CHECK_ERROR(_readBalanceOf(c, &m->tip))
     return parser_ok;
 }
 
@@ -1811,6 +1825,9 @@ parser_error_t _readMethod_V11(
     case 6146: /* module 24 call 2 */
         CHECK_ERROR(_readMethod_utility_batch_all_V11(c, &method->basic.utility_batch_all_V11))
         break;
+    case 6148: /* module 24 call 4 */
+        CHECK_ERROR(_readMethod_utility_force_batch_V11(c, &method->basic.utility_force_batch_V11))
+        break;
     case 18688: /* module 73 call 0 */
         CHECK_ERROR(_readMethod_crowdloan_create_V11(c, &method->basic.crowdloan_create_V11))
         break;
@@ -2052,6 +2069,9 @@ parser_error_t _readMethod_V11(
         break;
     case 4610: /* module 18 call 2 */
         CHECK_ERROR(_readMethod_treasury_approve_proposal_V11(c, &method->basic.treasury_approve_proposal_V11))
+        break;
+    case 4611: /* module 18 call 3 */
+        CHECK_ERROR(_readMethod_treasury_remove_approval_V11(c, &method->basic.treasury_remove_approval_V11))
         break;
     case 4864: /* module 19 call 0 */
         CHECK_ERROR(_readMethod_claims_claim_V11(c, &method->basic.claims_claim_V11))
@@ -2584,6 +2604,8 @@ const char* _getMethod_Name_V11(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_BATCH;
     case 6146: /* module 24 call 2 */
         return STR_ME_BATCH_ALL;
+    case 6148: /* module 24 call 4 */
+        return STR_ME_FORCE_BATCH;
     case 18688: /* module 73 call 0 */
         return STR_ME_CREATE;
     case 18689: /* module 73 call 1 */
@@ -2755,6 +2777,8 @@ const char* _getMethod_Name_V11_ParserFull(uint16_t callPrivIdx)
         return STR_ME_REJECT_PROPOSAL;
     case 4610: /* module 18 call 2 */
         return STR_ME_APPROVE_PROPOSAL;
+    case 4611: /* module 18 call 3 */
+        return STR_ME_REMOVE_APPROVAL;
     case 4864: /* module 19 call 0 */
         return STR_ME_CLAIM;
     case 4866: /* module 19 call 2 */
@@ -3068,6 +3092,8 @@ uint8_t _getMethod_NumItems_V11(uint8_t moduleIdx, uint8_t callIdx)
         return 1;
     case 6146: /* module 24 call 2 */
         return 1;
+    case 6148: /* module 24 call 4 */
+        return 1;
     case 18688: /* module 73 call 0 */
         return 6;
     case 18689: /* module 73 call 1 */
@@ -3228,6 +3254,8 @@ uint8_t _getMethod_NumItems_V11(uint8_t moduleIdx, uint8_t callIdx)
     case 4609: /* module 18 call 1 */
         return 1;
     case 4610: /* module 18 call 2 */
+        return 1;
+    case 4611: /* module 18 call 3 */
         return 1;
     case 4864: /* module 19 call 0 */
         return 2;
@@ -3645,6 +3673,13 @@ const char* _getMethod_ItemName_V11(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
             return NULL;
         }
     case 6146: /* module 24 call 2 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_calls;
+        default:
+            return NULL;
+        }
+    case 6148: /* module 24 call 4 */
         switch (itemIdx) {
         case 0:
             return STR_IT_calls;
@@ -4290,6 +4325,13 @@ const char* _getMethod_ItemName_V11(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
             return NULL;
         }
     case 4610: /* module 18 call 2 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_proposal_id;
+        default:
+            return NULL;
+        }
+    case 4611: /* module 18 call 3 */
         switch (itemIdx) {
         case 0:
             return STR_IT_proposal_id;
@@ -5581,6 +5623,16 @@ parser_error_t _getMethod_ItemValue_V11(
         default:
             return parser_no_data;
         }
+    case 6148: /* module 24 call 4 */
+        switch (itemIdx) {
+        case 0: /* utility_force_batch_V11 - calls */;
+            return _toStringVecCall(
+                &m->basic.utility_force_batch_V11.calls,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 18688: /* module 73 call 0 */
         switch (itemIdx) {
         case 0: /* crowdloan_create_V11 - index */;
@@ -6592,6 +6644,16 @@ parser_error_t _getMethod_ItemValue_V11(
         default:
             return parser_no_data;
         }
+    case 4611: /* module 18 call 3 */
+        switch (itemIdx) {
+        case 0: /* treasury_remove_approval_V11 - proposal_id */;
+            return _toStringCompactu32(
+                &m->basic.treasury_remove_approval_V11.proposal_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 4864: /* module 19 call 0 */
         switch (itemIdx) {
         case 0: /* claims_claim_V11 - dest */;
@@ -6755,7 +6817,7 @@ parser_error_t _getMethod_ItemValue_V11(
     case 6656: /* module 26 call 0 */
         switch (itemIdx) {
         case 0: /* society_bid_V11 - amount */;
-            return _toStringBalance(
+            return _toStringBalanceOf(
                 &m->basic.society_bid_V11.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6780,12 +6842,12 @@ parser_error_t _getMethod_ItemValue_V11(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* society_vouch_V11 - amount */;
-            return _toStringBalance(
+            return _toStringBalanceOf(
                 &m->basic.society_vouch_V11.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* society_vouch_V11 - tip */;
-            return _toStringBalance(
+            return _toStringBalanceOf(
                 &m->basic.society_vouch_V11.tip,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8340,12 +8402,14 @@ bool _getMethod_IsNestingSupported_V11(uint8_t moduleIdx, uint8_t callIdx)
     case 4608: // Treasury:Propose spend
     case 4609: // Treasury:Reject proposal
     case 4610: // Treasury:Approve proposal
+    case 4611: // Treasury:Remove approval
     case 4864: // Claims:Claim
     case 4866: // Claims:Claim attest
     case 4867: // Claims:Attest
     case 4868: // Claims:Move claim
     case 6144: // Utility:Batch
     case 6146: // Utility:Batch all
+    case 6148: // Utility:Force batch
     case 6400: // Identity:Add registrar
     case 6403: // Identity:Clear identity
     case 6404: // Identity:Request judgement

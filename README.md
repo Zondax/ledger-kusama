@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  11.9200.x
+# Kusama  11.9220.x
 
 ## System
 
@@ -219,6 +219,7 @@ Please:
 |Propose spend |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`LookupasStaticLookupSource` beneficiary <br/> |
 |Reject proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
 |Approve proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
+|Remove approval |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
 
 ## Claims
 
@@ -238,6 +239,7 @@ Please:
 |As derivative |    |   |   | `u16` index <br/>`Call` call <br/> |
 |Batch all | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> |
 |Dispatch as |    |   |   | `BoxPalletsOrigin` as_origin <br/>`Call` call <br/> |
+|Force batch | :heavy_check_mark:  | :heavy_check_mark: |   | `VecCall` calls <br/> |
 
 ## Identity
 
@@ -263,9 +265,9 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Bid |    | :heavy_check_mark: |   | `Balance` amount <br/> |
+|Bid |    | :heavy_check_mark: |   | `BalanceOf` amount <br/> |
 |Unbid |    | :heavy_check_mark: |   | `u32` pos <br/> |
-|Vouch |    | :heavy_check_mark: |   | `AccountId` who <br/>`Balance` amount <br/>`Balance` tip <br/> |
+|Vouch |    | :heavy_check_mark: |   | `AccountId` who <br/>`BalanceOf` amount <br/>`BalanceOf` tip <br/> |
 |Unvouch |    | :heavy_check_mark: |   | `u32` pos <br/> |
 |Vote |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` candidate <br/>`bool` approve <br/> |
 |Defender vote |    | :heavy_check_mark: |   | `bool` approve <br/> |
@@ -406,6 +408,23 @@ Please:
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Rebag |    | :heavy_check_mark: |   | `AccountId` dislocated <br/> |
 |Put in front of |    | :heavy_check_mark: |   | `AccountId` lighter <br/> |
+
+## NominationPools
+
+| Name        | Light | XL | Nesting | Arguments |
+| :---------- |:------------:|:--------:|:--------:|:--------|
+|Join |    |   |   | `Compactu128` amount <br/>`PoolId` pool_id <br/> |
+|Bond extra |    |   |   | `BondExtraBalanceOfT` extra <br/> |
+|Claim payout |    |   |   |  |
+|Unbond |    |   |   | `AccountId` member_account <br/>`Compactu128` unbonding_points <br/> |
+|Pool withdraw unbonded |    |   |   | `PoolId` pool_id <br/>`u32` num_slashing_spans <br/> |
+|Withdraw Unbonded |    |   |   | `AccountId` member_account <br/>`u32` num_slashing_spans <br/> |
+|Create |    |   |   | `Compactu128` amount <br/>`AccountId` root <br/>`AccountId` nominator <br/>`AccountId` state_toggler <br/> |
+|Nominate |    |   |   | `PoolId` pool_id <br/>`VecAccountId` validators <br/> |
+|Set state |    |   |   | `PoolId` pool_id <br/>`PoolState` state <br/> |
+|Set metadata |    |   |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
+|Set configs |    |   |   | `ConfigOpBalanceOfT` min_join_bond <br/>`ConfigOpBalanceOfT` min_create_bond <br/>`ConfigOpu32` max_pools <br/>`ConfigOpu32` max_members <br/>`ConfigOpu32` max_members_per_pool <br/> |
+|Update roles |    |   |   | `PoolId` pool_id <br/>`OptionAccountId` root <br/>`OptionAccountId` nominator <br/>`OptionAccountId` state_toggler <br/> |
 
 ## Configuration
 

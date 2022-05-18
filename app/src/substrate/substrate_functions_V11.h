@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2019 - 2022 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2019 - 2022 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 #pragma once
 
 #ifdef __cplusplus
@@ -32,6 +32,7 @@ parser_error_t _readAccountVoteSplit_V11(parser_context_t* c, pd_AccountVoteSpli
 parser_error_t _readAccountVoteStandard_V11(parser_context_t* c, pd_AccountVoteStandard_V11_t* v);
 parser_error_t _readAccountVote_V11(parser_context_t* c, pd_AccountVote_V11_t* v);
 parser_error_t _readAuthorityIdasRuntimeAppPublicSignature_V11(parser_context_t* c, pd_AuthorityIdasRuntimeAppPublicSignature_V11_t* v);
+parser_error_t _readBondExtraBalanceOfT_V11(parser_context_t* c, pd_BondExtraBalanceOfT_V11_t* v);
 parser_error_t _readBoxCallOrHashOfT_V11(parser_context_t* c, pd_BoxCallOrHashOfT_V11_t* v);
 parser_error_t _readBoxEquivocationProofHashBlockNumber_V11(parser_context_t* c, pd_BoxEquivocationProofHashBlockNumber_V11_t* v);
 parser_error_t _readBoxEquivocationProofHeader_V11(parser_context_t* c, pd_BoxEquivocationProofHeader_V11_t* v);
@@ -91,6 +92,8 @@ parser_error_t _readParaId_V11(parser_context_t* c, pd_ParaId_V11_t* v);
 parser_error_t _readParachainsInherentDataHeader_V11(parser_context_t* c, pd_ParachainsInherentDataHeader_V11_t* v);
 parser_error_t _readPerbill_V11(parser_context_t* c, pd_Perbill_V11_t* v);
 parser_error_t _readPercent_V11(parser_context_t* c, pd_Percent_V11_t* v);
+parser_error_t _readPoolId_V11(parser_context_t* c, pd_PoolId_V11_t* v);
+parser_error_t _readPoolState_V11(parser_context_t* c, pd_PoolState_V11_t* v);
 parser_error_t _readProxyType_V11(parser_context_t* c, pd_ProxyType_V11_t* v);
 parser_error_t _readPvfCheckStatement_V11(parser_context_t* c, pd_PvfCheckStatement_V11_t* v);
 parser_error_t _readReferendumIndex_V11(parser_context_t* c, pd_ReferendumIndex_V11_t* v);
@@ -161,6 +164,13 @@ parser_error_t _toStringAccountVote_V11(
 
 parser_error_t _toStringAuthorityIdasRuntimeAppPublicSignature_V11(
     const pd_AuthorityIdasRuntimeAppPublicSignature_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringBondExtraBalanceOfT_V11(
+    const pd_BondExtraBalanceOfT_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -574,6 +584,20 @@ parser_error_t _toStringPerbill_V11(
 
 parser_error_t _toStringPercent_V11(
     const pd_Percent_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringPoolId_V11(
+    const pd_PoolId_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringPoolState_V11(
+    const pd_PoolState_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

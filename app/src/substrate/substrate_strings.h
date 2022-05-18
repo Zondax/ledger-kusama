@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2019 - 2022 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2019 - 2022 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 #pragma once
 
 #ifdef __cplusplus
@@ -122,6 +122,8 @@ static const char* STR_ME_REMOVE_VOTE = "Remove vote";
 static const char* STR_ME_REMOVE_OTHER_VOTE = "Remove other vote";
 static const char* STR_ME_ENACT_PROPOSAL = "Enact proposal";
 static const char* STR_ME_CANCEL_PROPOSAL = "Cancel proposal";
+static const char* STR_ME_SET_MEMBERS = "Set members";
+static const char* STR_ME_EXECUTE = "Execute";
 static const char* STR_ME_CLOSE = "Close";
 static const char* STR_ME_DISAPPROVE_PROPOSAL = "Disapprove proposal";
 static const char* STR_ME_REMOVE_VOTER = "Remove voter";
@@ -137,11 +139,13 @@ static const char* STR_ME_CLEAR_PRIME = "Clear prime";
 static const char* STR_ME_PROPOSE_SPEND = "Propose spend";
 static const char* STR_ME_REJECT_PROPOSAL = "Reject proposal";
 static const char* STR_ME_APPROVE_PROPOSAL = "Approve proposal";
+static const char* STR_ME_REMOVE_APPROVAL = "Remove approval";
 static const char* STR_ME_CLAIM_ATTEST = "Claim attest";
 static const char* STR_ME_ATTEST = "Attest";
 static const char* STR_ME_MOVE_CLAIM = "Move claim";
 static const char* STR_ME_BATCH = "Batch";
 static const char* STR_ME_BATCH_ALL = "Batch all";
+static const char* STR_ME_FORCE_BATCH = "Force batch";
 static const char* STR_ME_ADD_REGISTRAR = "Add registrar";
 static const char* STR_ME_CLEAR_IDENTITY = "Clear identity";
 static const char* STR_ME_REQUEST_JUDGEMENT = "Request judgement";
@@ -207,6 +211,8 @@ static const char* STR_ME_SLASH_TIP = "Slash tip";
 static const char* STR_ME_GOVERNANCE_FALLBACK = "Governance fallback";
 static const char* STR_ME_PLACE_BID = "Place bid";
 static const char* STR_ME_RETRACT_BID = "Retract bid";
+static const char* STR_ME_SET_TARGET = "Set target";
+static const char* STR_ME_THAW = "Thaw";
 static const char* STR_ME_REBAG = "Rebag";
 static const char* STR_ME_PUT_IN_FRONT_OF = "Put in front of";
 static const char* STR_ME_SET_VALIDATION_UPGRADE_COOLDOWN = "Set validation upgrade cooldown";
@@ -261,10 +267,6 @@ static const char* STR_ME_FORCE_UNFREEZE = "Force unfreeze";
 static const char* STR_ME_RESERVE = "Reserve";
 static const char* STR_ME_NEW_AUCTION = "New auction";
 static const char* STR_ME_CANCEL_AUCTION = "Cancel auction";
-static const char* STR_ME_SET_TARGET = "Set target";
-static const char* STR_ME_THAW = "Thaw";
-static const char* STR_ME_SET_MEMBERS = "Set members";
-static const char* STR_ME_EXECUTE = "Execute";
 static const char* STR_ME_CREATE = "Create";
 static const char* STR_ME_CONTRIBUTE = "Contribute";
 static const char* STR_ME_WITHDRAW = "Withdraw";

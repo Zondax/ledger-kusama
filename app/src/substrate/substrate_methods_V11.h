@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2019 - 2022 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2019 - 2022 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextern-c-compat"
 #pragma once
@@ -144,6 +144,11 @@ typedef struct {
 typedef struct {
     pd_VecCall_t calls;
 } pd_utility_batch_all_V11_t;
+
+#define PD_CALL_UTILITY_FORCE_BATCH_V11 4
+typedef struct {
+    pd_VecCall_t calls;
+} pd_utility_force_batch_V11_t;
 
 #define PD_CALL_CROWDLOAN_CREATE_V11 0
 typedef struct {
@@ -552,6 +557,11 @@ typedef struct {
     pd_Compactu32_t proposal_id;
 } pd_treasury_approve_proposal_V11_t;
 
+#define PD_CALL_TREASURY_REMOVE_APPROVAL_V11 3
+typedef struct {
+    pd_Compactu32_t proposal_id;
+} pd_treasury_remove_approval_V11_t;
+
 #define PD_CALL_CLAIMS_CLAIM_V11 0
 typedef struct {
     pd_AccountId_V11_t dest;
@@ -625,7 +635,7 @@ typedef struct {
 
 #define PD_CALL_SOCIETY_BID_V11 0
 typedef struct {
-    pd_Balance_t amount;
+    pd_BalanceOf_t amount;
 } pd_society_bid_V11_t;
 
 #define PD_CALL_SOCIETY_UNBID_V11 1
@@ -636,8 +646,8 @@ typedef struct {
 #define PD_CALL_SOCIETY_VOUCH_V11 2
 typedef struct {
     pd_AccountId_V11_t who;
-    pd_Balance_t amount;
-    pd_Balance_t tip;
+    pd_BalanceOf_t amount;
+    pd_BalanceOf_t tip;
 } pd_society_vouch_V11_t;
 
 #define PD_CALL_SOCIETY_UNVOUCH_V11 3
@@ -1249,6 +1259,7 @@ typedef union {
     pd_session_purge_keys_V11_t session_purge_keys_V11;
     pd_utility_batch_V11_t utility_batch_V11;
     pd_utility_batch_all_V11_t utility_batch_all_V11;
+    pd_utility_force_batch_V11_t utility_force_batch_V11;
     pd_crowdloan_create_V11_t crowdloan_create_V11;
     pd_crowdloan_contribute_V11_t crowdloan_contribute_V11;
     pd_crowdloan_withdraw_V11_t crowdloan_withdraw_V11;
@@ -1323,6 +1334,7 @@ typedef union {
     pd_treasury_propose_spend_V11_t treasury_propose_spend_V11;
     pd_treasury_reject_proposal_V11_t treasury_reject_proposal_V11;
     pd_treasury_approve_proposal_V11_t treasury_approve_proposal_V11;
+    pd_treasury_remove_approval_V11_t treasury_remove_approval_V11;
     pd_claims_claim_V11_t claims_claim_V11;
     pd_claims_claim_attest_V11_t claims_claim_attest_V11;
     pd_claims_attest_V11_t claims_attest_V11;
