@@ -164,6 +164,16 @@ typedef struct {
 } pd_AccountVote_V11_t;
 
 typedef struct {
+    uint8_t value;
+    pd_Balance_t freeBalance;
+} pd_BondExtraBalanceOfT_V11_t;
+
+typedef struct {
+    uint8_t value;
+    pd_Balance_t set;
+} pd_ConfigOpBalanceOfT_V11_t;
+
+typedef struct {
     pd_Call_t call;
 } pd_OpaqueCall_V11_t;
 
@@ -212,11 +222,6 @@ typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_AuthorityIdasRuntimeAppPublicSignature_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BondExtraBalanceOfT_V11_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -280,11 +285,6 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ConfigOpBalanceOfT_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
 } pd_ConfigOpPerbill_V11_t;
 
 typedef struct {
@@ -293,8 +293,8 @@ typedef struct {
 } pd_ConfigOpPercent_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint8_t value;
+    uint32_t set;
 } pd_ConfigOpu32_V11_t;
 
 typedef struct {
@@ -425,13 +425,11 @@ typedef struct {
 } pd_Percent_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint32_t value;
 } pd_PoolId_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
+    uint8_t value;
 } pd_PoolState_V11_t;
 
 typedef struct {

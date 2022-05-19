@@ -54,6 +54,7 @@ extern "C" {
 #define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V11 37
 #define PD_CALL_GILT_V11 38
 #define PD_CALL_BAGSLIST_V11 39
+#define PD_CALL_NOMINATIONPOOLS_V11 41
 #define PD_CALL_CONFIGURATION_V11 51
 #define PD_CALL_INITIALIZER_V11 57
 #define PD_CALL_HRMP_V11 60
@@ -973,6 +974,82 @@ typedef struct {
     pd_AccountId_V11_t lighter;
 } pd_bagslist_put_in_front_of_V11_t;
 
+#define PD_CALL_NOMINATIONPOOLS_JOIN_V11 0
+typedef struct {
+    pd_Compactu128_t amount;
+    pd_PoolId_V11_t pool_id;
+} pd_nominationpools_join_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_BOND_EXTRA_V11 1
+typedef struct {
+    pd_BondExtraBalanceOfT_V11_t extra;
+} pd_nominationpools_bond_extra_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_CLAIM_PAYOUT_V11 2
+typedef struct {
+} pd_nominationpools_claim_payout_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_UNBOND_V11 3
+typedef struct {
+    pd_AccountId_V11_t member_account;
+    pd_Compactu128_t unbonding_points;
+} pd_nominationpools_unbond_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_POOL_WITHDRAW_UNBONDED_V11 4
+typedef struct {
+    pd_PoolId_V11_t pool_id;
+    pd_u32_t num_slashing_spans;
+} pd_nominationpools_pool_withdraw_unbonded_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_WITHDRAW_UNBONDED_V11 5
+typedef struct {
+    pd_AccountId_V11_t member_account;
+    pd_u32_t num_slashing_spans;
+} pd_nominationpools_withdraw_unbonded_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_CREATE_V11 6
+typedef struct {
+    pd_Compactu128_t amount;
+    pd_AccountId_V11_t root;
+    pd_AccountId_V11_t nominator;
+    pd_AccountId_V11_t state_toggler;
+} pd_nominationpools_create_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_NOMINATE_V11 7
+typedef struct {
+    pd_PoolId_V11_t pool_id;
+    pd_VecAccountId_V11_t validators;
+} pd_nominationpools_nominate_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_SET_STATE_V11 8
+typedef struct {
+    pd_PoolId_V11_t pool_id;
+    pd_PoolState_V11_t state;
+} pd_nominationpools_set_state_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_SET_METADATA_V11 9
+typedef struct {
+    pd_PoolId_V11_t pool_id;
+    pd_Vecu8_t metadata;
+} pd_nominationpools_set_metadata_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_SET_CONFIGS_V11 10
+typedef struct {
+    pd_ConfigOpBalanceOfT_V11_t min_join_bond;
+    pd_ConfigOpBalanceOfT_V11_t min_create_bond;
+    pd_ConfigOpu32_V11_t max_pools;
+    pd_ConfigOpu32_V11_t max_members;
+    pd_ConfigOpu32_V11_t max_members_per_pool;
+} pd_nominationpools_set_configs_V11_t;
+
+#define PD_CALL_NOMINATIONPOOLS_UPDATE_ROLES_V11 11
+typedef struct {
+    pd_PoolId_V11_t pool_id;
+    pd_OptionAccountId_V11_t root;
+    pd_OptionAccountId_V11_t nominator;
+    pd_OptionAccountId_V11_t state_toggler;
+} pd_nominationpools_update_roles_V11_t;
+
 #define PD_CALL_CONFIGURATION_SET_VALIDATION_UPGRADE_COOLDOWN_V11 0
 typedef struct {
     pd_BlockNumber_t new_;
@@ -1408,6 +1485,18 @@ typedef union {
     pd_gilt_thaw_V11_t gilt_thaw_V11;
     pd_bagslist_rebag_V11_t bagslist_rebag_V11;
     pd_bagslist_put_in_front_of_V11_t bagslist_put_in_front_of_V11;
+    pd_nominationpools_join_V11_t nominationpools_join_V11;
+    pd_nominationpools_bond_extra_V11_t nominationpools_bond_extra_V11;
+    pd_nominationpools_claim_payout_V11_t nominationpools_claim_payout_V11;
+    pd_nominationpools_unbond_V11_t nominationpools_unbond_V11;
+    pd_nominationpools_pool_withdraw_unbonded_V11_t nominationpools_pool_withdraw_unbonded_V11;
+    pd_nominationpools_withdraw_unbonded_V11_t nominationpools_withdraw_unbonded_V11;
+    pd_nominationpools_create_V11_t nominationpools_create_V11;
+    pd_nominationpools_nominate_V11_t nominationpools_nominate_V11;
+    pd_nominationpools_set_state_V11_t nominationpools_set_state_V11;
+    pd_nominationpools_set_metadata_V11_t nominationpools_set_metadata_V11;
+    pd_nominationpools_set_configs_V11_t nominationpools_set_configs_V11;
+    pd_nominationpools_update_roles_V11_t nominationpools_update_roles_V11;
     pd_configuration_set_validation_upgrade_cooldown_V11_t configuration_set_validation_upgrade_cooldown_V11;
     pd_configuration_set_validation_upgrade_delay_V11_t configuration_set_validation_upgrade_delay_V11;
     pd_configuration_set_code_retention_period_V11_t configuration_set_code_retention_period_V11;

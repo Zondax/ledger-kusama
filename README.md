@@ -413,18 +413,18 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Join |    |   |   | `Compactu128` amount <br/>`PoolId` pool_id <br/> |
-|Bond extra |    |   |   | `BondExtraBalanceOfT` extra <br/> |
-|Claim payout |    |   |   |  |
-|Unbond |    |   |   | `AccountId` member_account <br/>`Compactu128` unbonding_points <br/> |
-|Pool withdraw unbonded |    |   |   | `PoolId` pool_id <br/>`u32` num_slashing_spans <br/> |
-|Withdraw Unbonded |    |   |   | `AccountId` member_account <br/>`u32` num_slashing_spans <br/> |
-|Create |    |   |   | `Compactu128` amount <br/>`AccountId` root <br/>`AccountId` nominator <br/>`AccountId` state_toggler <br/> |
-|Nominate |    |   |   | `PoolId` pool_id <br/>`VecAccountId` validators <br/> |
-|Set state |    |   |   | `PoolId` pool_id <br/>`PoolState` state <br/> |
-|Set metadata |    |   |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
-|Set configs |    |   |   | `ConfigOpBalanceOfT` min_join_bond <br/>`ConfigOpBalanceOfT` min_create_bond <br/>`ConfigOpu32` max_pools <br/>`ConfigOpu32` max_members <br/>`ConfigOpu32` max_members_per_pool <br/> |
-|Update roles |    |   |   | `PoolId` pool_id <br/>`OptionAccountId` root <br/>`OptionAccountId` nominator <br/>`OptionAccountId` state_toggler <br/> |
+|Join |    | :heavy_check_mark: |   | `Compactu128` amount <br/>`PoolId` pool_id <br/> |
+|Bond extra |    | :heavy_check_mark: |   | `BondExtraBalanceOfT` extra <br/> |
+|Claim payout |    | :heavy_check_mark: |   |  |
+|Unbond |    | :heavy_check_mark: |   | `AccountId` member_account <br/>`Compactu128` unbonding_points <br/> |
+|Pool withdraw unbonded |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`u32` num_slashing_spans <br/> |
+|Withdraw Unbonded |    | :heavy_check_mark: |   | `AccountId` member_account <br/>`u32` num_slashing_spans <br/> |
+|Create |    | :heavy_check_mark: |   | `Compactu128` amount <br/>`AccountId` root <br/>`AccountId` nominator <br/>`AccountId` state_toggler <br/> |
+|Nominate |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`VecAccountId` validators <br/> |
+|Set state |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`PoolState` state <br/> |
+|Set metadata |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
+|Set configs |    | :heavy_check_mark: |   | `ConfigOpBalanceOfT` min_join_bond <br/>`ConfigOpBalanceOfT` min_create_bond <br/>`ConfigOpu32` max_pools <br/>`ConfigOpu32` max_members <br/>`ConfigOpu32` max_members_per_pool <br/> |
+|Update roles |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`OptionAccountId` root <br/>`OptionAccountId` nominator <br/>`OptionAccountId` state_toggler <br/> |
 
 ## Configuration
 

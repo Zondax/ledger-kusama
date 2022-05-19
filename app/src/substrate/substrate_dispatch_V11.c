@@ -1383,6 +1383,106 @@ __Z_INLINE parser_error_t _readMethod_bagslist_put_in_front_of_V11(
     return parser_ok;
 }
 
+__Z_INLINE parser_error_t _readMethod_nominationpools_join_V11(
+    parser_context_t* c, pd_nominationpools_join_V11_t* m)
+{
+    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_bond_extra_V11(
+    parser_context_t* c, pd_nominationpools_bond_extra_V11_t* m)
+{
+    CHECK_ERROR(_readBondExtraBalanceOfT_V11(c, &m->extra))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_claim_payout_V11(
+    parser_context_t* c, pd_nominationpools_claim_payout_V11_t* m)
+{
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_unbond_V11(
+    parser_context_t* c, pd_nominationpools_unbond_V11_t* m)
+{
+    CHECK_ERROR(_readAccountId_V11(c, &m->member_account))
+    CHECK_ERROR(_readCompactu128(c, &m->unbonding_points))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_pool_withdraw_unbonded_V11(
+    parser_context_t* c, pd_nominationpools_pool_withdraw_unbonded_V11_t* m)
+{
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_withdraw_unbonded_V11(
+    parser_context_t* c, pd_nominationpools_withdraw_unbonded_V11_t* m)
+{
+    CHECK_ERROR(_readAccountId_V11(c, &m->member_account))
+    CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_create_V11(
+    parser_context_t* c, pd_nominationpools_create_V11_t* m)
+{
+    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readAccountId_V11(c, &m->root))
+    CHECK_ERROR(_readAccountId_V11(c, &m->nominator))
+    CHECK_ERROR(_readAccountId_V11(c, &m->state_toggler))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_nominate_V11(
+    parser_context_t* c, pd_nominationpools_nominate_V11_t* m)
+{
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    CHECK_ERROR(_readVecAccountId_V11(c, &m->validators))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_set_state_V11(
+    parser_context_t* c, pd_nominationpools_set_state_V11_t* m)
+{
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    CHECK_ERROR(_readPoolState_V11(c, &m->state))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_set_metadata_V11(
+    parser_context_t* c, pd_nominationpools_set_metadata_V11_t* m)
+{
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    CHECK_ERROR(_readVecu8(c, &m->metadata))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_set_configs_V11(
+    parser_context_t* c, pd_nominationpools_set_configs_V11_t* m)
+{
+    CHECK_ERROR(_readConfigOpBalanceOfT_V11(c, &m->min_join_bond))
+    CHECK_ERROR(_readConfigOpBalanceOfT_V11(c, &m->min_create_bond))
+    CHECK_ERROR(_readConfigOpu32_V11(c, &m->max_pools))
+    CHECK_ERROR(_readConfigOpu32_V11(c, &m->max_members))
+    CHECK_ERROR(_readConfigOpu32_V11(c, &m->max_members_per_pool))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_nominationpools_update_roles_V11(
+    parser_context_t* c, pd_nominationpools_update_roles_V11_t* m)
+{
+    CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
+    CHECK_ERROR(_readOptionAccountId_V11(c, &m->root))
+    CHECK_ERROR(_readOptionAccountId_V11(c, &m->nominator))
+    CHECK_ERROR(_readOptionAccountId_V11(c, &m->state_toggler))
+    return parser_ok;
+}
+
 __Z_INLINE parser_error_t _readMethod_configuration_set_validation_upgrade_cooldown_V11(
     parser_context_t* c, pd_configuration_set_validation_upgrade_cooldown_V11_t* m)
 {
@@ -2307,6 +2407,42 @@ parser_error_t _readMethod_V11(
     case 9985: /* module 39 call 1 */
         CHECK_ERROR(_readMethod_bagslist_put_in_front_of_V11(c, &method->basic.bagslist_put_in_front_of_V11))
         break;
+    case 10496: /* module 41 call 0 */
+        CHECK_ERROR(_readMethod_nominationpools_join_V11(c, &method->basic.nominationpools_join_V11))
+        break;
+    case 10497: /* module 41 call 1 */
+        CHECK_ERROR(_readMethod_nominationpools_bond_extra_V11(c, &method->basic.nominationpools_bond_extra_V11))
+        break;
+    case 10498: /* module 41 call 2 */
+        CHECK_ERROR(_readMethod_nominationpools_claim_payout_V11(c, &method->basic.nominationpools_claim_payout_V11))
+        break;
+    case 10499: /* module 41 call 3 */
+        CHECK_ERROR(_readMethod_nominationpools_unbond_V11(c, &method->basic.nominationpools_unbond_V11))
+        break;
+    case 10500: /* module 41 call 4 */
+        CHECK_ERROR(_readMethod_nominationpools_pool_withdraw_unbonded_V11(c, &method->basic.nominationpools_pool_withdraw_unbonded_V11))
+        break;
+    case 10501: /* module 41 call 5 */
+        CHECK_ERROR(_readMethod_nominationpools_withdraw_unbonded_V11(c, &method->basic.nominationpools_withdraw_unbonded_V11))
+        break;
+    case 10502: /* module 41 call 6 */
+        CHECK_ERROR(_readMethod_nominationpools_create_V11(c, &method->basic.nominationpools_create_V11))
+        break;
+    case 10503: /* module 41 call 7 */
+        CHECK_ERROR(_readMethod_nominationpools_nominate_V11(c, &method->basic.nominationpools_nominate_V11))
+        break;
+    case 10504: /* module 41 call 8 */
+        CHECK_ERROR(_readMethod_nominationpools_set_state_V11(c, &method->basic.nominationpools_set_state_V11))
+        break;
+    case 10505: /* module 41 call 9 */
+        CHECK_ERROR(_readMethod_nominationpools_set_metadata_V11(c, &method->basic.nominationpools_set_metadata_V11))
+        break;
+    case 10506: /* module 41 call 10 */
+        CHECK_ERROR(_readMethod_nominationpools_set_configs_V11(c, &method->basic.nominationpools_set_configs_V11))
+        break;
+    case 10507: /* module 41 call 11 */
+        CHECK_ERROR(_readMethod_nominationpools_update_roles_V11(c, &method->basic.nominationpools_update_roles_V11))
+        break;
     case 13056: /* module 51 call 0 */
         CHECK_ERROR(_readMethod_configuration_set_validation_upgrade_cooldown_V11(c, &method->basic.configuration_set_validation_upgrade_cooldown_V11))
         break;
@@ -2541,6 +2677,8 @@ const char* _getMethod_ModuleName_V11(uint8_t moduleIdx)
         return STR_MO_GILT;
     case 39:
         return STR_MO_BAGSLIST;
+    case 41:
+        return STR_MO_NOMINATIONPOOLS;
     case 51:
         return STR_MO_CONFIGURATION;
     case 57:
@@ -2935,6 +3073,30 @@ const char* _getMethod_Name_V11_ParserFull(uint16_t callPrivIdx)
         return STR_ME_REBAG;
     case 9985: /* module 39 call 1 */
         return STR_ME_PUT_IN_FRONT_OF;
+    case 10496: /* module 41 call 0 */
+        return STR_ME_JOIN;
+    case 10497: /* module 41 call 1 */
+        return STR_ME_BOND_EXTRA;
+    case 10498: /* module 41 call 2 */
+        return STR_ME_CLAIM_PAYOUT;
+    case 10499: /* module 41 call 3 */
+        return STR_ME_UNBOND;
+    case 10500: /* module 41 call 4 */
+        return STR_ME_POOL_WITHDRAW_UNBONDED;
+    case 10501: /* module 41 call 5 */
+        return STR_ME_WITHDRAW_UNBONDED;
+    case 10502: /* module 41 call 6 */
+        return STR_ME_CREATE;
+    case 10503: /* module 41 call 7 */
+        return STR_ME_NOMINATE;
+    case 10504: /* module 41 call 8 */
+        return STR_ME_SET_STATE;
+    case 10505: /* module 41 call 9 */
+        return STR_ME_SET_METADATA;
+    case 10506: /* module 41 call 10 */
+        return STR_ME_SET_CONFIGS;
+    case 10507: /* module 41 call 11 */
+        return STR_ME_UPDATE_ROLES;
     case 13056: /* module 51 call 0 */
         return STR_ME_SET_VALIDATION_UPGRADE_COOLDOWN;
     case 13057: /* module 51 call 1 */
@@ -3413,6 +3575,30 @@ uint8_t _getMethod_NumItems_V11(uint8_t moduleIdx, uint8_t callIdx)
         return 1;
     case 9985: /* module 39 call 1 */
         return 1;
+    case 10496: /* module 41 call 0 */
+        return 2;
+    case 10497: /* module 41 call 1 */
+        return 1;
+    case 10498: /* module 41 call 2 */
+        return 0;
+    case 10499: /* module 41 call 3 */
+        return 2;
+    case 10500: /* module 41 call 4 */
+        return 2;
+    case 10501: /* module 41 call 5 */
+        return 2;
+    case 10502: /* module 41 call 6 */
+        return 4;
+    case 10503: /* module 41 call 7 */
+        return 2;
+    case 10504: /* module 41 call 8 */
+        return 2;
+    case 10505: /* module 41 call 9 */
+        return 2;
+    case 10506: /* module 41 call 10 */
+        return 5;
+    case 10507: /* module 41 call 11 */
+        return 4;
     case 13056: /* module 51 call 0 */
         return 1;
     case 13057: /* module 51 call 1 */
@@ -5003,6 +5189,122 @@ const char* _getMethod_ItemName_V11(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
         switch (itemIdx) {
         case 0:
             return STR_IT_lighter;
+        default:
+            return NULL;
+        }
+    case 10496: /* module 41 call 0 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_amount;
+        case 1:
+            return STR_IT_pool_id;
+        default:
+            return NULL;
+        }
+    case 10497: /* module 41 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_extra;
+        default:
+            return NULL;
+        }
+    case 10498: /* module 41 call 2 */
+        switch (itemIdx) {
+        default:
+            return NULL;
+        }
+    case 10499: /* module 41 call 3 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_member_account;
+        case 1:
+            return STR_IT_unbonding_points;
+        default:
+            return NULL;
+        }
+    case 10500: /* module 41 call 4 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_pool_id;
+        case 1:
+            return STR_IT_num_slashing_spans;
+        default:
+            return NULL;
+        }
+    case 10501: /* module 41 call 5 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_member_account;
+        case 1:
+            return STR_IT_num_slashing_spans;
+        default:
+            return NULL;
+        }
+    case 10502: /* module 41 call 6 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_amount;
+        case 1:
+            return STR_IT_root;
+        case 2:
+            return STR_IT_nominator;
+        case 3:
+            return STR_IT_state_toggler;
+        default:
+            return NULL;
+        }
+    case 10503: /* module 41 call 7 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_pool_id;
+        case 1:
+            return STR_IT_validators;
+        default:
+            return NULL;
+        }
+    case 10504: /* module 41 call 8 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_pool_id;
+        case 1:
+            return STR_IT_state;
+        default:
+            return NULL;
+        }
+    case 10505: /* module 41 call 9 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_pool_id;
+        case 1:
+            return STR_IT_metadata;
+        default:
+            return NULL;
+        }
+    case 10506: /* module 41 call 10 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_min_join_bond;
+        case 1:
+            return STR_IT_min_create_bond;
+        case 2:
+            return STR_IT_max_pools;
+        case 3:
+            return STR_IT_max_members;
+        case 4:
+            return STR_IT_max_members_per_pool;
+        default:
+            return NULL;
+        }
+    case 10507: /* module 41 call 11 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_pool_id;
+        case 1:
+            return STR_IT_root;
+        case 2:
+            return STR_IT_nominator;
+        case 3:
+            return STR_IT_state_toggler;
         default:
             return NULL;
         }
@@ -7739,6 +8041,206 @@ parser_error_t _getMethod_ItemValue_V11(
         default:
             return parser_no_data;
         }
+    case 10496: /* module 41 call 0 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_join_V11 - amount */;
+            return _toStringCompactu128(
+                &m->basic.nominationpools_join_V11.amount,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_join_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_join_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10497: /* module 41 call 1 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_bond_extra_V11 - extra */;
+            return _toStringBondExtraBalanceOfT_V11(
+                &m->basic.nominationpools_bond_extra_V11.extra,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10498: /* module 41 call 2 */
+        switch (itemIdx) {
+        default:
+            return parser_no_data;
+        }
+    case 10499: /* module 41 call 3 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_unbond_V11 - member_account */;
+            return _toStringAccountId_V11(
+                &m->basic.nominationpools_unbond_V11.member_account,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_unbond_V11 - unbonding_points */;
+            return _toStringCompactu128(
+                &m->basic.nominationpools_unbond_V11.unbonding_points,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10500: /* module 41 call 4 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_pool_withdraw_unbonded_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_pool_withdraw_unbonded_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_pool_withdraw_unbonded_V11 - num_slashing_spans */;
+            return _toStringu32(
+                &m->basic.nominationpools_pool_withdraw_unbonded_V11.num_slashing_spans,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10501: /* module 41 call 5 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_withdraw_unbonded_V11 - member_account */;
+            return _toStringAccountId_V11(
+                &m->basic.nominationpools_withdraw_unbonded_V11.member_account,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_withdraw_unbonded_V11 - num_slashing_spans */;
+            return _toStringu32(
+                &m->basic.nominationpools_withdraw_unbonded_V11.num_slashing_spans,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10502: /* module 41 call 6 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_create_V11 - amount */;
+            return _toStringCompactu128(
+                &m->basic.nominationpools_create_V11.amount,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_create_V11 - root */;
+            return _toStringAccountId_V11(
+                &m->basic.nominationpools_create_V11.root,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* nominationpools_create_V11 - nominator */;
+            return _toStringAccountId_V11(
+                &m->basic.nominationpools_create_V11.nominator,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* nominationpools_create_V11 - state_toggler */;
+            return _toStringAccountId_V11(
+                &m->basic.nominationpools_create_V11.state_toggler,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10503: /* module 41 call 7 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_nominate_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_nominate_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_nominate_V11 - validators */;
+            return _toStringVecAccountId_V11(
+                &m->basic.nominationpools_nominate_V11.validators,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10504: /* module 41 call 8 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_set_state_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_set_state_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_set_state_V11 - state */;
+            return _toStringPoolState_V11(
+                &m->basic.nominationpools_set_state_V11.state,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10505: /* module 41 call 9 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_set_metadata_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_set_metadata_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_set_metadata_V11 - metadata */;
+            return _toStringVecu8(
+                &m->basic.nominationpools_set_metadata_V11.metadata,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10506: /* module 41 call 10 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_set_configs_V11 - min_join_bond */;
+            return _toStringConfigOpBalanceOfT_V11(
+                &m->basic.nominationpools_set_configs_V11.min_join_bond,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_set_configs_V11 - min_create_bond */;
+            return _toStringConfigOpBalanceOfT_V11(
+                &m->basic.nominationpools_set_configs_V11.min_create_bond,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* nominationpools_set_configs_V11 - max_pools */;
+            return _toStringConfigOpu32_V11(
+                &m->basic.nominationpools_set_configs_V11.max_pools,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* nominationpools_set_configs_V11 - max_members */;
+            return _toStringConfigOpu32_V11(
+                &m->basic.nominationpools_set_configs_V11.max_members,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 4: /* nominationpools_set_configs_V11 - max_members_per_pool */;
+            return _toStringConfigOpu32_V11(
+                &m->basic.nominationpools_set_configs_V11.max_members_per_pool,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 10507: /* module 41 call 11 */
+        switch (itemIdx) {
+        case 0: /* nominationpools_update_roles_V11 - pool_id */;
+            return _toStringPoolId_V11(
+                &m->basic.nominationpools_update_roles_V11.pool_id,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* nominationpools_update_roles_V11 - root */;
+            return _toStringOptionAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.root,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* nominationpools_update_roles_V11 - nominator */;
+            return _toStringOptionAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.nominator,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* nominationpools_update_roles_V11 - state_toggler */;
+            return _toStringOptionAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.state_toggler,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 13056: /* module 51 call 0 */
         switch (itemIdx) {
         case 0: /* configuration_set_validation_upgrade_cooldown_V11 - new_ */;
@@ -8313,6 +8815,20 @@ bool _getMethod_ItemIsExpert_V11(uint8_t moduleIdx, uint8_t callIdx, uint8_t ite
         default:
             return false;
         }
+    case 10500: // NominationPools:Pool withdraw unbonded
+        switch (itemIdx) {
+        case 1: // Num slashing spans
+            return true;
+        default:
+            return false;
+        }
+    case 10501: // NominationPools:Withdraw Unbonded
+        switch (itemIdx) {
+        case 1: // Num slashing spans
+            return true;
+        default:
+            return false;
+        }
 
     default:
         return false;
@@ -8479,6 +8995,18 @@ bool _getMethod_IsNestingSupported_V11(uint8_t moduleIdx, uint8_t callIdx)
     case 9731: // Gilt:Thaw
     case 9984: // BagsList:Rebag
     case 9985: // BagsList:Put in front of
+    case 10496: // NominationPools:Join
+    case 10497: // NominationPools:Bond extra
+    case 10498: // NominationPools:Claim payout
+    case 10499: // NominationPools:Unbond
+    case 10500: // NominationPools:Pool withdraw unbonded
+    case 10501: // NominationPools:Withdraw Unbonded
+    case 10502: // NominationPools:Create
+    case 10503: // NominationPools:Nominate
+    case 10504: // NominationPools:Set state
+    case 10505: // NominationPools:Set metadata
+    case 10506: // NominationPools:Set configs
+    case 10507: // NominationPools:Update roles
     case 13056: // Configuration:Set validation upgrade cooldown
     case 13057: // Configuration:Set validation upgrade delay
     case 13058: // Configuration:Set code retention period
