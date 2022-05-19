@@ -73,10 +73,10 @@
 |Scale validator count |    |   |   | `Percent` factor <br/> |
 |Force no eras |    | :heavy_check_mark: |   |  |
 |Force new era |    | :heavy_check_mark: |   |  |
-|Set invulnerables |    |   |   | `VecAccountId` invulnerables <br/> |
+|Set invulnerables |    | :heavy_check_mark: |   | `VecAccountId` invulnerables <br/> |
 |Force unstake |    | :heavy_check_mark: |   | `AccountId` stash <br/>`u32` num_slashing_spans <br/> |
 |Force new era always |    | :heavy_check_mark: |   |  |
-|Cancel deferred slash |    |   |   | `EraIndex` era <br/>`Bytes` slash_indices <br/> |
+|Cancel deferred slash |    | :heavy_check_mark: |   | `EraIndex` era <br/>`Vecu32` slash_indices <br/> |
 |Payout stakers | :heavy_check_mark:  | :heavy_check_mark: |   | `AccountId` validator_stash <br/>`EraIndex` era <br/> |
 |Rebond | :heavy_check_mark:  | :heavy_check_mark: |   | `CompactBalance` amount <br/> |
 |Set history depth |    | :heavy_check_mark: |   | `Compactu32` new_history_depth <br/>`Compactu32` era_items_deleted <br/> |
@@ -152,18 +152,18 @@
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Set members |    |   |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> |
-|Execute |    |   |   | `Proposal` proposal <br/>`Compactu32` length_bound <br/> |
-|Propose |    |   |   | `Compactu32` threshold <br/>`Proposal` proposal <br/>`Compactu32` length_bound <br/> |
-|Vote |    |   |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> |
-|Close |    |   |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> |
+|Set members |    | :heavy_check_mark: |   | `VecAccountId` new_members <br/>`OptionAccountId` prime <br/>`MemberCount` old_count <br/> |
+|Execute |    | :heavy_check_mark: |   | `Proposal` proposal <br/>`Compactu32` length_bound <br/> |
+|Propose |    | :heavy_check_mark: |   | `Compactu32` threshold <br/>`Proposal` proposal <br/>`Compactu32` length_bound <br/> |
+|Vote |    | :heavy_check_mark: |   | `Hash` proposal <br/>`Compactu32` index <br/>`bool` approve <br/> |
+|Close |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/>`Compactu32` index <br/>`Compactu64` proposal_weight_bound <br/>`Compactu32` length_bound <br/> |
 |Disapprove proposal |    | :heavy_check_mark: |   | `Hash` proposal_hash <br/> |
 
 ## PhragmenElection
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Vote |    |   |   | `VecAccountId` votes <br/>`Compactu128` amount <br/> |
+|Vote |    | :heavy_check_mark: |   | `VecAccountId` votes <br/>`Compactu128` amount <br/> |
 |Remove voter |    | :heavy_check_mark: |   |  |
 |Submit candidacy |    | :heavy_check_mark: |   | `Compactu32` candidate_count <br/> |
 |Renounce candidacy |    |   |   | `Renouncing` renouncing <br/> |
@@ -268,8 +268,8 @@
 | :---------- |:------------:|:--------:|:--------:|:--------|
 |Vest |    | :heavy_check_mark: |   |  |
 |Vest other |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` target <br/> |
-|Vested transfer |    |   |   | `LookupasStaticLookupSource` target <br/>`VestingInfo` schedule <br/> |
-|Force vested transfer |    |   |   | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` target <br/>`VestingInfo` schedule <br/> |
+|Vested transfer |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` target <br/>`VestingInfo` schedule <br/> |
+|Force vested transfer |    | :heavy_check_mark: |   | `LookupasStaticLookupSource` source <br/>`LookupasStaticLookupSource` target <br/>`VestingInfo` schedule <br/> |
 |Merge schedules |    | :heavy_check_mark: |   | `u32` schedule1_index <br/>`u32` schedule2_index <br/> |
 
 ## Scheduler
