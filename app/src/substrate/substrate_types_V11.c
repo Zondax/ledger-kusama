@@ -81,7 +81,7 @@ parser_error_t _readBondExtraBalanceOfT_V11(parser_context_t* c, pd_BondExtraBal
     case 0:
         CHECK_ERROR(_readBalance(c, &v->freeBalance))
         break;
-    case 1:
+    case 1: // Rewards
         break;
     default:
         return parser_unexpected_value;
@@ -162,9 +162,14 @@ parser_error_t _readConfigOpBalanceOfT_V11(parser_context_t* c, pd_ConfigOpBalan
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
-    if (v->value == 1) {
+    switch (v->value) {
+    case 0: // Noop
+    case 2: // Remove
+        break;
+    case 1:
         CHECK_ERROR(_readBalance(c, &v->set))
-    } else if (v->value > 2) {
+        break;
+    default:
         return parser_unexpected_value;
     }
     return parser_ok;
@@ -184,9 +189,14 @@ parser_error_t _readConfigOpu32_V11(parser_context_t* c, pd_ConfigOpu32_V11_t* v
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
-    if (v->value == 1) {
+    switch (v->value) {
+    case 0: // Noop
+    case 2: // Remove
+        break;
+    case 1:
         CHECK_ERROR(_readUInt32(c, &v->set))
-    } else if (v->value > 2) {
+        break;
+    default:
         return parser_unexpected_value;
     }
     return parser_ok;
@@ -859,12 +869,12 @@ parser_error_t _toStringBondExtraBalanceOfT_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    *pageCount = 1;
     switch (v->value) {
     case 0:
         CHECK_ERROR(_toStringBalance(&v->freeBalance, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 1:
-        *pageCount = 1;
         snprintf(outValue, outValueLen, "Rewards");
         break;
     default:
@@ -1032,16 +1042,15 @@ parser_error_t _toStringConfigOpBalanceOfT_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    *pageCount = 1;
     switch (v->value) {
     case 0:
-        *pageCount = 1;
         snprintf(outValue, outValueLen, "Noop");
         break;
     case 1:
         CHECK_ERROR(_toStringBalance(&v->set, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 2:
-        *pageCount = 1;
         snprintf(outValue, outValueLen, "Remove");
         break;
     default:
@@ -1080,16 +1089,15 @@ parser_error_t _toStringConfigOpu32_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    *pageCount = 1;
     switch (v->value) {
     case 0:
-        *pageCount = 1;
         snprintf(outValue, outValueLen, "Noop");
         break;
     case 1:
         CHECK_ERROR(_toStringu32(&v->set, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 2:
-        *pageCount = 1;
         snprintf(outValue, outValueLen, "Remove");
         break;
     default:
