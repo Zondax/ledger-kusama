@@ -1,18 +1,18 @@
 /*******************************************************************************
-*  (c) 2019 - 2022 Zondax GmbH
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+ *  (c) 2019 - 2022 Zondax GmbH
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ********************************************************************************/
 #include "bignum.h"
 #include "coin.h"
 #include "parser_impl.h"
@@ -71,6 +71,22 @@ parser_error_t _readAccountVote_V11(parser_context_t* c, pd_AccountVote_V11_t* v
 parser_error_t _readAuthorityIdasRuntimeAppPublicSignature_V11(parser_context_t* c, pd_AuthorityIdasRuntimeAppPublicSignature_V11_t* v)
 {
     return parser_not_supported;
+}
+
+parser_error_t _readBondExtraBalanceOfT_V11(parser_context_t* c, pd_BondExtraBalanceOfT_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0:
+        CHECK_ERROR(_readBalance(c, &v->freeBalance))
+        break;
+    case 1: // Rewards
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _readBoxCallOrHashOfT_V11(parser_context_t* c, pd_BoxCallOrHashOfT_V11_t* v)
@@ -144,7 +160,19 @@ parser_error_t _readCompactPerBill_V11(parser_context_t* c, pd_CompactPerBill_V1
 
 parser_error_t _readConfigOpBalanceOfT_V11(parser_context_t* c, pd_ConfigOpBalanceOfT_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Noop
+    case 2: // Remove
+        break;
+    case 1:
+        CHECK_ERROR(_readBalance(c, &v->set))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _readConfigOpPerbill_V11(parser_context_t* c, pd_ConfigOpPerbill_V11_t* v)
@@ -159,7 +187,19 @@ parser_error_t _readConfigOpPercent_V11(parser_context_t* c, pd_ConfigOpPercent_
 
 parser_error_t _readConfigOpu32_V11(parser_context_t* c, pd_ConfigOpu32_V11_t* v)
 {
-    return parser_not_supported;
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Noop
+    case 2: // Remove
+        break;
+    case 1:
+        CHECK_ERROR(_readUInt32(c, &v->set))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _readConviction_V11(parser_context_t* c, pd_Conviction_V11_t* v)
@@ -372,6 +412,20 @@ parser_error_t _readPerbill_V11(parser_context_t* c, pd_Perbill_V11_t* v)
 parser_error_t _readPercent_V11(parser_context_t* c, pd_Percent_V11_t* v)
 {
     return _readCompactInt(c, &v->value);
+}
+
+parser_error_t _readPoolId_V11(parser_context_t* c, pd_PoolId_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
+}
+
+parser_error_t _readPoolState_V11(parser_context_t* c, pd_PoolState_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    return parser_ok;
 }
 
 parser_error_t _readProxyType_V11(parser_context_t* c, pd_ProxyType_V11_t* v)
@@ -807,6 +861,28 @@ parser_error_t _toStringAuthorityIdasRuntimeAppPublicSignature_V11(
     return parser_print_not_supported;
 }
 
+parser_error_t _toStringBondExtraBalanceOfT_V11(
+    const pd_BondExtraBalanceOfT_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        CHECK_ERROR(_toStringBalance(&v->freeBalance, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "Rewards");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _toStringBoxCallOrHashOfT_V11(
     const pd_BoxCallOrHashOfT_V11_t* v,
     char* outValue,
@@ -966,7 +1042,21 @@ parser_error_t _toStringConfigOpBalanceOfT_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Noop");
+        break;
+    case 1:
+        CHECK_ERROR(_toStringBalance(&v->set, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Remove");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _toStringConfigOpPerbill_V11(
@@ -999,7 +1089,21 @@ parser_error_t _toStringConfigOpu32_V11(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    return parser_print_not_supported;
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Noop");
+        break;
+    case 1:
+        CHECK_ERROR(_toStringu32(&v->set, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Remove");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _toStringConviction_V11(
@@ -1403,6 +1507,41 @@ parser_error_t _toStringPercent_V11(
 {
     // 9 but shift 2 to show as percentage
     return _toStringCompactInt(&v->value, 7, "%", "", outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringPoolId_V11(
+    const pd_PoolId_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringPoolState_V11(
+    const pd_PoolState_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Open");
+        break;
+    case 1:
+        snprintf(outValue, outValueLen, "Blocked");
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Destroying");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _toStringProxyType_V11(

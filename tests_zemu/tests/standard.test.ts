@@ -16,8 +16,8 @@
 
 import Zemu, { DEFAULT_START_OPTIONS } from '@zondax/zemu'
 import { newKusamaApp } from '@zondax/ledger-substrate'
-import { APP_SEED, models, txProxy_proxy_transferKeepAlive } from './common'
-import { txBalances_transfer, txSession_setKeys, txStaking_nominate } from './zemu_blobs'
+import { txBalances_transfer, txProxy_proxy, txSession_setKeys, txStaking_nominate } from './zemu_blobs'
+import { APP_SEED, models } from './common'
 
 // @ts-ignore
 import ed25519 from 'ed25519-supercop'
@@ -31,7 +31,7 @@ const defaultOptions = {
   X11: false,
 }
 
-jest.setTimeout(60000)
+jest.setTimeout(180000)
 
 beforeAll(async () => {
   await Zemu.checkAndPullImage()
@@ -315,7 +315,7 @@ describe('Standard', function () {
     }
   })
 
-  test.each(models)('Proxy proxy transferKeepAlive', async function (m) {
+  test.each(models)('Proxy proxy balances transfer', async function (m) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
@@ -324,7 +324,7 @@ describe('Standard', function () {
       const pathChange = 0x80000000
       const pathIndex = 0x80000000
 
-      const txBlob = Buffer.from(txProxy_proxy_transferKeepAlive, 'hex')
+      const txBlob = Buffer.from(txProxy_proxy, 'hex')
 
       const responseAddr = await app.getAddress(pathAccount, pathChange, pathIndex)
       const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
@@ -332,7 +332,7 @@ describe('Standard', function () {
       // do not wait here.. we need to navigate
       const signatureRequest = app.sign(pathAccount, pathChange, pathIndex, txBlob)
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
-      await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-proxy_transfer_keepAlive`)
+      await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-proxy_balances_transfer`)
 
       const signatureResponse = await signatureRequest
       console.log(signatureResponse)
