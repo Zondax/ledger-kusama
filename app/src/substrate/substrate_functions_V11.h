@@ -39,7 +39,7 @@ parser_error_t _readBoxEquivocationProofHeader_V11(parser_context_t* c, pd_BoxEq
 parser_error_t _readBoxIdentityInfoMaxAdditionalFields_V11(parser_context_t* c, pd_BoxIdentityInfoMaxAdditionalFields_V11_t* v);
 parser_error_t _readBoxMultiLocation_V11(parser_context_t* c, pd_BoxMultiLocation_V11_t* v);
 parser_error_t _readBoxPalletsOrigin_V11(parser_context_t* c, pd_BoxPalletsOrigin_V11_t* v);
-parser_error_t _readBoxRawSolutionSolutionOfT_V11(parser_context_t* c, pd_BoxRawSolutionSolutionOfT_V11_t* v);
+parser_error_t _readBoxRawSolutionSolutionOfMinerConfig_V11(parser_context_t* c, pd_BoxRawSolutionSolutionOfMinerConfig_V11_t* v);
 parser_error_t _readBoxVersionedMultiAssets_V11(parser_context_t* c, pd_BoxVersionedMultiAssets_V11_t* v);
 parser_error_t _readBoxVersionedMultiLocation_V11(parser_context_t* c, pd_BoxVersionedMultiLocation_V11_t* v);
 parser_error_t _readBoxVersionedXcmTasSysConfigCall_V11(parser_context_t* c, pd_BoxVersionedXcmTasSysConfigCall_V11_t* v);
@@ -47,6 +47,7 @@ parser_error_t _readBoxVersionedXcmTuple_V11(parser_context_t* c, pd_BoxVersione
 parser_error_t _readCallHashOf_V11(parser_context_t* c, pd_CallHashOf_V11_t* v);
 parser_error_t _readCompactAccountIndex_V11(parser_context_t* c, pd_CompactAccountIndex_V11_t* v);
 parser_error_t _readCompactPerBill_V11(parser_context_t* c, pd_CompactPerBill_V11_t* v);
+parser_error_t _readConfigOpAccountId_V11(parser_context_t* c, pd_ConfigOpAccountId_V11_t* v);
 parser_error_t _readConfigOpBalanceOfT_V11(parser_context_t* c, pd_ConfigOpBalanceOfT_V11_t* v);
 parser_error_t _readConfigOpPerbill_V11(parser_context_t* c, pd_ConfigOpPerbill_V11_t* v);
 parser_error_t _readConfigOpPercent_V11(parser_context_t* c, pd_ConfigOpPercent_V11_t* v);
@@ -218,8 +219,8 @@ parser_error_t _toStringBoxPalletsOrigin_V11(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringBoxRawSolutionSolutionOfT_V11(
-    const pd_BoxRawSolutionSolutionOfT_V11_t* v,
+parser_error_t _toStringBoxRawSolutionSolutionOfMinerConfig_V11(
+    const pd_BoxRawSolutionSolutionOfMinerConfig_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -269,6 +270,13 @@ parser_error_t _toStringCompactAccountIndex_V11(
 
 parser_error_t _toStringCompactPerBill_V11(
     const pd_CompactPerBill_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringConfigOpAccountId_V11(
+    const pd_ConfigOpAccountId_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

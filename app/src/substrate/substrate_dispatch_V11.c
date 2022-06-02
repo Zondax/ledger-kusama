@@ -1454,15 +1454,15 @@ __Z_INLINE parser_error_t _readMethod_gilt_thaw_V11(
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bagslist_rebag_V11(
-    parser_context_t* c, pd_bagslist_rebag_V11_t* m)
+__Z_INLINE parser_error_t _readMethod_voterlist_rebag_V11(
+    parser_context_t* c, pd_voterlist_rebag_V11_t* m)
 {
     CHECK_ERROR(_readAccountId_V11(c, &m->dislocated))
     return parser_ok;
 }
 
-__Z_INLINE parser_error_t _readMethod_bagslist_put_in_front_of_V11(
-    parser_context_t* c, pd_bagslist_put_in_front_of_V11_t* m)
+__Z_INLINE parser_error_t _readMethod_voterlist_put_in_front_of_V11(
+    parser_context_t* c, pd_voterlist_put_in_front_of_V11_t* m)
 {
     CHECK_ERROR(_readAccountId_V11(c, &m->lighter))
     return parser_ok;
@@ -1562,9 +1562,9 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_update_roles_V11(
     parser_context_t* c, pd_nominationpools_update_roles_V11_t* m)
 {
     CHECK_ERROR(_readPoolId_V11(c, &m->pool_id))
-    CHECK_ERROR(_readOptionAccountId_V11(c, &m->root))
-    CHECK_ERROR(_readOptionAccountId_V11(c, &m->nominator))
-    CHECK_ERROR(_readOptionAccountId_V11(c, &m->state_toggler))
+    CHECK_ERROR(_readConfigOpAccountId_V11(c, &m->new_root))
+    CHECK_ERROR(_readConfigOpAccountId_V11(c, &m->new_nominator))
+    CHECK_ERROR(_readConfigOpAccountId_V11(c, &m->new_state_toggler))
     return parser_ok;
 }
 
@@ -2517,10 +2517,10 @@ parser_error_t _readMethod_V11(
         CHECK_ERROR(_readMethod_gilt_thaw_V11(c, &method->basic.gilt_thaw_V11))
         break;
     case 9984: /* module 39 call 0 */
-        CHECK_ERROR(_readMethod_bagslist_rebag_V11(c, &method->basic.bagslist_rebag_V11))
+        CHECK_ERROR(_readMethod_voterlist_rebag_V11(c, &method->basic.voterlist_rebag_V11))
         break;
     case 9985: /* module 39 call 1 */
-        CHECK_ERROR(_readMethod_bagslist_put_in_front_of_V11(c, &method->basic.bagslist_put_in_front_of_V11))
+        CHECK_ERROR(_readMethod_voterlist_put_in_front_of_V11(c, &method->basic.voterlist_put_in_front_of_V11))
         break;
     case 10496: /* module 41 call 0 */
         CHECK_ERROR(_readMethod_nominationpools_join_V11(c, &method->basic.nominationpools_join_V11))
@@ -2791,7 +2791,7 @@ const char* _getMethod_ModuleName_V11(uint8_t moduleIdx)
     case 38:
         return STR_MO_GILT;
     case 39:
-        return STR_MO_BAGSLIST;
+        return STR_MO_VOTERLIST;
     case 41:
         return STR_MO_NOMINATIONPOOLS;
     case 51:
@@ -5555,11 +5555,11 @@ const char* _getMethod_ItemName_V11(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
         case 0:
             return STR_IT_pool_id;
         case 1:
-            return STR_IT_root;
+            return STR_IT_new_root;
         case 2:
-            return STR_IT_nominator;
+            return STR_IT_new_nominator;
         case 3:
-            return STR_IT_state_toggler;
+            return STR_IT_new_state_toggler;
         default:
             return NULL;
         }
@@ -8453,9 +8453,9 @@ parser_error_t _getMethod_ItemValue_V11(
         }
     case 9984: /* module 39 call 0 */
         switch (itemIdx) {
-        case 0: /* bagslist_rebag_V11 - dislocated */;
+        case 0: /* voterlist_rebag_V11 - dislocated */;
             return _toStringAccountId_V11(
-                &m->basic.bagslist_rebag_V11.dislocated,
+                &m->basic.voterlist_rebag_V11.dislocated,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8463,9 +8463,9 @@ parser_error_t _getMethod_ItemValue_V11(
         }
     case 9985: /* module 39 call 1 */
         switch (itemIdx) {
-        case 0: /* bagslist_put_in_front_of_V11 - lighter */;
+        case 0: /* voterlist_put_in_front_of_V11 - lighter */;
             return _toStringAccountId_V11(
-                &m->basic.bagslist_put_in_front_of_V11.lighter,
+                &m->basic.voterlist_put_in_front_of_V11.lighter,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8653,19 +8653,19 @@ parser_error_t _getMethod_ItemValue_V11(
                 &m->basic.nominationpools_update_roles_V11.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 1: /* nominationpools_update_roles_V11 - root */;
-            return _toStringOptionAccountId_V11(
-                &m->basic.nominationpools_update_roles_V11.root,
+        case 1: /* nominationpools_update_roles_V11 - new_root */;
+            return _toStringConfigOpAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.new_root,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 2: /* nominationpools_update_roles_V11 - nominator */;
-            return _toStringOptionAccountId_V11(
-                &m->basic.nominationpools_update_roles_V11.nominator,
+        case 2: /* nominationpools_update_roles_V11 - new_nominator */;
+            return _toStringConfigOpAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.new_nominator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
-        case 3: /* nominationpools_update_roles_V11 - state_toggler */;
-            return _toStringOptionAccountId_V11(
-                &m->basic.nominationpools_update_roles_V11.state_toggler,
+        case 3: /* nominationpools_update_roles_V11 - new_state_toggler */;
+            return _toStringConfigOpAccountId_V11(
+                &m->basic.nominationpools_update_roles_V11.new_state_toggler,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9433,8 +9433,8 @@ bool _getMethod_IsNestingSupported_V11(uint8_t moduleIdx, uint8_t callIdx)
     case 9729: // Gilt:Retract bid
     case 9730: // Gilt:Set target
     case 9731: // Gilt:Thaw
-    case 9984: // BagsList:Rebag
-    case 9985: // BagsList:Put in front of
+    case 9984: // VoterList:Rebag
+    case 9985: // VoterList:Put in front of
     case 10496: // NominationPools:Join
     case 10497: // NominationPools:Bond extra
     case 10498: // NominationPools:Claim payout
