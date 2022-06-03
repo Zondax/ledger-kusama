@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  11.9220.x
+# Kusama  11.9230.x
 
 ## System
 
@@ -387,10 +387,10 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Submit unsigned |    |   |   | `BoxRawSolutionSolutionOfT` raw_solution <br/>`SolutionOrSnapshotSize` witness <br/> |
+|Submit unsigned |    |   |   | `BoxRawSolutionSolutionOfMinerConfig` raw_solution <br/>`SolutionOrSnapshotSize` witness <br/> |
 |Set minimum untrusted score |    |   |   | `OptionElectionScore` maybe_next_score <br/> |
 |Set emergency election result |    |   |   | `SupportsAccountId` supports <br/> |
-|Submit |    |   |   | `BoxRawSolutionSolutionOfT` raw_solution <br/> |
+|Submit |    |   |   | `BoxRawSolutionSolutionOfMinerConfig` raw_solution <br/> |
 |Governance fallback |    | :heavy_check_mark: |   | `Optionu32` maybe_max_voters <br/>`Optionu32` maybe_max_targets <br/> |
 
 ## Gilt
@@ -402,7 +402,7 @@ Please:
 |Set target |    | :heavy_check_mark: |   | `Compactu64` target <br/> |
 |Thaw |    | :heavy_check_mark: |   | `Compactu32` index <br/> |
 
-## BagsList
+## VoterList
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
@@ -424,7 +424,7 @@ Please:
 |Set state |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`PoolState` state <br/> |
 |Set metadata |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
 |Set configs |    | :heavy_check_mark: |   | `ConfigOpBalanceOfT` min_join_bond <br/>`ConfigOpBalanceOfT` min_create_bond <br/>`ConfigOpu32` max_pools <br/>`ConfigOpu32` max_members <br/>`ConfigOpu32` max_members_per_pool <br/> |
-|Update roles |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`OptionAccountId` root <br/>`OptionAccountId` nominator <br/>`OptionAccountId` state_toggler <br/> |
+|Update roles |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`ConfigOpAccountId` new_root <br/>`ConfigOpAccountId` new_nominator <br/>`ConfigOpAccountId` new_state_toggler <br/> |
 
 ## Configuration
 

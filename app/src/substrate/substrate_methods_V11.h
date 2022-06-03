@@ -53,7 +53,7 @@ extern "C" {
 #define PD_CALL_TIPS_V11 36
 #define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V11 37
 #define PD_CALL_GILT_V11 38
-#define PD_CALL_BAGSLIST_V11 39
+#define PD_CALL_VOTERLIST_V11 39
 #define PD_CALL_NOMINATIONPOOLS_V11 41
 #define PD_CALL_CONFIGURATION_V11 51
 #define PD_CALL_INITIALIZER_V11 57
@@ -1029,15 +1029,15 @@ typedef struct {
     pd_Compactu32_t index;
 } pd_gilt_thaw_V11_t;
 
-#define PD_CALL_BAGSLIST_REBAG_V11 0
+#define PD_CALL_VOTERLIST_REBAG_V11 0
 typedef struct {
     pd_AccountId_V11_t dislocated;
-} pd_bagslist_rebag_V11_t;
+} pd_voterlist_rebag_V11_t;
 
-#define PD_CALL_BAGSLIST_PUT_IN_FRONT_OF_V11 1
+#define PD_CALL_VOTERLIST_PUT_IN_FRONT_OF_V11 1
 typedef struct {
     pd_AccountId_V11_t lighter;
-} pd_bagslist_put_in_front_of_V11_t;
+} pd_voterlist_put_in_front_of_V11_t;
 
 #define PD_CALL_NOMINATIONPOOLS_JOIN_V11 0
 typedef struct {
@@ -1110,9 +1110,9 @@ typedef struct {
 #define PD_CALL_NOMINATIONPOOLS_UPDATE_ROLES_V11 11
 typedef struct {
     pd_PoolId_V11_t pool_id;
-    pd_OptionAccountId_V11_t root;
-    pd_OptionAccountId_V11_t nominator;
-    pd_OptionAccountId_V11_t state_toggler;
+    pd_ConfigOpAccountId_V11_t new_root;
+    pd_ConfigOpAccountId_V11_t new_nominator;
+    pd_ConfigOpAccountId_V11_t new_state_toggler;
 } pd_nominationpools_update_roles_V11_t;
 
 #define PD_CALL_CONFIGURATION_SET_VALIDATION_UPGRADE_COOLDOWN_V11 0
@@ -1558,8 +1558,8 @@ typedef union {
     pd_gilt_retract_bid_V11_t gilt_retract_bid_V11;
     pd_gilt_set_target_V11_t gilt_set_target_V11;
     pd_gilt_thaw_V11_t gilt_thaw_V11;
-    pd_bagslist_rebag_V11_t bagslist_rebag_V11;
-    pd_bagslist_put_in_front_of_V11_t bagslist_put_in_front_of_V11;
+    pd_voterlist_rebag_V11_t voterlist_rebag_V11;
+    pd_voterlist_put_in_front_of_V11_t voterlist_put_in_front_of_V11;
     pd_nominationpools_join_V11_t nominationpools_join_V11;
     pd_nominationpools_bond_extra_V11_t nominationpools_bond_extra_V11;
     pd_nominationpools_claim_payout_V11_t nominationpools_claim_payout_V11;

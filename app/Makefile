@@ -76,13 +76,13 @@ ifneq ($(TARGET_NAME),TARGET_NANOS)
 DEFINES += SUBSTRATE_PARSER_FULL
 endif
 APPNAME = "Kusama"
-APPPATH = "44'/434'"  --path "44'/354'"
+APPPATH = "44'/434'" --path "44'/354'"
 
 else ifeq ($(COIN),KSM_XL)
 # XL app configuration
 DEFINES += APP_STANDARD SUBSTRATE_PARSER_FULL
 APPNAME = "Kusama XL"
-APPPATH = "44'/434'"  --path "44'/354'"
+APPPATH = "44'/434'" --path "44'/354'"
 
 else
 define error_message

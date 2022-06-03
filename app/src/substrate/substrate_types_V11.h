@@ -170,6 +170,11 @@ typedef struct {
 
 typedef struct {
     uint8_t value;
+    pd_AccountId_V11_t set;
+} pd_ConfigOpAccountId_V11_t;
+
+typedef struct {
+    uint8_t value;
     pd_Balance_t set;
 } pd_ConfigOpBalanceOfT_V11_t;
 
@@ -256,7 +261,7 @@ typedef struct {
 typedef struct {
     // TODO: Not implemented
     uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxRawSolutionSolutionOfT_V11_t;
+} pd_BoxRawSolutionSolutionOfMinerConfig_V11_t;
 
 typedef struct {
     // TODO: Not implemented
@@ -421,7 +426,7 @@ typedef struct {
 } pd_Perbill_V11_t;
 
 typedef struct {
-    compactInt_t value;
+    uint8_t value;
 } pd_Percent_V11_t;
 
 typedef struct {

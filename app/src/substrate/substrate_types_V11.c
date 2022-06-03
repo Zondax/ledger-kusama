@@ -119,7 +119,7 @@ parser_error_t _readBoxPalletsOrigin_V11(parser_context_t* c, pd_BoxPalletsOrigi
     return parser_not_supported;
 }
 
-parser_error_t _readBoxRawSolutionSolutionOfT_V11(parser_context_t* c, pd_BoxRawSolutionSolutionOfT_V11_t* v)
+parser_error_t _readBoxRawSolutionSolutionOfMinerConfig_V11(parser_context_t* c, pd_BoxRawSolutionSolutionOfMinerConfig_V11_t* v)
 {
     return parser_not_supported;
 }
@@ -156,6 +156,23 @@ parser_error_t _readCompactAccountIndex_V11(parser_context_t* c, pd_CompactAccou
 parser_error_t _readCompactPerBill_V11(parser_context_t* c, pd_CompactPerBill_V11_t* v)
 {
     return _readCompactInt(c, &v->value);
+}
+
+parser_error_t _readConfigOpAccountId_V11(parser_context_t* c, pd_ConfigOpAccountId_V11_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Noop
+    case 2: // Remove
+        break;
+    case 1:
+        CHECK_ERROR(_readAccountId_V11(c, &v->set))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _readConfigOpBalanceOfT_V11(parser_context_t* c, pd_ConfigOpBalanceOfT_V11_t* v)
@@ -411,7 +428,9 @@ parser_error_t _readPerbill_V11(parser_context_t* c, pd_Perbill_V11_t* v)
 
 parser_error_t _readPercent_V11(parser_context_t* c, pd_Percent_V11_t* v)
 {
-    return _readCompactInt(c, &v->value);
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    return parser_ok;
 }
 
 parser_error_t _readPoolId_V11(parser_context_t* c, pd_PoolId_V11_t* v)
@@ -949,8 +968,8 @@ parser_error_t _toStringBoxPalletsOrigin_V11(
     return parser_print_not_supported;
 }
 
-parser_error_t _toStringBoxRawSolutionSolutionOfT_V11(
-    const pd_BoxRawSolutionSolutionOfT_V11_t* v,
+parser_error_t _toStringBoxRawSolutionSolutionOfMinerConfig_V11(
+    const pd_BoxRawSolutionSolutionOfMinerConfig_V11_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1032,6 +1051,31 @@ parser_error_t _toStringCompactPerBill_V11(
 {
     // 9 but shift 2 to show as percentage
     return _toStringCompactInt(&v->value, 7, "%", "", outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringConfigOpAccountId_V11(
+    const pd_ConfigOpAccountId_V11_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+    switch (v->value) {
+    case 0:
+        snprintf(outValue, outValueLen, "Noop");
+        break;
+    case 1:
+        CHECK_ERROR(_toStringAccountId_V11(&v->set, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2:
+        snprintf(outValue, outValueLen, "Remove");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _toStringConfigOpBalanceOfT_V11(
@@ -1505,8 +1549,14 @@ parser_error_t _toStringPercent_V11(
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    // 9 but shift 2 to show as percentage
-    return _toStringCompactInt(&v->value, 7, "%", "", outValue, outValueLen, pageIdx, pageCount);
+    char bufferUI[50];
+    char bufferRatio[50];
+
+    uint64_to_str(bufferRatio, sizeof(bufferRatio), v->value);
+
+    snprintf(bufferUI, sizeof(bufferUI), "%s%%", bufferRatio);
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+    return parser_ok;
 }
 
 parser_error_t _toStringPoolId_V11(
