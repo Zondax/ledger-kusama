@@ -77,19 +77,6 @@ typedef struct {
 } pd_CompactPerBill_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ElectionScore_V11_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_KeyValue_V11_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_Key_V11_t;
-
-typedef struct {
     uint8_t value;
     union {
         pd_AccountId_V11_t id;
@@ -122,38 +109,9 @@ typedef struct {
 } pd_ProxyType_V11_t;
 
 typedef struct {
-    uint32_t value;
-} pd_ReferendumIndex_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_StatementKind_V11_t;
-
-typedef struct {
     pd_BlockNumber_t height;
     uint32_t index;
 } pd_Timepoint_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_TupleAccountIdData_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_TupleBalanceOfTBalanceOfTBlockNumber_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_XcmVersion_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_schedulePeriodBlockNumber_V11_t;
 
 typedef struct {
     uint8_t value;
@@ -224,80 +182,6 @@ typedef struct {
 } pd_AccountIndex_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_AuthorityIdasRuntimeAppPublicSignature_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxCallOrHashOfT_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxEquivocationProofHashBlockNumber_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxEquivocationProofHeader_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxIdentityInfoMaxAdditionalFields_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxMultiLocation_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxPalletsOrigin_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxRawSolutionSolutionOfMinerConfig_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxVersionedMultiAssets_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxVersionedMultiLocation_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxVersionedXcmTasSysConfigCall_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_BoxVersionedXcmTuple_V11_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_CallHashOf_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ConfigOpPerbill_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ConfigOpPercent_V11_t;
-
-typedef struct {
     uint8_t value;
     uint32_t set;
 } pd_ConfigOpu32_V11_t;
@@ -315,57 +199,12 @@ typedef struct {
 } pd_EthereumAddress_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_HeadData_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_HeartbeatBlockNumber_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_HrmpChannelId_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_IdentityFields_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_JudgementBalanceOfT_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Judgement_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_KeyOwnerProof_V11_t;
-
-typedef struct {
     const uint8_t* _ptr;
 } pd_Keys_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_LeasePeriodOfT_V11_t;
-
-typedef struct {
     uint32_t value;
 } pd_MemberCount_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_NextConfigDescriptor_V11_t;
 
 typedef struct {
     uint8_t some;
@@ -374,60 +213,16 @@ typedef struct {
 
 typedef struct {
     uint8_t some;
-    pd_ElectionScore_V11_t contained;
-} pd_OptionElectionScore_V11_t;
-
-typedef struct {
-    uint8_t some;
     pd_ProxyType_V11_t contained;
 } pd_OptionProxyType_V11_t;
-
-typedef struct {
-    uint8_t some;
-    pd_ReferendumIndex_V11_t contained;
-} pd_OptionReferendumIndex_V11_t;
-
-typedef struct {
-    uint8_t some;
-    pd_StatementKind_V11_t contained;
-} pd_OptionStatementKind_V11_t;
-
-typedef struct {
-    uint8_t some;
-    pd_TupleBalanceOfTBalanceOfTBlockNumber_V11_t contained;
-} pd_OptionTupleBalanceOfTBalanceOfTBlockNumber_V11_t;
-
-typedef struct {
-    uint8_t some;
-    pd_XcmVersion_V11_t contained;
-} pd_OptionXcmVersion_V11_t;
-
-typedef struct {
-    uint8_t some;
-    pd_schedulePeriodBlockNumber_V11_t contained;
-} pd_OptionschedulePeriodBlockNumber_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_OverweightIndex_V11_t;
 
 typedef struct {
     uint32_t value;
 } pd_ParaId_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ParachainsInherentDataHeader_V11_t;
-
-typedef struct {
     uint32_t value;
 } pd_Perbill_V11_t;
-
-typedef struct {
-    uint8_t value;
-} pd_Percent_V11_t;
 
 typedef struct {
     uint32_t value;
@@ -438,47 +233,16 @@ typedef struct {
 } pd_PoolState_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_PvfCheckStatement_V11_t;
+    uint32_t value;
+} pd_ReferendumIndex_V11_t;
 
 typedef struct {
     uint32_t value;
 } pd_RegistrarIndex_V11_t;
 
 typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_Renouncing_V11_t;
-
-typedef struct {
     uint32_t value;
 } pd_SessionIndex_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_SolutionOrSnapshotSize_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_SupportsAccountId_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ValidationCodeHash_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ValidationCode_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_ValidatorSignature_V11_t;
 
 typedef struct {
     uint64_t _len;
@@ -487,35 +251,8 @@ typedef struct {
 } pd_VecAccountId_V11_t;
 
 typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecKeyValue_V11_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecKey_V11_t;
-
-typedef struct {
-    uint64_t _len;
-    const uint8_t* _ptr;
-    uint64_t _lenBuffer;
-} pd_VecTupleAccountIdData_V11_t;
-
-typedef struct {
-    uint64_t value;
-} pd_WeightLimit_V11_t;
-
-typedef struct {
     uint64_t value;
 } pd_Weight_V11_t;
-
-typedef struct {
-    // TODO: Not implemented
-    uint8_t _NOT_IMPLEMENTED__DO_NOT_USE;
-} pd_schedulePriority_V11_t;
 
 #ifdef __cplusplus
 }
