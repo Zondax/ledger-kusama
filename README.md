@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  11.9230.x
+# Kusama  12.9250.x
 
 ## System
 
@@ -219,6 +219,7 @@ Please:
 |Propose spend |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`LookupasStaticLookupSource` beneficiary <br/> |
 |Reject proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
 |Approve proposal |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
+|Spend |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`LookupasStaticLookupSource` beneficiary <br/> |
 |Remove approval |    | :heavy_check_mark: |   | `Compactu32` proposal_id <br/> |
 
 ## Claims
@@ -425,6 +426,7 @@ Please:
 |Set metadata |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
 |Set configs |    | :heavy_check_mark: |   | `ConfigOpBalanceOfT` min_join_bond <br/>`ConfigOpBalanceOfT` min_create_bond <br/>`ConfigOpu32` max_pools <br/>`ConfigOpu32` max_members <br/>`ConfigOpu32` max_members_per_pool <br/> |
 |Update roles |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`ConfigOpAccountId` new_root <br/>`ConfigOpAccountId` new_nominator <br/>`ConfigOpAccountId` new_state_toggler <br/> |
+|Chill |    | :heavy_check_mark: |   | `PoolId` pool_id <br/> |
 
 ## Configuration
 
