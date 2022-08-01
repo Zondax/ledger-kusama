@@ -179,4 +179,4 @@ The Makefile will build the firmware in a docker container and leave the binary 
 
 ## APDU Specifications
 
-- [APDU Protocol](docs/APDUSPEC.md)
+- [APDU Protocol](./APDUSPEC.md)
