@@ -550,7 +550,8 @@ typedef struct {
 #define PD_CALL_PHRAGMENELECTION_REMOVE_MEMBER_V12 4
 typedef struct {
     pd_LookupasStaticLookupSource_V12_t who;
-    pd_bool_t has_replacement;
+    pd_bool_t slash_bond;
+    pd_bool_t rerun_election;
 } pd_phragmenelection_remove_member_V12_t;
 
 #define PD_CALL_PHRAGMENELECTION_CLEAN_DEFUNCT_VOTERS_V12 5
