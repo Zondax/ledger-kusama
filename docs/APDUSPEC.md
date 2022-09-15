@@ -68,18 +68,18 @@ The general structure of commands and responses is as follows:
 
 #### Command
 
-| Field   | Type     | Content                   | Expected   |
-| ------- | -------- | ------------------------- | ---------- |
-| CLA     | byte (1) | Application Identifier    | 0x99       |
-| INS     | byte (1) | Instruction ID            | 0x01       |
-| P1      | byte (1) | Request User confirmation | No = 0     |
-| P2      | byte (1) | Parameter 2               | ignored    |
-| L       | byte (1) | Bytes in payload          | (depends)  |
-| Path[0] | byte (4) | Derivation Path Data      | 0x80000000 | 44 |
+| Field   | Type     | Content                   | Expected   |     |
+| ------- | -------- | ------------------------- | ---------- | --- |
+| CLA     | byte (1) | Application Identifier    | 0x99       |     |
+| INS     | byte (1) | Instruction ID            | 0x01       |     |
+| P1      | byte (1) | Request User confirmation | No = 0     |     |
+| P2      | byte (1) | Parameter 2               | ignored    |     |
+| L       | byte (1) | Bytes in payload          | (depends)  |     |
+| Path[0] | byte (4) | Derivation Path Data      | 0x80000000 | 44  |
 | Path[1] | byte (4) | Derivation Path Data      | 0x80000000 | 434 |
-| Path[2] | byte (4) | Derivation Path Data      | ?          |
-| Path[3] | byte (4) | Derivation Path Data      | ?          |
-| Path[4] | byte (4) | Derivation Path Data      | ?          |
+| Path[2] | byte (4) | Derivation Path Data      | ?          |     |
+| Path[3] | byte (4) | Derivation Path Data      | ?          |     |
+| Path[4] | byte (4) | Derivation Path Data      | ?          |     |
 
 #### Response
 
@@ -95,18 +95,18 @@ The general structure of commands and responses is as follows:
 
 #### Command
 
-| Field   | Type     | Content                   | Expected   |
-| ------- | -------- | ------------------------- | ---------- |
-| CLA     | byte (1) | Application Identifier    | 0x99       |
-| INS     | byte (1) | Instruction ID            | 0x11       |
-| P1      | byte (1) | Request User confirmation | No = 0     |
-| P2      | byte (1) | Parameter 2               | ignored    |
-| L       | byte (1) | Bytes in payload          | (depends)  |
-| Path[0] | byte (4) | Derivation Path Data      | 0x80000000 | 44 |
+| Field   | Type     | Content                   | Expected   |     |
+| ------- | -------- | ------------------------- | ---------- | --- |
+| CLA     | byte (1) | Application Identifier    | 0x99       |     |
+| INS     | byte (1) | Instruction ID            | 0x11       |     |
+| P1      | byte (1) | Request User confirmation | No = 0     |     |
+| P2      | byte (1) | Parameter 2               | ignored    |     |
+| L       | byte (1) | Bytes in payload          | (depends)  |     |
+| Path[0] | byte (4) | Derivation Path Data      | 0x80000000 | 44  |
 | Path[1] | byte (4) | Derivation Path Data      | 0x80000000 | 434 |
-| Path[2] | byte (4) | Derivation Path Data      | ?          |
-| Path[3] | byte (4) | Derivation Path Data      | ?          |
-| Path[4] | byte (4) | Derivation Path Data      | ?          |
+| Path[2] | byte (4) | Derivation Path Data      | ?          |     |
+| Path[3] | byte (4) | Derivation Path Data      | ?          |     |
+| Path[4] | byte (4) | Derivation Path Data      | ?          |     |
 
 #### Response
 
