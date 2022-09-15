@@ -56,6 +56,7 @@ static const char* STR_MO_PARASDISPUTES = "Parasdisputes";
 static const char* STR_MO_REGISTRAR = "Registrar";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
+static const char* STR_MO_UMP = "Ump";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -289,6 +290,7 @@ static const char* STR_ME_EDIT = "Edit";
 static const char* STR_ME_ADD_MEMO = "Add memo";
 static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
+static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
 
 // Items names
 static const char* STR_IT_ratio = "Ratio";
@@ -477,6 +479,7 @@ static const char* STR_IT_end = "End";
 static const char* STR_IT_verifier = "Verifier";
 static const char* STR_IT_signature = "Signature";
 static const char* STR_IT_memo = "Memo";
+static const char* STR_IT_weight_limit = "Weight limit";
 
 #ifdef __cplusplus
 }
