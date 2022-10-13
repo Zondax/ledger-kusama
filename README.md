@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama  13.9290.x
+# Kusama  13.9291.x
 
 ## System
 
@@ -414,13 +414,13 @@ Please:
 
 | Name        | Light | XL | Nesting | Arguments |
 | :---------- |:------------:|:--------:|:--------:|:--------|
-|Join |    | :heavy_check_mark: |   | `Compactu128` amount <br/>`PoolId` pool_id <br/> |
+|Join |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`PoolId` pool_id <br/> |
 |Bond extra |    | :heavy_check_mark: |   | `BondExtraBalanceOfT` extra <br/> |
 |Claim payout |    | :heavy_check_mark: |   |  |
-|Unbond |    | :heavy_check_mark: |   | `AccountIdLookupOfT` member_account <br/>`Compactu128` unbonding_points <br/> |
+|Unbond |    | :heavy_check_mark: |   | `AccountIdLookupOfT` member_account <br/>`CompactBalance` unbonding_points <br/> |
 |Pool withdraw unbonded |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`u32` num_slashing_spans <br/> |
 |Withdraw Unbonded |    | :heavy_check_mark: |   | `AccountIdLookupOfT` member_account <br/>`u32` num_slashing_spans <br/> |
-|Create |    | :heavy_check_mark: |   | `Compactu128` amount <br/>`AccountIdLookupOfT` root <br/>`AccountIdLookupOfT` nominator <br/>`AccountIdLookupOfT` state_toggler <br/> |
+|Create |    | :heavy_check_mark: |   | `CompactBalance` amount <br/>`AccountIdLookupOfT` root <br/>`AccountIdLookupOfT` nominator <br/>`AccountIdLookupOfT` state_toggler <br/> |
 |Nominate |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`VecAccountId` validators <br/> |
 |Set state |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`PoolState` state <br/> |
 |Set metadata |    | :heavy_check_mark: |   | `PoolId` pool_id <br/>`Vecu8` metadata <br/> |
