@@ -1480,7 +1480,7 @@ __Z_INLINE parser_error_t _readMethod_voterlist_put_in_front_of_V13(
 __Z_INLINE parser_error_t _readMethod_nominationpools_join_V13(
     parser_context_t* c, pd_nominationpools_join_V13_t* m)
 {
-    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     CHECK_ERROR(_readPoolId_V13(c, &m->pool_id))
     return parser_ok;
 }
@@ -1502,7 +1502,7 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_unbond_V13(
     parser_context_t* c, pd_nominationpools_unbond_V13_t* m)
 {
     CHECK_ERROR(_readAccountIdLookupOfT_V13(c, &m->member_account))
-    CHECK_ERROR(_readCompactu128(c, &m->unbonding_points))
+    CHECK_ERROR(_readCompactBalance(c, &m->unbonding_points))
     return parser_ok;
 }
 
@@ -1525,7 +1525,7 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_withdraw_unbonded_V13(
 __Z_INLINE parser_error_t _readMethod_nominationpools_create_V13(
     parser_context_t* c, pd_nominationpools_create_V13_t* m)
 {
-    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     CHECK_ERROR(_readAccountIdLookupOfT_V13(c, &m->root))
     CHECK_ERROR(_readAccountIdLookupOfT_V13(c, &m->nominator))
     CHECK_ERROR(_readAccountIdLookupOfT_V13(c, &m->state_toggler))
@@ -8568,7 +8568,7 @@ parser_error_t _getMethod_ItemValue_V13(
     case 10496: /* module 41 call 0 */
         switch (itemIdx) {
         case 0: /* nominationpools_join_V13 - amount */;
-            return _toStringCompactu128(
+            return _toStringCompactBalance(
                 &m->basic.nominationpools_join_V13.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8603,7 +8603,7 @@ parser_error_t _getMethod_ItemValue_V13(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_unbond_V13 - unbonding_points */;
-            return _toStringCompactu128(
+            return _toStringCompactBalance(
                 &m->basic.nominationpools_unbond_V13.unbonding_points,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8643,7 +8643,7 @@ parser_error_t _getMethod_ItemValue_V13(
     case 10502: /* module 41 call 6 */
         switch (itemIdx) {
         case 0: /* nominationpools_create_V13 - amount */;
-            return _toStringCompactu128(
+            return _toStringCompactBalance(
                 &m->basic.nominationpools_create_V13.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);

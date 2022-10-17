@@ -51,12 +51,13 @@ static const char* STR_MO_VOTERLIST = "Voterlist";
 static const char* STR_MO_NOMINATIONPOOLS = "Nominationpools";
 static const char* STR_MO_CONFIGURATION = "Configuration";
 static const char* STR_MO_INITIALIZER = "Initializer";
+static const char* STR_MO_UMP = "Ump";
 static const char* STR_MO_HRMP = "Hrmp";
 static const char* STR_MO_PARASDISPUTES = "Parasdisputes";
 static const char* STR_MO_REGISTRAR = "Registrar";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
-static const char* STR_MO_UMP = "Ump";
+static const char* STR_MO_FASTUNSTAKE = "Fastunstake";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -276,6 +277,7 @@ static const char* STR_ME_SET_PVF_VOTING_TTL = "Set pvf voting ttl";
 static const char* STR_ME_SET_MINIMUM_VALIDATION_UPGRADE_DELAY = "Set minimum validation upgrade delay";
 static const char* STR_ME_SET_BYPASS_CONSISTENCY_CHECK = "Set bypass consistency check";
 static const char* STR_ME_FORCE_APPROVE = "Force approve";
+static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
 static const char* STR_ME_FORCE_PROCESS_HRMP_OPEN = "Force process hrmp open";
 static const char* STR_ME_FORCE_PROCESS_HRMP_CLOSE = "Force process hrmp close";
 static const char* STR_ME_FORCE_UNFREEZE = "Force unfreeze";
@@ -290,7 +292,11 @@ static const char* STR_ME_EDIT = "Edit";
 static const char* STR_ME_ADD_MEMO = "Add memo";
 static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
-static const char* STR_ME_SERVICE_OVERWEIGHT = "Service overweight";
+static const char* STR_ME_CREATE_PURE = "Create pure";
+static const char* STR_ME_KILL_PURE = "Kill pure";
+static const char* STR_ME_REGISTER_FAST_UNSTAKE = "Register fast unstake";
+static const char* STR_ME_DEREGISTER = "Deregister";
+static const char* STR_ME_CONTROL = "Control";
 
 // Items names
 static const char* STR_IT_ratio = "Ratio";
@@ -453,6 +459,7 @@ static const char* STR_IT_new_root = "New root";
 static const char* STR_IT_new_nominator = "New nominator";
 static const char* STR_IT_new_state_toggler = "New state toggler";
 static const char* STR_IT_up_to = "Up to";
+static const char* STR_IT_weight_limit = "Weight limit";
 static const char* STR_IT_recipient = "Recipient";
 static const char* STR_IT_proposed_max_capacity = "Proposed max capacity";
 static const char* STR_IT_proposed_max_message_size = "Proposed max message size";
@@ -479,7 +486,8 @@ static const char* STR_IT_end = "End";
 static const char* STR_IT_verifier = "Verifier";
 static const char* STR_IT_signature = "Signature";
 static const char* STR_IT_memo = "Memo";
-static const char* STR_IT_weight_limit = "Weight limit";
+static const char* STR_IT_identity = "Identity";
+static const char* STR_IT_unchecked_eras_to_check = "Unchecked eras to check";
 
 #ifdef __cplusplus
 }
