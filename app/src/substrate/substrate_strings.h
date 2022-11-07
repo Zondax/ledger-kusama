@@ -55,6 +55,11 @@ static const char* STR_MO_PARASDISPUTES = "Parasdisputes";
 static const char* STR_MO_AUCTIONS = "Auctions";
 static const char* STR_MO_CROWDLOAN = "Crowdloan";
 static const char* STR_MO_XCMPALLET = "Xcmpallet";
+static const char* STR_MO_CONVICTIONVOTING = "Convictionvoting";
+static const char* STR_MO_REFERENDA = "Referenda";
+static const char* STR_MO_FELLOWSHIPCOLLECTIVE = "Fellowshipcollective";
+static const char* STR_MO_FELLOWSHIPREFERENDA = "Fellowshipreferenda";
+static const char* STR_MO_WHITELIST = "Whitelist";
 
 // Methods names
 static const char* STR_ME_FILL_BLOCK = "Fill block";
@@ -294,6 +299,22 @@ static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
+static const char* STR_ME_SET_STAKING_CONFIGS = "Set staking configs";
+static const char* STR_ME_BLACKLIST = "Blacklist";
+static const char* STR_ME_CLOSE_OLD_WEIGHT = "Close old weight";
+static const char* STR_ME_PLACE_DECISION_DEPOSIT = "Place decision deposit";
+static const char* STR_ME_REFUND_DECISION_DEPOSIT = "Refund decision deposit";
+static const char* STR_ME_CANCEL = "Cancel";
+static const char* STR_ME_KILL = "Kill";
+static const char* STR_ME_NUDGE_REFERENDUM = "Nudge referendum";
+static const char* STR_ME_ONE_FEWER_DECIDING = "One fewer deciding";
+static const char* STR_ME_PROMOTE_MEMBER = "Promote member";
+static const char* STR_ME_DEMOTE_MEMBER = "Demote member";
+static const char* STR_ME_CLEANUP_POLL = "Cleanup poll";
+static const char* STR_ME_WHITELIST_CALL = "Whitelist call";
+static const char* STR_ME_REMOVE_WHITELISTED_CALL = "Remove whitelisted call";
+static const char* STR_ME_DISPATCH_WHITELISTED_CALL = "Dispatch whitelisted call";
+static const char* STR_ME_DISPATCH_WHITELISTED_CALL_WITH_PREIMAGE = "Dispatch whitelisted call with preimage";
 
 // Items names
 static const char* STR_IT_ratio = "Ratio";
@@ -466,6 +487,15 @@ static const char* STR_IT_fee_asset_item = "Fee asset item";
 static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
+static const char* STR_IT_poll_index = "Poll index";
+static const char* STR_IT_class_ = "Class";
+static const char* STR_IT_proposal_origin = "Proposal origin";
+static const char* STR_IT_enactment_moment = "Enactment moment";
+static const char* STR_IT_track = "Track";
+static const char* STR_IT_min_rank = "Min rank";
+static const char* STR_IT_poll = "Poll";
+static const char* STR_IT_aye = "Aye";
+static const char* STR_IT_call_weight_witness = "Call weight witness";
 
 #ifdef __cplusplus
 }
