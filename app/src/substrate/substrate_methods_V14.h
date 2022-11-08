@@ -25,6 +25,9 @@ extern "C" {
 #include "substrate_types_V14.h"
 #include <stddef.h>
 #include <stdint.h>
+#ifdef LEDGER_SPECIFIC
+#include "bolos_target.h"
+#endif
 
 #define PD_CALL_SYSTEM_V14 0
 #define PD_CALL_TIMESTAMP_V14 2
@@ -32,7 +35,6 @@ extern "C" {
 #define PD_CALL_BALANCES_V14 4
 #define PD_CALL_STAKING_V14 6
 #define PD_CALL_SESSION_V14 8
-#define PD_CALL_GRANDPA_V14 10
 #define PD_CALL_DEMOCRACY_V14 13
 #define PD_CALL_COUNCIL_V14 14
 #define PD_CALL_TECHNICALCOMMITTEE_V14 15
@@ -51,7 +53,6 @@ extern "C" {
 #define PD_CALL_BOUNTIES_V14 35
 #define PD_CALL_CHILDBOUNTIES_V14 40
 #define PD_CALL_TIPS_V14 36
-#define PD_CALL_ELECTIONPROVIDERMULTIPHASE_V14 37
 #define PD_CALL_GILT_V14 38
 #define PD_CALL_VOTERLIST_V14 39
 #define PD_CALL_NOMINATIONPOOLS_V14 41
@@ -59,11 +60,10 @@ extern "C" {
 #define PD_CALL_CONFIGURATION_V14 51
 #define PD_CALL_INITIALIZER_V14 57
 #define PD_CALL_UMP_V14 59
-#define PD_CALL_HRMP_V14 60
 #define PD_CALL_PARASDISPUTES_V14 62
-#define PD_CALL_REGISTRAR_V14 70
 #define PD_CALL_AUCTIONS_V14 72
 #define PD_CALL_CROWDLOAN_V14 73
+#define PD_CALL_XCMPALLET_V14 99
 
 #define PD_CALL_BALANCES_TRANSFER_ALL_V14 4
 typedef struct {
@@ -214,6 +214,23 @@ typedef struct {
 } pd_crowdloan_contribute_all_V14_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
+#ifndef TARGET_NANOS
+#define PD_CALL_XCMPALLET_RESERVE_TRANSFER_ASSETS_V14 2
+typedef struct {
+    pd_BoxVersionedMultiLocation_V14_t dest;
+    pd_BoxVersionedMultiLocation_V14_t beneficiary;
+    pd_BoxVersionedMultiAssets_V14_t assets;
+    pd_u32_t fee_asset_item;
+} pd_xcmpallet_reserve_transfer_assets_V14_t;
+#define PD_CALL_XCMPALLET_LIMITED_RESERVE_TRANSFER_ASSETS_V14 8
+typedef struct {
+    pd_BoxVersionedMultiLocation_V14_t dest;
+    pd_BoxVersionedMultiLocation_V14_t beneficiary;
+    pd_BoxVersionedMultiAssets_V14_t assets;
+    pd_u32_t fee_asset_item;
+    pd_WeightLimit_V14_t weight_limit;
+} pd_xcmpallet_limited_reserve_transfer_assets_V14_t;
+#endif
 
 #define PD_CALL_TIMESTAMP_SET_V14 0
 typedef struct {
@@ -264,6 +281,11 @@ typedef struct {
     pd_Compactu32_t additional;
 } pd_staking_increase_validator_count_V14_t;
 
+#define PD_CALL_STAKING_SCALE_VALIDATOR_COUNT_V14 11
+typedef struct {
+    pd_Percent_V14_t factor;
+} pd_staking_scale_validator_count_V14_t;
+
 #define PD_CALL_STAKING_FORCE_NO_ERAS_V14 12
 typedef struct {
 } pd_staking_force_no_eras_V14_t;
@@ -313,12 +335,6 @@ typedef struct {
 typedef struct {
     pd_AccountId_V14_t validator_stash;
 } pd_staking_force_apply_min_commission_V14_t;
-
-#define PD_CALL_GRANDPA_NOTE_STALLED_V14 2
-typedef struct {
-    pd_BlockNumber_t delay;
-    pd_BlockNumber_t best_finalized_block_number;
-} pd_grandpa_note_stalled_V14_t;
 
 #define PD_CALL_DEMOCRACY_NOTE_PREIMAGE_V14 14
 typedef struct {
@@ -540,6 +556,16 @@ typedef struct {
     pd_AccountIdLookupOfT_V14_t account;
 } pd_identity_add_registrar_V14_t;
 
+#define PD_CALL_IDENTITY_SET_IDENTITY_V14 1
+typedef struct {
+    pd_IdentityInfo_V14_t info;
+} pd_identity_set_identity_V14_t;
+
+#define PD_CALL_IDENTITY_SET_SUBS_V14 2
+typedef struct {
+    pd_VecTupleAccountIdData_V14_t subs;
+} pd_identity_set_subs_V14_t;
+
 #define PD_CALL_IDENTITY_CLEAR_IDENTITY_V14 3
 typedef struct {
 } pd_identity_clear_identity_V14_t;
@@ -567,10 +593,30 @@ typedef struct {
     pd_AccountIdLookupOfT_V14_t new_;
 } pd_identity_set_account_id_V14_t;
 
+#define PD_CALL_IDENTITY_PROVIDE_JUDGEMENT_V14 9
+typedef struct {
+    pd_Compactu32_t reg_index;
+    pd_AccountIdLookupOfT_V14_t target;
+    pd_JudgementBalanceOfT_V14_t judgement;
+    pd_Hash_t identity;
+} pd_identity_provide_judgement_V14_t;
+
 #define PD_CALL_IDENTITY_KILL_IDENTITY_V14 10
 typedef struct {
     pd_AccountIdLookupOfT_V14_t target;
 } pd_identity_kill_identity_V14_t;
+
+#define PD_CALL_IDENTITY_ADD_SUB_V14 11
+typedef struct {
+    pd_AccountIdLookupOfT_V14_t sub;
+    pd_Data_t data;
+} pd_identity_add_sub_V14_t;
+
+#define PD_CALL_IDENTITY_RENAME_SUB_V14 12
+typedef struct {
+    pd_AccountIdLookupOfT_V14_t sub;
+    pd_Data_t data;
+} pd_identity_rename_sub_V14_t;
 
 #define PD_CALL_IDENTITY_REMOVE_SUB_V14 13
 typedef struct {
@@ -895,12 +941,6 @@ typedef struct {
 typedef struct {
     pd_Hash_t hash;
 } pd_tips_slash_tip_V14_t;
-
-#define PD_CALL_ELECTIONPROVIDERMULTIPHASE_GOVERNANCE_FALLBACK_V14 4
-typedef struct {
-    pd_Optionu32_t maybe_max_voters;
-    pd_Optionu32_t maybe_max_targets;
-} pd_electionprovidermultiphase_governance_fallback_V14_t;
 
 #define PD_CALL_GILT_PLACE_BID_V14 0
 typedef struct {
@@ -1264,23 +1304,9 @@ typedef struct {
     pd_Weight_V14_t weight_limit;
 } pd_ump_service_overweight_V14_t;
 
-#define PD_CALL_HRMP_FORCE_PROCESS_HRMP_OPEN_V14 4
-typedef struct {
-    pd_u32_t channels;
-} pd_hrmp_force_process_hrmp_open_V14_t;
-
-#define PD_CALL_HRMP_FORCE_PROCESS_HRMP_CLOSE_V14 5
-typedef struct {
-    pd_u32_t channels;
-} pd_hrmp_force_process_hrmp_close_V14_t;
-
 #define PD_CALL_PARASDISPUTES_FORCE_UNFREEZE_V14 0
 typedef struct {
 } pd_parasdisputes_force_unfreeze_V14_t;
-
-#define PD_CALL_REGISTRAR_RESERVE_V14 5
-typedef struct {
-} pd_registrar_reserve_V14_t;
 
 #define PD_CALL_AUCTIONS_NEW_AUCTION_V14 0
 typedef struct {
@@ -1331,6 +1357,10 @@ typedef union {
     pd_crowdloan_poke_V14_t crowdloan_poke_V14;
     pd_crowdloan_contribute_all_V14_t crowdloan_contribute_all_V14;
 #ifdef SUBSTRATE_PARSER_FULL
+#ifndef TARGET_NANOS
+    pd_xcmpallet_reserve_transfer_assets_V14_t xcmpallet_reserve_transfer_assets_V14;
+    pd_xcmpallet_limited_reserve_transfer_assets_V14_t xcmpallet_limited_reserve_transfer_assets_V14;
+#endif
     pd_timestamp_set_V14_t timestamp_set_V14;
     pd_indices_claim_V14_t indices_claim_V14;
     pd_indices_transfer_V14_t indices_transfer_V14;
@@ -1340,6 +1370,7 @@ typedef union {
     pd_balances_force_unreserve_V14_t balances_force_unreserve_V14;
     pd_staking_set_validator_count_V14_t staking_set_validator_count_V14;
     pd_staking_increase_validator_count_V14_t staking_increase_validator_count_V14;
+    pd_staking_scale_validator_count_V14_t staking_scale_validator_count_V14;
     pd_staking_force_no_eras_V14_t staking_force_no_eras_V14;
     pd_staking_force_new_era_V14_t staking_force_new_era_V14;
     pd_staking_set_invulnerables_V14_t staking_set_invulnerables_V14;
@@ -1350,7 +1381,6 @@ typedef union {
     pd_staking_kick_V14_t staking_kick_V14;
     pd_staking_chill_other_V14_t staking_chill_other_V14;
     pd_staking_force_apply_min_commission_V14_t staking_force_apply_min_commission_V14;
-    pd_grandpa_note_stalled_V14_t grandpa_note_stalled_V14;
     pd_democracy_note_preimage_V14_t democracy_note_preimage_V14;
     pd_democracy_note_preimage_operational_V14_t democracy_note_preimage_operational_V14;
     pd_democracy_note_imminent_preimage_V14_t democracy_note_imminent_preimage_V14;
@@ -1389,12 +1419,17 @@ typedef union {
     pd_claims_attest_V14_t claims_attest_V14;
     pd_claims_move_claim_V14_t claims_move_claim_V14;
     pd_identity_add_registrar_V14_t identity_add_registrar_V14;
+    pd_identity_set_identity_V14_t identity_set_identity_V14;
+    pd_identity_set_subs_V14_t identity_set_subs_V14;
     pd_identity_clear_identity_V14_t identity_clear_identity_V14;
     pd_identity_request_judgement_V14_t identity_request_judgement_V14;
     pd_identity_cancel_request_V14_t identity_cancel_request_V14;
     pd_identity_set_fee_V14_t identity_set_fee_V14;
     pd_identity_set_account_id_V14_t identity_set_account_id_V14;
+    pd_identity_provide_judgement_V14_t identity_provide_judgement_V14;
     pd_identity_kill_identity_V14_t identity_kill_identity_V14;
+    pd_identity_add_sub_V14_t identity_add_sub_V14;
+    pd_identity_rename_sub_V14_t identity_rename_sub_V14;
     pd_identity_remove_sub_V14_t identity_remove_sub_V14;
     pd_identity_quit_sub_V14_t identity_quit_sub_V14;
     pd_society_bid_V14_t society_bid_V14;
@@ -1452,7 +1487,6 @@ typedef union {
     pd_tips_tip_V14_t tips_tip_V14;
     pd_tips_close_tip_V14_t tips_close_tip_V14;
     pd_tips_slash_tip_V14_t tips_slash_tip_V14;
-    pd_electionprovidermultiphase_governance_fallback_V14_t electionprovidermultiphase_governance_fallback_V14;
     pd_gilt_place_bid_V14_t gilt_place_bid_V14;
     pd_gilt_retract_bid_V14_t gilt_retract_bid_V14;
     pd_gilt_set_target_V14_t gilt_set_target_V14;
@@ -1522,10 +1556,7 @@ typedef union {
     pd_configuration_set_bypass_consistency_check_V14_t configuration_set_bypass_consistency_check_V14;
     pd_initializer_force_approve_V14_t initializer_force_approve_V14;
     pd_ump_service_overweight_V14_t ump_service_overweight_V14;
-    pd_hrmp_force_process_hrmp_open_V14_t hrmp_force_process_hrmp_open_V14;
-    pd_hrmp_force_process_hrmp_close_V14_t hrmp_force_process_hrmp_close_V14;
     pd_parasdisputes_force_unfreeze_V14_t parasdisputes_force_unfreeze_V14;
-    pd_registrar_reserve_V14_t registrar_reserve_V14;
     pd_auctions_new_auction_V14_t auctions_new_auction_V14;
     pd_auctions_bid_V14_t auctions_bid_V14;
     pd_auctions_cancel_auction_V14_t auctions_cancel_auction_V14;
@@ -1552,6 +1583,8 @@ typedef struct {
 } pd_balances_transfer_keep_alive_V14_t;
 
 #ifdef SUBSTRATE_PARSER_FULL
+#ifndef TARGET_NANOS
+#endif
 #define PD_CALL_SYSTEM_FILL_BLOCK_V14 0
 typedef struct {
     pd_Perbill_V14_t ratio;
@@ -1744,6 +1777,8 @@ typedef union {
     pd_balances_force_transfer_V14_t balances_force_transfer_V14;
     pd_balances_transfer_keep_alive_V14_t balances_transfer_keep_alive_V14;
 #ifdef SUBSTRATE_PARSER_FULL
+#ifndef TARGET_NANOS
+#endif
     pd_system_fill_block_V14_t system_fill_block_V14;
     pd_system_remark_V14_t system_remark_V14;
     pd_system_set_heap_pages_V14_t system_set_heap_pages_V14;
