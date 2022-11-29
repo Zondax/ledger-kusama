@@ -2231,7 +2231,7 @@ parser_error_t _readMethod_V15(
         CHECK_ERROR(_readMethod_balances_transfer_all_V15(c, &method->basic.balances_transfer_all_V15))
         break;
     case 1536: /* module 6 call 0 */
-        CHECK_ERROR(_readMethod_staking_bond_V15(c, &method->basic.staking_bond_V15))
+        CHECK_ERROR(_readMethod_staking_bond_V15(c, &method->nested.staking_bond_V15))
         break;
     case 1537: /* module 6 call 1 */
         CHECK_ERROR(_readMethod_staking_bond_extra_V15(c, &method->basic.staking_bond_extra_V15))
@@ -2246,7 +2246,7 @@ parser_error_t _readMethod_V15(
         CHECK_ERROR(_readMethod_staking_validate_V15(c, &method->basic.staking_validate_V15))
         break;
     case 1541: /* module 6 call 5 */
-        CHECK_ERROR(_readMethod_staking_nominate_V15(c, &method->basic.staking_nominate_V15))
+        CHECK_ERROR(_readMethod_staking_nominate_V15(c, &method->nested.staking_nominate_V15))
         break;
     case 1542: /* module 6 call 6 */
         CHECK_ERROR(_readMethod_staking_chill_V15(c, &method->basic.staking_chill_V15))
@@ -6831,17 +6831,17 @@ parser_error_t _getMethod_ItemValue_V15(
         switch (itemIdx) {
         case 0: /* staking_bond_V15 - controller */;
             return _toStringAccountIdLookupOfT_V15(
-                &m->basic.staking_bond_V15.controller,
+                &m->nested.staking_bond_V15.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_bond_V15 - amount */;
             return _toStringCompactBalance(
-                &m->basic.staking_bond_V15.amount,
+                &m->nested.staking_bond_V15.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_bond_V15 - payee */;
             return _toStringRewardDestination_V15(
-                &m->basic.staking_bond_V15.payee,
+                &m->nested.staking_bond_V15.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6891,7 +6891,7 @@ parser_error_t _getMethod_ItemValue_V15(
         switch (itemIdx) {
         case 0: /* staking_nominate_V15 - targets */;
             return _toStringVecAccountIdLookupOfT_V15(
-                &m->basic.staking_nominate_V15.targets,
+                &m->nested.staking_nominate_V15.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -10572,12 +10572,10 @@ bool _getMethod_IsNestingSupported_V15(uint8_t moduleIdx, uint8_t callIdx)
     case 772: // Indices:Freeze
     case 1028: // Balances:Transfer all
     case 1029: // Balances:Force unreserve
-    case 1536: // Staking:Bond
     case 1537: // Staking:Bond extra
     case 1538: // Staking:Unbond
     case 1539: // Staking:Withdraw Unbonded
     case 1540: // Staking:Validate
-    case 1541: // Staking:Nominate
     case 1542: // Staking:Chill
     case 1543: // Staking:Set payee
     case 1544: // Staking:Set controller
