@@ -131,6 +131,10 @@ typedef struct {
 } pd_VecTupleDataData_t;
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_u128_t;
+
+typedef struct {
     pd_Call_t call;
 } pd_Proposal_t;
 
@@ -144,6 +148,11 @@ typedef struct {
 typedef struct {
     const uint8_t* _ptr;
 } pd_Hash_t;
+
+typedef struct {
+    uint8_t some;
+    pd_u128_t contained;
+} pd_Optionu128_t;
 
 typedef struct {
     uint8_t some;
