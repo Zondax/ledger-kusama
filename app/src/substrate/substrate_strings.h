@@ -311,6 +311,7 @@ static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
+static const char* STR_ME_REFUND_SUBMISSION_DEPOSIT = "Refund submission deposit";
 
 // Items names
 static const char* STR_IT_remark = "Remark";
@@ -488,6 +489,7 @@ static const char* STR_IT_fee_asset_item = "Fee asset item";
 static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
+static const char* STR_IT_call_encoded_len = "Call encoded len";
 
 #ifdef __cplusplus
 }
