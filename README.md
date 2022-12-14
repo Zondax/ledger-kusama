@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama 17.9340.x
+# Kusama 18.9350.x
 
 ## System
 
@@ -228,15 +228,16 @@ Please:
 
 ## Referenda
 
-| Name                    | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                           |
-| ----------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------- |
-| Submit                  |        |                    |                    |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOf`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
-| Place decision deposit  |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Refund decision deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Cancel                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Kill                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Nudge referendum        |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| One fewer deciding      |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                               |
+| Name                      | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                           |
+| ------------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| Submit                    |        |                    |                    |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOf`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
+| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                               |
+| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
 
 ## FellowshipCollective
 
@@ -251,24 +252,25 @@ Please:
 
 ## FellowshipReferenda
 
-| Name                    | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                           |
-| ----------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------- |
-| Submit                  |        |                    |                    |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOf`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
-| Place decision deposit  |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Refund decision deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Cancel                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Kill                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| Nudge referendum        |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
-| One fewer deciding      |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                               |
+| Name                      | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                           |
+| ------------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| Submit                    |        |                    |                    |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOf`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
+| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
+| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                               |
+| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                         |
 
 ## Whitelist
 
-| Name                                    | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                            |
-| --------------------------------------- | ------ | ------------------ | ------------------ | ------- | ---------------------------------------------------- |
-| Whitelist call                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`call_hash<br/>                                 |
-| Remove whitelisted call                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`call_hash<br/>                                 |
-| Dispatch whitelisted call               |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`call_hash<br/>`Weight`call_weight_witness<br/> |
-| Dispatch whitelisted call with preimage |        | :heavy_check_mark: | :heavy_check_mark: |         | `Call`call<br/>                                      |
+| Name                                    | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                              |
+| --------------------------------------- | ------ | ------------------ | ------------------ | ------- | -------------------------------------------------------------------------------------- |
+| Whitelist call                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `PreimageHash`call_hash<br/>                                                           |
+| Remove whitelisted call                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `PreimageHash`call_hash<br/>                                                           |
+| Dispatch whitelisted call               |        | :heavy_check_mark: | :heavy_check_mark: |         | `PreimageHash`call_hash<br/>`u32`call_encoded_len<br/>`Weight`call_weight_witness<br/> |
+| Dispatch whitelisted call with preimage |        | :heavy_check_mark: | :heavy_check_mark: |         | `Call`call<br/>                                                                        |
 
 ## Claims
 
