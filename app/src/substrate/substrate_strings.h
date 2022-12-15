@@ -149,6 +149,7 @@ static const char* STR_ME_CANCEL = "Cancel";
 static const char* STR_ME_KILL = "Kill";
 static const char* STR_ME_NUDGE_REFERENDUM = "Nudge referendum";
 static const char* STR_ME_ONE_FEWER_DECIDING = "One fewer deciding";
+static const char* STR_ME_REFUND_SUBMISSION_DEPOSIT = "Refund submission deposit";
 static const char* STR_ME_PROMOTE_MEMBER = "Promote member";
 static const char* STR_ME_DEMOTE_MEMBER = "Demote member";
 static const char* STR_ME_CLEANUP_POLL = "Cleanup poll";
@@ -311,7 +312,6 @@ static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
-static const char* STR_ME_REFUND_SUBMISSION_DEPOSIT = "Refund submission deposit";
 
 // Items names
 static const char* STR_IT_remark = "Remark";
@@ -392,6 +392,7 @@ static const char* STR_IT_poll = "Poll";
 static const char* STR_IT_aye = "Aye";
 static const char* STR_IT_max = "Max";
 static const char* STR_IT_call_hash = "Call hash";
+static const char* STR_IT_call_encoded_len = "Call encoded len";
 static const char* STR_IT_call_weight_witness = "Call weight witness";
 static const char* STR_IT_call = "Call";
 static const char* STR_IT_ethereum_signature = "Ethereum signature";
@@ -489,7 +490,6 @@ static const char* STR_IT_fee_asset_item = "Fee asset item";
 static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
-static const char* STR_IT_call_encoded_len = "Call encoded len";
 
 #ifdef __cplusplus
 }
