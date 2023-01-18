@@ -25,7 +25,7 @@
 __Z_INLINE parser_error_t _readMethod_balances_transfer_V18(
     parser_context_t* c, pd_balances_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
@@ -33,8 +33,8 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_V18(
 __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V18(
     parser_context_t* c, pd_balances_force_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->source))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->source))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
@@ -42,7 +42,7 @@ __Z_INLINE parser_error_t _readMethod_balances_force_transfer_V18(
 __Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V18(
     parser_context_t* c, pd_balances_transfer_keep_alive_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
@@ -50,7 +50,7 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_keep_alive_V18(
 __Z_INLINE parser_error_t _readMethod_balances_transfer_all_V18(
     parser_context_t* c, pd_balances_transfer_all_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readbool(c, &m->keep_alive))
     return parser_ok;
 }
@@ -58,9 +58,9 @@ __Z_INLINE parser_error_t _readMethod_balances_transfer_all_V18(
 __Z_INLINE parser_error_t _readMethod_staking_bond_V18(
     parser_context_t* c, pd_staking_bond_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->controller))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->controller))
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readRewardDestination_V18(c, &m->payee))
+    CHECK_ERROR(_readRewardDestination(c, &m->payee))
     return parser_ok;
 }
 
@@ -88,14 +88,14 @@ __Z_INLINE parser_error_t _readMethod_staking_withdraw_unbonded_V18(
 __Z_INLINE parser_error_t _readMethod_staking_validate_V18(
     parser_context_t* c, pd_staking_validate_V18_t* m)
 {
-    CHECK_ERROR(_readValidatorPrefs_V18(c, &m->prefs))
+    CHECK_ERROR(_readValidatorPrefs(c, &m->prefs))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_nominate_V18(
     parser_context_t* c, pd_staking_nominate_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountIdLookupOfT_V18(c, &m->targets))
+    CHECK_ERROR(_readVecAccountIdLookupOfT(c, &m->targets))
     return parser_ok;
 }
 
@@ -108,22 +108,22 @@ __Z_INLINE parser_error_t _readMethod_staking_chill_V18(
 __Z_INLINE parser_error_t _readMethod_staking_set_payee_V18(
     parser_context_t* c, pd_staking_set_payee_V18_t* m)
 {
-    CHECK_ERROR(_readRewardDestination_V18(c, &m->payee))
+    CHECK_ERROR(_readRewardDestination(c, &m->payee))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_set_controller_V18(
     parser_context_t* c, pd_staking_set_controller_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->controller))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->controller))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_payout_stakers_V18(
     parser_context_t* c, pd_staking_payout_stakers_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->validator_stash))
-    CHECK_ERROR(_readEraIndex_V18(c, &m->era))
+    CHECK_ERROR(_readAccountId(c, &m->validator_stash))
+    CHECK_ERROR(_readEraIndex(c, &m->era))
     return parser_ok;
 }
 
@@ -137,7 +137,7 @@ __Z_INLINE parser_error_t _readMethod_staking_rebond_V18(
 __Z_INLINE parser_error_t _readMethod_session_set_keys_V18(
     parser_context_t* c, pd_session_set_keys_V18_t* m)
 {
-    CHECK_ERROR(_readKeys_V18(c, &m->keys))
+    CHECK_ERROR(_readKeys(c, &m->keys))
     CHECK_ERROR(_readBytes(c, &m->proof))
     return parser_ok;
 }
@@ -177,7 +177,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_create_V18(
     CHECK_ERROR(_readCompactu32(c, &m->first_period))
     CHECK_ERROR(_readCompactu32(c, &m->last_period))
     CHECK_ERROR(_readCompactu32(c, &m->end))
-    CHECK_ERROR(_readOptionMultiSigner_V18(c, &m->verifier))
+    CHECK_ERROR(_readOptionMultiSigner(c, &m->verifier))
     return parser_ok;
 }
 
@@ -186,14 +186,14 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_contribute_V18(
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
     CHECK_ERROR(_readCompactu128(c, &m->amount))
-    CHECK_ERROR(_readOptionMultiSignature_V18(c, &m->signature))
+    CHECK_ERROR(_readOptionMultiSignature(c, &m->signature))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_crowdloan_withdraw_V18(
     parser_context_t* c, pd_crowdloan_withdraw_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->who))
+    CHECK_ERROR(_readAccountId(c, &m->who))
     CHECK_ERROR(_readCompactu32(c, &m->index))
     return parser_ok;
 }
@@ -220,14 +220,14 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_edit_V18(
     CHECK_ERROR(_readCompactu32(c, &m->first_period))
     CHECK_ERROR(_readCompactu32(c, &m->last_period))
     CHECK_ERROR(_readCompactu32(c, &m->end))
-    CHECK_ERROR(_readOptionMultiSigner_V18(c, &m->verifier))
+    CHECK_ERROR(_readOptionMultiSigner(c, &m->verifier))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_crowdloan_add_memo_V18(
     parser_context_t* c, pd_crowdloan_add_memo_V18_t* m)
 {
-    CHECK_ERROR(_readParaId_V18(c, &m->index))
+    CHECK_ERROR(_readParaId(c, &m->index))
     CHECK_ERROR(_readVecu8(c, &m->memo))
     return parser_ok;
 }
@@ -235,7 +235,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_add_memo_V18(
 __Z_INLINE parser_error_t _readMethod_crowdloan_poke_V18(
     parser_context_t* c, pd_crowdloan_poke_V18_t* m)
 {
-    CHECK_ERROR(_readParaId_V18(c, &m->index))
+    CHECK_ERROR(_readParaId(c, &m->index))
     return parser_ok;
 }
 
@@ -243,7 +243,7 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_contribute_all_V18(
     parser_context_t* c, pd_crowdloan_contribute_all_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readOptionMultiSignature_V18(c, &m->signature))
+    CHECK_ERROR(_readOptionMultiSignature(c, &m->signature))
     return parser_ok;
 }
 
@@ -252,20 +252,20 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_contribute_all_V18(
 __Z_INLINE parser_error_t _readMethod_xcmpallet_reserve_transfer_assets_V18(
     parser_context_t* c, pd_xcmpallet_reserve_transfer_assets_V18_t* m)
 {
-    CHECK_ERROR(_readBoxVersionedMultiLocation_V18(c, &m->dest))
-    CHECK_ERROR(_readBoxVersionedMultiLocation_V18(c, &m->beneficiary))
-    CHECK_ERROR(_readBoxVersionedMultiAssets_V18(c, &m->assets))
+    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets(c, &m->assets))
     CHECK_ERROR(_readu32(c, &m->fee_asset_item))
     return parser_ok;
 }
 __Z_INLINE parser_error_t _readMethod_xcmpallet_limited_reserve_transfer_assets_V18(
     parser_context_t* c, pd_xcmpallet_limited_reserve_transfer_assets_V18_t* m)
 {
-    CHECK_ERROR(_readBoxVersionedMultiLocation_V18(c, &m->dest))
-    CHECK_ERROR(_readBoxVersionedMultiLocation_V18(c, &m->beneficiary))
-    CHECK_ERROR(_readBoxVersionedMultiAssets_V18(c, &m->assets))
+    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets(c, &m->assets))
     CHECK_ERROR(_readu32(c, &m->fee_asset_item))
-    CHECK_ERROR(_readWeightLimit_V18(c, &m->weight_limit))
+    CHECK_ERROR(_readWeightLimit(c, &m->weight_limit))
     return parser_ok;
 }
 #endif
@@ -314,30 +314,30 @@ __Z_INLINE parser_error_t _readMethod_timestamp_set_V18(
 __Z_INLINE parser_error_t _readMethod_indices_claim_V18(
     parser_context_t* c, pd_indices_claim_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_indices_transfer_V18(
     parser_context_t* c, pd_indices_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->new_))
-    CHECK_ERROR(_readAccountIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->new_))
+    CHECK_ERROR(_readAccountIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_indices_free_V18(
     parser_context_t* c, pd_indices_free_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_indices_force_transfer_V18(
     parser_context_t* c, pd_indices_force_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->new_))
-    CHECK_ERROR(_readAccountIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->new_))
+    CHECK_ERROR(_readAccountIndex(c, &m->index))
     CHECK_ERROR(_readbool(c, &m->freeze))
     return parser_ok;
 }
@@ -345,14 +345,14 @@ __Z_INLINE parser_error_t _readMethod_indices_force_transfer_V18(
 __Z_INLINE parser_error_t _readMethod_indices_freeze_V18(
     parser_context_t* c, pd_indices_freeze_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_balances_set_balance_V18(
     parser_context_t* c, pd_balances_set_balance_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readCompactBalance(c, &m->new_free))
     CHECK_ERROR(_readCompactBalance(c, &m->new_reserved))
     return parser_ok;
@@ -361,7 +361,7 @@ __Z_INLINE parser_error_t _readMethod_balances_set_balance_V18(
 __Z_INLINE parser_error_t _readMethod_balances_force_unreserve_V18(
     parser_context_t* c, pd_balances_force_unreserve_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readBalance(c, &m->amount))
     return parser_ok;
 }
@@ -383,7 +383,7 @@ __Z_INLINE parser_error_t _readMethod_staking_increase_validator_count_V18(
 __Z_INLINE parser_error_t _readMethod_staking_scale_validator_count_V18(
     parser_context_t* c, pd_staking_scale_validator_count_V18_t* m)
 {
-    CHECK_ERROR(_readPercent_V18(c, &m->factor))
+    CHECK_ERROR(_readPercent(c, &m->factor))
     return parser_ok;
 }
 
@@ -402,14 +402,14 @@ __Z_INLINE parser_error_t _readMethod_staking_force_new_era_V18(
 __Z_INLINE parser_error_t _readMethod_staking_set_invulnerables_V18(
     parser_context_t* c, pd_staking_set_invulnerables_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->invulnerables))
+    CHECK_ERROR(_readVecAccountId(c, &m->invulnerables))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_force_unstake_V18(
     parser_context_t* c, pd_staking_force_unstake_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->stash))
+    CHECK_ERROR(_readAccountId(c, &m->stash))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
@@ -423,7 +423,7 @@ __Z_INLINE parser_error_t _readMethod_staking_force_new_era_always_V18(
 __Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V18(
     parser_context_t* c, pd_staking_cancel_deferred_slash_V18_t* m)
 {
-    CHECK_ERROR(_readEraIndex_V18(c, &m->era))
+    CHECK_ERROR(_readEraIndex(c, &m->era))
     CHECK_ERROR(_readVecu32(c, &m->slash_indices))
     return parser_ok;
 }
@@ -431,7 +431,7 @@ __Z_INLINE parser_error_t _readMethod_staking_cancel_deferred_slash_V18(
 __Z_INLINE parser_error_t _readMethod_staking_reap_stash_V18(
     parser_context_t* c, pd_staking_reap_stash_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->stash))
+    CHECK_ERROR(_readAccountId(c, &m->stash))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
@@ -439,40 +439,40 @@ __Z_INLINE parser_error_t _readMethod_staking_reap_stash_V18(
 __Z_INLINE parser_error_t _readMethod_staking_kick_V18(
     parser_context_t* c, pd_staking_kick_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readVecAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_set_staking_configs_V18(
     parser_context_t* c, pd_staking_set_staking_configs_V18_t* m)
 {
-    CHECK_ERROR(_readConfigOpBalanceOfT_V18(c, &m->min_nominator_bond))
-    CHECK_ERROR(_readConfigOpBalanceOfT_V18(c, &m->min_validator_bond))
-    CHECK_ERROR(_readConfigOpu32_V18(c, &m->max_nominator_count))
-    CHECK_ERROR(_readConfigOpu32_V18(c, &m->max_validator_count))
-    CHECK_ERROR(_readConfigOpPercent_V18(c, &m->chill_threshold))
-    CHECK_ERROR(_readConfigOpPerbill_V18(c, &m->min_commission))
+    CHECK_ERROR(_readConfigOpBalanceOfT(c, &m->min_nominator_bond))
+    CHECK_ERROR(_readConfigOpBalanceOfT(c, &m->min_validator_bond))
+    CHECK_ERROR(_readConfigOpu32(c, &m->max_nominator_count))
+    CHECK_ERROR(_readConfigOpu32(c, &m->max_validator_count))
+    CHECK_ERROR(_readConfigOpPercent(c, &m->chill_threshold))
+    CHECK_ERROR(_readConfigOpPerbill(c, &m->min_commission))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_chill_other_V18(
     parser_context_t* c, pd_staking_chill_other_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->controller))
+    CHECK_ERROR(_readAccountId(c, &m->controller))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_force_apply_min_commission_V18(
     parser_context_t* c, pd_staking_force_apply_min_commission_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->validator_stash))
+    CHECK_ERROR(_readAccountId(c, &m->validator_stash))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_propose_V18(
     parser_context_t* c, pd_democracy_propose_V18_t* m)
 {
-    CHECK_ERROR(_readBoundedCallOfT_V18(c, &m->proposal))
+    CHECK_ERROR(_readBoundedCallOfT(c, &m->proposal))
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
@@ -488,35 +488,35 @@ __Z_INLINE parser_error_t _readMethod_democracy_vote_V18(
     parser_context_t* c, pd_democracy_vote_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->ref_index))
-    CHECK_ERROR(_readAccountVote_V18(c, &m->vote))
+    CHECK_ERROR(_readAccountVote(c, &m->vote))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_emergency_cancel_V18(
     parser_context_t* c, pd_democracy_emergency_cancel_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->ref_index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->ref_index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_external_propose_V18(
     parser_context_t* c, pd_democracy_external_propose_V18_t* m)
 {
-    CHECK_ERROR(_readBoundedCallOfT_V18(c, &m->proposal))
+    CHECK_ERROR(_readBoundedCallOfT(c, &m->proposal))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_external_propose_majority_V18(
     parser_context_t* c, pd_democracy_external_propose_majority_V18_t* m)
 {
-    CHECK_ERROR(_readBoundedCallOfT_V18(c, &m->proposal))
+    CHECK_ERROR(_readBoundedCallOfT(c, &m->proposal))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_external_propose_default_V18(
     parser_context_t* c, pd_democracy_external_propose_default_V18_t* m)
 {
-    CHECK_ERROR(_readBoundedCallOfT_V18(c, &m->proposal))
+    CHECK_ERROR(_readBoundedCallOfT(c, &m->proposal))
     return parser_ok;
 }
 
@@ -546,8 +546,8 @@ __Z_INLINE parser_error_t _readMethod_democracy_cancel_referendum_V18(
 __Z_INLINE parser_error_t _readMethod_democracy_delegate_V18(
     parser_context_t* c, pd_democracy_delegate_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->to))
-    CHECK_ERROR(_readConviction_V18(c, &m->conviction))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->to))
+    CHECK_ERROR(_readConviction(c, &m->conviction))
     CHECK_ERROR(_readBalance(c, &m->balance))
     return parser_ok;
 }
@@ -567,22 +567,22 @@ __Z_INLINE parser_error_t _readMethod_democracy_clear_public_proposals_V18(
 __Z_INLINE parser_error_t _readMethod_democracy_unlock_V18(
     parser_context_t* c, pd_democracy_unlock_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_remove_vote_V18(
     parser_context_t* c, pd_democracy_remove_vote_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_remove_other_vote_V18(
     parser_context_t* c, pd_democracy_remove_other_vote_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
@@ -590,7 +590,7 @@ __Z_INLINE parser_error_t _readMethod_democracy_blacklist_V18(
     parser_context_t* c, pd_democracy_blacklist_V18_t* m)
 {
     CHECK_ERROR(_readH256(c, &m->proposal_hash))
-    CHECK_ERROR(_readOptionReferendumIndex_V18(c, &m->maybe_ref_index))
+    CHECK_ERROR(_readOptionReferendumIndex(c, &m->maybe_ref_index))
     return parser_ok;
 }
 
@@ -604,9 +604,9 @@ __Z_INLINE parser_error_t _readMethod_democracy_cancel_proposal_V18(
 __Z_INLINE parser_error_t _readMethod_council_set_members_V18(
     parser_context_t* c, pd_council_set_members_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->new_members))
-    CHECK_ERROR(_readOptionAccountId_V18(c, &m->prime))
-    CHECK_ERROR(_readMemberCount_V18(c, &m->old_count))
+    CHECK_ERROR(_readVecAccountId(c, &m->new_members))
+    CHECK_ERROR(_readOptionAccountId(c, &m->prime))
+    CHECK_ERROR(_readMemberCount(c, &m->old_count))
     return parser_ok;
 }
 
@@ -658,7 +658,7 @@ __Z_INLINE parser_error_t _readMethod_council_close_V18(
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readWeight_V18(c, &m->proposal_weight_bound))
+    CHECK_ERROR(_readWeight(c, &m->proposal_weight_bound))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -666,9 +666,9 @@ __Z_INLINE parser_error_t _readMethod_council_close_V18(
 __Z_INLINE parser_error_t _readMethod_technicalcommittee_set_members_V18(
     parser_context_t* c, pd_technicalcommittee_set_members_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->new_members))
-    CHECK_ERROR(_readOptionAccountId_V18(c, &m->prime))
-    CHECK_ERROR(_readMemberCount_V18(c, &m->old_count))
+    CHECK_ERROR(_readVecAccountId(c, &m->new_members))
+    CHECK_ERROR(_readOptionAccountId(c, &m->prime))
+    CHECK_ERROR(_readMemberCount(c, &m->old_count))
     return parser_ok;
 }
 
@@ -720,7 +720,7 @@ __Z_INLINE parser_error_t _readMethod_technicalcommittee_close_V18(
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readWeight_V18(c, &m->proposal_weight_bound))
+    CHECK_ERROR(_readWeight(c, &m->proposal_weight_bound))
     CHECK_ERROR(_readCompactu32(c, &m->length_bound))
     return parser_ok;
 }
@@ -728,7 +728,7 @@ __Z_INLINE parser_error_t _readMethod_technicalcommittee_close_V18(
 __Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V18(
     parser_context_t* c, pd_phragmenelection_vote_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->votes))
+    CHECK_ERROR(_readVecAccountId(c, &m->votes))
     CHECK_ERROR(_readCompactu128(c, &m->amount))
     return parser_ok;
 }
@@ -749,7 +749,7 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_submit_candidacy_V18(
 __Z_INLINE parser_error_t _readMethod_phragmenelection_remove_member_V18(
     parser_context_t* c, pd_phragmenelection_remove_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readbool(c, &m->slash_bond))
     CHECK_ERROR(_readbool(c, &m->rerun_election))
     return parser_ok;
@@ -766,43 +766,43 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_clean_defunct_voters_V18(
 __Z_INLINE parser_error_t _readMethod_technicalmembership_add_member_V18(
     parser_context_t* c, pd_technicalmembership_add_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_technicalmembership_remove_member_V18(
     parser_context_t* c, pd_technicalmembership_remove_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_technicalmembership_swap_member_V18(
     parser_context_t* c, pd_technicalmembership_swap_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->remove))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->add))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->remove))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->add))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_technicalmembership_reset_members_V18(
     parser_context_t* c, pd_technicalmembership_reset_members_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->members))
+    CHECK_ERROR(_readVecAccountId(c, &m->members))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_technicalmembership_change_key_V18(
     parser_context_t* c, pd_technicalmembership_change_key_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->new_))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->new_))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_technicalmembership_set_prime_V18(
     parser_context_t* c, pd_technicalmembership_set_prime_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
@@ -816,7 +816,7 @@ __Z_INLINE parser_error_t _readMethod_treasury_propose_spend_V18(
     parser_context_t* c, pd_treasury_propose_spend_V18_t* m)
 {
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->beneficiary))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -838,7 +838,7 @@ __Z_INLINE parser_error_t _readMethod_treasury_spend_V18(
     parser_context_t* c, pd_treasury_spend_V18_t* m)
 {
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->beneficiary))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -853,16 +853,16 @@ __Z_INLINE parser_error_t _readMethod_convictionvoting_vote_V18(
     parser_context_t* c, pd_convictionvoting_vote_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->poll_index))
-    CHECK_ERROR(_readAccountVote_V18(c, &m->vote))
+    CHECK_ERROR(_readAccountVote(c, &m->vote))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_convictionvoting_delegate_V18(
     parser_context_t* c, pd_convictionvoting_delegate_V18_t* m)
 {
-    CHECK_ERROR(_readClassOf_V18(c, &m->class_))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->to))
-    CHECK_ERROR(_readConviction_V18(c, &m->conviction))
+    CHECK_ERROR(_readClassOf(c, &m->class_))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->to))
+    CHECK_ERROR(_readConviction(c, &m->conviction))
     CHECK_ERROR(_readBalanceOf(c, &m->balance))
     return parser_ok;
 }
@@ -870,117 +870,117 @@ __Z_INLINE parser_error_t _readMethod_convictionvoting_delegate_V18(
 __Z_INLINE parser_error_t _readMethod_convictionvoting_undelegate_V18(
     parser_context_t* c, pd_convictionvoting_undelegate_V18_t* m)
 {
-    CHECK_ERROR(_readClassOf_V18(c, &m->class_))
+    CHECK_ERROR(_readClassOf(c, &m->class_))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_convictionvoting_unlock_V18(
     parser_context_t* c, pd_convictionvoting_unlock_V18_t* m)
 {
-    CHECK_ERROR(_readClassOf_V18(c, &m->class_))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
+    CHECK_ERROR(_readClassOf(c, &m->class_))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_convictionvoting_remove_vote_V18(
     parser_context_t* c, pd_convictionvoting_remove_vote_V18_t* m)
 {
-    CHECK_ERROR(_readOptionClassOf_V18(c, &m->class_))
-    CHECK_ERROR(_readPollIndexOf_V18(c, &m->index))
+    CHECK_ERROR(_readOptionClassOf(c, &m->class_))
+    CHECK_ERROR(_readPollIndexOf(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_convictionvoting_remove_other_vote_V18(
     parser_context_t* c, pd_convictionvoting_remove_other_vote_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
-    CHECK_ERROR(_readClassOf_V18(c, &m->class_))
-    CHECK_ERROR(_readPollIndexOf_V18(c, &m->index))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
+    CHECK_ERROR(_readClassOf(c, &m->class_))
+    CHECK_ERROR(_readPollIndexOf(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_place_decision_deposit_V18(
     parser_context_t* c, pd_referenda_place_decision_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_refund_decision_deposit_V18(
     parser_context_t* c, pd_referenda_refund_decision_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_cancel_V18(
     parser_context_t* c, pd_referenda_cancel_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_kill_V18(
     parser_context_t* c, pd_referenda_kill_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_nudge_referendum_V18(
     parser_context_t* c, pd_referenda_nudge_referendum_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_one_fewer_deciding_V18(
     parser_context_t* c, pd_referenda_one_fewer_deciding_V18_t* m)
 {
-    CHECK_ERROR(_readTrackIdOf_V18(c, &m->track))
+    CHECK_ERROR(_readTrackIdOf(c, &m->track))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_referenda_refund_submission_deposit_V18(
     parser_context_t* c, pd_referenda_refund_submission_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_add_member_V18(
     parser_context_t* c, pd_fellowshipcollective_add_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_promote_member_V18(
     parser_context_t* c, pd_fellowshipcollective_promote_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_demote_member_V18(
     parser_context_t* c, pd_fellowshipcollective_demote_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_remove_member_V18(
     parser_context_t* c, pd_fellowshipcollective_remove_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
-    CHECK_ERROR(_readRank_V18(c, &m->min_rank))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
+    CHECK_ERROR(_readRank(c, &m->min_rank))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_vote_V18(
     parser_context_t* c, pd_fellowshipcollective_vote_V18_t* m)
 {
-    CHECK_ERROR(_readPollIndexOf_V18(c, &m->poll))
+    CHECK_ERROR(_readPollIndexOf(c, &m->poll))
     CHECK_ERROR(_readbool(c, &m->aye))
     return parser_ok;
 }
@@ -988,7 +988,7 @@ __Z_INLINE parser_error_t _readMethod_fellowshipcollective_vote_V18(
 __Z_INLINE parser_error_t _readMethod_fellowshipcollective_cleanup_poll_V18(
     parser_context_t* c, pd_fellowshipcollective_cleanup_poll_V18_t* m)
 {
-    CHECK_ERROR(_readPollIndexOf_V18(c, &m->poll_index))
+    CHECK_ERROR(_readPollIndexOf(c, &m->poll_index))
     CHECK_ERROR(_readu32(c, &m->max))
     return parser_ok;
 }
@@ -996,72 +996,72 @@ __Z_INLINE parser_error_t _readMethod_fellowshipcollective_cleanup_poll_V18(
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_place_decision_deposit_V18(
     parser_context_t* c, pd_fellowshipreferenda_place_decision_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_refund_decision_deposit_V18(
     parser_context_t* c, pd_fellowshipreferenda_refund_decision_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_cancel_V18(
     parser_context_t* c, pd_fellowshipreferenda_cancel_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_kill_V18(
     parser_context_t* c, pd_fellowshipreferenda_kill_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_nudge_referendum_V18(
     parser_context_t* c, pd_fellowshipreferenda_nudge_referendum_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_one_fewer_deciding_V18(
     parser_context_t* c, pd_fellowshipreferenda_one_fewer_deciding_V18_t* m)
 {
-    CHECK_ERROR(_readTrackIdOf_V18(c, &m->track))
+    CHECK_ERROR(_readTrackIdOf(c, &m->track))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fellowshipreferenda_refund_submission_deposit_V18(
     parser_context_t* c, pd_fellowshipreferenda_refund_submission_deposit_V18_t* m)
 {
-    CHECK_ERROR(_readReferendumIndex_V18(c, &m->index))
+    CHECK_ERROR(_readReferendumIndex(c, &m->index))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_whitelist_whitelist_call_V18(
     parser_context_t* c, pd_whitelist_whitelist_call_V18_t* m)
 {
-    CHECK_ERROR(_readPreimageHash_V18(c, &m->call_hash))
+    CHECK_ERROR(_readPreimageHash(c, &m->call_hash))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_whitelist_remove_whitelisted_call_V18(
     parser_context_t* c, pd_whitelist_remove_whitelisted_call_V18_t* m)
 {
-    CHECK_ERROR(_readPreimageHash_V18(c, &m->call_hash))
+    CHECK_ERROR(_readPreimageHash(c, &m->call_hash))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_whitelist_dispatch_whitelisted_call_V18(
     parser_context_t* c, pd_whitelist_dispatch_whitelisted_call_V18_t* m)
 {
-    CHECK_ERROR(_readPreimageHash_V18(c, &m->call_hash))
+    CHECK_ERROR(_readPreimageHash(c, &m->call_hash))
     CHECK_ERROR(_readu32(c, &m->call_encoded_len))
-    CHECK_ERROR(_readWeight_V18(c, &m->call_weight_witness))
+    CHECK_ERROR(_readWeight(c, &m->call_weight_witness))
     return parser_ok;
 }
 
@@ -1075,16 +1075,16 @@ __Z_INLINE parser_error_t _readMethod_whitelist_dispatch_whitelisted_call_with_p
 __Z_INLINE parser_error_t _readMethod_claims_claim_V18(
     parser_context_t* c, pd_claims_claim_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->dest))
-    CHECK_ERROR(_readEcdsaSignature_V18(c, &m->ethereum_signature))
+    CHECK_ERROR(_readAccountId(c, &m->dest))
+    CHECK_ERROR(_readEcdsaSignature(c, &m->ethereum_signature))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_claims_claim_attest_V18(
     parser_context_t* c, pd_claims_claim_attest_V18_t* m)
 {
-    CHECK_ERROR(_readAccountId_V18(c, &m->dest))
-    CHECK_ERROR(_readEcdsaSignature_V18(c, &m->ethereum_signature))
+    CHECK_ERROR(_readAccountId(c, &m->dest))
+    CHECK_ERROR(_readEcdsaSignature(c, &m->ethereum_signature))
     CHECK_ERROR(_readBytes(c, &m->statement))
     return parser_ok;
 }
@@ -1099,9 +1099,9 @@ __Z_INLINE parser_error_t _readMethod_claims_attest_V18(
 __Z_INLINE parser_error_t _readMethod_claims_move_claim_V18(
     parser_context_t* c, pd_claims_move_claim_V18_t* m)
 {
-    CHECK_ERROR(_readEthereumAddress_V18(c, &m->old))
-    CHECK_ERROR(_readEthereumAddress_V18(c, &m->new_))
-    CHECK_ERROR(_readOptionAccountId_V18(c, &m->maybe_preclaim))
+    CHECK_ERROR(_readEthereumAddress(c, &m->old))
+    CHECK_ERROR(_readEthereumAddress(c, &m->new_))
+    CHECK_ERROR(_readOptionAccountId(c, &m->maybe_preclaim))
     return parser_ok;
 }
 
@@ -1109,28 +1109,28 @@ __Z_INLINE parser_error_t _readMethod_utility_with_weight_V18(
     parser_context_t* c, pd_utility_with_weight_V18_t* m)
 {
     CHECK_ERROR(_readCall(c, &m->call))
-    CHECK_ERROR(_readWeight_V18(c, &m->weight))
+    CHECK_ERROR(_readWeight(c, &m->weight))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_identity_add_registrar_V18(
     parser_context_t* c, pd_identity_add_registrar_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->account))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_identity_set_identity_V18(
     parser_context_t* c, pd_identity_set_identity_V18_t* m)
 {
-    CHECK_ERROR(_readIdentityInfo_V18(c, &m->info))
+    CHECK_ERROR(_readIdentityInfo(c, &m->info))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_identity_set_subs_V18(
     parser_context_t* c, pd_identity_set_subs_V18_t* m)
 {
-    CHECK_ERROR(_readVecTupleAccountIdData_V18(c, &m->subs))
+    CHECK_ERROR(_readVecTupleAccountIdData(c, &m->subs))
     return parser_ok;
 }
 
@@ -1151,7 +1151,7 @@ __Z_INLINE parser_error_t _readMethod_identity_request_judgement_V18(
 __Z_INLINE parser_error_t _readMethod_identity_cancel_request_V18(
     parser_context_t* c, pd_identity_cancel_request_V18_t* m)
 {
-    CHECK_ERROR(_readRegistrarIndex_V18(c, &m->reg_index))
+    CHECK_ERROR(_readRegistrarIndex(c, &m->reg_index))
     return parser_ok;
 }
 
@@ -1167,7 +1167,7 @@ __Z_INLINE parser_error_t _readMethod_identity_set_account_id_V18(
     parser_context_t* c, pd_identity_set_account_id_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->index))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->new_))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->new_))
     return parser_ok;
 }
 
@@ -1175,8 +1175,8 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V18(
     parser_context_t* c, pd_identity_provide_judgement_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->reg_index))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
-    CHECK_ERROR(_readJudgementBalanceOfT_V18(c, &m->judgement))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
+    CHECK_ERROR(_readJudgementBalanceOfT(c, &m->judgement))
     CHECK_ERROR(_readHash(c, &m->identity))
     return parser_ok;
 }
@@ -1184,14 +1184,14 @@ __Z_INLINE parser_error_t _readMethod_identity_provide_judgement_V18(
 __Z_INLINE parser_error_t _readMethod_identity_kill_identity_V18(
     parser_context_t* c, pd_identity_kill_identity_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_identity_add_sub_V18(
     parser_context_t* c, pd_identity_add_sub_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->sub))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
@@ -1199,7 +1199,7 @@ __Z_INLINE parser_error_t _readMethod_identity_add_sub_V18(
 __Z_INLINE parser_error_t _readMethod_identity_rename_sub_V18(
     parser_context_t* c, pd_identity_rename_sub_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->sub))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->sub))
     CHECK_ERROR(_readData(c, &m->data))
     return parser_ok;
 }
@@ -1207,7 +1207,7 @@ __Z_INLINE parser_error_t _readMethod_identity_rename_sub_V18(
 __Z_INLINE parser_error_t _readMethod_identity_remove_sub_V18(
     parser_context_t* c, pd_identity_remove_sub_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->sub))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->sub))
     return parser_ok;
 }
 
@@ -1234,7 +1234,7 @@ __Z_INLINE parser_error_t _readMethod_society_unbid_V18(
 __Z_INLINE parser_error_t _readMethod_society_vouch_V18(
     parser_context_t* c, pd_society_vouch_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readBalanceOf(c, &m->amount))
     CHECK_ERROR(_readBalanceOf(c, &m->tip))
     return parser_ok;
@@ -1250,7 +1250,7 @@ __Z_INLINE parser_error_t _readMethod_society_unvouch_V18(
 __Z_INLINE parser_error_t _readMethod_society_vote_V18(
     parser_context_t* c, pd_society_vote_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->candidate))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->candidate))
     CHECK_ERROR(_readbool(c, &m->approve))
     return parser_ok;
 }
@@ -1271,7 +1271,7 @@ __Z_INLINE parser_error_t _readMethod_society_payout_V18(
 __Z_INLINE parser_error_t _readMethod_society_found_V18(
     parser_context_t* c, pd_society_found_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->founder))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->founder))
     CHECK_ERROR(_readu32(c, &m->max_members))
     CHECK_ERROR(_readBytes(c, &m->rules))
     return parser_ok;
@@ -1286,7 +1286,7 @@ __Z_INLINE parser_error_t _readMethod_society_unfound_V18(
 __Z_INLINE parser_error_t _readMethod_society_judge_suspended_member_V18(
     parser_context_t* c, pd_society_judge_suspended_member_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readbool(c, &m->forgive))
     return parser_ok;
 }
@@ -1301,37 +1301,37 @@ __Z_INLINE parser_error_t _readMethod_society_set_max_members_V18(
 __Z_INLINE parser_error_t _readMethod_recovery_set_recovered_V18(
     parser_context_t* c, pd_recovery_set_recovered_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->lost))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->rescuer))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->lost))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->rescuer))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_recovery_initiate_recovery_V18(
     parser_context_t* c, pd_recovery_initiate_recovery_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->account))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_recovery_vouch_recovery_V18(
     parser_context_t* c, pd_recovery_vouch_recovery_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->lost))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->rescuer))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->lost))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->rescuer))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_recovery_claim_recovery_V18(
     parser_context_t* c, pd_recovery_claim_recovery_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->account))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_recovery_close_recovery_V18(
     parser_context_t* c, pd_recovery_close_recovery_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->rescuer))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->rescuer))
     return parser_ok;
 }
 
@@ -1344,7 +1344,7 @@ __Z_INLINE parser_error_t _readMethod_recovery_remove_recovery_V18(
 __Z_INLINE parser_error_t _readMethod_recovery_cancel_recovered_V18(
     parser_context_t* c, pd_recovery_cancel_recovered_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->account))
     return parser_ok;
 }
 
@@ -1357,24 +1357,24 @@ __Z_INLINE parser_error_t _readMethod_vesting_vest_V18(
 __Z_INLINE parser_error_t _readMethod_vesting_vest_other_V18(
     parser_context_t* c, pd_vesting_vest_other_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_vesting_vested_transfer_V18(
     parser_context_t* c, pd_vesting_vested_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
-    CHECK_ERROR(_readVestingInfo_V18(c, &m->schedule))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
+    CHECK_ERROR(_readVestingInfo(c, &m->schedule))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_vesting_force_vested_transfer_V18(
     parser_context_t* c, pd_vesting_force_vested_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->source))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->target))
-    CHECK_ERROR(_readVestingInfo_V18(c, &m->schedule))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->source))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->target))
+    CHECK_ERROR(_readVestingInfo(c, &m->schedule))
     return parser_ok;
 }
 
@@ -1389,8 +1389,8 @@ __Z_INLINE parser_error_t _readMethod_vesting_merge_schedules_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_proxy_V18(
     parser_context_t* c, pd_proxy_proxy_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->real))
-    CHECK_ERROR(_readOptionProxyType_V18(c, &m->force_proxy_type))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->real))
+    CHECK_ERROR(_readOptionProxyType(c, &m->force_proxy_type))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
@@ -1398,8 +1398,8 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_add_proxy_V18(
     parser_context_t* c, pd_proxy_add_proxy_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->delegate))
-    CHECK_ERROR(_readProxyType_V18(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->delegate))
+    CHECK_ERROR(_readProxyType(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     return parser_ok;
 }
@@ -1407,8 +1407,8 @@ __Z_INLINE parser_error_t _readMethod_proxy_add_proxy_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_remove_proxy_V18(
     parser_context_t* c, pd_proxy_remove_proxy_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->delegate))
-    CHECK_ERROR(_readProxyType_V18(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->delegate))
+    CHECK_ERROR(_readProxyType(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     return parser_ok;
 }
@@ -1422,7 +1422,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_remove_proxies_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_create_pure_V18(
     parser_context_t* c, pd_proxy_create_pure_V18_t* m)
 {
-    CHECK_ERROR(_readProxyType_V18(c, &m->proxy_type))
+    CHECK_ERROR(_readProxyType(c, &m->proxy_type))
     CHECK_ERROR(_readBlockNumber(c, &m->delay))
     CHECK_ERROR(_readu16(c, &m->index))
     return parser_ok;
@@ -1431,8 +1431,8 @@ __Z_INLINE parser_error_t _readMethod_proxy_create_pure_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_kill_pure_V18(
     parser_context_t* c, pd_proxy_kill_pure_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->spawner))
-    CHECK_ERROR(_readProxyType_V18(c, &m->proxy_type))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->spawner))
+    CHECK_ERROR(_readProxyType(c, &m->proxy_type))
     CHECK_ERROR(_readu16(c, &m->index))
     CHECK_ERROR(_readCompactu32(c, &m->height))
     CHECK_ERROR(_readCompactu32(c, &m->ext_index))
@@ -1442,9 +1442,9 @@ __Z_INLINE parser_error_t _readMethod_proxy_kill_pure_V18(
 __Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V18(
     parser_context_t* c, pd_proxy_proxy_announced_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->delegate))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->real))
-    CHECK_ERROR(_readOptionProxyType_V18(c, &m->force_proxy_type))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->delegate))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->real))
+    CHECK_ERROR(_readOptionProxyType(c, &m->force_proxy_type))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
@@ -1452,7 +1452,7 @@ __Z_INLINE parser_error_t _readMethod_proxy_proxy_announced_V18(
 __Z_INLINE parser_error_t _readMethod_multisig_as_multi_threshold_1_V18(
     parser_context_t* c, pd_multisig_as_multi_threshold_1_V18_t* m)
 {
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->other_signatories))
+    CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
     CHECK_ERROR(_readCall(c, &m->call))
     return parser_ok;
 }
@@ -1461,10 +1461,10 @@ __Z_INLINE parser_error_t _readMethod_multisig_as_multi_V18(
     parser_context_t* c, pd_multisig_as_multi_V18_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepoint_V18(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
+    CHECK_ERROR(_readOptionTimepoint(c, &m->maybe_timepoint))
     CHECK_ERROR(_readCall(c, &m->call))
-    CHECK_ERROR(_readWeight_V18(c, &m->max_weight))
+    CHECK_ERROR(_readWeight(c, &m->max_weight))
     return parser_ok;
 }
 
@@ -1472,10 +1472,10 @@ __Z_INLINE parser_error_t _readMethod_multisig_approve_as_multi_V18(
     parser_context_t* c, pd_multisig_approve_as_multi_V18_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->other_signatories))
-    CHECK_ERROR(_readOptionTimepoint_V18(c, &m->maybe_timepoint))
+    CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
+    CHECK_ERROR(_readOptionTimepoint(c, &m->maybe_timepoint))
     CHECK_ERROR(_readH256(c, &m->call_hash))
-    CHECK_ERROR(_readWeight_V18(c, &m->max_weight))
+    CHECK_ERROR(_readWeight(c, &m->max_weight))
     return parser_ok;
 }
 
@@ -1483,8 +1483,8 @@ __Z_INLINE parser_error_t _readMethod_multisig_cancel_as_multi_V18(
     parser_context_t* c, pd_multisig_cancel_as_multi_V18_t* m)
 {
     CHECK_ERROR(_readu16(c, &m->threshold))
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->other_signatories))
-    CHECK_ERROR(_readTimepoint_V18(c, &m->timepoint))
+    CHECK_ERROR(_readVecAccountId(c, &m->other_signatories))
+    CHECK_ERROR(_readTimepoint(c, &m->timepoint))
     CHECK_ERROR(_readH256(c, &m->call_hash))
     return parser_ok;
 }
@@ -1536,7 +1536,7 @@ __Z_INLINE parser_error_t _readMethod_bounties_propose_curator_V18(
     parser_context_t* c, pd_bounties_propose_curator_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->bounty_id))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->curator))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->curator))
     CHECK_ERROR(_readCompactBalance(c, &m->fee))
     return parser_ok;
 }
@@ -1559,7 +1559,7 @@ __Z_INLINE parser_error_t _readMethod_bounties_award_bounty_V18(
     parser_context_t* c, pd_bounties_award_bounty_V18_t* m)
 {
     CHECK_ERROR(_readCompactu32(c, &m->bounty_id))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->beneficiary))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -1599,7 +1599,7 @@ __Z_INLINE parser_error_t _readMethod_childbounties_propose_curator_V18(
 {
     CHECK_ERROR(_readCompactu32(c, &m->parent_bounty_id))
     CHECK_ERROR(_readCompactu32(c, &m->child_bounty_id))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->curator))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->curator))
     CHECK_ERROR(_readCompactBalance(c, &m->fee))
     return parser_ok;
 }
@@ -1625,7 +1625,7 @@ __Z_INLINE parser_error_t _readMethod_childbounties_award_child_bounty_V18(
 {
     CHECK_ERROR(_readCompactu32(c, &m->parent_bounty_id))
     CHECK_ERROR(_readCompactu32(c, &m->child_bounty_id))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->beneficiary))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->beneficiary))
     return parser_ok;
 }
 
@@ -1649,7 +1649,7 @@ __Z_INLINE parser_error_t _readMethod_tips_report_awesome_V18(
     parser_context_t* c, pd_tips_report_awesome_V18_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->reason))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     return parser_ok;
 }
 
@@ -1664,7 +1664,7 @@ __Z_INLINE parser_error_t _readMethod_tips_tip_new_V18(
     parser_context_t* c, pd_tips_tip_new_V18_t* m)
 {
     CHECK_ERROR(_readBytes(c, &m->reason))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readCompactu128(c, &m->tip_value))
     return parser_ok;
 }
@@ -1724,7 +1724,7 @@ __Z_INLINE parser_error_t _readMethod_nis_thaw_V18(
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_V18(
     parser_context_t* c, pd_niscounterpartbalances_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactu128(c, &m->amount))
     return parser_ok;
 }
@@ -1732,7 +1732,7 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_V18(
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_set_balance_V18(
     parser_context_t* c, pd_niscounterpartbalances_set_balance_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readCompactu128(c, &m->new_free))
     CHECK_ERROR(_readCompactu128(c, &m->new_reserved))
     return parser_ok;
@@ -1741,8 +1741,8 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_set_balance_V18(
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_force_transfer_V18(
     parser_context_t* c, pd_niscounterpartbalances_force_transfer_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->source))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->source))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactu128(c, &m->amount))
     return parser_ok;
 }
@@ -1750,7 +1750,7 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_force_transfer_V18(
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_keep_alive_V18(
     parser_context_t* c, pd_niscounterpartbalances_transfer_keep_alive_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readCompactu128(c, &m->amount))
     return parser_ok;
 }
@@ -1758,7 +1758,7 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_keep_alive
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_all_V18(
     parser_context_t* c, pd_niscounterpartbalances_transfer_all_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dest))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dest))
     CHECK_ERROR(_readbool(c, &m->keep_alive))
     return parser_ok;
 }
@@ -1766,7 +1766,7 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_transfer_all_V18(
 __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_force_unreserve_V18(
     parser_context_t* c, pd_niscounterpartbalances_force_unreserve_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->who))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->who))
     CHECK_ERROR(_readBalance(c, &m->amount))
     return parser_ok;
 }
@@ -1774,14 +1774,14 @@ __Z_INLINE parser_error_t _readMethod_niscounterpartbalances_force_unreserve_V18
 __Z_INLINE parser_error_t _readMethod_voterlist_rebag_V18(
     parser_context_t* c, pd_voterlist_rebag_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->dislocated))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->dislocated))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_voterlist_put_in_front_of_V18(
     parser_context_t* c, pd_voterlist_put_in_front_of_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->lighter))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->lighter))
     return parser_ok;
 }
 
@@ -1789,14 +1789,14 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_join_V18(
     parser_context_t* c, pd_nominationpools_join_V18_t* m)
 {
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_bond_extra_V18(
     parser_context_t* c, pd_nominationpools_bond_extra_V18_t* m)
 {
-    CHECK_ERROR(_readBondExtraBalanceOfT_V18(c, &m->extra))
+    CHECK_ERROR(_readBondExtraBalanceOfT(c, &m->extra))
     return parser_ok;
 }
 
@@ -1809,7 +1809,7 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_claim_payout_V18(
 __Z_INLINE parser_error_t _readMethod_nominationpools_unbond_V18(
     parser_context_t* c, pd_nominationpools_unbond_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->member_account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->member_account))
     CHECK_ERROR(_readCompactBalance(c, &m->unbonding_points))
     return parser_ok;
 }
@@ -1817,7 +1817,7 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_unbond_V18(
 __Z_INLINE parser_error_t _readMethod_nominationpools_pool_withdraw_unbonded_V18(
     parser_context_t* c, pd_nominationpools_pool_withdraw_unbonded_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
@@ -1825,7 +1825,7 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_pool_withdraw_unbonded_V18
 __Z_INLINE parser_error_t _readMethod_nominationpools_withdraw_unbonded_V18(
     parser_context_t* c, pd_nominationpools_withdraw_unbonded_V18_t* m)
 {
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->member_account))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->member_account))
     CHECK_ERROR(_readu32(c, &m->num_slashing_spans))
     return parser_ok;
 }
@@ -1834,9 +1834,9 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_create_V18(
     parser_context_t* c, pd_nominationpools_create_V18_t* m)
 {
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->root))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->nominator))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->state_toggler))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->root))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->nominator))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->state_toggler))
     return parser_ok;
 }
 
@@ -1844,33 +1844,33 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_create_with_pool_id_V18(
     parser_context_t* c, pd_nominationpools_create_with_pool_id_V18_t* m)
 {
     CHECK_ERROR(_readCompactBalance(c, &m->amount))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->root))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->nominator))
-    CHECK_ERROR(_readAccountIdLookupOfT_V18(c, &m->state_toggler))
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->root))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->nominator))
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &m->state_toggler))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_nominate_V18(
     parser_context_t* c, pd_nominationpools_nominate_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
-    CHECK_ERROR(_readVecAccountId_V18(c, &m->validators))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
+    CHECK_ERROR(_readVecAccountId(c, &m->validators))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_set_state_V18(
     parser_context_t* c, pd_nominationpools_set_state_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
-    CHECK_ERROR(_readPoolState_V18(c, &m->state))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
+    CHECK_ERROR(_readPoolState(c, &m->state))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_set_metadata_V18(
     parser_context_t* c, pd_nominationpools_set_metadata_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
     CHECK_ERROR(_readVecu8(c, &m->metadata))
     return parser_ok;
 }
@@ -1878,28 +1878,28 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_set_metadata_V18(
 __Z_INLINE parser_error_t _readMethod_nominationpools_set_configs_V18(
     parser_context_t* c, pd_nominationpools_set_configs_V18_t* m)
 {
-    CHECK_ERROR(_readConfigOpBalanceOfT_V18(c, &m->min_join_bond))
-    CHECK_ERROR(_readConfigOpBalanceOfT_V18(c, &m->min_create_bond))
-    CHECK_ERROR(_readConfigOpu32_V18(c, &m->max_pools))
-    CHECK_ERROR(_readConfigOpu32_V18(c, &m->max_members))
-    CHECK_ERROR(_readConfigOpu32_V18(c, &m->max_members_per_pool))
+    CHECK_ERROR(_readConfigOpBalanceOfT(c, &m->min_join_bond))
+    CHECK_ERROR(_readConfigOpBalanceOfT(c, &m->min_create_bond))
+    CHECK_ERROR(_readConfigOpu32(c, &m->max_pools))
+    CHECK_ERROR(_readConfigOpu32(c, &m->max_members))
+    CHECK_ERROR(_readConfigOpu32(c, &m->max_members_per_pool))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_update_roles_V18(
     parser_context_t* c, pd_nominationpools_update_roles_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
-    CHECK_ERROR(_readConfigOpAccountId_V18(c, &m->new_root))
-    CHECK_ERROR(_readConfigOpAccountId_V18(c, &m->new_nominator))
-    CHECK_ERROR(_readConfigOpAccountId_V18(c, &m->new_state_toggler))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
+    CHECK_ERROR(_readConfigOpAccountId(c, &m->new_root))
+    CHECK_ERROR(_readConfigOpAccountId(c, &m->new_nominator))
+    CHECK_ERROR(_readConfigOpAccountId(c, &m->new_state_toggler))
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_nominationpools_chill_V18(
     parser_context_t* c, pd_nominationpools_chill_V18_t* m)
 {
-    CHECK_ERROR(_readPoolId_V18(c, &m->pool_id))
+    CHECK_ERROR(_readPoolId(c, &m->pool_id))
     return parser_ok;
 }
 
@@ -1918,7 +1918,7 @@ __Z_INLINE parser_error_t _readMethod_fastunstake_deregister_V18(
 __Z_INLINE parser_error_t _readMethod_fastunstake_control_V18(
     parser_context_t* c, pd_fastunstake_control_V18_t* m)
 {
-    CHECK_ERROR(_readEraIndex_V18(c, &m->unchecked_eras_to_check))
+    CHECK_ERROR(_readEraIndex(c, &m->unchecked_eras_to_check))
     return parser_ok;
 }
 
@@ -2023,7 +2023,7 @@ __Z_INLINE parser_error_t _readMethod_configuration_set_max_validators_V18(
 __Z_INLINE parser_error_t _readMethod_configuration_set_dispute_period_V18(
     parser_context_t* c, pd_configuration_set_dispute_period_V18_t* m)
 {
-    CHECK_ERROR(_readSessionIndex_V18(c, &m->new_))
+    CHECK_ERROR(_readSessionIndex(c, &m->new_))
     return parser_ok;
 }
 
@@ -2107,7 +2107,7 @@ __Z_INLINE parser_error_t _readMethod_configuration_set_max_downward_message_siz
 __Z_INLINE parser_error_t _readMethod_configuration_set_ump_service_total_weight_V18(
     parser_context_t* c, pd_configuration_set_ump_service_total_weight_V18_t* m)
 {
-    CHECK_ERROR(_readWeight_V18(c, &m->new_))
+    CHECK_ERROR(_readWeight(c, &m->new_))
     return parser_ok;
 }
 
@@ -2205,7 +2205,7 @@ __Z_INLINE parser_error_t _readMethod_configuration_set_hrmp_max_message_num_per
 __Z_INLINE parser_error_t _readMethod_configuration_set_ump_max_individual_weight_V18(
     parser_context_t* c, pd_configuration_set_ump_max_individual_weight_V18_t* m)
 {
-    CHECK_ERROR(_readWeight_V18(c, &m->new_))
+    CHECK_ERROR(_readWeight(c, &m->new_))
     return parser_ok;
 }
 
@@ -2219,7 +2219,7 @@ __Z_INLINE parser_error_t _readMethod_configuration_set_pvf_checking_enabled_V18
 __Z_INLINE parser_error_t _readMethod_configuration_set_pvf_voting_ttl_V18(
     parser_context_t* c, pd_configuration_set_pvf_voting_ttl_V18_t* m)
 {
-    CHECK_ERROR(_readSessionIndex_V18(c, &m->new_))
+    CHECK_ERROR(_readSessionIndex(c, &m->new_))
     return parser_ok;
 }
 
@@ -2247,8 +2247,8 @@ __Z_INLINE parser_error_t _readMethod_initializer_force_approve_V18(
 __Z_INLINE parser_error_t _readMethod_ump_service_overweight_V18(
     parser_context_t* c, pd_ump_service_overweight_V18_t* m)
 {
-    CHECK_ERROR(_readOverweightIndex_V18(c, &m->index))
-    CHECK_ERROR(_readWeight_V18(c, &m->weight_limit))
+    CHECK_ERROR(_readOverweightIndex(c, &m->index))
+    CHECK_ERROR(_readWeight(c, &m->weight_limit))
     return parser_ok;
 }
 
@@ -2314,7 +2314,7 @@ parser_error_t _readMethod_V18(
         CHECK_ERROR(_readMethod_staking_bond_extra_V18(c, &method->basic.staking_bond_extra_V18))
         break;
     case 1538: /* module 6 call 2 */
-        CHECK_ERROR(_readMethod_staking_unbond_V18(c, &method->basic.staking_unbond_V18))
+        CHECK_ERROR(_readMethod_staking_unbond_V18(c, &method->nested.staking_unbond_V18))
         break;
     case 1539: /* module 6 call 3 */
         CHECK_ERROR(_readMethod_staking_withdraw_unbonded_V18(c, &method->basic.staking_withdraw_unbonded_V18))
@@ -2326,13 +2326,13 @@ parser_error_t _readMethod_V18(
         CHECK_ERROR(_readMethod_staking_nominate_V18(c, &method->nested.staking_nominate_V18))
         break;
     case 1542: /* module 6 call 6 */
-        CHECK_ERROR(_readMethod_staking_chill_V18(c, &method->basic.staking_chill_V18))
+        CHECK_ERROR(_readMethod_staking_chill_V18(c, &method->nested.staking_chill_V18))
         break;
     case 1543: /* module 6 call 7 */
         CHECK_ERROR(_readMethod_staking_set_payee_V18(c, &method->basic.staking_set_payee_V18))
         break;
     case 1544: /* module 6 call 8 */
-        CHECK_ERROR(_readMethod_staking_set_controller_V18(c, &method->basic.staking_set_controller_V18))
+        CHECK_ERROR(_readMethod_staking_set_controller_V18(c, &method->nested.staking_set_controller_V18))
         break;
     case 1554: /* module 6 call 18 */
         CHECK_ERROR(_readMethod_staking_payout_stakers_V18(c, &method->basic.staking_payout_stakers_V18))
@@ -3002,19 +3002,19 @@ parser_error_t _readMethod_V18(
         CHECK_ERROR(_readMethod_nominationpools_withdraw_unbonded_V18(c, &method->basic.nominationpools_withdraw_unbonded_V18))
         break;
     case 10502: /* module 41 call 6 */
-        CHECK_ERROR(_readMethod_nominationpools_create_V18(c, &method->basic.nominationpools_create_V18))
+        CHECK_ERROR(_readMethod_nominationpools_create_V18(c, &method->nested.nominationpools_create_V18))
         break;
     case 10503: /* module 41 call 7 */
         CHECK_ERROR(_readMethod_nominationpools_create_with_pool_id_V18(c, &method->basic.nominationpools_create_with_pool_id_V18))
         break;
     case 10504: /* module 41 call 8 */
-        CHECK_ERROR(_readMethod_nominationpools_nominate_V18(c, &method->basic.nominationpools_nominate_V18))
+        CHECK_ERROR(_readMethod_nominationpools_nominate_V18(c, &method->nested.nominationpools_nominate_V18))
         break;
     case 10505: /* module 41 call 9 */
         CHECK_ERROR(_readMethod_nominationpools_set_state_V18(c, &method->basic.nominationpools_set_state_V18))
         break;
     case 10506: /* module 41 call 10 */
-        CHECK_ERROR(_readMethod_nominationpools_set_metadata_V18(c, &method->basic.nominationpools_set_metadata_V18))
+        CHECK_ERROR(_readMethod_nominationpools_set_metadata_V18(c, &method->nested.nominationpools_set_metadata_V18))
         break;
     case 10507: /* module 41 call 11 */
         CHECK_ERROR(_readMethod_nominationpools_set_configs_V18(c, &method->basic.nominationpools_set_configs_V18))
@@ -6998,7 +6998,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1024: /* module 4 call 0 */
         switch (itemIdx) {
         case 0: /* balances_transfer_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.balances_transfer_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7013,12 +7013,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1026: /* module 4 call 2 */
         switch (itemIdx) {
         case 0: /* balances_force_transfer_V18 - source */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.balances_force_transfer_V18.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* balances_force_transfer_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.balances_force_transfer_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7033,7 +7033,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1027: /* module 4 call 3 */
         switch (itemIdx) {
         case 0: /* balances_transfer_keep_alive_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.balances_transfer_keep_alive_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7048,7 +7048,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1028: /* module 4 call 4 */
         switch (itemIdx) {
         case 0: /* balances_transfer_all_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.balances_transfer_all_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7063,7 +7063,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1536: /* module 6 call 0 */
         switch (itemIdx) {
         case 0: /* staking_bond_V18 - controller */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.staking_bond_V18.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7073,7 +7073,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_bond_V18 - payee */;
-            return _toStringRewardDestination_V18(
+            return _toStringRewardDestination(
                 &m->nested.staking_bond_V18.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7094,7 +7094,7 @@ parser_error_t _getMethod_ItemValue_V18(
         switch (itemIdx) {
         case 0: /* staking_unbond_V18 - amount */;
             return _toStringCompactBalance(
-                &m->basic.staking_unbond_V18.amount,
+                &m->nested.staking_unbond_V18.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7113,7 +7113,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1540: /* module 6 call 4 */
         switch (itemIdx) {
         case 0: /* staking_validate_V18 - prefs */;
-            return _toStringValidatorPrefs_V18(
+            return _toStringValidatorPrefs(
                 &m->basic.staking_validate_V18.prefs,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7123,7 +7123,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1541: /* module 6 call 5 */
         switch (itemIdx) {
         case 0: /* staking_nominate_V18 - targets */;
-            return _toStringVecAccountIdLookupOfT_V18(
+            return _toStringVecAccountIdLookupOfT(
                 &m->nested.staking_nominate_V18.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7138,7 +7138,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1543: /* module 6 call 7 */
         switch (itemIdx) {
         case 0: /* staking_set_payee_V18 - payee */;
-            return _toStringRewardDestination_V18(
+            return _toStringRewardDestination(
                 &m->basic.staking_set_payee_V18.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7148,8 +7148,8 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1544: /* module 6 call 8 */
         switch (itemIdx) {
         case 0: /* staking_set_controller_V18 - controller */;
-            return _toStringAccountIdLookupOfT_V18(
-                &m->basic.staking_set_controller_V18.controller,
+            return _toStringAccountIdLookupOfT(
+                &m->nested.staking_set_controller_V18.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -7158,12 +7158,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1554: /* module 6 call 18 */
         switch (itemIdx) {
         case 0: /* staking_payout_stakers_V18 - validator_stash */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.staking_payout_stakers_V18.validator_stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_payout_stakers_V18 - era */;
-            return _toStringEraIndex_V18(
+            return _toStringEraIndex(
                 &m->basic.staking_payout_stakers_V18.era,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7183,7 +7183,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 2048: /* module 8 call 0 */
         switch (itemIdx) {
         case 0: /* session_set_keys_V18 - keys */;
-            return _toStringKeys_V18(
+            return _toStringKeys(
                 &m->basic.session_set_keys_V18.keys,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7258,7 +7258,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 5: /* crowdloan_create_V18 - verifier */;
-            return _toStringOptionMultiSigner_V18(
+            return _toStringOptionMultiSigner(
                 &m->basic.crowdloan_create_V18.verifier,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7278,7 +7278,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* crowdloan_contribute_V18 - signature */;
-            return _toStringOptionMultiSignature_V18(
+            return _toStringOptionMultiSignature(
                 &m->basic.crowdloan_contribute_V18.signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7288,7 +7288,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 18690: /* module 73 call 2 */
         switch (itemIdx) {
         case 0: /* crowdloan_withdraw_V18 - who */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.crowdloan_withdraw_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7348,7 +7348,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 5: /* crowdloan_edit_V18 - verifier */;
-            return _toStringOptionMultiSigner_V18(
+            return _toStringOptionMultiSigner(
                 &m->basic.crowdloan_edit_V18.verifier,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7358,7 +7358,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 18694: /* module 73 call 6 */
         switch (itemIdx) {
         case 0: /* crowdloan_add_memo_V18 - index */;
-            return _toStringParaId_V18(
+            return _toStringParaId(
                 &m->basic.crowdloan_add_memo_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7373,7 +7373,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 18695: /* module 73 call 7 */
         switch (itemIdx) {
         case 0: /* crowdloan_poke_V18 - index */;
-            return _toStringParaId_V18(
+            return _toStringParaId(
                 &m->basic.crowdloan_poke_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7388,7 +7388,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* crowdloan_contribute_all_V18 - signature */;
-            return _toStringOptionMultiSignature_V18(
+            return _toStringOptionMultiSignature(
                 &m->basic.crowdloan_contribute_all_V18.signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7400,17 +7400,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
         case 0: /* xcmpallet_reserve_transfer_assets_V18 - dest */;
-            return _toStringBoxVersionedMultiLocation_V18(
+            return _toStringBoxVersionedMultiLocation(
                 &m->basic.xcmpallet_reserve_transfer_assets_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* xcmpallet_reserve_transfer_assets_V18 - beneficiary */;
-            return _toStringBoxVersionedMultiLocation_V18(
+            return _toStringBoxVersionedMultiLocation(
                 &m->basic.xcmpallet_reserve_transfer_assets_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* xcmpallet_reserve_transfer_assets_V18 - assets */;
-            return _toStringBoxVersionedMultiAssets_V18(
+            return _toStringBoxVersionedMultiAssets(
                 &m->basic.xcmpallet_reserve_transfer_assets_V18.assets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7425,17 +7425,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 25352: /* module 99 call 8 */
         switch (itemIdx) {
         case 0: /* xcmpallet_limited_reserve_transfer_assets_V18 - dest */;
-            return _toStringBoxVersionedMultiLocation_V18(
+            return _toStringBoxVersionedMultiLocation(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* xcmpallet_limited_reserve_transfer_assets_V18 - beneficiary */;
-            return _toStringBoxVersionedMultiLocation_V18(
+            return _toStringBoxVersionedMultiLocation(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* xcmpallet_limited_reserve_transfer_assets_V18 - assets */;
-            return _toStringBoxVersionedMultiAssets_V18(
+            return _toStringBoxVersionedMultiAssets(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V18.assets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7445,7 +7445,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* xcmpallet_limited_reserve_transfer_assets_V18 - weight_limit */;
-            return _toStringWeightLimit_V18(
+            return _toStringWeightLimit(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V18.weight_limit,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7516,7 +7516,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 768: /* module 3 call 0 */
         switch (itemIdx) {
         case 0: /* indices_claim_V18 - index */;
-            return _toStringAccountIndex_V18(
+            return _toStringAccountIndex(
                 &m->basic.indices_claim_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7526,12 +7526,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 769: /* module 3 call 1 */
         switch (itemIdx) {
         case 0: /* indices_transfer_V18 - new_ */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.indices_transfer_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* indices_transfer_V18 - index */;
-            return _toStringAccountIndex_V18(
+            return _toStringAccountIndex(
                 &m->basic.indices_transfer_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7541,7 +7541,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 770: /* module 3 call 2 */
         switch (itemIdx) {
         case 0: /* indices_free_V18 - index */;
-            return _toStringAccountIndex_V18(
+            return _toStringAccountIndex(
                 &m->basic.indices_free_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7551,12 +7551,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 771: /* module 3 call 3 */
         switch (itemIdx) {
         case 0: /* indices_force_transfer_V18 - new_ */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.indices_force_transfer_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* indices_force_transfer_V18 - index */;
-            return _toStringAccountIndex_V18(
+            return _toStringAccountIndex(
                 &m->basic.indices_force_transfer_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7571,7 +7571,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 772: /* module 3 call 4 */
         switch (itemIdx) {
         case 0: /* indices_freeze_V18 - index */;
-            return _toStringAccountIndex_V18(
+            return _toStringAccountIndex(
                 &m->basic.indices_freeze_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7581,7 +7581,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1025: /* module 4 call 1 */
         switch (itemIdx) {
         case 0: /* balances_set_balance_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.balances_set_balance_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7601,7 +7601,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1029: /* module 4 call 5 */
         switch (itemIdx) {
         case 0: /* balances_force_unreserve_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.balances_force_unreserve_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7636,7 +7636,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1547: /* module 6 call 11 */
         switch (itemIdx) {
         case 0: /* staking_scale_validator_count_V18 - factor */;
-            return _toStringPercent_V18(
+            return _toStringPercent(
                 &m->basic.staking_scale_validator_count_V18.factor,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7656,7 +7656,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1550: /* module 6 call 14 */
         switch (itemIdx) {
         case 0: /* staking_set_invulnerables_V18 - invulnerables */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->basic.staking_set_invulnerables_V18.invulnerables,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7666,7 +7666,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1551: /* module 6 call 15 */
         switch (itemIdx) {
         case 0: /* staking_force_unstake_V18 - stash */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.staking_force_unstake_V18.stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7686,7 +7686,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1553: /* module 6 call 17 */
         switch (itemIdx) {
         case 0: /* staking_cancel_deferred_slash_V18 - era */;
-            return _toStringEraIndex_V18(
+            return _toStringEraIndex(
                 &m->basic.staking_cancel_deferred_slash_V18.era,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7701,7 +7701,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1556: /* module 6 call 20 */
         switch (itemIdx) {
         case 0: /* staking_reap_stash_V18 - stash */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.staking_reap_stash_V18.stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7716,7 +7716,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1557: /* module 6 call 21 */
         switch (itemIdx) {
         case 0: /* staking_kick_V18 - who */;
-            return _toStringVecAccountIdLookupOfT_V18(
+            return _toStringVecAccountIdLookupOfT(
                 &m->basic.staking_kick_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7726,32 +7726,32 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1558: /* module 6 call 22 */
         switch (itemIdx) {
         case 0: /* staking_set_staking_configs_V18 - min_nominator_bond */;
-            return _toStringConfigOpBalanceOfT_V18(
+            return _toStringConfigOpBalanceOfT(
                 &m->basic.staking_set_staking_configs_V18.min_nominator_bond,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_set_staking_configs_V18 - min_validator_bond */;
-            return _toStringConfigOpBalanceOfT_V18(
+            return _toStringConfigOpBalanceOfT(
                 &m->basic.staking_set_staking_configs_V18.min_validator_bond,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_set_staking_configs_V18 - max_nominator_count */;
-            return _toStringConfigOpu32_V18(
+            return _toStringConfigOpu32(
                 &m->basic.staking_set_staking_configs_V18.max_nominator_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* staking_set_staking_configs_V18 - max_validator_count */;
-            return _toStringConfigOpu32_V18(
+            return _toStringConfigOpu32(
                 &m->basic.staking_set_staking_configs_V18.max_validator_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* staking_set_staking_configs_V18 - chill_threshold */;
-            return _toStringConfigOpPercent_V18(
+            return _toStringConfigOpPercent(
                 &m->basic.staking_set_staking_configs_V18.chill_threshold,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 5: /* staking_set_staking_configs_V18 - min_commission */;
-            return _toStringConfigOpPerbill_V18(
+            return _toStringConfigOpPerbill(
                 &m->basic.staking_set_staking_configs_V18.min_commission,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7761,7 +7761,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1559: /* module 6 call 23 */
         switch (itemIdx) {
         case 0: /* staking_chill_other_V18 - controller */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.staking_chill_other_V18.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7771,7 +7771,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 1560: /* module 6 call 24 */
         switch (itemIdx) {
         case 0: /* staking_force_apply_min_commission_V18 - validator_stash */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.staking_force_apply_min_commission_V18.validator_stash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7781,7 +7781,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3328: /* module 13 call 0 */
         switch (itemIdx) {
         case 0: /* democracy_propose_V18 - proposal */;
-            return _toStringBoundedCallOfT_V18(
+            return _toStringBoundedCallOfT(
                 &m->nested.democracy_propose_V18.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7811,7 +7811,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* democracy_vote_V18 - vote */;
-            return _toStringAccountVote_V18(
+            return _toStringAccountVote(
                 &m->nested.democracy_vote_V18.vote,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7821,7 +7821,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3331: /* module 13 call 3 */
         switch (itemIdx) {
         case 0: /* democracy_emergency_cancel_V18 - ref_index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->nested.democracy_emergency_cancel_V18.ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7831,7 +7831,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3332: /* module 13 call 4 */
         switch (itemIdx) {
         case 0: /* democracy_external_propose_V18 - proposal */;
-            return _toStringBoundedCallOfT_V18(
+            return _toStringBoundedCallOfT(
                 &m->nested.democracy_external_propose_V18.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7841,7 +7841,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3333: /* module 13 call 5 */
         switch (itemIdx) {
         case 0: /* democracy_external_propose_majority_V18 - proposal */;
-            return _toStringBoundedCallOfT_V18(
+            return _toStringBoundedCallOfT(
                 &m->nested.democracy_external_propose_majority_V18.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7851,7 +7851,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3334: /* module 13 call 6 */
         switch (itemIdx) {
         case 0: /* democracy_external_propose_default_V18 - proposal */;
-            return _toStringBoundedCallOfT_V18(
+            return _toStringBoundedCallOfT(
                 &m->nested.democracy_external_propose_default_V18.proposal,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7901,12 +7901,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3338: /* module 13 call 10 */
         switch (itemIdx) {
         case 0: /* democracy_delegate_V18 - to */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.democracy_delegate_V18.to,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* democracy_delegate_V18 - conviction */;
-            return _toStringConviction_V18(
+            return _toStringConviction(
                 &m->nested.democracy_delegate_V18.conviction,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7931,7 +7931,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3341: /* module 13 call 13 */
         switch (itemIdx) {
         case 0: /* democracy_unlock_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.democracy_unlock_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7941,7 +7941,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3342: /* module 13 call 14 */
         switch (itemIdx) {
         case 0: /* democracy_remove_vote_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->nested.democracy_remove_vote_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7951,12 +7951,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3343: /* module 13 call 15 */
         switch (itemIdx) {
         case 0: /* democracy_remove_other_vote_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.democracy_remove_other_vote_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* democracy_remove_other_vote_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->nested.democracy_remove_other_vote_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7971,7 +7971,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* democracy_blacklist_V18 - maybe_ref_index */;
-            return _toStringOptionReferendumIndex_V18(
+            return _toStringOptionReferendumIndex(
                 &m->basic.democracy_blacklist_V18.maybe_ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7991,17 +7991,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3584: /* module 14 call 0 */
         switch (itemIdx) {
         case 0: /* council_set_members_V18 - new_members */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->basic.council_set_members_V18.new_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* council_set_members_V18 - prime */;
-            return _toStringOptionAccountId_V18(
+            return _toStringOptionAccountId(
                 &m->basic.council_set_members_V18.prime,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* council_set_members_V18 - old_count */;
-            return _toStringMemberCount_V18(
+            return _toStringMemberCount(
                 &m->basic.council_set_members_V18.old_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8111,7 +8111,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* council_close_V18 - proposal_weight_bound */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.council_close_V18.proposal_weight_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8126,17 +8126,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 3840: /* module 15 call 0 */
         switch (itemIdx) {
         case 0: /* technicalcommittee_set_members_V18 - new_members */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->basic.technicalcommittee_set_members_V18.new_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* technicalcommittee_set_members_V18 - prime */;
-            return _toStringOptionAccountId_V18(
+            return _toStringOptionAccountId(
                 &m->basic.technicalcommittee_set_members_V18.prime,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* technicalcommittee_set_members_V18 - old_count */;
-            return _toStringMemberCount_V18(
+            return _toStringMemberCount(
                 &m->basic.technicalcommittee_set_members_V18.old_count,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8246,7 +8246,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* technicalcommittee_close_V18 - proposal_weight_bound */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.technicalcommittee_close_V18.proposal_weight_bound,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8261,7 +8261,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4096: /* module 16 call 0 */
         switch (itemIdx) {
         case 0: /* phragmenelection_vote_V18 - votes */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->basic.phragmenelection_vote_V18.votes,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8291,7 +8291,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4100: /* module 16 call 4 */
         switch (itemIdx) {
         case 0: /* phragmenelection_remove_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.phragmenelection_remove_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8326,7 +8326,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4352: /* module 17 call 0 */
         switch (itemIdx) {
         case 0: /* technicalmembership_add_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_add_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8336,7 +8336,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4353: /* module 17 call 1 */
         switch (itemIdx) {
         case 0: /* technicalmembership_remove_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_remove_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8346,12 +8346,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4354: /* module 17 call 2 */
         switch (itemIdx) {
         case 0: /* technicalmembership_swap_member_V18 - remove */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_swap_member_V18.remove,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* technicalmembership_swap_member_V18 - add */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_swap_member_V18.add,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8361,7 +8361,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4355: /* module 17 call 3 */
         switch (itemIdx) {
         case 0: /* technicalmembership_reset_members_V18 - members */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->basic.technicalmembership_reset_members_V18.members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8371,7 +8371,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4356: /* module 17 call 4 */
         switch (itemIdx) {
         case 0: /* technicalmembership_change_key_V18 - new_ */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_change_key_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8381,7 +8381,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4357: /* module 17 call 5 */
         switch (itemIdx) {
         case 0: /* technicalmembership_set_prime_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.technicalmembership_set_prime_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8401,7 +8401,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* treasury_propose_spend_V18 - beneficiary */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.treasury_propose_spend_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8436,7 +8436,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* treasury_spend_V18 - beneficiary */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.treasury_spend_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8461,7 +8461,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* convictionvoting_vote_V18 - vote */;
-            return _toStringAccountVote_V18(
+            return _toStringAccountVote(
                 &m->basic.convictionvoting_vote_V18.vote,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8471,17 +8471,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5121: /* module 20 call 1 */
         switch (itemIdx) {
         case 0: /* convictionvoting_delegate_V18 - class_ */;
-            return _toStringClassOf_V18(
+            return _toStringClassOf(
                 &m->basic.convictionvoting_delegate_V18.class_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* convictionvoting_delegate_V18 - to */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.convictionvoting_delegate_V18.to,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* convictionvoting_delegate_V18 - conviction */;
-            return _toStringConviction_V18(
+            return _toStringConviction(
                 &m->basic.convictionvoting_delegate_V18.conviction,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8496,7 +8496,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5122: /* module 20 call 2 */
         switch (itemIdx) {
         case 0: /* convictionvoting_undelegate_V18 - class_ */;
-            return _toStringClassOf_V18(
+            return _toStringClassOf(
                 &m->basic.convictionvoting_undelegate_V18.class_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8506,12 +8506,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5123: /* module 20 call 3 */
         switch (itemIdx) {
         case 0: /* convictionvoting_unlock_V18 - class_ */;
-            return _toStringClassOf_V18(
+            return _toStringClassOf(
                 &m->basic.convictionvoting_unlock_V18.class_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* convictionvoting_unlock_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.convictionvoting_unlock_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8521,12 +8521,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5124: /* module 20 call 4 */
         switch (itemIdx) {
         case 0: /* convictionvoting_remove_vote_V18 - class_ */;
-            return _toStringOptionClassOf_V18(
+            return _toStringOptionClassOf(
                 &m->basic.convictionvoting_remove_vote_V18.class_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* convictionvoting_remove_vote_V18 - index */;
-            return _toStringPollIndexOf_V18(
+            return _toStringPollIndexOf(
                 &m->basic.convictionvoting_remove_vote_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8536,17 +8536,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5125: /* module 20 call 5 */
         switch (itemIdx) {
         case 0: /* convictionvoting_remove_other_vote_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.convictionvoting_remove_other_vote_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* convictionvoting_remove_other_vote_V18 - class_ */;
-            return _toStringClassOf_V18(
+            return _toStringClassOf(
                 &m->basic.convictionvoting_remove_other_vote_V18.class_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* convictionvoting_remove_other_vote_V18 - index */;
-            return _toStringPollIndexOf_V18(
+            return _toStringPollIndexOf(
                 &m->basic.convictionvoting_remove_other_vote_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8556,7 +8556,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5377: /* module 21 call 1 */
         switch (itemIdx) {
         case 0: /* referenda_place_decision_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_place_decision_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8566,7 +8566,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5378: /* module 21 call 2 */
         switch (itemIdx) {
         case 0: /* referenda_refund_decision_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_refund_decision_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8576,7 +8576,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5379: /* module 21 call 3 */
         switch (itemIdx) {
         case 0: /* referenda_cancel_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_cancel_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8586,7 +8586,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5380: /* module 21 call 4 */
         switch (itemIdx) {
         case 0: /* referenda_kill_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_kill_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8596,7 +8596,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5381: /* module 21 call 5 */
         switch (itemIdx) {
         case 0: /* referenda_nudge_referendum_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_nudge_referendum_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8606,7 +8606,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5382: /* module 21 call 6 */
         switch (itemIdx) {
         case 0: /* referenda_one_fewer_deciding_V18 - track */;
-            return _toStringTrackIdOf_V18(
+            return _toStringTrackIdOf(
                 &m->basic.referenda_one_fewer_deciding_V18.track,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8616,7 +8616,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5383: /* module 21 call 7 */
         switch (itemIdx) {
         case 0: /* referenda_refund_submission_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.referenda_refund_submission_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8626,7 +8626,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5632: /* module 22 call 0 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_add_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.fellowshipcollective_add_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8636,7 +8636,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5633: /* module 22 call 1 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_promote_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.fellowshipcollective_promote_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8646,7 +8646,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5634: /* module 22 call 2 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_demote_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.fellowshipcollective_demote_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8656,12 +8656,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5635: /* module 22 call 3 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_remove_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.fellowshipcollective_remove_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* fellowshipcollective_remove_member_V18 - min_rank */;
-            return _toStringRank_V18(
+            return _toStringRank(
                 &m->basic.fellowshipcollective_remove_member_V18.min_rank,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8671,7 +8671,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5636: /* module 22 call 4 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_vote_V18 - poll */;
-            return _toStringPollIndexOf_V18(
+            return _toStringPollIndexOf(
                 &m->basic.fellowshipcollective_vote_V18.poll,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8686,7 +8686,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5637: /* module 22 call 5 */
         switch (itemIdx) {
         case 0: /* fellowshipcollective_cleanup_poll_V18 - poll_index */;
-            return _toStringPollIndexOf_V18(
+            return _toStringPollIndexOf(
                 &m->basic.fellowshipcollective_cleanup_poll_V18.poll_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8701,7 +8701,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5889: /* module 23 call 1 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_place_decision_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_place_decision_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8711,7 +8711,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5890: /* module 23 call 2 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_refund_decision_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_refund_decision_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8721,7 +8721,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5891: /* module 23 call 3 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_cancel_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_cancel_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8731,7 +8731,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5892: /* module 23 call 4 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_kill_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_kill_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8741,7 +8741,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5893: /* module 23 call 5 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_nudge_referendum_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_nudge_referendum_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8751,7 +8751,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5894: /* module 23 call 6 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_one_fewer_deciding_V18 - track */;
-            return _toStringTrackIdOf_V18(
+            return _toStringTrackIdOf(
                 &m->basic.fellowshipreferenda_one_fewer_deciding_V18.track,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8761,7 +8761,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 5895: /* module 23 call 7 */
         switch (itemIdx) {
         case 0: /* fellowshipreferenda_refund_submission_deposit_V18 - index */;
-            return _toStringReferendumIndex_V18(
+            return _toStringReferendumIndex(
                 &m->basic.fellowshipreferenda_refund_submission_deposit_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8771,7 +8771,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11264: /* module 44 call 0 */
         switch (itemIdx) {
         case 0: /* whitelist_whitelist_call_V18 - call_hash */;
-            return _toStringPreimageHash_V18(
+            return _toStringPreimageHash(
                 &m->basic.whitelist_whitelist_call_V18.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8781,7 +8781,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11265: /* module 44 call 1 */
         switch (itemIdx) {
         case 0: /* whitelist_remove_whitelisted_call_V18 - call_hash */;
-            return _toStringPreimageHash_V18(
+            return _toStringPreimageHash(
                 &m->basic.whitelist_remove_whitelisted_call_V18.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8791,7 +8791,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11266: /* module 44 call 2 */
         switch (itemIdx) {
         case 0: /* whitelist_dispatch_whitelisted_call_V18 - call_hash */;
-            return _toStringPreimageHash_V18(
+            return _toStringPreimageHash(
                 &m->basic.whitelist_dispatch_whitelisted_call_V18.call_hash,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8801,7 +8801,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* whitelist_dispatch_whitelisted_call_V18 - call_weight_witness */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.whitelist_dispatch_whitelisted_call_V18.call_weight_witness,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8821,12 +8821,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4864: /* module 19 call 0 */
         switch (itemIdx) {
         case 0: /* claims_claim_V18 - dest */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.claims_claim_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* claims_claim_V18 - ethereum_signature */;
-            return _toStringEcdsaSignature_V18(
+            return _toStringEcdsaSignature(
                 &m->basic.claims_claim_V18.ethereum_signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8836,12 +8836,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4866: /* module 19 call 2 */
         switch (itemIdx) {
         case 0: /* claims_claim_attest_V18 - dest */;
-            return _toStringAccountId_V18(
+            return _toStringAccountId(
                 &m->basic.claims_claim_attest_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* claims_claim_attest_V18 - ethereum_signature */;
-            return _toStringEcdsaSignature_V18(
+            return _toStringEcdsaSignature(
                 &m->basic.claims_claim_attest_V18.ethereum_signature,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8866,17 +8866,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 4868: /* module 19 call 4 */
         switch (itemIdx) {
         case 0: /* claims_move_claim_V18 - old */;
-            return _toStringEthereumAddress_V18(
+            return _toStringEthereumAddress(
                 &m->basic.claims_move_claim_V18.old,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* claims_move_claim_V18 - new_ */;
-            return _toStringEthereumAddress_V18(
+            return _toStringEthereumAddress(
                 &m->basic.claims_move_claim_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* claims_move_claim_V18 - maybe_preclaim */;
-            return _toStringOptionAccountId_V18(
+            return _toStringOptionAccountId(
                 &m->basic.claims_move_claim_V18.maybe_preclaim,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8891,7 +8891,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* utility_with_weight_V18 - weight */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.utility_with_weight_V18.weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8901,7 +8901,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6400: /* module 25 call 0 */
         switch (itemIdx) {
         case 0: /* identity_add_registrar_V18 - account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_add_registrar_V18.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8911,7 +8911,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6401: /* module 25 call 1 */
         switch (itemIdx) {
         case 0: /* identity_set_identity_V18 - info */;
-            return _toStringIdentityInfo_V18(
+            return _toStringIdentityInfo(
                 &m->basic.identity_set_identity_V18.info,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8921,7 +8921,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6402: /* module 25 call 2 */
         switch (itemIdx) {
         case 0: /* identity_set_subs_V18 - subs */;
-            return _toStringVecTupleAccountIdData_V18(
+            return _toStringVecTupleAccountIdData(
                 &m->basic.identity_set_subs_V18.subs,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8951,7 +8951,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6405: /* module 25 call 5 */
         switch (itemIdx) {
         case 0: /* identity_cancel_request_V18 - reg_index */;
-            return _toStringRegistrarIndex_V18(
+            return _toStringRegistrarIndex(
                 &m->basic.identity_cancel_request_V18.reg_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8981,7 +8981,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* identity_set_account_id_V18 - new_ */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_set_account_id_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -8996,12 +8996,12 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* identity_provide_judgement_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_provide_judgement_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* identity_provide_judgement_V18 - judgement */;
-            return _toStringJudgementBalanceOfT_V18(
+            return _toStringJudgementBalanceOfT(
                 &m->basic.identity_provide_judgement_V18.judgement,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9016,7 +9016,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6410: /* module 25 call 10 */
         switch (itemIdx) {
         case 0: /* identity_kill_identity_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_kill_identity_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9026,7 +9026,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6411: /* module 25 call 11 */
         switch (itemIdx) {
         case 0: /* identity_add_sub_V18 - sub */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_add_sub_V18.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9041,7 +9041,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6412: /* module 25 call 12 */
         switch (itemIdx) {
         case 0: /* identity_rename_sub_V18 - sub */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_rename_sub_V18.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9056,7 +9056,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6413: /* module 25 call 13 */
         switch (itemIdx) {
         case 0: /* identity_remove_sub_V18 - sub */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.identity_remove_sub_V18.sub,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9091,7 +9091,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6658: /* module 26 call 2 */
         switch (itemIdx) {
         case 0: /* society_vouch_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.society_vouch_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9121,7 +9121,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6660: /* module 26 call 4 */
         switch (itemIdx) {
         case 0: /* society_vote_V18 - candidate */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.society_vote_V18.candidate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9151,7 +9151,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6663: /* module 26 call 7 */
         switch (itemIdx) {
         case 0: /* society_found_V18 - founder */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.society_found_V18.founder,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9176,7 +9176,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6665: /* module 26 call 9 */
         switch (itemIdx) {
         case 0: /* society_judge_suspended_member_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.society_judge_suspended_member_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9201,12 +9201,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6913: /* module 27 call 1 */
         switch (itemIdx) {
         case 0: /* recovery_set_recovered_V18 - lost */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_set_recovered_V18.lost,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* recovery_set_recovered_V18 - rescuer */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_set_recovered_V18.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9216,7 +9216,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6915: /* module 27 call 3 */
         switch (itemIdx) {
         case 0: /* recovery_initiate_recovery_V18 - account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_initiate_recovery_V18.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9226,12 +9226,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6916: /* module 27 call 4 */
         switch (itemIdx) {
         case 0: /* recovery_vouch_recovery_V18 - lost */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_vouch_recovery_V18.lost,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* recovery_vouch_recovery_V18 - rescuer */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_vouch_recovery_V18.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9241,7 +9241,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6917: /* module 27 call 5 */
         switch (itemIdx) {
         case 0: /* recovery_claim_recovery_V18 - account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_claim_recovery_V18.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9251,7 +9251,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6918: /* module 27 call 6 */
         switch (itemIdx) {
         case 0: /* recovery_close_recovery_V18 - rescuer */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_close_recovery_V18.rescuer,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9266,7 +9266,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 6920: /* module 27 call 8 */
         switch (itemIdx) {
         case 0: /* recovery_cancel_recovered_V18 - account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.recovery_cancel_recovered_V18.account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9281,7 +9281,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7169: /* module 28 call 1 */
         switch (itemIdx) {
         case 0: /* vesting_vest_other_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.vesting_vest_other_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9291,12 +9291,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7170: /* module 28 call 2 */
         switch (itemIdx) {
         case 0: /* vesting_vested_transfer_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.vesting_vested_transfer_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* vesting_vested_transfer_V18 - schedule */;
-            return _toStringVestingInfo_V18(
+            return _toStringVestingInfo(
                 &m->basic.vesting_vested_transfer_V18.schedule,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9306,17 +9306,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7171: /* module 28 call 3 */
         switch (itemIdx) {
         case 0: /* vesting_force_vested_transfer_V18 - source */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.vesting_force_vested_transfer_V18.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* vesting_force_vested_transfer_V18 - target */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.vesting_force_vested_transfer_V18.target,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* vesting_force_vested_transfer_V18 - schedule */;
-            return _toStringVestingInfo_V18(
+            return _toStringVestingInfo(
                 &m->basic.vesting_force_vested_transfer_V18.schedule,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9341,12 +9341,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7680: /* module 30 call 0 */
         switch (itemIdx) {
         case 0: /* proxy_proxy_V18 - real */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->nested.proxy_proxy_V18.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_proxy_V18 - force_proxy_type */;
-            return _toStringOptionProxyType_V18(
+            return _toStringOptionProxyType(
                 &m->nested.proxy_proxy_V18.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9361,12 +9361,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7681: /* module 30 call 1 */
         switch (itemIdx) {
         case 0: /* proxy_add_proxy_V18 - delegate */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.proxy_add_proxy_V18.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_add_proxy_V18 - proxy_type */;
-            return _toStringProxyType_V18(
+            return _toStringProxyType(
                 &m->basic.proxy_add_proxy_V18.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9381,12 +9381,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7682: /* module 30 call 2 */
         switch (itemIdx) {
         case 0: /* proxy_remove_proxy_V18 - delegate */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.proxy_remove_proxy_V18.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_remove_proxy_V18 - proxy_type */;
-            return _toStringProxyType_V18(
+            return _toStringProxyType(
                 &m->basic.proxy_remove_proxy_V18.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9406,7 +9406,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7684: /* module 30 call 4 */
         switch (itemIdx) {
         case 0: /* proxy_create_pure_V18 - proxy_type */;
-            return _toStringProxyType_V18(
+            return _toStringProxyType(
                 &m->basic.proxy_create_pure_V18.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9426,12 +9426,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7685: /* module 30 call 5 */
         switch (itemIdx) {
         case 0: /* proxy_kill_pure_V18 - spawner */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.proxy_kill_pure_V18.spawner,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_kill_pure_V18 - proxy_type */;
-            return _toStringProxyType_V18(
+            return _toStringProxyType(
                 &m->basic.proxy_kill_pure_V18.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9456,17 +9456,17 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7689: /* module 30 call 9 */
         switch (itemIdx) {
         case 0: /* proxy_proxy_announced_V18 - delegate */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.proxy_proxy_announced_V18.delegate,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_proxy_announced_V18 - real */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.proxy_proxy_announced_V18.real,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_proxy_announced_V18 - force_proxy_type */;
-            return _toStringOptionProxyType_V18(
+            return _toStringOptionProxyType(
                 &m->basic.proxy_proxy_announced_V18.force_proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9481,7 +9481,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 7936: /* module 31 call 0 */
         switch (itemIdx) {
         case 0: /* multisig_as_multi_threshold_1_V18 - other_signatories */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->nested.multisig_as_multi_threshold_1_V18.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9501,12 +9501,12 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* multisig_as_multi_V18 - other_signatories */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->nested.multisig_as_multi_V18.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_as_multi_V18 - maybe_timepoint */;
-            return _toStringOptionTimepoint_V18(
+            return _toStringOptionTimepoint(
                 &m->nested.multisig_as_multi_V18.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9516,7 +9516,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* multisig_as_multi_V18 - max_weight */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->nested.multisig_as_multi_V18.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9531,12 +9531,12 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* multisig_approve_as_multi_V18 - other_signatories */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->nested.multisig_approve_as_multi_V18.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_approve_as_multi_V18 - maybe_timepoint */;
-            return _toStringOptionTimepoint_V18(
+            return _toStringOptionTimepoint(
                 &m->nested.multisig_approve_as_multi_V18.maybe_timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9546,7 +9546,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* multisig_approve_as_multi_V18 - max_weight */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->nested.multisig_approve_as_multi_V18.max_weight,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9561,12 +9561,12 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* multisig_cancel_as_multi_V18 - other_signatories */;
-            return _toStringVecAccountId_V18(
+            return _toStringVecAccountId(
                 &m->nested.multisig_cancel_as_multi_V18.other_signatories,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* multisig_cancel_as_multi_V18 - timepoint */;
-            return _toStringTimepoint_V18(
+            return _toStringTimepoint(
                 &m->nested.multisig_cancel_as_multi_V18.timepoint,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9651,7 +9651,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_propose_curator_V18 - curator */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.bounties_propose_curator_V18.curator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9691,7 +9691,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* bounties_award_bounty_V18 - beneficiary */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.bounties_award_bounty_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9766,7 +9766,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* childbounties_propose_curator_V18 - curator */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.childbounties_propose_curator_V18.curator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9821,7 +9821,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* childbounties_award_child_bounty_V18 - beneficiary */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.childbounties_award_child_bounty_V18.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9866,7 +9866,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* tips_report_awesome_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.tips_report_awesome_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9891,7 +9891,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* tips_tip_new_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.tips_tip_new_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9991,7 +9991,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11520: /* module 45 call 0 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_transfer_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_transfer_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10006,7 +10006,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11521: /* module 45 call 1 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_set_balance_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_set_balance_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10026,12 +10026,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11522: /* module 45 call 2 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_force_transfer_V18 - source */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_force_transfer_V18.source,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* niscounterpartbalances_force_transfer_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_force_transfer_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10046,7 +10046,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11523: /* module 45 call 3 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_transfer_keep_alive_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_transfer_keep_alive_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10061,7 +10061,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11524: /* module 45 call 4 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_transfer_all_V18 - dest */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_transfer_all_V18.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10076,7 +10076,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 11525: /* module 45 call 5 */
         switch (itemIdx) {
         case 0: /* niscounterpartbalances_force_unreserve_V18 - who */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.niscounterpartbalances_force_unreserve_V18.who,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10091,7 +10091,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 9984: /* module 39 call 0 */
         switch (itemIdx) {
         case 0: /* voterlist_rebag_V18 - dislocated */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.voterlist_rebag_V18.dislocated,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10101,7 +10101,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 9985: /* module 39 call 1 */
         switch (itemIdx) {
         case 0: /* voterlist_put_in_front_of_V18 - lighter */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.voterlist_put_in_front_of_V18.lighter,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10116,7 +10116,7 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_join_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_join_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10126,7 +10126,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10497: /* module 41 call 1 */
         switch (itemIdx) {
         case 0: /* nominationpools_bond_extra_V18 - extra */;
-            return _toStringBondExtraBalanceOfT_V18(
+            return _toStringBondExtraBalanceOfT(
                 &m->basic.nominationpools_bond_extra_V18.extra,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10141,7 +10141,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10499: /* module 41 call 3 */
         switch (itemIdx) {
         case 0: /* nominationpools_unbond_V18 - member_account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.nominationpools_unbond_V18.member_account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10156,7 +10156,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10500: /* module 41 call 4 */
         switch (itemIdx) {
         case 0: /* nominationpools_pool_withdraw_unbonded_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_pool_withdraw_unbonded_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10171,7 +10171,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10501: /* module 41 call 5 */
         switch (itemIdx) {
         case 0: /* nominationpools_withdraw_unbonded_V18 - member_account */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.nominationpools_withdraw_unbonded_V18.member_account,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10187,22 +10187,22 @@ parser_error_t _getMethod_ItemValue_V18(
         switch (itemIdx) {
         case 0: /* nominationpools_create_V18 - amount */;
             return _toStringCompactBalance(
-                &m->basic.nominationpools_create_V18.amount,
+                &m->nested.nominationpools_create_V18.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_create_V18 - root */;
-            return _toStringAccountIdLookupOfT_V18(
-                &m->basic.nominationpools_create_V18.root,
+            return _toStringAccountIdLookupOfT(
+                &m->nested.nominationpools_create_V18.root,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* nominationpools_create_V18 - nominator */;
-            return _toStringAccountIdLookupOfT_V18(
-                &m->basic.nominationpools_create_V18.nominator,
+            return _toStringAccountIdLookupOfT(
+                &m->nested.nominationpools_create_V18.nominator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* nominationpools_create_V18 - state_toggler */;
-            return _toStringAccountIdLookupOfT_V18(
-                &m->basic.nominationpools_create_V18.state_toggler,
+            return _toStringAccountIdLookupOfT(
+                &m->nested.nominationpools_create_V18.state_toggler,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -10216,22 +10216,22 @@ parser_error_t _getMethod_ItemValue_V18(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_create_with_pool_id_V18 - root */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.nominationpools_create_with_pool_id_V18.root,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* nominationpools_create_with_pool_id_V18 - nominator */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.nominationpools_create_with_pool_id_V18.nominator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* nominationpools_create_with_pool_id_V18 - state_toggler */;
-            return _toStringAccountIdLookupOfT_V18(
+            return _toStringAccountIdLookupOfT(
                 &m->basic.nominationpools_create_with_pool_id_V18.state_toggler,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* nominationpools_create_with_pool_id_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_create_with_pool_id_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10241,13 +10241,13 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10504: /* module 41 call 8 */
         switch (itemIdx) {
         case 0: /* nominationpools_nominate_V18 - pool_id */;
-            return _toStringPoolId_V18(
-                &m->basic.nominationpools_nominate_V18.pool_id,
+            return _toStringPoolId(
+                &m->nested.nominationpools_nominate_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_nominate_V18 - validators */;
-            return _toStringVecAccountId_V18(
-                &m->basic.nominationpools_nominate_V18.validators,
+            return _toStringVecAccountId(
+                &m->nested.nominationpools_nominate_V18.validators,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -10256,12 +10256,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10505: /* module 41 call 9 */
         switch (itemIdx) {
         case 0: /* nominationpools_set_state_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_set_state_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_set_state_V18 - state */;
-            return _toStringPoolState_V18(
+            return _toStringPoolState(
                 &m->basic.nominationpools_set_state_V18.state,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10271,13 +10271,13 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10506: /* module 41 call 10 */
         switch (itemIdx) {
         case 0: /* nominationpools_set_metadata_V18 - pool_id */;
-            return _toStringPoolId_V18(
-                &m->basic.nominationpools_set_metadata_V18.pool_id,
+            return _toStringPoolId(
+                &m->nested.nominationpools_set_metadata_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_set_metadata_V18 - metadata */;
             return _toStringVecu8(
-                &m->basic.nominationpools_set_metadata_V18.metadata,
+                &m->nested.nominationpools_set_metadata_V18.metadata,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -10286,27 +10286,27 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10507: /* module 41 call 11 */
         switch (itemIdx) {
         case 0: /* nominationpools_set_configs_V18 - min_join_bond */;
-            return _toStringConfigOpBalanceOfT_V18(
+            return _toStringConfigOpBalanceOfT(
                 &m->basic.nominationpools_set_configs_V18.min_join_bond,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_set_configs_V18 - min_create_bond */;
-            return _toStringConfigOpBalanceOfT_V18(
+            return _toStringConfigOpBalanceOfT(
                 &m->basic.nominationpools_set_configs_V18.min_create_bond,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* nominationpools_set_configs_V18 - max_pools */;
-            return _toStringConfigOpu32_V18(
+            return _toStringConfigOpu32(
                 &m->basic.nominationpools_set_configs_V18.max_pools,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* nominationpools_set_configs_V18 - max_members */;
-            return _toStringConfigOpu32_V18(
+            return _toStringConfigOpu32(
                 &m->basic.nominationpools_set_configs_V18.max_members,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* nominationpools_set_configs_V18 - max_members_per_pool */;
-            return _toStringConfigOpu32_V18(
+            return _toStringConfigOpu32(
                 &m->basic.nominationpools_set_configs_V18.max_members_per_pool,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10316,22 +10316,22 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10508: /* module 41 call 12 */
         switch (itemIdx) {
         case 0: /* nominationpools_update_roles_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_update_roles_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* nominationpools_update_roles_V18 - new_root */;
-            return _toStringConfigOpAccountId_V18(
+            return _toStringConfigOpAccountId(
                 &m->basic.nominationpools_update_roles_V18.new_root,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* nominationpools_update_roles_V18 - new_nominator */;
-            return _toStringConfigOpAccountId_V18(
+            return _toStringConfigOpAccountId(
                 &m->basic.nominationpools_update_roles_V18.new_nominator,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* nominationpools_update_roles_V18 - new_state_toggler */;
-            return _toStringConfigOpAccountId_V18(
+            return _toStringConfigOpAccountId(
                 &m->basic.nominationpools_update_roles_V18.new_state_toggler,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10341,7 +10341,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10509: /* module 41 call 13 */
         switch (itemIdx) {
         case 0: /* nominationpools_chill_V18 - pool_id */;
-            return _toStringPoolId_V18(
+            return _toStringPoolId(
                 &m->basic.nominationpools_chill_V18.pool_id,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10361,7 +10361,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 10754: /* module 42 call 2 */
         switch (itemIdx) {
         case 0: /* fastunstake_control_V18 - unchecked_eras_to_check */;
-            return _toStringEraIndex_V18(
+            return _toStringEraIndex(
                 &m->basic.fastunstake_control_V18.unchecked_eras_to_check,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10511,7 +10511,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 13070: /* module 51 call 14 */
         switch (itemIdx) {
         case 0: /* configuration_set_dispute_period_V18 - new_ */;
-            return _toStringSessionIndex_V18(
+            return _toStringSessionIndex(
                 &m->basic.configuration_set_dispute_period_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10631,7 +10631,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 13082: /* module 51 call 26 */
         switch (itemIdx) {
         case 0: /* configuration_set_ump_service_total_weight_V18 - new_ */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.configuration_set_ump_service_total_weight_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10771,7 +10771,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 13096: /* module 51 call 40 */
         switch (itemIdx) {
         case 0: /* configuration_set_ump_max_individual_weight_V18 - new_ */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.configuration_set_ump_max_individual_weight_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10791,7 +10791,7 @@ parser_error_t _getMethod_ItemValue_V18(
     case 13098: /* module 51 call 42 */
         switch (itemIdx) {
         case 0: /* configuration_set_pvf_voting_ttl_V18 - new_ */;
-            return _toStringSessionIndex_V18(
+            return _toStringSessionIndex(
                 &m->basic.configuration_set_pvf_voting_ttl_V18.new_,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10831,12 +10831,12 @@ parser_error_t _getMethod_ItemValue_V18(
     case 15104: /* module 59 call 0 */
         switch (itemIdx) {
         case 0: /* ump_service_overweight_V18 - index */;
-            return _toStringOverweightIndex_V18(
+            return _toStringOverweightIndex(
                 &m->basic.ump_service_overweight_V18.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* ump_service_overweight_V18 - weight_limit */;
-            return _toStringWeight_V18(
+            return _toStringWeight(
                 &m->basic.ump_service_overweight_V18.weight_limit,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -10966,12 +10966,9 @@ bool _getMethod_IsNestingSupported_V18(uint8_t moduleIdx, uint8_t callIdx)
     case 1028: // Balances:Transfer all
     case 1029: // Balances:Force unreserve
     case 1537: // Staking:Bond extra
-    case 1538: // Staking:Unbond
     case 1539: // Staking:Withdraw Unbonded
     case 1540: // Staking:Validate
-    case 1542: // Staking:Chill
     case 1543: // Staking:Set payee
-    case 1544: // Staking:Set controller
     case 1545: // Staking:Set validator count
     case 1546: // Staking:Increase validator count
     case 1547: // Staking:Scale validator count
@@ -11147,11 +11144,8 @@ bool _getMethod_IsNestingSupported_V18(uint8_t moduleIdx, uint8_t callIdx)
     case 10499: // NominationPools:Unbond
     case 10500: // NominationPools:Pool withdraw unbonded
     case 10501: // NominationPools:Withdraw Unbonded
-    case 10502: // NominationPools:Create
     case 10503: // NominationPools:Create with pool id
-    case 10504: // NominationPools:Nominate
     case 10505: // NominationPools:Set state
-    case 10506: // NominationPools:Set metadata
     case 10507: // NominationPools:Set configs
     case 10508: // NominationPools:Update roles
     case 10509: // NominationPools:Chill
