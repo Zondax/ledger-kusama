@@ -436,7 +436,7 @@ typedef struct {
 #define PD_CALL_PHRAGMENELECTION_VOTE_V19 0
 typedef struct {
     pd_VecAccountId_t votes;
-    pd_Compactu128_t amount;
+    pd_CompactBalance_t amount;
 } pd_phragmenelection_vote_V19_t;
 
 #define PD_CALL_PHRAGMENELECTION_REMOVE_VOTER_V19 1

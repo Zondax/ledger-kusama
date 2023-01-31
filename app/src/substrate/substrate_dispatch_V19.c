@@ -736,7 +736,7 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V19(
     parser_context_t* c, pd_phragmenelection_vote_V19_t* m)
 {
     CHECK_ERROR(_readVecAccountId(c, &m->votes))
-    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
 
@@ -8276,7 +8276,7 @@ parser_error_t _getMethod_ItemValue_V19(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* phragmenelection_vote_V19 - amount */;
-            return _toStringCompactu128(
+            return _toStringCompactBalance(
                 &m->basic.phragmenelection_vote_V19.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
