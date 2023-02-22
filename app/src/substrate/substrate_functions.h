@@ -36,7 +36,6 @@ parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_MethodNested_
 
 parser_error_t _readBytes(parser_context_t* c, pd_Bytes_t* v);
 parser_error_t _readFraction(parser_context_t* c, pd_Fraction_t* v);
-parser_error_t _readBodyId(parser_context_t* c, pd_BodyId_t* v);
 parser_error_t _readBodyPart(parser_context_t* c, pd_BodyPart_t* v);
 parser_error_t _readNetworkId(parser_context_t* c, pd_NetworkId_t* v);
 parser_error_t _readu8_array_20(parser_context_t* c, pd_u8_array_20_t* v);
@@ -114,8 +113,6 @@ parser_error_t _readu128(parser_context_t* c, pd_u128_t* v);
 parser_error_t _readAccountVote(parser_context_t* c, pd_AccountVote_t* v);
 parser_error_t _readBondExtraBalanceOfT(parser_context_t* c, pd_BondExtraBalanceOfT_t* v);
 parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v);
-parser_error_t _readBoxVersionedMultiAssets(parser_context_t* c, pd_BoxVersionedMultiAssets_t* v);
-parser_error_t _readBoxVersionedMultiLocation(parser_context_t* c, pd_BoxVersionedMultiLocation_t* v);
 parser_error_t _readConfigOpAccountId(parser_context_t* c, pd_ConfigOpAccountId_t* v);
 parser_error_t _readConfigOpBalanceOfT(parser_context_t* c, pd_ConfigOpBalanceOfT_t* v);
 parser_error_t _readConfigOpPerbill(parser_context_t* c, pd_ConfigOpPerbill_t* v);
@@ -132,7 +129,6 @@ parser_error_t _readVecAccountIdLookupOfT(parser_context_t* c, pd_VecAccountIdLo
 parser_error_t _readVecCall(parser_context_t* c, pd_VecCall_t* v);
 parser_error_t _readVecTupleAccountIdData(parser_context_t* c, pd_VecTupleAccountIdData_t* v);
 parser_error_t _readVestingInfo(parser_context_t* c, pd_VestingInfo_t* v);
-parser_error_t _readWeightLimit(parser_context_t* c, pd_WeightLimit_t* v);
 parser_error_t _readWeight(parser_context_t* c, pd_Weight_t* v);
 parser_error_t _readAccountIndex(parser_context_t* c, pd_AccountIndex_t* v);
 parser_error_t _readConfigOpu32(parser_context_t* c, pd_ConfigOpu32_t* v);
@@ -229,13 +225,6 @@ parser_error_t _toStringBytes(
 
 parser_error_t _toStringFraction(
     const pd_Fraction_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringBodyId(
-    const pd_BodyId_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -780,20 +769,6 @@ parser_error_t _toStringBoundedCallOfT(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringBoxVersionedMultiAssets(
-    const pd_BoxVersionedMultiAssets_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringBoxVersionedMultiLocation(
-    const pd_BoxVersionedMultiLocation_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringConfigOpAccountId(
     const pd_ConfigOpAccountId_t* v,
     char* outValue,
@@ -901,13 +876,6 @@ parser_error_t _toStringVecTupleAccountIdData(
 
 parser_error_t _toStringVestingInfo(
     const pd_VestingInfo_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringWeightLimit(
-    const pd_WeightLimit_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

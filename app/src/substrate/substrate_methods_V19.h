@@ -195,21 +195,36 @@ typedef struct {
 
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+#define PD_CALL_XCMPALLET_TELEPORT_ASSETS_V19 1
+typedef struct {
+    pd_BoxVersionedMultiLocation_V19_t dest;
+    pd_BoxVersionedMultiLocation_V19_t beneficiary;
+    pd_BoxVersionedMultiAssets_V19_t assets;
+    pd_u32_t fee_asset_item;
+} pd_xcmpallet_teleport_assets_V19_t;
 #define PD_CALL_XCMPALLET_RESERVE_TRANSFER_ASSETS_V19 2
 typedef struct {
-    pd_BoxVersionedMultiLocation_t dest;
-    pd_BoxVersionedMultiLocation_t beneficiary;
-    pd_BoxVersionedMultiAssets_t assets;
+    pd_BoxVersionedMultiLocation_V19_t dest;
+    pd_BoxVersionedMultiLocation_V19_t beneficiary;
+    pd_BoxVersionedMultiAssets_V19_t assets;
     pd_u32_t fee_asset_item;
 } pd_xcmpallet_reserve_transfer_assets_V19_t;
 #define PD_CALL_XCMPALLET_LIMITED_RESERVE_TRANSFER_ASSETS_V19 8
 typedef struct {
-    pd_BoxVersionedMultiLocation_t dest;
-    pd_BoxVersionedMultiLocation_t beneficiary;
-    pd_BoxVersionedMultiAssets_t assets;
+    pd_BoxVersionedMultiLocation_V19_t dest;
+    pd_BoxVersionedMultiLocation_V19_t beneficiary;
+    pd_BoxVersionedMultiAssets_V19_t assets;
     pd_u32_t fee_asset_item;
-    pd_WeightLimit_t weight_limit;
+    pd_WeightLimit_V19_t weight_limit;
 } pd_xcmpallet_limited_reserve_transfer_assets_V19_t;
+#define PD_CALL_XCMPALLET_LIMITED_TELEPORT_ASSETS_V19 9
+typedef struct {
+    pd_BoxVersionedMultiLocation_V19_t dest;
+    pd_BoxVersionedMultiLocation_V19_t beneficiary;
+    pd_BoxVersionedMultiAssets_V19_t assets;
+    pd_u32_t fee_asset_item;
+    pd_WeightLimit_V19_t weight_limit;
+} pd_xcmpallet_limited_teleport_assets_V19_t;
 #endif
 
 #define PD_CALL_TIMESTAMP_SET_V19 0
@@ -436,7 +451,7 @@ typedef struct {
 #define PD_CALL_PHRAGMENELECTION_VOTE_V19 0
 typedef struct {
     pd_VecAccountId_t votes;
-    pd_Compactu128_t amount;
+    pd_CompactBalance_t amount;
 } pd_phragmenelection_vote_V19_t;
 
 #define PD_CALL_PHRAGMENELECTION_REMOVE_VOTER_V19 1
@@ -933,22 +948,6 @@ typedef struct {
 #define PD_CALL_PROXY_REMOVE_PROXIES_V19 3
 typedef struct {
 } pd_proxy_remove_proxies_V19_t;
-
-#define PD_CALL_PROXY_CREATE_PURE_V19 4
-typedef struct {
-    pd_ProxyType_t proxy_type;
-    pd_BlockNumber_t delay;
-    pd_u16_t index;
-} pd_proxy_create_pure_V19_t;
-
-#define PD_CALL_PROXY_KILL_PURE_V19 5
-typedef struct {
-    pd_AccountIdLookupOfT_t spawner;
-    pd_ProxyType_t proxy_type;
-    pd_u16_t index;
-    pd_Compactu32_t height;
-    pd_Compactu32_t ext_index;
-} pd_proxy_kill_pure_V19_t;
 
 #define PD_CALL_PROXY_PROXY_ANNOUNCED_V19 9
 typedef struct {
@@ -1541,8 +1540,10 @@ typedef union {
     pd_crowdloan_contribute_all_V19_t crowdloan_contribute_all_V19;
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    pd_xcmpallet_teleport_assets_V19_t xcmpallet_teleport_assets_V19;
     pd_xcmpallet_reserve_transfer_assets_V19_t xcmpallet_reserve_transfer_assets_V19;
     pd_xcmpallet_limited_reserve_transfer_assets_V19_t xcmpallet_limited_reserve_transfer_assets_V19;
+    pd_xcmpallet_limited_teleport_assets_V19_t xcmpallet_limited_teleport_assets_V19;
 #endif
     pd_timestamp_set_V19_t timestamp_set_V19;
     pd_indices_claim_V19_t indices_claim_V19;
@@ -1673,8 +1674,6 @@ typedef union {
     pd_proxy_add_proxy_V19_t proxy_add_proxy_V19;
     pd_proxy_remove_proxy_V19_t proxy_remove_proxy_V19;
     pd_proxy_remove_proxies_V19_t proxy_remove_proxies_V19;
-    pd_proxy_create_pure_V19_t proxy_create_pure_V19;
-    pd_proxy_kill_pure_V19_t proxy_kill_pure_V19;
     pd_proxy_proxy_announced_V19_t proxy_proxy_announced_V19;
     pd_preimage_note_preimage_V19_t preimage_note_preimage_V19;
     pd_preimage_unnote_preimage_V19_t preimage_unnote_preimage_V19;
@@ -1958,6 +1957,22 @@ typedef struct {
     pd_Call_t call;
 } pd_proxy_proxy_V19_t;
 
+#define PD_CALL_PROXY_CREATE_PURE_V19 4
+typedef struct {
+    pd_ProxyType_t proxy_type;
+    pd_BlockNumber_t delay;
+    pd_u16_t index;
+} pd_proxy_create_pure_V19_t;
+
+#define PD_CALL_PROXY_KILL_PURE_V19 5
+typedef struct {
+    pd_AccountIdLookupOfT_t spawner;
+    pd_ProxyType_t proxy_type;
+    pd_u16_t index;
+    pd_Compactu32_t height;
+    pd_Compactu32_t ext_index;
+} pd_proxy_kill_pure_V19_t;
+
 #define PD_CALL_MULTISIG_AS_MULTI_THRESHOLD_1_V19 0
 typedef struct {
     pd_VecAccountId_t other_signatories;
@@ -2048,6 +2063,8 @@ typedef union {
     pd_democracy_remove_other_vote_V19_t democracy_remove_other_vote_V19;
     pd_democracy_cancel_proposal_V19_t democracy_cancel_proposal_V19;
     pd_proxy_proxy_V19_t proxy_proxy_V19;
+    pd_proxy_create_pure_V19_t proxy_create_pure_V19;
+    pd_proxy_kill_pure_V19_t proxy_kill_pure_V19;
     pd_multisig_as_multi_threshold_1_V19_t multisig_as_multi_threshold_1_V19;
     pd_multisig_as_multi_V19_t multisig_as_multi_V19;
     pd_multisig_approve_as_multi_V19_t multisig_approve_as_multi_V19;

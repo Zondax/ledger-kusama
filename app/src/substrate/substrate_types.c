@@ -17,8 +17,9 @@
 #include "bignum.h"
 #include "coin.h"
 #include "parser_impl.h"
-
 #include "substrate_dispatch.h"
+#include "substrate_strings.h"
+
 #include <stddef.h>
 #include <stdint.h>
 #include <zxformat.h>
@@ -1021,42 +1022,6 @@ parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v)
     return parser_ok;
 }
 
-parser_error_t _readBoxVersionedMultiAssets(parser_context_t* c, pd_BoxVersionedMultiAssets_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->value))
-    switch (v->value) {
-    case 0: // V0
-        CHECK_ERROR(_readVecMultiAssetV0(c, &v->vecMultiassetV0))
-        break;
-    case 1: // V1
-        CHECK_ERROR(_readVecMultiAssetV1(c, &v->vecMultiassetV1))
-        break;
-    default:
-        return parser_unexpected_value;
-    }
-
-    return parser_ok;
-}
-
-parser_error_t _readBoxVersionedMultiLocation(parser_context_t* c, pd_BoxVersionedMultiLocation_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->value))
-    switch (v->value) {
-    case 0: // V0
-        CHECK_ERROR(_readMultiLocationV0(c, &v->multilocationV0))
-        break;
-    case 1: // V1
-        CHECK_ERROR(_readMultiLocationV1(c, &v->multilocationV1))
-        break;
-    default:
-        return parser_unexpected_value;
-    }
-
-    return parser_ok;
-}
-
 parser_error_t _readConfigOpAccountId(parser_context_t* c, pd_ConfigOpAccountId_t* v)
 {
     CHECK_INPUT()
@@ -1228,22 +1193,6 @@ parser_error_t _readVestingInfo(parser_context_t* c, pd_VestingInfo_t* v)
     CHECK_ERROR(_readBalanceOf(c, &v->locked))
     CHECK_ERROR(_readBalanceOf(c, &v->per_block))
     CHECK_ERROR(_readBlockNumber(c, &v->starting_block))
-    return parser_ok;
-}
-
-parser_error_t _readWeightLimit(parser_context_t* c, pd_WeightLimit_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->value))
-    switch (v->value) {
-    case 0: // Unlimited
-        break;
-    case 1: // Limited
-        CHECK_ERROR(_readCompactu64(c, &v->limited))
-        break;
-    default:
-        return parser_unexpected_value;
-    }
     return parser_ok;
 }
 
@@ -4171,50 +4120,6 @@ parser_error_t _toStringBoundedCallOfT(
     return parser_ok;
 }
 
-parser_error_t _toStringBoxVersionedMultiAssets(
-    const pd_BoxVersionedMultiAssets_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    switch (v->value) {
-    case 0: // V0
-        CHECK_ERROR(_toStringVecMultiAssetV0(&v->vecMultiassetV0, outValue, outValueLen, pageIdx, pageCount))
-        break;
-    case 1: // V1
-        CHECK_ERROR(_toStringVecMultiAssetV1(&v->vecMultiassetV1, outValue, outValueLen, pageIdx, pageCount))
-        break;
-    default:
-        return parser_not_supported;
-    }
-
-    return parser_ok;
-}
-
-parser_error_t _toStringBoxVersionedMultiLocation(
-    const pd_BoxVersionedMultiLocation_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    switch (v->value) {
-    case 0: // V0
-        CHECK_ERROR(_toStringMultiLocationV0(&v->multilocationV0, outValue, outValueLen, pageIdx, pageCount))
-        break;
-    case 1: // V1
-        CHECK_ERROR(_toStringMultiLocationV1(&v->multilocationV1, outValue, outValueLen, pageIdx, pageCount))
-        break;
-    default:
-        return parser_not_supported;
-    }
-
-    return parser_ok;
-}
-
 parser_error_t _toStringConfigOpAccountId(
     const pd_ConfigOpAccountId_t* v,
     char* outValue,
@@ -4636,28 +4541,6 @@ parser_error_t _toStringVestingInfo(
     }
 
     return parser_display_idx_out_of_range;
-}
-
-parser_error_t _toStringWeightLimit(
-    const pd_WeightLimit_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    switch (v->value) {
-    case 0: // Unlimited
-        *pageCount = 1;
-        snprintf(outValue, outValueLen, "Unlimited");
-        break;
-    case 1: // Limited
-        CHECK_ERROR(_toStringCompactu64(&v->limited, outValue, outValueLen, pageIdx, pageCount))
-        break;
-    default:
-        return parser_unexpected_value;
-    }
-    return parser_ok;
 }
 
 parser_error_t _toStringWeight(

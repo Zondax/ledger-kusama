@@ -249,23 +249,42 @@ __Z_INLINE parser_error_t _readMethod_crowdloan_contribute_all_V19(
 
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+__Z_INLINE parser_error_t _readMethod_xcmpallet_teleport_assets_V19(
+    parser_context_t* c, pd_xcmpallet_teleport_assets_V19_t* m)
+{
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets_V19(c, &m->assets))
+    CHECK_ERROR(_readu32(c, &m->fee_asset_item))
+    return parser_ok;
+}
 __Z_INLINE parser_error_t _readMethod_xcmpallet_reserve_transfer_assets_V19(
     parser_context_t* c, pd_xcmpallet_reserve_transfer_assets_V19_t* m)
 {
-    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->dest))
-    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->beneficiary))
-    CHECK_ERROR(_readBoxVersionedMultiAssets(c, &m->assets))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets_V19(c, &m->assets))
     CHECK_ERROR(_readu32(c, &m->fee_asset_item))
     return parser_ok;
 }
 __Z_INLINE parser_error_t _readMethod_xcmpallet_limited_reserve_transfer_assets_V19(
     parser_context_t* c, pd_xcmpallet_limited_reserve_transfer_assets_V19_t* m)
 {
-    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->dest))
-    CHECK_ERROR(_readBoxVersionedMultiLocation(c, &m->beneficiary))
-    CHECK_ERROR(_readBoxVersionedMultiAssets(c, &m->assets))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets_V19(c, &m->assets))
     CHECK_ERROR(_readu32(c, &m->fee_asset_item))
-    CHECK_ERROR(_readWeightLimit(c, &m->weight_limit))
+    CHECK_ERROR(_readWeightLimit_V19(c, &m->weight_limit))
+    return parser_ok;
+}
+__Z_INLINE parser_error_t _readMethod_xcmpallet_limited_teleport_assets_V19(
+    parser_context_t* c, pd_xcmpallet_limited_teleport_assets_V19_t* m)
+{
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->dest))
+    CHECK_ERROR(_readBoxVersionedMultiLocation_V19(c, &m->beneficiary))
+    CHECK_ERROR(_readBoxVersionedMultiAssets_V19(c, &m->assets))
+    CHECK_ERROR(_readu32(c, &m->fee_asset_item))
+    CHECK_ERROR(_readWeightLimit_V19(c, &m->weight_limit))
     return parser_ok;
 }
 #endif
@@ -736,7 +755,7 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V19(
     parser_context_t* c, pd_phragmenelection_vote_V19_t* m)
 {
     CHECK_ERROR(_readVecAccountId(c, &m->votes))
-    CHECK_ERROR(_readCompactu128(c, &m->amount))
+    CHECK_ERROR(_readCompactBalance(c, &m->amount))
     return parser_ok;
 }
 
@@ -2385,11 +2404,17 @@ parser_error_t _readMethod_V19(
 
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    case 25345: /* module 99 call 1 */
+        CHECK_ERROR(_readMethod_xcmpallet_teleport_assets_V19(c, &method->basic.xcmpallet_teleport_assets_V19))
+        break;
     case 25346: /* module 99 call 2 */
         CHECK_ERROR(_readMethod_xcmpallet_reserve_transfer_assets_V19(c, &method->basic.xcmpallet_reserve_transfer_assets_V19))
         break;
     case 25352: /* module 99 call 8 */
         CHECK_ERROR(_readMethod_xcmpallet_limited_reserve_transfer_assets_V19(c, &method->basic.xcmpallet_limited_reserve_transfer_assets_V19))
+        break;
+    case 25353: /* module 99 call 9 */
+        CHECK_ERROR(_readMethod_xcmpallet_limited_teleport_assets_V19(c, &method->basic.xcmpallet_limited_teleport_assets_V19))
         break;
 #endif
     case 0: /* module 0 call 0 */
@@ -2852,10 +2877,10 @@ parser_error_t _readMethod_V19(
         CHECK_ERROR(_readMethod_proxy_remove_proxies_V19(c, &method->basic.proxy_remove_proxies_V19))
         break;
     case 7684: /* module 30 call 4 */
-        CHECK_ERROR(_readMethod_proxy_create_pure_V19(c, &method->basic.proxy_create_pure_V19))
+        CHECK_ERROR(_readMethod_proxy_create_pure_V19(c, &method->nested.proxy_create_pure_V19))
         break;
     case 7685: /* module 30 call 5 */
-        CHECK_ERROR(_readMethod_proxy_kill_pure_V19(c, &method->basic.proxy_kill_pure_V19))
+        CHECK_ERROR(_readMethod_proxy_kill_pure_V19(c, &method->nested.proxy_kill_pure_V19))
         break;
     case 7689: /* module 30 call 9 */
         CHECK_ERROR(_readMethod_proxy_proxy_announced_V19(c, &method->basic.proxy_proxy_announced_V19))
@@ -3371,10 +3396,14 @@ const char* _getMethod_Name_V19_ParserFull(uint16_t callPrivIdx)
     switch (callPrivIdx) {
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    case 25345: /* module 99 call 1 */
+        return STR_ME_TELEPORT_ASSETS;
     case 25346: /* module 99 call 2 */
         return STR_ME_RESERVE_TRANSFER_ASSETS;
     case 25352: /* module 99 call 8 */
         return STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS;
+    case 25353: /* module 99 call 9 */
+        return STR_ME_LIMITED_TELEPORT_ASSETS;
 #endif
     case 0: /* module 0 call 0 */
         return STR_ME_REMARK;
@@ -3979,9 +4008,13 @@ uint8_t _getMethod_NumItems_V19(uint8_t moduleIdx, uint8_t callIdx)
         return 2;
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    case 25345: /* module 99 call 1 */
+        return 4;
     case 25346: /* module 99 call 2 */
         return 4;
     case 25352: /* module 99 call 8 */
+        return 5;
+    case 25353: /* module 99 call 9 */
         return 5;
 #endif
     case 0: /* module 0 call 0 */
@@ -4776,6 +4809,19 @@ const char* _getMethod_ItemName_V19(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
         }
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    case 25345: /* module 99 call 1 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_beneficiary;
+        case 2:
+            return STR_IT_assets;
+        case 3:
+            return STR_IT_fee_asset_item;
+        default:
+            return NULL;
+        }
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
         case 0:
@@ -4790,6 +4836,21 @@ const char* _getMethod_ItemName_V19(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
             return NULL;
         }
     case 25352: /* module 99 call 8 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_beneficiary;
+        case 2:
+            return STR_IT_assets;
+        case 3:
+            return STR_IT_fee_asset_item;
+        case 4:
+            return STR_IT_weight_limit;
+        default:
+            return NULL;
+        }
+    case 25353: /* module 99 call 9 */
         switch (itemIdx) {
         case 0:
             return STR_IT_dest;
@@ -7397,20 +7458,45 @@ parser_error_t _getMethod_ItemValue_V19(
         }
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
+    case 25345: /* module 99 call 1 */
+        switch (itemIdx) {
+        case 0: /* xcmpallet_teleport_assets_V19 - dest */;
+            return _toStringBoxVersionedMultiLocation_V19(
+                &m->basic.xcmpallet_teleport_assets_V19.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* xcmpallet_teleport_assets_V19 - beneficiary */;
+            return _toStringBoxVersionedMultiLocation_V19(
+                &m->basic.xcmpallet_teleport_assets_V19.beneficiary,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* xcmpallet_teleport_assets_V19 - assets */;
+            return _toStringBoxVersionedMultiAssets_V19(
+                &m->basic.xcmpallet_teleport_assets_V19.assets,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* xcmpallet_teleport_assets_V19 - fee_asset_item */;
+            return _toStringu32(
+                &m->basic.xcmpallet_teleport_assets_V19.fee_asset_item,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
     case 25346: /* module 99 call 2 */
         switch (itemIdx) {
         case 0: /* xcmpallet_reserve_transfer_assets_V19 - dest */;
-            return _toStringBoxVersionedMultiLocation(
+            return _toStringBoxVersionedMultiLocation_V19(
                 &m->basic.xcmpallet_reserve_transfer_assets_V19.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* xcmpallet_reserve_transfer_assets_V19 - beneficiary */;
-            return _toStringBoxVersionedMultiLocation(
+            return _toStringBoxVersionedMultiLocation_V19(
                 &m->basic.xcmpallet_reserve_transfer_assets_V19.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* xcmpallet_reserve_transfer_assets_V19 - assets */;
-            return _toStringBoxVersionedMultiAssets(
+            return _toStringBoxVersionedMultiAssets_V19(
                 &m->basic.xcmpallet_reserve_transfer_assets_V19.assets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7425,17 +7511,17 @@ parser_error_t _getMethod_ItemValue_V19(
     case 25352: /* module 99 call 8 */
         switch (itemIdx) {
         case 0: /* xcmpallet_limited_reserve_transfer_assets_V19 - dest */;
-            return _toStringBoxVersionedMultiLocation(
+            return _toStringBoxVersionedMultiLocation_V19(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V19.dest,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* xcmpallet_limited_reserve_transfer_assets_V19 - beneficiary */;
-            return _toStringBoxVersionedMultiLocation(
+            return _toStringBoxVersionedMultiLocation_V19(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V19.beneficiary,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* xcmpallet_limited_reserve_transfer_assets_V19 - assets */;
-            return _toStringBoxVersionedMultiAssets(
+            return _toStringBoxVersionedMultiAssets_V19(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V19.assets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -7445,8 +7531,38 @@ parser_error_t _getMethod_ItemValue_V19(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* xcmpallet_limited_reserve_transfer_assets_V19 - weight_limit */;
-            return _toStringWeightLimit(
+            return _toStringWeightLimit_V19(
                 &m->basic.xcmpallet_limited_reserve_transfer_assets_V19.weight_limit,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 25353: /* module 99 call 9 */
+        switch (itemIdx) {
+        case 0: /* xcmpallet_limited_teleport_assets_V19 - dest */;
+            return _toStringBoxVersionedMultiLocation_V19(
+                &m->basic.xcmpallet_limited_teleport_assets_V19.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* xcmpallet_limited_teleport_assets_V19 - beneficiary */;
+            return _toStringBoxVersionedMultiLocation_V19(
+                &m->basic.xcmpallet_limited_teleport_assets_V19.beneficiary,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 2: /* xcmpallet_limited_teleport_assets_V19 - assets */;
+            return _toStringBoxVersionedMultiAssets_V19(
+                &m->basic.xcmpallet_limited_teleport_assets_V19.assets,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 3: /* xcmpallet_limited_teleport_assets_V19 - fee_asset_item */;
+            return _toStringu32(
+                &m->basic.xcmpallet_limited_teleport_assets_V19.fee_asset_item,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 4: /* xcmpallet_limited_teleport_assets_V19 - weight_limit */;
+            return _toStringWeightLimit_V19(
+                &m->basic.xcmpallet_limited_teleport_assets_V19.weight_limit,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8276,7 +8392,7 @@ parser_error_t _getMethod_ItemValue_V19(
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* phragmenelection_vote_V19 - amount */;
-            return _toStringCompactu128(
+            return _toStringCompactBalance(
                 &m->basic.phragmenelection_vote_V19.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -9417,17 +9533,17 @@ parser_error_t _getMethod_ItemValue_V19(
         switch (itemIdx) {
         case 0: /* proxy_create_pure_V19 - proxy_type */;
             return _toStringProxyType(
-                &m->basic.proxy_create_pure_V19.proxy_type,
+                &m->nested.proxy_create_pure_V19.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_create_pure_V19 - delay */;
             return _toStringBlockNumber(
-                &m->basic.proxy_create_pure_V19.delay,
+                &m->nested.proxy_create_pure_V19.delay,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_create_pure_V19 - index */;
             return _toStringu16(
-                &m->basic.proxy_create_pure_V19.index,
+                &m->nested.proxy_create_pure_V19.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -9437,27 +9553,27 @@ parser_error_t _getMethod_ItemValue_V19(
         switch (itemIdx) {
         case 0: /* proxy_kill_pure_V19 - spawner */;
             return _toStringAccountIdLookupOfT(
-                &m->basic.proxy_kill_pure_V19.spawner,
+                &m->nested.proxy_kill_pure_V19.spawner,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* proxy_kill_pure_V19 - proxy_type */;
             return _toStringProxyType(
-                &m->basic.proxy_kill_pure_V19.proxy_type,
+                &m->nested.proxy_kill_pure_V19.proxy_type,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* proxy_kill_pure_V19 - index */;
             return _toStringu16(
-                &m->basic.proxy_kill_pure_V19.index,
+                &m->nested.proxy_kill_pure_V19.index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 3: /* proxy_kill_pure_V19 - height */;
             return _toStringCompactu32(
-                &m->basic.proxy_kill_pure_V19.height,
+                &m->nested.proxy_kill_pure_V19.height,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 4: /* proxy_kill_pure_V19 - ext_index */;
             return _toStringCompactu32(
-                &m->basic.proxy_kill_pure_V19.ext_index,
+                &m->nested.proxy_kill_pure_V19.ext_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -11098,8 +11214,6 @@ bool _getMethod_IsNestingSupported_V19(uint8_t moduleIdx, uint8_t callIdx)
     case 7681: // Proxy:Add proxy
     case 7682: // Proxy:Remove proxy
     case 7683: // Proxy:Remove proxies
-    case 7684: // Proxy:Create pure
-    case 7685: // Proxy:Kill pure
     case 7689: // Proxy:Proxy announced
     case 8192: // Preimage:Note preimage
     case 8193: // Preimage:Unnote preimage
@@ -11212,8 +11326,10 @@ bool _getMethod_IsNestingSupported_V19(uint8_t moduleIdx, uint8_t callIdx)
     case 18694: // Crowdloan:Add memo
     case 18695: // Crowdloan:Poke
     case 18696: // Crowdloan:Contribute all
+    case 25345: // XcmPallet:Teleport assets
     case 25346: // XcmPallet:Reserve transfer assets
     case 25352: // XcmPallet:Limited reserve transfer assets
+    case 25353: // XcmPallet:Limited teleport assets
         return false;
     default:
         return true;

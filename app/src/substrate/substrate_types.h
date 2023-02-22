@@ -129,14 +129,6 @@ typedef struct {
 typedef struct {
     uint8_t value;
     union {
-        pd_Bytes_t named;
-        pd_Compactu32_t index;
-    };
-} pd_BodyId_t;
-
-typedef struct {
-    uint8_t value;
-    union {
         pd_Compactu32_t count;
         pd_Fraction_t fraction;
     };
@@ -616,22 +608,6 @@ typedef struct {
 
 typedef struct {
     uint8_t value;
-    union {
-        pd_VecMultiAssetV0_t vecMultiassetV0;
-        pd_VecMultiAssetV1_t vecMultiassetV1;
-    };
-} pd_BoxVersionedMultiAssets_t;
-
-typedef struct {
-    uint8_t value;
-    union {
-        pd_MultiLocationV0_t multilocationV0;
-        pd_MultiLocationV1_t multilocationV1;
-    };
-} pd_BoxVersionedMultiLocation_t;
-
-typedef struct {
-    uint8_t value;
     pd_AccountId_t set;
 } pd_ConfigOpAccountId_t;
 
@@ -720,11 +696,6 @@ typedef struct {
     pd_BalanceOf_t per_block;
     pd_BlockNumber_t starting_block;
 } pd_VestingInfo_t;
-
-typedef struct {
-    uint8_t value;
-    pd_Compactu64_t limited;
-} pd_WeightLimit_t;
 
 typedef struct {
     pd_Compactu64_t refTime;
