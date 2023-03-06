@@ -27,6 +27,31 @@ extern "C" {
 
 // Versioned types functions for tx version V19
 
+parser_error_t _readBoxVersionedMultiAssets_V19(parser_context_t* c, pd_BoxVersionedMultiAssets_V19_t* v);
+parser_error_t _readBoxVersionedMultiLocation_V19(parser_context_t* c, pd_BoxVersionedMultiLocation_V19_t* v);
+parser_error_t _readWeightLimit_V19(parser_context_t* c, pd_WeightLimit_V19_t* v);
+
+parser_error_t _toStringBoxVersionedMultiAssets_V19(
+    const pd_BoxVersionedMultiAssets_V19_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringBoxVersionedMultiLocation_V19(
+    const pd_BoxVersionedMultiLocation_V19_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringWeightLimit_V19(
+    const pd_WeightLimit_V19_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 #ifdef __cplusplus
 }
 #endif

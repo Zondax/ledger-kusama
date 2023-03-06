@@ -69,6 +69,7 @@ fuzz/corpora
 !build/.gitkeep
 build/*
 cmake-build-debug
+app/build
 
 tests_zemu/snapshots-tmp
 tests_zemu/yarn.lock
