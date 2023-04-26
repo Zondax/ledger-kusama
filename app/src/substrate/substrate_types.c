@@ -1146,7 +1146,7 @@ parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v)
         CHECK_ERROR(_readH256(c, &v->legacy))
         break;
     case 1:
-        CHECK_ERROR(_readBytes(c, &v->_inline))
+        CHECK_ERROR(_readBytes(c, &v->bytes_inline))
         break;
     case 2:
         CHECK_ERROR(_readTupleH256u32(c, &v->lookup))
@@ -1676,6 +1676,7 @@ parser_error_t _toStringbool(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
 
     *pageCount = 1;
     switch (*v) {
@@ -4005,6 +4006,7 @@ parser_error_t _toStringVote(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
     *pageCount = 1;
     const uint8_t conviction = v->value & 0x0F;
 
@@ -4400,6 +4402,7 @@ parser_error_t _toStringProxyType(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
 
     *pageCount = 1;
     switch (v->value) {
@@ -4649,7 +4652,7 @@ parser_error_t _toStringBoundedCallOfT(
         CHECK_ERROR(_toStringH256(&v->legacy, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 1:
-        CHECK_ERROR(_toStringBytes(&v->_inline, outValue, outValueLen, pageIdx, pageCount))
+        CHECK_ERROR(_toStringBytes(&v->bytes_inline, outValue, outValueLen, pageIdx, pageCount))
         break;
     case 2:
         CHECK_ERROR(_toStringTupleH256u32(&v->lookup, outValue, outValueLen, pageIdx, pageCount))
@@ -5076,7 +5079,7 @@ parser_error_t _toStringVecCall(
     ctx.tx_obj->nestCallIdx._nextPtr = NULL;
     ctx.tx_obj->nestCallIdx.isTail = true;
 
-    for (uint16_t i = 0; i < v->_len; i++) {
+    for (uint64_t i = 0; i < v->_len; i++) {
         ctx.tx_obj->nestCallIdx._ptr = NULL;
         ctx.tx_obj->nestCallIdx._nextPtr = NULL;
         ctx.tx_obj->nestCallIdx.slotIdx = 0;
@@ -5087,7 +5090,7 @@ parser_error_t _toStringVecCall(
 
     /* Then iterate until we can print the corresponding chunk*/
     parser_init(&ctx, v->_ptr, v->_lenBuffer);
-    for (uint16_t i = 0; i < v->_len; i++) {
+    for (uint64_t i = 0; i < v->_len; i++) {
         ctx.tx_obj->nestCallIdx._ptr = NULL;
         ctx.tx_obj->nestCallIdx._nextPtr = NULL;
         ctx.tx_obj->nestCallIdx.slotIdx = 0;
@@ -5191,6 +5194,7 @@ parser_error_t _toStringClaimPermission(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
     switch (v->value) {
     case 0: // Permissioned
         snprintf(outValue, outValueLen, "Permissioned");
@@ -5243,6 +5247,7 @@ parser_error_t _toStringConviction(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
 
     *pageCount = 1;
     switch (v->value) {
@@ -5366,6 +5371,7 @@ parser_error_t _toStringPoolState(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
     *pageCount = 1;
     switch (v->value) {
     case 0:

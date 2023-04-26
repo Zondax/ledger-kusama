@@ -102,6 +102,8 @@ __Z_INLINE parser_error_t _readMethod_staking_nominate_V20(
 __Z_INLINE parser_error_t _readMethod_staking_chill_V20(
     parser_context_t* c, pd_staking_chill_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -145,6 +147,8 @@ __Z_INLINE parser_error_t _readMethod_session_set_keys_V20(
 __Z_INLINE parser_error_t _readMethod_session_purge_keys_V20(
     parser_context_t* c, pd_session_purge_keys_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -409,12 +413,16 @@ __Z_INLINE parser_error_t _readMethod_staking_scale_validator_count_V20(
 __Z_INLINE parser_error_t _readMethod_staking_force_no_eras_V20(
     parser_context_t* c, pd_staking_force_no_eras_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_staking_force_new_era_V20(
     parser_context_t* c, pd_staking_force_new_era_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -436,6 +444,8 @@ __Z_INLINE parser_error_t _readMethod_staking_force_unstake_V20(
 __Z_INLINE parser_error_t _readMethod_staking_force_new_era_always_V20(
     parser_context_t* c, pd_staking_force_new_era_always_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -581,12 +591,16 @@ __Z_INLINE parser_error_t _readMethod_democracy_delegate_V20(
 __Z_INLINE parser_error_t _readMethod_democracy_undelegate_V20(
     parser_context_t* c, pd_democracy_undelegate_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_democracy_clear_public_proposals_V20(
     parser_context_t* c, pd_democracy_clear_public_proposals_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -770,6 +784,8 @@ __Z_INLINE parser_error_t _readMethod_phragmenelection_vote_V20(
 __Z_INLINE parser_error_t _readMethod_phragmenelection_remove_voter_V20(
     parser_context_t* c, pd_phragmenelection_remove_voter_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -843,6 +859,8 @@ __Z_INLINE parser_error_t _readMethod_technicalmembership_set_prime_V20(
 __Z_INLINE parser_error_t _readMethod_technicalmembership_clear_prime_V20(
     parser_context_t* c, pd_technicalmembership_clear_prime_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1187,6 +1205,8 @@ __Z_INLINE parser_error_t _readMethod_identity_set_subs_V20(
 __Z_INLINE parser_error_t _readMethod_identity_clear_identity_V20(
     parser_context_t* c, pd_identity_clear_identity_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1264,6 +1284,8 @@ __Z_INLINE parser_error_t _readMethod_identity_remove_sub_V20(
 __Z_INLINE parser_error_t _readMethod_identity_quit_sub_V20(
     parser_context_t* c, pd_identity_quit_sub_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1315,6 +1337,8 @@ __Z_INLINE parser_error_t _readMethod_society_defender_vote_V20(
 __Z_INLINE parser_error_t _readMethod_society_payout_V20(
     parser_context_t* c, pd_society_payout_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1330,6 +1354,8 @@ __Z_INLINE parser_error_t _readMethod_society_found_V20(
 __Z_INLINE parser_error_t _readMethod_society_unfound_V20(
     parser_context_t* c, pd_society_unfound_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1388,6 +1414,8 @@ __Z_INLINE parser_error_t _readMethod_recovery_close_recovery_V20(
 __Z_INLINE parser_error_t _readMethod_recovery_remove_recovery_V20(
     parser_context_t* c, pd_recovery_remove_recovery_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1401,6 +1429,8 @@ __Z_INLINE parser_error_t _readMethod_recovery_cancel_recovered_V20(
 __Z_INLINE parser_error_t _readMethod_vesting_vest_V20(
     parser_context_t* c, pd_vesting_vest_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1466,6 +1496,8 @@ __Z_INLINE parser_error_t _readMethod_proxy_remove_proxy_V20(
 __Z_INLINE parser_error_t _readMethod_proxy_remove_proxies_V20(
     parser_context_t* c, pd_proxy_remove_proxies_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1760,6 +1792,8 @@ __Z_INLINE parser_error_t _readMethod_nis_retract_bid_V20(
 __Z_INLINE parser_error_t _readMethod_nis_fund_deficit_V20(
     parser_context_t* c, pd_nis_fund_deficit_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1874,6 +1908,8 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_bond_extra_V20(
 __Z_INLINE parser_error_t _readMethod_nominationpools_claim_payout_V20(
     parser_context_t* c, pd_nominationpools_claim_payout_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -1999,12 +2035,16 @@ __Z_INLINE parser_error_t _readMethod_nominationpools_claim_payout_other_V20(
 __Z_INLINE parser_error_t _readMethod_fastunstake_register_fast_unstake_V20(
     parser_context_t* c, pd_fastunstake_register_fast_unstake_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
 __Z_INLINE parser_error_t _readMethod_fastunstake_deregister_V20(
     parser_context_t* c, pd_fastunstake_deregister_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -2341,6 +2381,8 @@ __Z_INLINE parser_error_t _readMethod_ump_service_overweight_V20(
 __Z_INLINE parser_error_t _readMethod_parasdisputes_force_unfreeze_V20(
     parser_context_t* c, pd_parasdisputes_force_unfreeze_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -2366,6 +2408,8 @@ __Z_INLINE parser_error_t _readMethod_auctions_bid_V20(
 __Z_INLINE parser_error_t _readMethod_auctions_cancel_auction_V20(
     parser_context_t* c, pd_auctions_cancel_auction_V20_t* m)
 {
+    UNUSED(c);
+    UNUSED(m);
     return parser_ok;
 }
 
@@ -11333,7 +11377,7 @@ parser_error_t _getMethod_ItemValue_V20(
     return parser_ok;
 }
 
-bool _getMethod_ItemIsExpert_V20(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+bool _getMethod_ItemIsExpert_V20(uint8_t moduleIdx, uint8_t callIdx, __Z_UNUSED uint8_t itemIdx)
 {
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
