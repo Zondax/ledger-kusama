@@ -881,6 +881,13 @@ parser_error_t _readMultiAssetV3(parser_context_t* c, pd_MultiAssetV3_t* v)
     return parser_ok;
 }
 
+parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
+}
+
 parser_error_t _readSr25519Public(parser_context_t* c, pd_Sr25519Public_t* v) {
     GEN_DEF_READARRAY(32)
 }
@@ -1023,13 +1030,6 @@ parser_error_t _readMultiSigner(parser_context_t* c, pd_MultiSigner_t* v)
     return parser_ok;
 }
 
-parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt32(c, &v->value))
-    return parser_ok;
-}
-
 parser_error_t _readPercent(parser_context_t* c, pd_Percent_t* v)
 {
     CHECK_INPUT()
@@ -1091,6 +1091,14 @@ parser_error_t _readTupleH256u32(parser_context_t* c, pd_TupleH256u32_t* v)
     CHECK_INPUT()
     CHECK_ERROR(_readH256(c, &v->h256))
     CHECK_ERROR(_readUInt32(c, &v->u32))
+    return parser_ok;
+}
+
+parser_error_t _readTuplePerbillAccountId(parser_context_t* c, pd_TuplePerbillAccountId_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readPerbill(c, &v->perbill));
+    CHECK_ERROR(_readAccountId(c, &v->id));
     return parser_ok;
 }
 
@@ -1190,6 +1198,14 @@ parser_error_t _readBoxVersionedMultiLocation(parser_context_t* c, pd_BoxVersion
         return parser_unexpected_value;
     }
 
+    return parser_ok;
+}
+
+parser_error_t _readCommissionChangeRateBlockNumber(parser_context_t* c, pd_CommissionChangeRateBlockNumber_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readPerbill(c, &v->maxIncrease));
+    CHECK_ERROR(_readUInt32(c, &v->minDelay));
     return parser_ok;
 }
 
@@ -1597,6 +1613,15 @@ parser_error_t _readOptionTimepoint(parser_context_t* c, pd_OptionTimepoint_t* v
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readTimepoint(c, &v->contained))
+    }
+    return parser_ok;
+}
+
+parser_error_t _readOptionTuplePerbillAccountId(parser_context_t* c, pd_OptionTuplePerbillAccountId_t* v)
+{
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readTuplePerbillAccountId(c, &v->contained))
     }
     return parser_ok;
 }
@@ -3943,6 +3968,27 @@ parser_error_t _toStringMultiAssetV3(
     return parser_display_idx_out_of_range;
 }
 
+parser_error_t _toStringPerbill(
+    const pd_Perbill_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    char bufferUI[100] = { 0 };
+    char ratioBuffer[80] = { 0 };
+    memset(outValue, 0, outValueLen);
+    *pageCount = 1;
+
+    if (fpuint64_to_str(ratioBuffer, sizeof(ratioBuffer), v->value, 7) == 0) {
+        return parser_unexpected_value;
+    }
+
+    snprintf(bufferUI, sizeof(bufferUI), "%s%%", ratioBuffer);
+    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
+    return parser_ok;
+}
+
 parser_error_t _toStringSr25519Public(
     const pd_Sr25519Public_t* v,
     char* outValue,
@@ -4316,27 +4362,6 @@ parser_error_t _toStringMultiSigner(
     return parser_ok;
 }
 
-parser_error_t _toStringPerbill(
-    const pd_Perbill_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    char bufferUI[100] = { 0 };
-    char ratioBuffer[80] = { 0 };
-    memset(outValue, 0, outValueLen);
-    *pageCount = 1;
-
-    if (fpuint64_to_str(ratioBuffer, sizeof(ratioBuffer), v->value, 7) == 0) {
-        return parser_unexpected_value;
-    }
-
-    snprintf(bufferUI, sizeof(bufferUI), "%s%%", ratioBuffer);
-    pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
-    return parser_ok;
-}
-
 parser_error_t _toStringPercent(
     const pd_Percent_t* v,
     char* outValue,
@@ -4558,6 +4583,43 @@ parser_error_t _toStringTupleH256u32(
     return parser_display_idx_out_of_range;
 }
 
+parser_error_t _toStringTuplePerbillAccountId(
+    const pd_TuplePerbillAccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    // First measure number of pages
+    uint8_t pages[2] = { 0 };
+    CHECK_ERROR(_toStringPerbill(&v->perbill, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringAccountId(&v->id, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = 0;
+    for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
+        *pageCount += pages[i];
+    }
+
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringPerbill(&v->perbill, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringAccountId(&v->id, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
+}
+
 parser_error_t _toStringWeight(
     const pd_Weight_t* v,
     char* outValue,
@@ -4705,6 +4767,43 @@ parser_error_t _toStringBoxVersionedMultiLocation(
     }
 
     return parser_ok;
+}
+
+parser_error_t _toStringCommissionChangeRateBlockNumber(
+    const pd_CommissionChangeRateBlockNumber_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    // First measure number of pages
+    uint8_t pages[2] = { 0 };
+    CHECK_ERROR(_toStringPerbill(&v->maxIncrease, outValue, outValueLen, 0, &pages[0]))
+    CHECK_ERROR(_toStringu32(&v->minDelay, outValue, outValueLen, 0, &pages[1]))
+
+    *pageCount = 0;
+    for (uint8_t i = 0; i < (uint8_t)sizeof(pages); i++) {
+        *pageCount += pages[i];
+    }
+
+    if (pageIdx > *pageCount) {
+        return parser_display_idx_out_of_range;
+    }
+
+    if (pageIdx < pages[0]) {
+        CHECK_ERROR(_toStringPerbill(&v->maxIncrease, outValue, outValueLen, pageIdx, &pages[0]))
+        return parser_ok;
+    }
+    pageIdx -= pages[0];
+
+    if (pageIdx < pages[1]) {
+        CHECK_ERROR(_toStringu32(&v->minDelay, outValue, outValueLen, pageIdx, &pages[1]))
+        return parser_ok;
+    }
+
+    return parser_display_idx_out_of_range;
 }
 
 parser_error_t _toStringConfigOpAccountId(
@@ -5584,6 +5683,27 @@ parser_error_t _toStringOptionTimepoint(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringTimepoint(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringOptionTuplePerbillAccountId(
+    const pd_OptionTuplePerbillAccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringTuplePerbillAccountId(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));

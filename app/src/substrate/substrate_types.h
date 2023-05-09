@@ -519,6 +519,10 @@ typedef struct {
 } pd_MultiAssetV3_t;
 
 typedef struct {
+    uint32_t value;
+} pd_Perbill_t;
+
+typedef struct {
     const uint8_t* _ptr;
 } pd_Sr25519Public_t;
 
@@ -593,10 +597,6 @@ typedef struct {
 } pd_Optionu8_array_20_t;
 
 typedef struct {
-    uint32_t value;
-} pd_Perbill_t;
-
-typedef struct {
     uint8_t value;
 } pd_Percent_t;
 
@@ -634,6 +634,11 @@ typedef struct {
     pd_H256_t h256;
     uint32_t u32;
 } pd_TupleH256u32_t;
+
+typedef struct {
+    pd_Perbill_t perbill;
+    pd_AccountId_t id;
+} pd_TuplePerbillAccountId_t;
 
 typedef struct {
     uint64_t _len;
@@ -697,6 +702,11 @@ typedef struct {
 } pd_BoxVersionedMultiLocation_t;
 
 typedef struct {
+    pd_Perbill_t maxIncrease;
+    uint32_t minDelay;
+} pd_CommissionChangeRateBlockNumber_t;
+
+typedef struct {
     uint8_t value;
     pd_AccountId_t set;
 } pd_ConfigOpAccountId_t;
@@ -755,6 +765,11 @@ typedef struct {
     uint8_t some;
     pd_Timepoint_t contained;
 } pd_OptionTimepoint_t;
+
+typedef struct {
+    uint8_t some;
+    pd_TuplePerbillAccountId_t contained;
+} pd_OptionTuplePerbillAccountId_t;
 
 typedef struct {
     pd_Call_t call;

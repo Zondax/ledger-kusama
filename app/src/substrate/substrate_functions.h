@@ -95,6 +95,7 @@ parser_error_t _readEd25519Signature(parser_context_t* c, pd_Ed25519Signature_t*
 parser_error_t _readH256(parser_context_t* c, pd_H256_t* v);
 parser_error_t _readMultiAssetV2(parser_context_t* c, pd_MultiAssetV2_t* v);
 parser_error_t _readMultiAssetV3(parser_context_t* c, pd_MultiAssetV3_t* v);
+parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v);
 parser_error_t _readSr25519Public(parser_context_t* c, pd_Sr25519Public_t* v);
 parser_error_t _readSr25519Signature(parser_context_t* c, pd_Sr25519Signature_t* v);
 parser_error_t _readTupleDataData(parser_context_t* c, pd_TupleDataData_t* v);
@@ -108,7 +109,6 @@ parser_error_t _readCompactPerBill(parser_context_t* c, pd_CompactPerBill_t* v);
 parser_error_t _readMultiSignature(parser_context_t* c, pd_MultiSignature_t* v);
 parser_error_t _readMultiSigner(parser_context_t* c, pd_MultiSigner_t* v);
 parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_t* v);
-parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v);
 parser_error_t _readPercent(parser_context_t* c, pd_Percent_t* v);
 parser_error_t _readPerquintill(parser_context_t* c, pd_Perquintill_t* v);
 parser_error_t _readPreimageHash(parser_context_t* c, pd_PreimageHash_t* v);
@@ -118,6 +118,7 @@ parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v
 parser_error_t _readTimepoint(parser_context_t* c, pd_Timepoint_t* v);
 parser_error_t _readTupleAccountIdData(parser_context_t* c, pd_TupleAccountIdData_t* v);
 parser_error_t _readTupleH256u32(parser_context_t* c, pd_TupleH256u32_t* v);
+parser_error_t _readTuplePerbillAccountId(parser_context_t* c, pd_TuplePerbillAccountId_t* v);
 parser_error_t _readVecMultiAssetV2(parser_context_t* c, pd_VecMultiAssetV2_t* v);
 parser_error_t _readVecMultiAssetV3(parser_context_t* c, pd_VecMultiAssetV3_t* v);
 parser_error_t _readVecTupleDataData(parser_context_t* c, pd_VecTupleDataData_t* v);
@@ -127,6 +128,7 @@ parser_error_t _readBondExtraBalanceOfT(parser_context_t* c, pd_BondExtraBalance
 parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v);
 parser_error_t _readBoxVersionedMultiAssets(parser_context_t* c, pd_BoxVersionedMultiAssets_t* v);
 parser_error_t _readBoxVersionedMultiLocation(parser_context_t* c, pd_BoxVersionedMultiLocation_t* v);
+parser_error_t _readCommissionChangeRateBlockNumber(parser_context_t* c, pd_CommissionChangeRateBlockNumber_t* v);
 parser_error_t _readConfigOpAccountId(parser_context_t* c, pd_ConfigOpAccountId_t* v);
 parser_error_t _readConfigOpBalanceOfT(parser_context_t* c, pd_ConfigOpBalanceOfT_t* v);
 parser_error_t _readConfigOpPerbill(parser_context_t* c, pd_ConfigOpPerbill_t* v);
@@ -137,6 +139,7 @@ parser_error_t _readMetadataOwner(parser_context_t* c, pd_MetadataOwner_t* v);
 parser_error_t _readOptionMultiSignature(parser_context_t* c, pd_OptionMultiSignature_t* v);
 parser_error_t _readOptionMultiSigner(parser_context_t* c, pd_OptionMultiSigner_t* v);
 parser_error_t _readOptionTimepoint(parser_context_t* c, pd_OptionTimepoint_t* v);
+parser_error_t _readOptionTuplePerbillAccountId(parser_context_t* c, pd_OptionTuplePerbillAccountId_t* v);
 parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v);
 parser_error_t _readRewardDestination(parser_context_t* c, pd_RewardDestination_t* v);
 parser_error_t _readValidatorPrefs(parser_context_t* c, pd_ValidatorPrefs_t* v);
@@ -659,6 +662,13 @@ parser_error_t _toStringMultiAssetV3(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringPerbill(
+    const pd_Perbill_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringSr25519Public(
     const pd_Sr25519Public_t* v,
     char* outValue,
@@ -750,13 +760,6 @@ parser_error_t _toStringOptionu8_array_20(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringPerbill(
-    const pd_Perbill_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringPercent(
     const pd_Percent_t* v,
     char* outValue,
@@ -820,6 +823,13 @@ parser_error_t _toStringTupleH256u32(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringTuplePerbillAccountId(
+    const pd_TuplePerbillAccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringVecMultiAssetV2(
     const pd_VecMultiAssetV2_t* v,
     char* outValue,
@@ -878,6 +888,13 @@ parser_error_t _toStringBoxVersionedMultiAssets(
 
 parser_error_t _toStringBoxVersionedMultiLocation(
     const pd_BoxVersionedMultiLocation_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCommissionChangeRateBlockNumber(
+    const pd_CommissionChangeRateBlockNumber_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -948,6 +965,13 @@ parser_error_t _toStringOptionMultiSigner(
 
 parser_error_t _toStringOptionTimepoint(
     const pd_OptionTimepoint_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringOptionTuplePerbillAccountId(
+    const pd_OptionTuplePerbillAccountId_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
