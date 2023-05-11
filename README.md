@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama 20.9391.x
+# Kusama 22.9420.x
 
 ## System
 
@@ -69,27 +69,30 @@ Please:
 
 ## Balances
 
-| Name                | Nano S             | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                  |
-| ------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------------------------------------------------------------------------------ |
-| Transfer            | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
-| Set balance         |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`who<br/>`CompactBalance`new_free<br/>`CompactBalance`new_reserved<br/> |
-| Force transfer      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`source<br/>`AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>    |
-| Transfer keep alive | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
-| Transfer all        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                         |
-| Force unreserve     |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`who<br/>`Balance`amount<br/>                                           |
+| Name                   | Nano S             | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                  |
+| ---------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------------------------------------------------------------------------------ |
+| Transfer allow death   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
+| Set balance deprecated |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`who<br/>`CompactBalance`new_free<br/>`CompactBalance`old_reserved<br/> |
+| Force transfer         | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`source<br/>`AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>    |
+| Transfer keep alive    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
+| Transfer all           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                         |
+| Force unreserve        |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`who<br/>`Balance`amount<br/>                                           |
+| Upgrade accounts       |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `VecAccountId`who<br/>                                                                     |
+| Transfer               | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
+| Force set balance      |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`who<br/>`CompactBalance`new_free<br/>                                  |
 
 ## Staking
 
 | Name                       | Nano S             | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                                                                                                                                                                 |
 | -------------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bond                       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`controller<br/>`CompactBalance`amount<br/>`RewardDestination`payee<br/>                                                                                                                                               |
-| Bond extra                 | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
+| Bond extra                 | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
 | Unbond                     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
-| Withdraw Unbonded          | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `u32`num_slashing_spans<br/>                                                                                                                                                                                                              |
+| Withdraw Unbonded          | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `u32`num_slashing_spans<br/>                                                                                                                                                                                                              |
 | Validate                   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `ValidatorPrefs`prefs<br/>                                                                                                                                                                                                                |
 | Nominate                   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `VecAccountIdLookupOfT`targets<br/>                                                                                                                                                                                                       |
 | Chill                      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                                                                                                                                                                                                                                           |
-| Set payee                  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `RewardDestination`payee<br/>                                                                                                                                                                                                             |
+| Set payee                  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `RewardDestination`payee<br/>                                                                                                                                                                                                             |
 | Set controller             | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`controller<br/>                                                                                                                                                                                                       |
 | Set validator count        |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `Compactu32`new\_<br/>                                                                                                                                                                                                                    |
 | Increase validator count   |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `Compactu32`additional<br/>                                                                                                                                                                                                               |
@@ -101,7 +104,7 @@ Please:
 | Force new era always       |                    | :heavy_check_mark: | :heavy_check_mark: |                    |                                                                                                                                                                                                                                           |
 | Cancel deferred slash      |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `EraIndex`era<br/>`Vecu32`slash_indices<br/>                                                                                                                                                                                              |
 | Payout stakers             | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`validator_stash<br/>`EraIndex`era<br/>                                                                                                                                                                                         |
-| Rebond                     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
+| Rebond                     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
 | Reap stash                 |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`stash<br/>`u32`num_slashing_spans<br/>                                                                                                                                                                                         |
 | Kick                       |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `VecAccountIdLookupOfT`who<br/>                                                                                                                                                                                                           |
 | Set staking configs        |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `ConfigOpBalanceOfT`min_nominator_bond<br/>`ConfigOpBalanceOfT`min_validator_bond<br/>`ConfigOpu32`max_nominator_count<br/>`ConfigOpu32`max_validator_count<br/>`ConfigOpPercent`chill_threshold<br/>`ConfigOpPerbill`min_commission<br/> |
@@ -129,77 +132,6 @@ Please:
 | Name      | Nano S | Nano S XL | Nano SP/X | Nesting | Arguments                                                                                  |
 | --------- | ------ | --------- | --------- | ------- | ------------------------------------------------------------------------------------------ |
 | Heartbeat |        |           |           |         | `HeartbeatBlockNumber`heartbeat<br/>`AuthorityIdasRuntimeAppPublicSignature`signature<br/> |
-
-## Democracy
-
-| Name                      | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                      |
-| ------------------------- | ------ | ------------------ | ------------------ | ------------------ | ------------------------------------------------------------------------------ |
-| Propose                   |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `BoundedCallOfT`proposal<br/>`CompactBalance`amount<br/>                       |
-| Second                    |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Compactu32`proposal<br/>                                                      |
-| Vote                      |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Compactu32`ref_index<br/>`AccountVote`vote<br/>                               |
-| Emergency cancel          |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `ReferendumIndex`ref_index<br/>                                                |
-| External propose          |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `BoundedCallOfT`proposal<br/>                                                  |
-| External propose majority |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `BoundedCallOfT`proposal<br/>                                                  |
-| External propose default  |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `BoundedCallOfT`proposal<br/>                                                  |
-| Fast track                |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `H256`proposal_hash<br/>`BlockNumber`voting_period<br/>`BlockNumber`delay<br/> |
-| Veto external             |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `H256`proposal_hash<br/>                                                       |
-| Cancel referendum         |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Compactu32`ref_index<br/>                                                     |
-| Delegate                  |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`to<br/>`Conviction`conviction<br/>`Balance`balance<br/>    |
-| Undelegate                |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                                                                                |
-| Clear public proposals    |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                                                                                |
-| Unlock                    |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`target<br/>                                                |
-| Remove vote               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `ReferendumIndex`index<br/>                                                    |
-| Remove other vote         |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`target<br/>`ReferendumIndex`index<br/>                     |
-| Blacklist                 |        | :heavy_check_mark: | :heavy_check_mark: |                    | `H256`proposal_hash<br/>`OptionReferendumIndex`maybe_ref_index<br/>            |
-| Cancel proposal           |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Compactu32`prop_index<br/>                                                    |
-| Set metadata              |        | :heavy_check_mark: | :heavy_check_mark: |                    | `MetadataOwner`owner<br/>`OptionPreimageHash`maybe_hash<br/>                   |
-
-## Council
-
-| Name                | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                         |
-| ------------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| Set members         |        | :heavy_check_mark: | :heavy_check_mark: |         | `VecAccountId`new_members<br/>`OptionAccountId`prime<br/>`MemberCount`old_count<br/>                              |
-| Execute             |        | :heavy_check_mark: | :heavy_check_mark: |         | `Proposal`proposal<br/>`Compactu32`length_bound<br/>                                                              |
-| Propose             |        | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`threshold<br/>`Proposal`proposal<br/>`Compactu32`length_bound<br/>                                    |
-| Vote                |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal<br/>`Compactu32`index<br/>`bool`approve<br/>                                                       |
-| Close old weight    |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>`Compactu32`index<br/>`Compactu64`proposal_weight_bound<br/>`Compactu32`length_bound<br/> |
-| Disapprove proposal |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>                                                                                          |
-| Close               |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>`Compactu32`index<br/>`Weight`proposal_weight_bound<br/>`Compactu32`length_bound<br/>     |
-
-## TechnicalCommittee
-
-| Name                | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                                                         |
-| ------------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| Set members         |        | :heavy_check_mark: | :heavy_check_mark: |         | `VecAccountId`new_members<br/>`OptionAccountId`prime<br/>`MemberCount`old_count<br/>                              |
-| Execute             |        | :heavy_check_mark: | :heavy_check_mark: |         | `Proposal`proposal<br/>`Compactu32`length_bound<br/>                                                              |
-| Propose             |        | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`threshold<br/>`Proposal`proposal<br/>`Compactu32`length_bound<br/>                                    |
-| Vote                |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal<br/>`Compactu32`index<br/>`bool`approve<br/>                                                       |
-| Close old weight    |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>`Compactu32`index<br/>`Compactu64`proposal_weight_bound<br/>`Compactu32`length_bound<br/> |
-| Disapprove proposal |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>                                                                                          |
-| Close               |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`proposal_hash<br/>`Compactu32`index<br/>`Weight`proposal_weight_bound<br/>`Compactu32`length_bound<br/>     |
-
-## PhragmenElection
-
-| Name                 | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                  |
-| -------------------- | ------ | ------------------ | ------------------ | ------- | -------------------------------------------------------------------------- |
-| Vote                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `VecAccountId`votes<br/>`CompactBalance`amount<br/>                        |
-| Remove voter         |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                            |
-| Submit candidacy     |        | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`candidate_count<br/>                                           |
-| Renounce candidacy   |        |                    |                    |         | `Renouncing`renouncing<br/>                                                |
-| Remove member        |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`bool`slash_bond<br/>`bool`rerun_election<br/> |
-| Clean defunct voters |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`num_voters<br/>`u32`num_defunct<br/>                                  |
-
-## TechnicalMembership
-
-| Name          | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                   |
-| ------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------------------------------- |
-| Add member    |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>                                |
-| Remove member |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>                                |
-| Swap member   |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`remove<br/>`AccountIdLookupOfT`add<br/> |
-| Reset members |        | :heavy_check_mark: | :heavy_check_mark: |         | `VecAccountId`members<br/>                                  |
-| Change key    |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`new\_<br/>                              |
-| Set prime     |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>                                |
-| Clear prime   |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                             |
 
 ## Treasury
 
@@ -368,8 +300,8 @@ Please:
 | Name                | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                                                  |
 | ------------------- | ------ | ------------------ | ------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | Proxy               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`real<br/>`OptionProxyType`force_proxy_type<br/>`Call`call<br/>                                         |
-| Add proxy           |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`delegate<br/>`ProxyType`proxy_type<br/>`BlockNumber`delay<br/>                                         |
-| Remove proxy        |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`delegate<br/>`ProxyType`proxy_type<br/>`BlockNumber`delay<br/>                                         |
+| Add proxy           |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`delegate<br/>`ProxyType`proxy_type<br/>`BlockNumber`delay<br/>                                         |
+| Remove proxy        |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`delegate<br/>`ProxyType`proxy_type<br/>`BlockNumber`delay<br/>                                         |
 | Remove proxies      |        | :heavy_check_mark: | :heavy_check_mark: |                    |                                                                                                                            |
 | Create pure         |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `ProxyType`proxy_type<br/>`BlockNumber`delay<br/>`u16`index<br/>                                                           |
 | Kill pure           |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`spawner<br/>`ProxyType`proxy_type<br/>`u16`index<br/>`Compactu32`height<br/>`Compactu32`ext_index<br/> |
@@ -422,17 +354,6 @@ Please:
 | Claim child bounty |        | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`parent_bounty_id<br/>`Compactu32`child_bounty_id<br/>                                                         |
 | Close child bounty |        | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`parent_bounty_id<br/>`Compactu32`child_bounty_id<br/>                                                         |
 
-## Tips
-
-| Name           | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                 |
-| -------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------- |
-| Report awesome |        | :heavy_check_mark: | :heavy_check_mark: |         | `Bytes`reason<br/>`AccountIdLookupOfT`who<br/>                            |
-| Retract tip    |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`hash<br/>                                                           |
-| Tip new        |        | :heavy_check_mark: | :heavy_check_mark: |         | `Bytes`reason<br/>`AccountIdLookupOfT`who<br/>`Compactu128`tip_value<br/> |
-| Tip            |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`hash<br/>`Compactu128`tip_value<br/>                                |
-| Close tip      |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`hash<br/>                                                           |
-| Slash tip      |        | :heavy_check_mark: | :heavy_check_mark: |         | `Hash`hash<br/>                                                           |
-
 ## ElectionProviderMultiPhase
 
 | Name                          | Nano S | Nano S XL | Nano SP/X | Nesting | Arguments                                                                                  |
@@ -457,14 +378,17 @@ Please:
 
 ## NisCounterpartBalances
 
-| Name                | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                            |
-| ------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------ |
-| Transfer            |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/>                                |
-| Set balance         |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`Compactu128`new_free<br/>`Compactu128`new_reserved<br/> |
-| Force transfer      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`source<br/>`AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/> |
-| Transfer keep alive |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/>                                |
-| Transfer all        |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                   |
-| Force unreserve     |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`Balance`amount<br/>                                     |
+| Name                   | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                                                            |
+| ---------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------ |
+| Transfer allow death   |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/>                                |
+| Set balance deprecated |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`Compactu128`new_free<br/>`Compactu128`old_reserved<br/> |
+| Force transfer         |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`source<br/>`AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/> |
+| Transfer keep alive    |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/>                                |
+| Transfer all           |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                   |
+| Force unreserve        |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`Balance`amount<br/>                                     |
+| Upgrade accounts       |        | :heavy_check_mark: | :heavy_check_mark: |         | `VecAccountId`who<br/>                                                               |
+| Transfer               |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dest<br/>`Compactu128`amount<br/>                                |
+| Force set balance      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`Compactu128`new_free<br/>                               |
 
 ## VoterList
 
@@ -475,82 +399,87 @@ Please:
 
 ## NominationPools
 
-| Name                   | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                                                                                                    |
-| ---------------------- | ------ | ------------------ | ------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Join                   |        | :heavy_check_mark: | :heavy_check_mark: |                    | `CompactBalance`amount<br/>`PoolId`pool_id<br/>                                                                                                                              |
-| Bond extra             |        | :heavy_check_mark: | :heavy_check_mark: |                    | `BondExtraBalanceOfT`extra<br/>                                                                                                                                              |
-| Claim payout           |        | :heavy_check_mark: | :heavy_check_mark: |                    |                                                                                                                                                                              |
-| Unbond                 |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`member_account<br/>`CompactBalance`unbonding_points<br/>                                                                                                 |
-| Pool withdraw unbonded |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`u32`num_slashing_spans<br/>                                                                                                                             |
-| Withdraw Unbonded      |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`member_account<br/>`u32`num_slashing_spans<br/>                                                                                                          |
-| Create                 |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`bouncer<br/>                                                   |
-| Create with pool id    |        | :heavy_check_mark: | :heavy_check_mark: |                    | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`bouncer<br/>`PoolId`pool_id<br/>                               |
-| Nominate               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`VecAccountId`validators<br/>                                                                                                                            |
-| Set state              |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`PoolState`state<br/>                                                                                                                                    |
-| Set metadata           |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`Vecu8`metadata<br/>                                                                                                                                     |
-| Set configs            |        | :heavy_check_mark: | :heavy_check_mark: |                    | `ConfigOpBalanceOfT`min_join_bond<br/>`ConfigOpBalanceOfT`min_create_bond<br/>`ConfigOpu32`max_pools<br/>`ConfigOpu32`max_members<br/>`ConfigOpu32`max_members_per_pool<br/> |
-| Update roles           |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`ConfigOpAccountId`new_root<br/>`ConfigOpAccountId`new_nominator<br/>`ConfigOpAccountId`new_bouncer<br/>                                                 |
-| Chill                  |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>                                                                                                                                                         |
-| Bond extra other       |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`member<br/>`BondExtraBalanceOfT`extra<br/>                                                                                                               |
-| Set claim permission   |        | :heavy_check_mark: | :heavy_check_mark: |                    | `ClaimPermission`permission<br/>                                                                                                                                             |
-| Claim payout other     |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`other<br/>                                                                                                                                                        |
+| Name                       | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                                                                                                                                                                                                               |
+| -------------------------- | ------ | ------------------ | ------------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Join                       |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>`PoolId`pool_id<br/>                                                                                                                                                                         |
+| Bond extra                 |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `BondExtraBalanceOfT`extra<br/>                                                                                                                                                                                         |
+| Claim payout               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                                                                                                                                                                                                                         |
+| Unbond                     |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`member_account<br/>`CompactBalance`unbonding_points<br/>                                                                                                                                            |
+| Pool withdraw unbonded     |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`u32`num_slashing_spans<br/>                                                                                                                                                                        |
+| Withdraw Unbonded          |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`member_account<br/>`u32`num_slashing_spans<br/>                                                                                                                                                     |
+| Create                     |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`bouncer<br/>                                                                                              |
+| Create with pool id        |        | :heavy_check_mark: | :heavy_check_mark: |                    | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`bouncer<br/>`PoolId`pool_id<br/>                                                                          |
+| Nominate                   |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`VecAccountId`validators<br/>                                                                                                                                                                       |
+| Set state                  |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`PoolState`state<br/>                                                                                                                                                                               |
+| Set metadata               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`Vecu8`metadata<br/>                                                                                                                                                                                |
+| Set configs                |        | :heavy_check_mark: | :heavy_check_mark: |                    | `ConfigOpBalanceOfT`min_join_bond<br/>`ConfigOpBalanceOfT`min_create_bond<br/>`ConfigOpu32`max_pools<br/>`ConfigOpu32`max_members<br/>`ConfigOpu32`max_members_per_pool<br/>`ConfigOpPerbill`global_max_commission<br/> |
+| Update roles               |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>`ConfigOpAccountId`new_root<br/>`ConfigOpAccountId`new_nominator<br/>`ConfigOpAccountId`new_bouncer<br/>                                                                                            |
+| Chill                      |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `PoolId`pool_id<br/>                                                                                                                                                                                                    |
+| Bond extra other           |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`member<br/>`BondExtraBalanceOfT`extra<br/>                                                                                                                                                          |
+| Set claim permission       |        | :heavy_check_mark: | :heavy_check_mark: |                    | `ClaimPermission`permission<br/>                                                                                                                                                                                        |
+| Claim payout other         |        | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`other<br/>                                                                                                                                                                                                   |
+| Set commission             |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`OptionTuplePerbillAccountId`new_commission<br/>                                                                                                                                                    |
+| Set commission max         |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`Perbill`max_commission<br/>                                                                                                                                                                        |
+| Set commission change rate |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>`CommissionChangeRateBlockNumber`change_rate<br/>                                                                                                                                                   |
+| Claim commission           |        | :heavy_check_mark: | :heavy_check_mark: |                    | `PoolId`pool_id<br/>                                                                                                                                                                                                    |
 
 ## FastUnstake
 
-| Name                  | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                    |
-| --------------------- | ------ | ------------------ | ------------------ | ------- | ---------------------------- |
-| Register fast unstake |        | :heavy_check_mark: | :heavy_check_mark: |         |                              |
-| Deregister            |        | :heavy_check_mark: | :heavy_check_mark: |         |                              |
-| Control               |        | :heavy_check_mark: | :heavy_check_mark: |         | `EraIndex`eras_to_check<br/> |
+| Name                  | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                    |
+| --------------------- | ------ | ------------------ | ------------------ | ------------------ | ---------------------------- |
+| Register fast unstake |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                              |
+| Deregister            |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                              |
+| Control               |        | :heavy_check_mark: | :heavy_check_mark: |                    | `EraIndex`eras_to_check<br/> |
 
 ## Configuration
 
-| Name                                          | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                |
-| --------------------------------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------ |
-| Set validation upgrade cooldown               |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set validation upgrade delay                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set code retention period                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set max code size                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max pov size                              |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max head data size                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set parathread cores                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set parathread retries                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set group rotation frequency                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set chain availability period                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set thread availability period                |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set scheduling lookahead                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max validators per core                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>    |
-| Set max validators                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>    |
-| Set dispute period                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `SessionIndex`new\_<br/> |
-| Set dispute post conclusion acceptance period |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set dispute conclusion by time out period     |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set no show slots                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set n delay tranches                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set zeroth delay tranche width                |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set needed approvals                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set relay vrf modulo samples                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max upward queue count                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max upward queue size                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max downward message size                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set ump service total weight                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `Weight`new\_<br/>       |
-| Set max upward message size                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set max upward message num per candidate      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp open request ttl                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp sender deposit                       |        | :heavy_check_mark: | :heavy_check_mark: |         | `Balance`new\_<br/>      |
-| Set hrmp recipient deposit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `Balance`new\_<br/>      |
-| Set hrmp channel max capacity                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp channel max total size               |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp max parachain inbound channels       |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp max parathread inbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp channel max message size             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp max parachain outbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp max parathread outbound channels     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set hrmp max message num per candidate        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>          |
-| Set ump max individual weight                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `Weight`new\_<br/>       |
-| Set pvf checking enabled                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>         |
-| Set pvf voting ttl                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `SessionIndex`new\_<br/> |
-| Set minimum validation upgrade delay          |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>  |
-| Set bypass consistency check                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>         |
+| Name                                          | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                      |
+| --------------------------------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------ |
+| Set validation upgrade cooldown               |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set validation upgrade delay                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set code retention period                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set max code size                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max pov size                              |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max head data size                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set parathread cores                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set parathread retries                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set group rotation frequency                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set chain availability period                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set thread availability period                |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set scheduling lookahead                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max validators per core                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>          |
+| Set max validators                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>          |
+| Set dispute period                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `SessionIndex`new\_<br/>       |
+| Set dispute post conclusion acceptance period |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set no show slots                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set n delay tranches                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set zeroth delay tranche width                |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set needed approvals                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set relay vrf modulo samples                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max upward queue count                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max upward queue size                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max downward message size                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set ump service total weight                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `Weight`new\_<br/>             |
+| Set max upward message size                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set max upward message num per candidate      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp open request ttl                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp sender deposit                       |        | :heavy_check_mark: | :heavy_check_mark: |         | `Balance`new\_<br/>            |
+| Set hrmp recipient deposit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `Balance`new\_<br/>            |
+| Set hrmp channel max capacity                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp channel max total size               |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp max parachain inbound channels       |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp max parathread inbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp channel max message size             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp max parachain outbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp max parathread outbound channels     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set hrmp max message num per candidate        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set ump max individual weight                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `Weight`new\_<br/>             |
+| Set pvf checking enabled                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>               |
+| Set pvf voting ttl                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `SessionIndex`new\_<br/>       |
+| Set minimum validation upgrade delay          |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set bypass consistency check                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>               |
+| Set async backing params                      |        |                    |                    |         | `AsyncBackingParams`new\_<br/> |
+| Set executor params                           |        |                    |                    |         | `ExecutorParams`new\_<br/>     |
 
 ## ParasShared
 
@@ -587,11 +516,6 @@ Please:
 | ------------- | ------ | ------------------ | ------------------ | ------- | ----------------------- |
 | Force approve |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`up_to<br/> |
 
-## Dmp
-
-| Name | Nano S | Nano S XL | Nano SP/X | Nesting | Arguments |
-| ---- | ------ | --------- | --------- | ------- | --------- |
-
 ## Ump
 
 | Name               | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments                                            |
@@ -616,6 +540,12 @@ Please:
 | Name           | Nano S | Nano S XL          | Nano SP/X          | Nesting | Arguments |
 | -------------- | ------ | ------------------ | ------------------ | ------- | --------- |
 | Force unfreeze |        | :heavy_check_mark: | :heavy_check_mark: |         |           |
+
+## ParasSlashing
+
+| Name                         | Nano S | Nano S XL | Nano SP/X | Nesting | Arguments                                                              |
+| ---------------------------- | ------ | --------- | --------- | ------- | ---------------------------------------------------------------------- |
+| Report dispute lost unsigned |        |           |           |         | `BoxDisputeProof`dispute_proof<br/>`KeyOwnerProof`key_owner_proof<br/> |
 
 ## Registrar
 
@@ -675,3 +605,4 @@ Please:
 | Force unsubscribe version notify |        |           |                    |         | `BoxVersionedMultiLocation`location<br/>                                                                                                                                  |
 | Limited reserve transfer assets  |        |           | :heavy_check_mark: |         | `BoxVersionedMultiLocation`dest<br/>`BoxVersionedMultiLocation`beneficiary<br/>`BoxVersionedMultiAssets`assets<br/>`u32`fee_asset_item<br/>`WeightLimit`weight_limit<br/> |
 | Limited teleport assets          |        |           | :heavy_check_mark: |         | `BoxVersionedMultiLocation`dest<br/>`BoxVersionedMultiLocation`beneficiary<br/>`BoxVersionedMultiAssets`assets<br/>`u32`fee_asset_item<br/>`WeightLimit`weight_limit<br/> |
+| Force suspension                 |        |           |                    |         | `bool`suspended<br/>                                                                                                                                                      |
