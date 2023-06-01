@@ -14,7 +14,7 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import Zemu, { DEFAULT_START_OPTIONS, zondaxMainmenuNavigation } from '@zondax/zemu'
+import Zemu, { ButtonKind, DEFAULT_START_OPTIONS, zondaxMainmenuNavigation } from '@zondax/zemu'
 import { newKusamaApp } from '@zondax/ledger-substrate'
 import { APP_SEED, models } from './common'
 
@@ -94,7 +94,12 @@ describe('Standard', function () {
   test.concurrent.each(models)('show address', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({
+        ...defaultOptions,
+        model: m.name,
+        approveKeyword: m.name === 'stax' ? 'QR' : '',
+        approveAction: ButtonKind.ApproveTapButton,
+      })
       const app = newKusamaApp(sim.getTransport())
 
       const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true)
@@ -119,7 +124,11 @@ describe('Standard', function () {
   test.concurrent.each(models)('show address - reject', async function (m) {
     const sim = new Zemu(m.path)
     try {
-      await sim.start({ ...defaultOptions, model: m.name })
+      await sim.start({
+        ...defaultOptions,
+        model: m.name,
+        rejectKeyword: m.name === 'stax' ? 'QR' : '',
+      })
       const app = newKusamaApp(sim.getTransport())
 
       const respRequest = app.getAddress(0x80000000, 0x80000000, 0x80000000, true)

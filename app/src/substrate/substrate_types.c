@@ -1334,6 +1334,7 @@ parser_error_t _readMetadataOwner(parser_context_t* c, pd_MetadataOwner_t* v)
 
 parser_error_t _readOptionMultiSigner(parser_context_t* c, pd_OptionMultiSigner_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readMultiSigner(c, &v->verifier))
@@ -1583,6 +1584,7 @@ parser_error_t _readVecu8(parser_context_t* c, pd_Vecu8_t* v) {
 
 parser_error_t _readOptionNetworkIdV3(parser_context_t* c, pd_OptionNetworkIdV3_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readNetworkIdV3(c, &v->contained))
@@ -1592,6 +1594,7 @@ parser_error_t _readOptionNetworkIdV3(parser_context_t* c, pd_OptionNetworkIdV3_
 
 parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readu8_array_20(c, &v->contained))
@@ -1601,6 +1604,7 @@ parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_
 
 parser_error_t _readOptionMultiSignature(parser_context_t* c, pd_OptionMultiSignature_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readMultiSignature(c, &v->contained))
@@ -1610,6 +1614,7 @@ parser_error_t _readOptionMultiSignature(parser_context_t* c, pd_OptionMultiSign
 
 parser_error_t _readOptionTimepoint(parser_context_t* c, pd_OptionTimepoint_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readTimepoint(c, &v->contained))
@@ -1619,6 +1624,7 @@ parser_error_t _readOptionTimepoint(parser_context_t* c, pd_OptionTimepoint_t* v
 
 parser_error_t _readOptionTuplePerbillAccountId(parser_context_t* c, pd_OptionTuplePerbillAccountId_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readTuplePerbillAccountId(c, &v->contained))
@@ -1628,6 +1634,7 @@ parser_error_t _readOptionTuplePerbillAccountId(parser_context_t* c, pd_OptionTu
 
 parser_error_t _readOptionAccountId(parser_context_t* c, pd_OptionAccountId_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readAccountId(c, &v->contained))
@@ -1637,6 +1644,7 @@ parser_error_t _readOptionAccountId(parser_context_t* c, pd_OptionAccountId_t* v
 
 parser_error_t _readOptionClassOf(parser_context_t* c, pd_OptionClassOf_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readClassOf(c, &v->contained))
@@ -1646,6 +1654,7 @@ parser_error_t _readOptionClassOf(parser_context_t* c, pd_OptionClassOf_t* v)
 
 parser_error_t _readOptionPerquintill(parser_context_t* c, pd_OptionPerquintill_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readPerquintill(c, &v->contained))
@@ -1655,6 +1664,7 @@ parser_error_t _readOptionPerquintill(parser_context_t* c, pd_OptionPerquintill_
 
 parser_error_t _readOptionPreimageHash(parser_context_t* c, pd_OptionPreimageHash_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readPreimageHash(c, &v->contained))
@@ -1664,6 +1674,7 @@ parser_error_t _readOptionPreimageHash(parser_context_t* c, pd_OptionPreimageHas
 
 parser_error_t _readOptionProxyType(parser_context_t* c, pd_OptionProxyType_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readProxyType(c, &v->contained))
@@ -1673,6 +1684,7 @@ parser_error_t _readOptionProxyType(parser_context_t* c, pd_OptionProxyType_t* v
 
 parser_error_t _readOptionReferendumIndex(parser_context_t* c, pd_OptionReferendumIndex_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readReferendumIndex(c, &v->contained))
@@ -1682,6 +1694,7 @@ parser_error_t _readOptionReferendumIndex(parser_context_t* c, pd_OptionReferend
 
 parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v)
 {
+    CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readu32(c, &v->contained))
