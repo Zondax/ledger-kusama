@@ -881,6 +881,13 @@ parser_error_t _readMultiAssetV3(parser_context_t* c, pd_MultiAssetV3_t* v)
     return parser_ok;
 }
 
+parser_error_t _readParaId(parser_context_t* c, pd_ParaId_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
+}
+
 parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v)
 {
     CHECK_INPUT()
@@ -988,6 +995,16 @@ parser_error_t _readCompactPerBill(parser_context_t* c, pd_CompactPerBill_t* v)
     return _readCompactInt(c, &v->value);
 }
 
+parser_error_t _readKusamaOrigins(parser_context_t* c, pd_KusamaOrigins_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    if (v->value > 26) {
+        return parser_value_out_of_range;
+    }
+    return parser_ok;
+}
+
 parser_error_t _readMultiSignature(parser_context_t* c, pd_MultiSignature_t* v)
 {
     CHECK_INPUT()
@@ -1030,6 +1047,20 @@ parser_error_t _readMultiSigner(parser_context_t* c, pd_MultiSigner_t* v)
     return parser_ok;
 }
 
+parser_error_t _readParachainsOrigin(parser_context_t* c, pd_ParachainsOrigin_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Parachain
+        CHECK_ERROR(_readParaId(c, &v->parachain))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _readPercent(parser_context_t* c, pd_Percent_t* v)
 {
     CHECK_INPUT()
@@ -1048,13 +1079,6 @@ parser_error_t _readPreimageHash(parser_context_t* c, pd_PreimageHash_t* v) {
     GEN_DEF_READARRAY(32)
 }
 
-parser_error_t _readPropIndex(parser_context_t* c, pd_PropIndex_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt32(c, &v->value))
-    return parser_ok;
-}
-
 parser_error_t _readProxyType(parser_context_t* c, pd_ProxyType_t* v)
 {
     CHECK_ERROR(_readUInt8(c, &v->value))
@@ -1064,10 +1088,20 @@ parser_error_t _readProxyType(parser_context_t* c, pd_ProxyType_t* v)
     return parser_ok;
 }
 
-parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v)
+parser_error_t _readSystemOrigin(parser_context_t* c, pd_SystemOrigin_t* v)
 {
     CHECK_INPUT()
-    CHECK_ERROR(_readUInt32(c, &v->value))
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Root
+    case 2: // None
+        break;
+    case 1: // Signed
+        CHECK_ERROR(_readAccountId(c, &v->_signed))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
     return parser_ok;
 }
 
@@ -1158,6 +1192,28 @@ parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v)
         break;
     case 2:
         CHECK_ERROR(_readTupleH256u32(c, &v->lookup))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
+parser_error_t _readBoxPalletsOriginOfT(parser_context_t* c, pd_BoxPalletsOriginOfT_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // System
+        CHECK_ERROR(_readSystemOrigin(c, &v->system))
+        break;
+    case 4: // Void
+        break;
+    case 43: // Origins
+        CHECK_ERROR(_readKusamaOrigins(c, &v->origins))
+        break;
+    case 50: // ParachainsOrigins
+        CHECK_ERROR(_readParachainsOrigin(c, &v->parachainsOrigin))
         break;
     default:
         return parser_unexpected_value;
@@ -1313,25 +1369,6 @@ parser_error_t _readJudgementBalanceOfT(parser_context_t* c, pd_JudgementBalance
     return parser_ok;
 }
 
-parser_error_t _readMetadataOwner(parser_context_t* c, pd_MetadataOwner_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->value))
-    switch (v->value) {
-    case 0: // External
-        break;
-    case 1: // Proposal
-        CHECK_ERROR(_readPropIndex(c, &v->proposal))
-        break;
-    case 2: // Referendum
-        CHECK_ERROR(_readReferendumIndex(c, &v->referendum))
-        break;
-    default:
-        return parser_unexpected_value;
-    }
-    return parser_ok;
-}
-
 parser_error_t _readOptionMultiSigner(parser_context_t* c, pd_OptionMultiSigner_t* v)
 {
     CHECK_INPUT()
@@ -1340,11 +1377,6 @@ parser_error_t _readOptionMultiSigner(parser_context_t* c, pd_OptionMultiSigner_
         CHECK_ERROR(_readMultiSigner(c, &v->verifier))
     }
     return parser_ok;
-}
-
-parser_error_t _readProposal(parser_context_t* c, pd_Proposal_t* v)
-{
-    return _readCall(c, &v->call);
 }
 
 parser_error_t _readRewardDestination(parser_context_t* c, pd_RewardDestination_t* v)
@@ -1463,6 +1495,21 @@ parser_error_t _readConviction(parser_context_t* c, pd_Conviction_t* v)
     return parser_ok;
 }
 
+parser_error_t _readDispatchTimeBlockNumber(parser_context_t* c, pd_DispatchTimeBlockNumber_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // At
+    case 1: // After
+        CHECK_ERROR(_readUInt32(c, &v->block))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _readEraIndex(parser_context_t* c, pd_EraIndex_t* v)
 {
     CHECK_INPUT()
@@ -1482,24 +1529,10 @@ parser_error_t _readKeys(parser_context_t* c, pd_Keys_t* v) {
     GEN_DEF_READARRAY(6 * 32)
 }
 
-parser_error_t _readMemberCount(parser_context_t* c, pd_MemberCount_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt32(c, &v->value))
-    return parser_ok;
-}
-
 parser_error_t _readOverweightIndex(parser_context_t* c, pd_OverweightIndex_t* v)
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt64(c, &v->value))
-    return parser_ok;
-}
-
-parser_error_t _readParaId(parser_context_t* c, pd_ParaId_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt32(c, &v->value))
     return parser_ok;
 }
 
@@ -1528,6 +1561,13 @@ parser_error_t _readRank(parser_context_t* c, pd_Rank_t* v)
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt16(c, &v->value))
+    return parser_ok;
+}
+
+parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
     return parser_ok;
 }
 
@@ -1678,16 +1718,6 @@ parser_error_t _readOptionProxyType(parser_context_t* c, pd_OptionProxyType_t* v
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readProxyType(c, &v->contained))
-    }
-    return parser_ok;
-}
-
-parser_error_t _readOptionReferendumIndex(parser_context_t* c, pd_OptionReferendumIndex_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->some))
-    if (v->some > 0) {
-        CHECK_ERROR(_readReferendumIndex(c, &v->contained))
     }
     return parser_ok;
 }
@@ -3981,6 +4011,16 @@ parser_error_t _toStringMultiAssetV3(
     return parser_display_idx_out_of_range;
 }
 
+parser_error_t _toStringParaId(
+    const pd_ParaId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+}
+
 parser_error_t _toStringPerbill(
     const pd_Perbill_t* v,
     char* outValue,
@@ -4325,6 +4365,88 @@ parser_error_t _toStringCompactPerBill(
     return _toStringCompactInt(&v->value, 7, false, "%", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringKusamaOrigins(
+    const pd_KusamaOrigins_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    UNUSED(pageIdx);
+    *pageCount = 1;
+    switch (v->value) {
+    case 0: // StakingAdmin
+        snprintf(outValue, outValueLen, "StakingAdmin");
+        break;
+    case 1: // Treasurer
+        snprintf(outValue, outValueLen, "Treasurer");
+        break;
+    case 2: // FellowshipAdmin
+        snprintf(outValue, outValueLen, "FellowshipAdmin");
+        break;
+    case 3: // GeneralAdmin
+        snprintf(outValue, outValueLen, "GeneralAdmin");
+        break;
+    case 4: // AuctionAdmin
+        snprintf(outValue, outValueLen, "AuctionAdmin");
+        break;
+    case 5: // LeaseAdmin
+        snprintf(outValue, outValueLen, "LeaseAdmin");
+        break;
+    case 6: // ReferendumCanceller
+        snprintf(outValue, outValueLen, "ReferendumCanceller");
+        break;
+    case 7: // ReferendumKiller
+        snprintf(outValue, outValueLen, "ReferendumKiller");
+        break;
+    case 8: // SmallTipper
+        snprintf(outValue, outValueLen, "SmallTipper");
+        break;
+    case 9: // BigTipper
+        snprintf(outValue, outValueLen, "BigTipper");
+        break;
+    case 10: // SmallSpender
+        snprintf(outValue, outValueLen, "SmallSpender");
+        break;
+    case 11: // MediumSpender
+        snprintf(outValue, outValueLen, "MediumSpender");
+        break;
+    case 12: // BigSpender
+        snprintf(outValue, outValueLen, "BigSpender");
+        break;
+    case 13: // WhitelistedCaller
+        snprintf(outValue, outValueLen, "WhitelistedCaller");
+        break;
+    case 14: // FellowshipInitiates
+        snprintf(outValue, outValueLen, "FellowshipInitiates");
+        break;
+    case 15: // Fellows
+        snprintf(outValue, outValueLen, "Fellows");
+        break;
+    case 16: // FellowshipExperts
+        snprintf(outValue, outValueLen, "FellowshipExperts");
+        break;
+    case 17: // FellowshipMasters
+        snprintf(outValue, outValueLen, "FellowshipMasters");
+        break;
+    case 18: // Fellowship1Dan
+    case 19: // Fellowship2Dan
+    case 20: // Fellowship3Dan
+    case 21: // Fellowship4Dan
+    case 22: // Fellowship5Dan
+    case 23: // Fellowship6Dan
+    case 24: // Fellowship7Dan
+    case 25: // Fellowship8Dan
+    case 26: // Fellowship9Dan
+        snprintf(outValue, outValueLen, "Fellowship%dDan", v->value - 17);
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _toStringMultiSignature(
     const pd_MultiSignature_t* v,
     char* outValue,
@@ -4375,6 +4497,24 @@ parser_error_t _toStringMultiSigner(
     return parser_ok;
 }
 
+parser_error_t _toStringParachainsOrigin(
+    const pd_ParachainsOrigin_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    switch (v->value) {
+    case 0: // Parachain
+        CHECK_ERROR(_toStringParaId(&v->parachain, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _toStringPercent(
     const pd_Percent_t* v,
     char* outValue,
@@ -4422,16 +4562,6 @@ parser_error_t _toStringPreimageHash(
     GEN_DEF_TOSTRING_ARRAY(32)
 }
 
-parser_error_t _toStringPropIndex(
-    const pd_PropIndex_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
-}
-
 parser_error_t _toStringProxyType(
     const pd_ProxyType_t* v,
     char* outValue,
@@ -4475,14 +4605,29 @@ parser_error_t _toStringProxyType(
     return parser_ok;
 }
 
-parser_error_t _toStringReferendumIndex(
-    const pd_ReferendumIndex_t* v,
+parser_error_t _toStringSystemOrigin(
+    const pd_SystemOrigin_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount)
 {
-    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+    switch (v->value) {
+    case 0: // Root
+        snprintf(outValue, outValueLen, "Root");
+        break;
+    case 1: // Signed
+        CHECK_ERROR(_toStringAccountId(&v->_signed, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2: // None
+        snprintf(outValue, outValueLen, "None");
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
 }
 
 parser_error_t _toStringTimepoint(
@@ -4731,6 +4876,34 @@ parser_error_t _toStringBoundedCallOfT(
         break;
     case 2:
         CHECK_ERROR(_toStringTupleH256u32(&v->lookup, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringBoxPalletsOriginOfT(
+    const pd_BoxPalletsOriginOfT_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    *pageCount = 1;
+    switch (v->value) {
+    case 0: // System
+        CHECK_ERROR(_toStringSystemOrigin(&v->system, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 4: // Void
+        snprintf(outValue, outValueLen, "Void");
+        break;
+    case 43: // Origins
+        CHECK_ERROR(_toStringKusamaOrigins(&v->origins, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 50: // ParachainsOrigins
+        CHECK_ERROR(_toStringParachainsOrigin(&v->parachainsOrigin, outValue, outValueLen, pageIdx, pageCount))
         break;
     default:
         return parser_unexpected_value;
@@ -5042,30 +5215,6 @@ parser_error_t _toStringJudgementBalanceOfT(
     return parser_ok;
 }
 
-parser_error_t _toStringMetadataOwner(
-    const pd_MetadataOwner_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-    switch (v->value) {
-    case 0: // External
-        snprintf(outValue, outValueLen, "External");
-        break;
-    case 1: // Proposal
-        CHECK_ERROR(_toStringPropIndex(&v->proposal, outValue, outValueLen, pageIdx, pageCount));
-        break;
-    case 2: // Referendum
-        CHECK_ERROR(_toStringReferendumIndex(&v->referendum, outValue, outValueLen, pageIdx, pageCount));
-        break;
-    default:
-        return parser_unexpected_value;
-    }
-    return parser_ok;
-}
-
 parser_error_t _toStringOptionMultiSigner(
     const pd_OptionMultiSigner_t* v,
     char* outValue,
@@ -5080,16 +5229,6 @@ parser_error_t _toStringOptionMultiSigner(
         return parser_ok;
     }
     return _toStringMultiSigner(&v->verifier, outValue, outValueLen, pageIdx, pageCount);
-}
-
-parser_error_t _toStringProposal(
-    const pd_Proposal_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringCall(&v->call, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringRewardDestination(
@@ -5388,6 +5527,25 @@ parser_error_t _toStringConviction(
     return parser_ok;
 }
 
+parser_error_t _toStringDispatchTimeBlockNumber(
+    const pd_DispatchTimeBlockNumber_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    switch (v->value) {
+    case 0: // At
+    case 1: // After
+        CHECK_ERROR(_toStringu32(&v->block, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+    return parser_ok;
+}
+
 parser_error_t _toStringEraIndex(
     const pd_EraIndex_t* v,
     char* outValue,
@@ -5425,16 +5583,6 @@ parser_error_t _toStringKeys(
     GEN_DEF_TOSTRING_ARRAY(6 * 32)
 }
 
-parser_error_t _toStringMemberCount(
-    const pd_MemberCount_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
-}
-
 parser_error_t _toStringOverweightIndex(
     const pd_OverweightIndex_t* v,
     char* outValue,
@@ -5443,16 +5591,6 @@ parser_error_t _toStringOverweightIndex(
     uint8_t* pageCount)
 {
     return _toStringu64(&v->value, outValue, outValueLen, pageIdx, pageCount);
-}
-
-parser_error_t _toStringParaId(
-    const pd_ParaId_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringPollIndexOf(
@@ -5509,6 +5647,16 @@ parser_error_t _toStringRank(
     uint8_t* pageCount)
 {
     return _toStringu16(&v->value, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringReferendumIndex(
+    const pd_ReferendumIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
 parser_error_t _toStringRegistrarIndex(
@@ -5822,27 +5970,6 @@ parser_error_t _toStringOptionProxyType(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringProxyType(
-            &v->contained,
-            outValue, outValueLen,
-            pageIdx, pageCount));
-    } else {
-        snprintf(outValue, outValueLen, "None");
-    }
-    return parser_ok;
-}
-
-parser_error_t _toStringOptionReferendumIndex(
-    const pd_OptionReferendumIndex_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-
-    *pageCount = 1;
-    if (v->some > 0) {
-        CHECK_ERROR(_toStringReferendumIndex(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));
