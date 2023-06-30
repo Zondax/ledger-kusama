@@ -20,6 +20,7 @@
 #include "cx.h"
 #include "zxmacros.h"
 #include "ristretto.h"
+#include "crypto_helper.h"
 
 #ifdef SUPPORT_SR25519
 #include "rslib.h"
@@ -29,15 +30,15 @@ uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
 zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPATH_LEN_DEFAULT],
                                 uint8_t *pubKey, uint16_t pubKeyLen) {
-    cx_ecfp_public_key_t cx_publicKey;
-    cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[SK_LEN_25519];
-
-    if (pubKeyLen < PK_LEN_25519) {
+    if (pubKey == NULL || pubKeyLen < PK_LEN_25519) {
         return zxerr_invalid_crypto_settings;
     }
 
-    zxerr_t err = zxerr_ok;
+    cx_ecfp_public_key_t cx_publicKey;
+    cx_ecfp_private_key_t cx_privateKey;
+    uint8_t privateKeyData[SK_LEN_25519] = {0};
+
+    volatile zxerr_t err = zxerr_unknown;
     BEGIN_TRY
     {
         TRY
@@ -65,13 +66,19 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
                     if ((cx_publicKey.W[PK_LEN_25519] & 1) != 0) {
                         pubKey[31] |= 0x80;
                     }
+                    err = zxerr_ok;
                     break;
                 }
 #ifdef SUPPORT_SR25519
-                    case key_sr25519:
-                            get_sr25519_sk(privateKeyData);
-                            crypto_scalarmult_ristretto255_base_sdk(pubKey, privateKeyData);
-                        break;
+                case key_sr25519:
+                    get_sr25519_sk(privateKeyData);
+                    if (crypto_scalarmult_ristretto255_base_sdk(pubKey, privateKeyData) == 0) {
+                        err = zxerr_ok;
+                    } else {
+                        MEMZERO(pubKey, pubKeyLen);
+                        err = zxerr_unknown;
+                    }
+                    break;
 #endif
                 default:
                     err = zxerr_invalid_crypto_settings;
@@ -94,6 +101,10 @@ zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPA
 }
 
 zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen) {
+    if (signature == NULL || message == NULL || signatureMaxlen < SIG_PLUS_TYPE_LEN) {
+        return zxerr_unknown;
+    }
+
     const uint8_t *toSign = message;
     uint8_t messageDigest[BLAKE2B_DIGEST_SIZE];
 
@@ -107,10 +118,10 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const 
     }
 
     cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[SK_LEN_25519];
+    uint8_t privateKeyData[SK_LEN_25519] = {0};
     unsigned int info = 0;
 
-    zxerr_t err = zxerr_ok;
+    volatile zxerr_t err = zxerr_unknown;
     BEGIN_TRY
     {
         TRY
@@ -141,6 +152,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const 
                           signatureMaxlen - 1,
                           &info);
 
+            err = zxerr_ok;
         }
         CATCH_ALL
         {
@@ -158,7 +170,7 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const 
 }
 
 #ifdef SUPPORT_SR25519
-static uint8_t sr25519_signature[SIG_PLUS_TYPE_LEN];
+static uint8_t sr25519_signature[SIG_PLUS_TYPE_LEN] = {0};
 
 void zeroize_sr25519_signdata(void) {
     explicit_bzero(sr25519_signature, sizeof(sr25519_signature));
@@ -174,11 +186,11 @@ zxerr_t copy_sr25519_signdata(uint8_t *buffer, uint16_t bufferLen) {
 }
 
 static zxerr_t crypto_sign_sr25519_helper(const uint8_t *data, size_t len) {
-    uint8_t sk[SK_LEN_25519];
-    uint8_t pk[PK_LEN_25519];
+    uint8_t sk[SK_LEN_25519] = {0};
+    uint8_t pk[PK_LEN_25519] = {0};
 
-    zxerr_t err = zxerr_ok;
-    int ret = 0;
+    volatile zxerr_t err = zxerr_unknown;
+    int ret = -1;
 
     BEGIN_TRY
     {
@@ -197,10 +209,10 @@ static zxerr_t crypto_sign_sr25519_helper(const uint8_t *data, size_t len) {
             ret = crypto_scalarmult_ristretto255_base_sdk(pk, sk);
             if (ret == 0) {
                 *sr25519_signature = PREFIX_SIGNATURE_TYPE_SR25519;
-                sign_sr25519_phase1((const uint8_t *)&sk, (const uint8_t *)&pk, NULL, 0,
-                                    data, len, sr25519_signature + 1);
+                sign_sr25519_phase1(sk, pk, NULL, 0, data, len, sr25519_signature + 1);
 
                 ret = crypto_scalarmult_ristretto255_base_sdk(sr25519_signature + 1, sr25519_signature + 1 + PK_LEN_25519);
+                if (ret == 0) err = zxerr_ok;
             }
         }
         CATCH_ALL

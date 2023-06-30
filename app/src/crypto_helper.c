@@ -87,7 +87,10 @@ uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
     unencoded[33 + prefixSize] = hash[1];
 
     size_t outLen = buffer_len;
-    encode_base58(unencoded, 34 + prefixSize, buffer, &outLen);
+    if (encode_base58(unencoded, 34 + prefixSize, buffer, &outLen) != 0) {
+        MEMZERO(buffer, buffer_len);
+        return 0;
+    }
 
     return outLen;
 }
