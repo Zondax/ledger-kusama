@@ -520,6 +520,10 @@ typedef struct {
 
 typedef struct {
     uint32_t value;
+} pd_ParaId_t;
+
+typedef struct {
+    uint32_t value;
 } pd_Perbill_t;
 
 typedef struct {
@@ -575,6 +579,10 @@ typedef struct {
 
 typedef struct {
     uint8_t value;
+} pd_KusamaOrigins_t;
+
+typedef struct {
+    uint8_t value;
     union {
         pd_Ed25519Signature_t ed25519;
         pd_Sr25519Signature_t sr25519;
@@ -598,6 +606,11 @@ typedef struct {
 
 typedef struct {
     uint8_t value;
+    pd_ParaId_t parachain;
+} pd_ParachainsOrigin_t;
+
+typedef struct {
+    uint8_t value;
 } pd_Percent_t;
 
 typedef struct {
@@ -609,16 +622,13 @@ typedef struct {
 } pd_PreimageHash_t;
 
 typedef struct {
-    uint32_t value;
-} pd_PropIndex_t;
-
-typedef struct {
     uint8_t value;
 } pd_ProxyType_t;
 
 typedef struct {
-    uint32_t value;
-} pd_ReferendumIndex_t;
+    uint8_t value;
+    pd_AccountId_t _signed;
+} pd_SystemOrigin_t;
 
 typedef struct {
     pd_BlockNumber_t height;
@@ -688,6 +698,15 @@ typedef struct {
 typedef struct {
     uint8_t value;
     union {
+        pd_SystemOrigin_t system;
+        pd_KusamaOrigins_t origins;
+        pd_ParachainsOrigin_t parachainsOrigin;
+    };
+} pd_BoxPalletsOriginOfT_t;
+
+typedef struct {
+    uint8_t value;
+    union {
         pd_VecMultiAssetV2_t vecMultiassetV2;
         pd_VecMultiAssetV3_t vecMultiassetV3;
     };
@@ -744,14 +763,6 @@ typedef struct {
 } pd_JudgementBalanceOfT_t;
 
 typedef struct {
-    uint8_t value;
-    union {
-        pd_PropIndex_t proposal;
-        pd_ReferendumIndex_t referendum;
-    };
-} pd_MetadataOwner_t;
-
-typedef struct {
     uint8_t some;
     pd_MultiSignature_t contained;
 } pd_OptionMultiSignature_t;
@@ -770,10 +781,6 @@ typedef struct {
     uint8_t some;
     pd_TuplePerbillAccountId_t contained;
 } pd_OptionTuplePerbillAccountId_t;
-
-typedef struct {
-    pd_Call_t call;
-} pd_Proposal_t;
 
 typedef struct {
     uint8_t value;
@@ -833,6 +840,11 @@ typedef struct {
 } pd_Conviction_t;
 
 typedef struct {
+    uint8_t value;
+    uint32_t block;
+} pd_DispatchTimeBlockNumber_t;
+
+typedef struct {
     uint32_t value;
 } pd_EraIndex_t;
 
@@ -847,10 +859,6 @@ typedef struct {
 typedef struct {
     const uint8_t* _ptr;
 } pd_Keys_t;
-
-typedef struct {
-    uint32_t value;
-} pd_MemberCount_t;
 
 typedef struct {
     uint8_t some;
@@ -879,21 +887,12 @@ typedef struct {
 
 typedef struct {
     uint8_t some;
-    pd_ReferendumIndex_t contained;
-} pd_OptionReferendumIndex_t;
-
-typedef struct {
-    uint8_t some;
     pd_u32_t contained;
 } pd_Optionu32_t;
 
 typedef struct {
     uint64_t value;
 } pd_OverweightIndex_t;
-
-typedef struct {
-    uint32_t value;
-} pd_ParaId_t;
 
 typedef struct {
     uint32_t value;
@@ -910,6 +909,10 @@ typedef struct {
 typedef struct {
     uint16_t value;
 } pd_Rank_t;
+
+typedef struct {
+    uint32_t value;
+} pd_ReferendumIndex_t;
 
 typedef struct {
     uint32_t value;
