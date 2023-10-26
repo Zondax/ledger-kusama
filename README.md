@@ -28,7 +28,7 @@ Please:
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
-# Kusama 23.9430.x
+# Kusama 24.1000000.x
 
 ## System
 
@@ -75,7 +75,7 @@ Please:
 | Set balance deprecated |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`who<br/>`CompactBalance`new_free<br/>`CompactBalance`old_reserved<br/> |
 | Force transfer         | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`source<br/>`AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>    |
 | Transfer keep alive    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
-| Transfer all           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                         |
+| Transfer all           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`bool`keep_alive<br/>                                         |
 | Force unreserve        |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountIdLookupOfT`who<br/>`Balance`amount<br/>                                           |
 | Upgrade accounts       |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `VecAccountId`who<br/>                                                                     |
 | Transfer               | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountIdLookupOfT`dest<br/>`CompactBalance`amount<br/>                                   |
@@ -103,7 +103,7 @@ Please:
 | Force unstake              |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`stash<br/>`u32`num_slashing_spans<br/>                                                                                                                                                                                         |
 | Force new era always       |                    | :heavy_check_mark: | :heavy_check_mark: |                    |                                                                                                                                                                                                                                           |
 | Cancel deferred slash      |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `EraIndex`era<br/>`Vecu32`slash_indices<br/>                                                                                                                                                                                              |
-| Payout stakers             | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`validator_stash<br/>`EraIndex`era<br/>                                                                                                                                                                                         |
+| Payout stakers             | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `AccountId`validator_stash<br/>`EraIndex`era<br/>                                                                                                                                                                                         |
 | Rebond                     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `CompactBalance`amount<br/>                                                                                                                                                                                                               |
 | Reap stash                 |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`stash<br/>`u32`num_slashing_spans<br/>                                                                                                                                                                                         |
 | Kick                       |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `VecAccountIdLookupOfT`who<br/>                                                                                                                                                                                                           |
@@ -112,12 +112,19 @@ Please:
 | Force apply min commission |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `AccountId`validator_stash<br/>                                                                                                                                                                                                           |
 | Set min commission         |                    | :heavy_check_mark: | :heavy_check_mark: |                    | `Perbill`new\_<br/>                                                                                                                                                                                                                       |
 
+## Beefy
+
+| Name                         | Nano S | Nano S XL | Nano SP/X - Stax | Nesting | Arguments                                                                                                                                |
+| ---------------------------- | ------ | --------- | ---------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Report equivocation          |        |           |                  |         | `BoxEquivocationProofBlockNumberForTBeefyIdBeefyIdasRuntimeAppPublicSignature`equivocation_proof<br/>`KeyOwnerProof`key_owner_proof<br/> |
+| Report equivocation unsigned |        |           |                  |         | `BoxEquivocationProofBlockNumberForTBeefyIdBeefyIdasRuntimeAppPublicSignature`equivocation_proof<br/>`KeyOwnerProof`key_owner_proof<br/> |
+
 ## Session
 
-| Name       | Nano S             | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                        |
-| ---------- | ------------------ | ------------------ | ------------------ | ------- | -------------------------------- |
-| Set keys   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `Keys`keys<br/>`Bytes`proof<br/> |
-| Purge keys | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         |                                  |
+| Name       | Nano S             | Nano S XL          | Nano SP/X - Stax   | Nesting            | Arguments                        |
+| ---------- | ------------------ | ------------------ | ------------------ | ------------------ | -------------------------------- |
+| Set keys   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Keys`keys<br/>`Bytes`proof<br/> |
+| Purge keys | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |                                  |
 
 ## Grandpa
 
@@ -156,17 +163,17 @@ Please:
 
 ## Referenda
 
-| Name                      | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                                                                            |
-| ------------------------- | ------ | ------------------ | ------------------ | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| Submit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOfT`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
-| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                                |
-| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Set metadata              |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>`OptionPreimageHash`maybe_hash<br/>                                                       |
+| Name                      | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                                                                         |
+| ------------------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| Submit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `BoxPalletsOrigin`proposal_origin<br/>`BoundedCallOfT`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
+| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                             |
+| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Set metadata              |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>`OptionPreimageHash`maybe_hash<br/>                                                    |
 
 ## FellowshipCollective
 
@@ -181,17 +188,17 @@ Please:
 
 ## FellowshipReferenda
 
-| Name                      | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                                                                            |
-| ------------------------- | ------ | ------------------ | ------------------ | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| Submit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `BoxPalletsOriginOfT`proposal_origin<br/>`BoundedCallOfT`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
-| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                                |
-| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                          |
-| Set metadata              |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>`OptionPreimageHash`maybe_hash<br/>                                                       |
+| Name                      | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                                                                         |
+| ------------------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| Submit                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `BoxPalletsOrigin`proposal_origin<br/>`BoundedCallOfT`proposal<br/>`DispatchTimeBlockNumber`enactment_moment<br/> |
+| Place decision deposit    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Refund decision deposit   |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Cancel                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Kill                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Nudge referendum          |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| One fewer deciding        |        | :heavy_check_mark: | :heavy_check_mark: |         | `TrackIdOf`track<br/>                                                                                             |
+| Refund submission deposit |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>                                                                                       |
+| Set metadata              |        | :heavy_check_mark: | :heavy_check_mark: |         | `ReferendumIndex`index<br/>`OptionPreimageHash`maybe_hash<br/>                                                    |
 
 ## Whitelist
 
@@ -219,7 +226,7 @@ Please:
 | Batch         | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `VecCall`calls<br/>                             |
 | As derivative |                    |                    |                    |         | `u16`index<br/>`Call`call<br/>                  |
 | Batch all     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `VecCall`calls<br/>                             |
-| Dispatch as   |                    |                    |                    |         | `BoxPalletsOrigin`as_origin<br/>`Call`call<br/> |
+| Dispatch as   |                    | :heavy_check_mark: | :heavy_check_mark: |         | `BoxPalletsOrigin`as_origin<br/>`Call`call<br/> |
 | Force batch   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `VecCall`calls<br/>                             |
 | With weight   |                    | :heavy_check_mark: | :heavy_check_mark: |         | `Call`call<br/>`Weight`weight<br/>              |
 
@@ -245,20 +252,28 @@ Please:
 
 ## Society
 
-| Name                      | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                              |
-| ------------------------- | ------ | ------------------ | ------------------ | ------- | ---------------------------------------------------------------------- |
-| Bid                       |        | :heavy_check_mark: | :heavy_check_mark: |         | `BalanceOf`amount<br/>                                                 |
-| Unbid                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`pos<br/>                                                          |
-| Vouch                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`BalanceOf`amount<br/>`BalanceOf`tip<br/>  |
-| Unvouch                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`pos<br/>                                                          |
-| Vote                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`candidate<br/>`bool`approve<br/>                   |
-| Defender vote             |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`approve<br/>                                                     |
-| Payout                    |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                        |
-| Found                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`founder<br/>`u32`max_members<br/>`Bytes`rules<br/> |
-| Unfound                   |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                        |
-| Judge suspended member    |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`bool`forgive<br/>                         |
-| Judge suspended candidate |        |                    |                    |         | `AccountIdLookupOfT`who<br/>`Judgement`judgement<br/>                  |
-| Set max members           |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`max<br/>                                                          |
+| Name                   | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                                                                                                        |
+| ---------------------- | ------ | ------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Bid                    |        | :heavy_check_mark: | :heavy_check_mark: |         | `BalanceOf`amount<br/>                                                                                                                           |
+| Unbid                  |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Vouch                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`BalanceOf`amount<br/>`BalanceOf`tip<br/>                                                                            |
+| Unvouch                |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Vote                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`candidate<br/>`bool`approve<br/>                                                                                             |
+| Defender vote          |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`approve<br/>                                                                                                                               |
+| Payout                 |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Waive repay            |        | :heavy_check_mark: | :heavy_check_mark: |         | `BalanceOf`amount<br/>                                                                                                                           |
+| Found society          |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`founder<br/>`u32`max_members<br/>`u32`max_intake<br/>`u32`max_strikes<br/>`BalanceOf`candidate_deposit<br/>`Vecu8`rules<br/> |
+| Dissolve               |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Judge suspended member |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`who<br/>`bool`forgive<br/>                                                                                                   |
+| Set parameters         |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`max_members<br/>`u32`max_intake<br/>`u32`max_strikes<br/>`BalanceOf`candidate_deposit<br/>                                                  |
+| Punish skeptic         |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Claim membership       |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Bestow membership      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountId`candidate<br/>                                                                                                                        |
+| Kick candidate         |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountId`candidate<br/>                                                                                                                        |
+| Resign candidacy       |        | :heavy_check_mark: | :heavy_check_mark: |         |                                                                                                                                                  |
+| Drop candidate         |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountId`candidate<br/>                                                                                                                        |
+| Cleanup candidacy      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountId`candidate<br/>`u32`max<br/>                                                                                                           |
+| Cleanup challenge      |        | :heavy_check_mark: | :heavy_check_mark: |         | `RoundIndex`challenge_round<br/>`u32`max<br/>                                                                                                    |
 
 ## Recovery
 
@@ -392,10 +407,11 @@ Please:
 
 ## VoterList
 
-| Name            | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                           |
-| --------------- | ------ | ------------------ | ------------------ | ------- | ----------------------------------- |
-| Rebag           |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dislocated<br/> |
-| Put in front of |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`lighter<br/>    |
+| Name                  | Nano S | Nano S XL          | Nano SP/X - Stax   | Nesting | Arguments                                                        |
+| --------------------- | ------ | ------------------ | ------------------ | ------- | ---------------------------------------------------------------- |
+| Rebag                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`dislocated<br/>                              |
+| Put in front of       |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`lighter<br/>                                 |
+| Put in front of other |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`heavier<br/>`AccountIdLookupOfT`lighter<br/> |
 
 ## NominationPools
 
@@ -441,11 +457,10 @@ Please:
 | Set max code size                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set max pov size                              |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set max head data size                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
-| Set parathread cores                          |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
-| Set parathread retries                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set on demand cores                           |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set on demand retries                         |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set group rotation frequency                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
-| Set chain availability period                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
-| Set thread availability period                |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set paras availability period                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
 | Set scheduling lookahead                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set max validators per core                   |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>          |
 | Set max validators                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `Optionu32`new\_<br/>          |
@@ -467,17 +482,20 @@ Please:
 | Set hrmp channel max capacity                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set hrmp channel max total size               |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set hrmp max parachain inbound channels       |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
-| Set hrmp max parathread inbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set hrmp channel max message size             |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set hrmp max parachain outbound channels      |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
-| Set hrmp max parathread outbound channels     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 | Set hrmp max message num per candidate        |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
-| Set pvf checking enabled                      |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>               |
 | Set pvf voting ttl                            |        | :heavy_check_mark: | :heavy_check_mark: |         | `SessionIndex`new\_<br/>       |
 | Set minimum validation upgrade delay          |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
 | Set bypass consistency check                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `bool`new\_<br/>               |
 | Set async backing params                      |        |                    |                    |         | `AsyncBackingParams`new\_<br/> |
 | Set executor params                           |        |                    |                    |         | `ExecutorParams`new\_<br/>     |
+| Set on demand base fee                        |        | :heavy_check_mark: | :heavy_check_mark: |         | `Balance`new\_<br/>            |
+| Set on demand fee variability                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `Perbill`new\_<br/>            |
+| Set on demand queue max size                  |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
+| Set on demand target queue utilization        |        | :heavy_check_mark: | :heavy_check_mark: |         | `Perbill`new\_<br/>            |
+| Set on demand ttl                             |        | :heavy_check_mark: | :heavy_check_mark: |         | `BlockNumber`new\_<br/>        |
+| Set minimum backing votes                     |        | :heavy_check_mark: | :heavy_check_mark: |         | `u32`new\_<br/>                |
 
 ## ParasShared
 
@@ -497,16 +515,17 @@ Please:
 
 ## Paras
 
-| Name                        | Nano S | Nano S XL | Nano SP/X - Stax | Nesting | Arguments                                                                           |
-| --------------------------- | ------ | --------- | ---------------- | ------- | ----------------------------------------------------------------------------------- |
-| Force set current code      |        |           |                  |         | `ParaId`para<br/>`ValidationCode`new_code<br/>                                      |
-| Force set current head      |        |           |                  |         | `ParaId`para<br/>`HeadData`new_head<br/>                                            |
-| Force schedule code upgrade |        |           |                  |         | `ParaId`para<br/>`ValidationCode`new_code<br/>`BlockNumber`relay_parent_number<br/> |
-| Force note new head         |        |           |                  |         | `ParaId`para<br/>`HeadData`new_head<br/>                                            |
-| Force queue action          |        |           |                  |         | `ParaId`para<br/>                                                                   |
-| Add trusted validation code |        |           |                  |         | `ValidationCode`validation_code<br/>                                                |
-| Poke unused validation code |        |           |                  |         | `ValidationCodeHash`validation_code_hash<br/>                                       |
-| Include pvf check statement |        |           |                  |         | `PvfCheckStatement`stmt<br/>`ValidatorSignature`signature<br/>                      |
+| Name                          | Nano S | Nano S XL | Nano SP/X - Stax | Nesting | Arguments                                                                           |
+| ----------------------------- | ------ | --------- | ---------------- | ------- | ----------------------------------------------------------------------------------- |
+| Force set current code        |        |           |                  |         | `ParaId`para<br/>`ValidationCode`new_code<br/>                                      |
+| Force set current head        |        |           |                  |         | `ParaId`para<br/>`HeadData`new_head<br/>                                            |
+| Force schedule code upgrade   |        |           |                  |         | `ParaId`para<br/>`ValidationCode`new_code<br/>`BlockNumber`relay_parent_number<br/> |
+| Force note new head           |        |           |                  |         | `ParaId`para<br/>`HeadData`new_head<br/>                                            |
+| Force queue action            |        |           |                  |         | `ParaId`para<br/>                                                                   |
+| Add trusted validation code   |        |           |                  |         | `ValidationCode`validation_code<br/>                                                |
+| Poke unused validation code   |        |           |                  |         | `ValidationCodeHash`validation_code_hash<br/>                                       |
+| Include pvf check statement   |        |           |                  |         | `PvfCheckStatement`stmt<br/>`ValidatorSignature`signature<br/>                      |
+| Force set most recent context |        |           |                  |         | `ParaId`para<br/>`BlockNumber`context<br/>                                          |
 
 ## Initializer
 
@@ -583,6 +602,17 @@ Please:
 | Poke           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `ParaId`index<br/>                                                                                                                                       |
 | Contribute all | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `Compactu32`index<br/>`OptionMultiSignature`signature<br/>                                                                                               |
 
+## StateTrieMigration
+
+| Name                   | Nano S | Nano S XL | Nano SP/X - Stax | Nesting | Arguments                                                                              |
+| ---------------------- | ------ | --------- | ---------------- | ------- | -------------------------------------------------------------------------------------- |
+| Control auto migration |        |           |                  |         | `OptionMigrationLimits`maybe_config<br/>                                               |
+| Continue migrate       |        |           |                  |         | `MigrationLimits`limits<br/>`u32`real_size_upper<br/>`MigrationTaskT`witness_task<br/> |
+| Migrate custom top     |        |           |                  |         | `VecVecu8`keys<br/>`u32`witness_size<br/>                                              |
+| Migrate custom child   |        |           |                  |         | `Vecu8`root<br/>`VecVecu8`child_keys<br/>`u32`total_size<br/>                          |
+| Set signed max limits  |        |           |                  |         | `MigrationLimits`limits<br/>                                                           |
+| Force set progress     |        |           |                  |         | `ProgressOfT`progress_top<br/>`ProgressOfT`progress_child<br/>                         |
+
 ## XcmPallet
 
 | Name                             | Nano S | Nano S XL | Nano SP/X - Stax   | Nesting | Arguments                                                                                                                                                                 |
@@ -591,7 +621,7 @@ Please:
 | Teleport assets                  |        |           | :heavy_check_mark: |         | `BoxVersionedMultiLocation`dest<br/>`BoxVersionedMultiLocation`beneficiary<br/>`BoxVersionedMultiAssets`assets<br/>`u32`fee_asset_item<br/>                               |
 | Reserve transfer assets          |        |           | :heavy_check_mark: |         | `BoxVersionedMultiLocation`dest<br/>`BoxVersionedMultiLocation`beneficiary<br/>`BoxVersionedMultiAssets`assets<br/>`u32`fee_asset_item<br/>                               |
 | Execute                          |        |           |                    |         | `BoxVersionedXcmTasSysConfigRuntimeCall`message<br/>`Weight`max_weight<br/>                                                                                               |
-| Force xcm version                |        |           |                    |         | `BoxMultiLocation`location<br/>`XcmVersion`xcm_version<br/>                                                                                                               |
+| Force xcm version                |        |           |                    |         | `BoxMultiLocation`location<br/>`XcmVersion`version<br/>                                                                                                                   |
 | Force default xcm version        |        |           |                    |         | `OptionXcmVersion`maybe_xcm_version<br/>                                                                                                                                  |
 | Force subscribe version notify   |        |           |                    |         | `BoxVersionedMultiLocation`location<br/>                                                                                                                                  |
 | Force unsubscribe version notify |        |           |                    |         | `BoxVersionedMultiLocation`location<br/>                                                                                                                                  |
