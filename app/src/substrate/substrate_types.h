@@ -702,7 +702,7 @@ typedef struct {
         pd_KusamaOrigins_t origins;
         pd_ParachainsOrigin_t parachainsOrigin;
     };
-} pd_BoxPalletsOriginOfT_t;
+} pd_BoxPalletsOrigin_t;
 
 typedef struct {
     uint8_t value;
@@ -891,10 +891,6 @@ typedef struct {
 } pd_Optionu32_t;
 
 typedef struct {
-    uint64_t value;
-} pd_OverweightIndex_t;
-
-typedef struct {
     uint32_t value;
 } pd_PollIndexOf_t;
 
@@ -917,6 +913,10 @@ typedef struct {
 typedef struct {
     uint32_t value;
 } pd_RegistrarIndex_t;
+
+typedef struct {
+    uint32_t value;
+} pd_RoundIndex_t;
 
 typedef struct {
     uint32_t value;

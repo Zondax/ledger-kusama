@@ -1082,7 +1082,7 @@ parser_error_t _readPreimageHash(parser_context_t* c, pd_PreimageHash_t* v) {
 parser_error_t _readProxyType(parser_context_t* c, pd_ProxyType_t* v)
 {
     CHECK_ERROR(_readUInt8(c, &v->value))
-    if (v->value > 7) {
+    if (v->value > 8) {
         return parser_unexpected_value;
     }
     return parser_ok;
@@ -1199,7 +1199,7 @@ parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v)
     return parser_ok;
 }
 
-parser_error_t _readBoxPalletsOriginOfT(parser_context_t* c, pd_BoxPalletsOriginOfT_t* v)
+parser_error_t _readBoxPalletsOrigin(parser_context_t* c, pd_BoxPalletsOrigin_t* v)
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->value))
@@ -1526,14 +1526,7 @@ parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v) {
 }
 
 parser_error_t _readKeys(parser_context_t* c, pd_Keys_t* v) {
-    GEN_DEF_READARRAY(6 * 32)
-}
-
-parser_error_t _readOverweightIndex(parser_context_t* c, pd_OverweightIndex_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt64(c, &v->value))
-    return parser_ok;
+    GEN_DEF_READARRAY(6 * 32 + 33)
 }
 
 parser_error_t _readPollIndexOf(parser_context_t* c, pd_PollIndexOf_t* v)
@@ -1572,6 +1565,13 @@ parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v
 }
 
 parser_error_t _readRegistrarIndex(parser_context_t* c, pd_RegistrarIndex_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
+}
+
+parser_error_t _readRoundIndex(parser_context_t* c, pd_RoundIndex_t* v)
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt32(c, &v->value))
@@ -1891,7 +1891,7 @@ parser_error_t _toStringByFork(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -1938,7 +1938,7 @@ parser_error_t _toStringFraction(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2183,7 +2183,7 @@ parser_error_t _toStringAccountId32V2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2220,7 +2220,7 @@ parser_error_t _toStringAccountId32V3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2257,7 +2257,7 @@ parser_error_t _toStringAccountIndex64V2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2294,7 +2294,7 @@ parser_error_t _toStringAccountIndex64V3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2331,7 +2331,7 @@ parser_error_t _toStringAccountKey20V2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2368,7 +2368,7 @@ parser_error_t _toStringAccountKey20V3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2405,7 +2405,7 @@ parser_error_t _toStringGeneralKeyV3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2442,7 +2442,7 @@ parser_error_t _toStringPluralityV2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2479,7 +2479,7 @@ parser_error_t _toStringPluralityV3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2604,7 +2604,7 @@ parser_error_t _toStringJunctionV2X1(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2635,7 +2635,7 @@ parser_error_t _toStringJunctionV2X2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2673,7 +2673,7 @@ parser_error_t _toStringJunctionV2X3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2718,7 +2718,7 @@ parser_error_t _toStringJunctionV2X4(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2770,7 +2770,7 @@ parser_error_t _toStringJunctionV2X5(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2829,7 +2829,7 @@ parser_error_t _toStringJunctionV2X6(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2895,7 +2895,7 @@ parser_error_t _toStringJunctionV2X7(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -2968,7 +2968,7 @@ parser_error_t _toStringJunctionV2X8(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3040,7 +3040,7 @@ parser_error_t _toStringJunctionV3X1(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3071,7 +3071,7 @@ parser_error_t _toStringJunctionV3X2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3109,7 +3109,7 @@ parser_error_t _toStringJunctionV3X3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3154,7 +3154,7 @@ parser_error_t _toStringJunctionV3X4(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3206,7 +3206,7 @@ parser_error_t _toStringJunctionV3X5(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3265,7 +3265,7 @@ parser_error_t _toStringJunctionV3X6(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3331,7 +3331,7 @@ parser_error_t _toStringJunctionV3X7(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3404,7 +3404,7 @@ parser_error_t _toStringJunctionV3X8(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3646,7 +3646,7 @@ parser_error_t _toStringMultiLocationV2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3683,7 +3683,7 @@ parser_error_t _toStringMultiLocationV3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3956,7 +3956,7 @@ parser_error_t _toStringMultiAssetV2(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -3993,7 +3993,7 @@ parser_error_t _toStringMultiAssetV3(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4079,7 +4079,7 @@ parser_error_t _toStringTupleDataData(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4322,7 +4322,7 @@ parser_error_t _toStringCall(
 
     pageIdx--;
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4598,6 +4598,9 @@ parser_error_t _toStringProxyType(
     case 7:
         snprintf(outValue, outValueLen, "Society");
         break;
+    case 8:
+        snprintf(outValue, outValueLen, "NominationPools");
+        break;
     default:
         return parser_print_not_supported;
     }
@@ -4649,7 +4652,7 @@ parser_error_t _toStringTimepoint(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4686,7 +4689,7 @@ parser_error_t _toStringTupleAccountIdData(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4723,7 +4726,7 @@ parser_error_t _toStringTupleH256u32(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4760,7 +4763,7 @@ parser_error_t _toStringTuplePerbillAccountId(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4797,7 +4800,7 @@ parser_error_t _toStringWeight(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -4883,8 +4886,8 @@ parser_error_t _toStringBoundedCallOfT(
     return parser_ok;
 }
 
-parser_error_t _toStringBoxPalletsOriginOfT(
-    const pd_BoxPalletsOriginOfT_t* v,
+parser_error_t _toStringBoxPalletsOrigin(
+    const pd_BoxPalletsOrigin_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -4974,7 +4977,7 @@ parser_error_t _toStringCommissionChangeRateBlockNumber(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -5118,7 +5121,7 @@ parser_error_t _toStringIdentityInfo(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -5283,7 +5286,7 @@ parser_error_t _toStringValidatorPrefs(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -5381,7 +5384,7 @@ parser_error_t _toStringVestingInfo(
         *pageCount += pages[i];
     }
 
-    if (pageIdx > *pageCount) {
+    if (pageIdx >= *pageCount) {
         return parser_display_idx_out_of_range;
     }
 
@@ -5580,17 +5583,7 @@ parser_error_t _toStringKeys(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(6 * 32)
-}
-
-parser_error_t _toStringOverweightIndex(
-    const pd_OverweightIndex_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    return _toStringu64(&v->value, outValue, outValueLen, pageIdx, pageCount);
+    GEN_DEF_TOSTRING_ARRAY(6 * 32 + 33)
 }
 
 parser_error_t _toStringPollIndexOf(
@@ -5661,6 +5654,16 @@ parser_error_t _toStringReferendumIndex(
 
 parser_error_t _toStringRegistrarIndex(
     const pd_RegistrarIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringRoundIndex(
+    const pd_RoundIndex_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

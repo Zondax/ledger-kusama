@@ -128,7 +128,7 @@ parser_error_t _readWeight(parser_context_t* c, pd_Weight_t* v);
 parser_error_t _readAccountVote(parser_context_t* c, pd_AccountVote_t* v);
 parser_error_t _readBondExtraBalanceOfT(parser_context_t* c, pd_BondExtraBalanceOfT_t* v);
 parser_error_t _readBoundedCallOfT(parser_context_t* c, pd_BoundedCallOfT_t* v);
-parser_error_t _readBoxPalletsOriginOfT(parser_context_t* c, pd_BoxPalletsOriginOfT_t* v);
+parser_error_t _readBoxPalletsOrigin(parser_context_t* c, pd_BoxPalletsOrigin_t* v);
 parser_error_t _readBoxVersionedMultiAssets(parser_context_t* c, pd_BoxVersionedMultiAssets_t* v);
 parser_error_t _readBoxVersionedMultiLocation(parser_context_t* c, pd_BoxVersionedMultiLocation_t* v);
 parser_error_t _readCommissionChangeRateBlockNumber(parser_context_t* c, pd_CommissionChangeRateBlockNumber_t* v);
@@ -164,13 +164,13 @@ parser_error_t _readOptionPerquintill(parser_context_t* c, pd_OptionPerquintill_
 parser_error_t _readOptionPreimageHash(parser_context_t* c, pd_OptionPreimageHash_t* v);
 parser_error_t _readOptionProxyType(parser_context_t* c, pd_OptionProxyType_t* v);
 parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v);
-parser_error_t _readOverweightIndex(parser_context_t* c, pd_OverweightIndex_t* v);
 parser_error_t _readPollIndexOf(parser_context_t* c, pd_PollIndexOf_t* v);
 parser_error_t _readPoolId(parser_context_t* c, pd_PoolId_t* v);
 parser_error_t _readPoolState(parser_context_t* c, pd_PoolState_t* v);
 parser_error_t _readRank(parser_context_t* c, pd_Rank_t* v);
 parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v);
 parser_error_t _readRegistrarIndex(parser_context_t* c, pd_RegistrarIndex_t* v);
+parser_error_t _readRoundIndex(parser_context_t* c, pd_RoundIndex_t* v);
 parser_error_t _readSessionIndex(parser_context_t* c, pd_SessionIndex_t* v);
 parser_error_t _readTrackIdOf(parser_context_t* c, pd_TrackIdOf_t* v);
 parser_error_t _readVecAccountId(parser_context_t* c, pd_VecAccountId_t* v);
@@ -893,8 +893,8 @@ parser_error_t _toStringBoundedCallOfT(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringBoxPalletsOriginOfT(
-    const pd_BoxPalletsOriginOfT_t* v,
+parser_error_t _toStringBoxPalletsOrigin(
+    const pd_BoxPalletsOrigin_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1145,13 +1145,6 @@ parser_error_t _toStringOptionu32(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringOverweightIndex(
-    const pd_OverweightIndex_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringPollIndexOf(
     const pd_PollIndexOf_t* v,
     char* outValue,
@@ -1189,6 +1182,13 @@ parser_error_t _toStringReferendumIndex(
 
 parser_error_t _toStringRegistrarIndex(
     const pd_RegistrarIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringRoundIndex(
+    const pd_RoundIndex_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
