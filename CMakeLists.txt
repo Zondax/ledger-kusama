@@ -44,15 +44,14 @@ if(ENABLE_FUZZING)
     set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,bugprone-*,cert-*,clang-analyzer-*,-cert-err58-cpp,misc-*)
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        # require at least clang 3.2
+        # require at least clang 10.0
         if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 10.0)
             message(FATAL_ERROR "Clang version must be at least 10.0!")
         endif()
     else()
         message(FATAL_ERROR
-                "You are using an unsupported compiler! Fuzzing only works with Clang 10.\n"
-                "1. Install clang-10 \n"
-                "2. Pass -DCMAKE_C_COMPILER=clang-10 -DCMAKE_CXX_COMPILER=clang++-10")
+                "You are using an unsupported compiler! Fuzzing only works with Clang >10.\n"
+                "1. Install any clang >10")
     endif()
 
     string(APPEND CMAKE_C_FLAGS " -fsanitize=fuzzer-no-link")
