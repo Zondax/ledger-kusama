@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2019 - 2023 Zondax AG
+ *  (c) 2019 - 2024 Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -995,6 +995,10 @@ parser_error_t _readCompactPerBill(parser_context_t* c, pd_CompactPerBill_t* v)
     return _readCompactInt(c, &v->value);
 }
 
+parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v) {
+    GEN_DEF_READARRAY(32)
+}
+
 parser_error_t _readKusamaOrigins(parser_context_t* c, pd_KusamaOrigins_t* v)
 {
     CHECK_INPUT()
@@ -1073,10 +1077,6 @@ parser_error_t _readPerquintill(parser_context_t* c, pd_Perquintill_t* v)
     CHECK_INPUT()
     CHECK_ERROR(_readUInt64(c, &v->value))
     return parser_ok;
-}
-
-parser_error_t _readPreimageHash(parser_context_t* c, pd_PreimageHash_t* v) {
-    GEN_DEF_READARRAY(32)
 }
 
 parser_error_t _readProxyType(parser_context_t* c, pd_ProxyType_t* v)
@@ -1521,10 +1521,6 @@ parser_error_t _readEthereumAddress(parser_context_t* c, pd_EthereumAddress_t* v
     GEN_DEF_READARRAY(20)
 }
 
-parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v) {
-    GEN_DEF_READARRAY(32)
-}
-
 parser_error_t _readKeys(parser_context_t* c, pd_Keys_t* v) {
     GEN_DEF_READARRAY(6 * 32 + 33)
 }
@@ -1583,6 +1579,13 @@ parser_error_t _readSessionIndex(parser_context_t* c, pd_SessionIndex_t* v)
     return _readUInt32(c, &v->value);
 }
 
+parser_error_t _readSpendIndex(parser_context_t* c, pd_SpendIndex_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
+}
+
 parser_error_t _readTrackIdOf(parser_context_t* c, pd_TrackIdOf_t* v)
 {
     CHECK_INPUT()
@@ -1612,6 +1615,10 @@ parser_error_t _readVecTupleAccountIdData(parser_context_t* c, pd_VecTupleAccoun
 
 parser_error_t _readVecAccountId(parser_context_t* c, pd_VecAccountId_t* v) {
     GEN_DEF_READVECTOR(AccountId)
+}
+
+parser_error_t _readVecHash(parser_context_t* c, pd_VecHash_t* v) {
+    GEN_DEF_READVECTOR(Hash)
 }
 
 parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v) {
@@ -1692,22 +1699,22 @@ parser_error_t _readOptionClassOf(parser_context_t* c, pd_OptionClassOf_t* v)
     return parser_ok;
 }
 
+parser_error_t _readOptionHash(parser_context_t* c, pd_OptionHash_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readHash(c, &v->contained))
+    }
+    return parser_ok;
+}
+
 parser_error_t _readOptionPerquintill(parser_context_t* c, pd_OptionPerquintill_t* v)
 {
     CHECK_INPUT()
     CHECK_ERROR(_readUInt8(c, &v->some))
     if (v->some > 0) {
         CHECK_ERROR(_readPerquintill(c, &v->contained))
-    }
-    return parser_ok;
-}
-
-parser_error_t _readOptionPreimageHash(parser_context_t* c, pd_OptionPreimageHash_t* v)
-{
-    CHECK_INPUT()
-    CHECK_ERROR(_readUInt8(c, &v->some))
-    if (v->some > 0) {
-        CHECK_ERROR(_readPreimageHash(c, &v->contained))
     }
     return parser_ok;
 }
@@ -4365,6 +4372,15 @@ parser_error_t _toStringCompactPerBill(
     return _toStringCompactInt(&v->value, 7, false, "%", "", outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringHash(
+    const pd_Hash_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount) {
+    GEN_DEF_TOSTRING_ARRAY(32)
+}
+
 parser_error_t _toStringKusamaOrigins(
     const pd_KusamaOrigins_t* v,
     char* outValue,
@@ -4551,15 +4567,6 @@ parser_error_t _toStringPerquintill(
     snprintf(bufferUI, sizeof(bufferUI), "%s%%", ratioBuffer);
     pageString(outValue, outValueLen, bufferUI, pageIdx, pageCount);
     return parser_ok;
-}
-
-parser_error_t _toStringPreimageHash(
-    const pd_PreimageHash_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(32)
 }
 
 parser_error_t _toStringProxyType(
@@ -5568,15 +5575,6 @@ parser_error_t _toStringEthereumAddress(
     GEN_DEF_TOSTRING_ARRAY(20)
 }
 
-parser_error_t _toStringHash(
-    const pd_Hash_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(32)
-}
-
 parser_error_t _toStringKeys(
     const pd_Keys_t* v,
     char* outValue,
@@ -5682,6 +5680,16 @@ parser_error_t _toStringSessionIndex(
     return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
 }
 
+parser_error_t _toStringSpendIndex(
+    const pd_SpendIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount);
+}
+
 parser_error_t _toStringTrackIdOf(
     const pd_TrackIdOf_t* v,
     char* outValue,
@@ -5750,6 +5758,16 @@ parser_error_t _toStringVecAccountId(
     uint8_t* pageCount)
 {
     GEN_DEF_TOSTRING_VECTOR(AccountId);
+}
+
+parser_error_t _toStringVecHash(
+    const pd_VecHash_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    GEN_DEF_TOSTRING_VECTOR(Hash);
 }
 
 parser_error_t _toStringVecu32(
@@ -5919,6 +5937,27 @@ parser_error_t _toStringOptionClassOf(
     return parser_ok;
 }
 
+parser_error_t _toStringOptionHash(
+    const pd_OptionHash_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringHash(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
+
 parser_error_t _toStringOptionPerquintill(
     const pd_OptionPerquintill_t* v,
     char* outValue,
@@ -5931,27 +5970,6 @@ parser_error_t _toStringOptionPerquintill(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringPerquintill(
-            &v->contained,
-            outValue, outValueLen,
-            pageIdx, pageCount));
-    } else {
-        snprintf(outValue, outValueLen, "None");
-    }
-    return parser_ok;
-}
-
-parser_error_t _toStringOptionPreimageHash(
-    const pd_OptionPreimageHash_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount)
-{
-    CLEAN_AND_CHECK()
-
-    *pageCount = 1;
-    if (v->some > 0) {
-        CHECK_ERROR(_toStringPreimageHash(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));

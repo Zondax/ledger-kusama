@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2019 - 2023 Zondax AG
+ *  (c) 2019 - 2024 Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -578,6 +578,10 @@ typedef struct {
 } pd_CompactPerBill_t;
 
 typedef struct {
+    const uint8_t* _ptr;
+} pd_Hash_t;
+
+typedef struct {
     uint8_t value;
 } pd_KusamaOrigins_t;
 
@@ -616,10 +620,6 @@ typedef struct {
 typedef struct {
     uint64_t value;
 } pd_Perquintill_t;
-
-typedef struct {
-    const uint8_t* _ptr;
-} pd_PreimageHash_t;
 
 typedef struct {
     uint8_t value;
@@ -854,10 +854,6 @@ typedef struct {
 
 typedef struct {
     const uint8_t* _ptr;
-} pd_Hash_t;
-
-typedef struct {
-    const uint8_t* _ptr;
 } pd_Keys_t;
 
 typedef struct {
@@ -872,13 +868,13 @@ typedef struct {
 
 typedef struct {
     uint8_t some;
-    pd_Perquintill_t contained;
-} pd_OptionPerquintill_t;
+    pd_Hash_t contained;
+} pd_OptionHash_t;
 
 typedef struct {
     uint8_t some;
-    pd_PreimageHash_t contained;
-} pd_OptionPreimageHash_t;
+    pd_Perquintill_t contained;
+} pd_OptionPerquintill_t;
 
 typedef struct {
     uint8_t some;
@@ -923,6 +919,10 @@ typedef struct {
 } pd_SessionIndex_t;
 
 typedef struct {
+    uint32_t value;
+} pd_SpendIndex_t;
+
+typedef struct {
     uint16_t value;
 } pd_TrackIdOf_t;
 
@@ -931,6 +931,12 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecAccountId_t;
+
+typedef struct {
+    uint64_t _len;
+    const uint8_t* _ptr;
+    uint64_t _lenBuffer;
+} pd_VecHash_t;
 
 typedef struct {
     uint64_t _len;
