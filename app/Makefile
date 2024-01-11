@@ -1,6 +1,6 @@
 #*******************************************************************************
 #  Ledger App
-#  (c) 2019 - 2023 Zondax AG
+#  (c) 2019 - 2024 Zondax AG
 #  (c) 2017 Ledger
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,8 +76,6 @@ $(error "$(error_message)")
 endif
 
 APP_LOAD_PARAMS = --curve ed25519 $(COMMON_LOAD_PARAMS) --path $(APPPATH)
-
-NANOS_STACK_SIZE := 3216
 
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.devices
 
