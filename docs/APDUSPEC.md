@@ -27,7 +27,7 @@ The general structure of commands and responses is as follows:
 | Return code | Description             |
 | ----------- | ----------------------- |
 | 0x6400      | Execution Error         |
-| 0x6400      | Wrong buffer length     |
+| 0x6700      | Wrong buffer length     |
 | 0x6982      | Empty buffer            |
 | 0x6983      | Output buffer too small |
 | 0x6984      | Data is invalid         |
@@ -145,13 +145,13 @@ All other packets/chunks contain data chunks that are described below
 
 ##### First Packet
 
-| Field   | Type     | Content              | Expected |
-| ------- | -------- | -------------------- | -------- |
-| Path[0] | byte (4) | Derivation Path Data | 44       |
-| Path[1] | byte (4) | Derivation Path Data | 434      |
-| Path[2] | byte (4) | Derivation Path Data | ?        |
-| Path[3] | byte (4) | Derivation Path Data | ?        |
-| Path[4] | byte (4) | Derivation Path Data | ?        |
+| Field   | Type     | Content              | Expected          |
+| ------- | -------- | -------------------- | ----------------- |
+| Path[0] | byte (4) | Derivation Path Data | 0x80000000 \| 44  |
+| Path[1] | byte (4) | Derivation Path Data | 0x80000000 \| 434 |
+| Path[2] | byte (4) | Derivation Path Data | ?                 |
+| Path[3] | byte (4) | Derivation Path Data | ?                 |
+| Path[4] | byte (4) | Derivation Path Data | ?                 |
 
 ##### Other Chunks/Packets
 
@@ -189,13 +189,13 @@ All other packets/chunks contain data chunks that are described below
 
 ##### First Packet
 
-| Field   | Type     | Content              | Expected |
-| ------- | -------- | -------------------- | -------- |
-| Path[0] | byte (4) | Derivation Path Data | 44       |
-| Path[1] | byte (4) | Derivation Path Data | 434      |
-| Path[2] | byte (4) | Derivation Path Data | ?        |
-| Path[3] | byte (4) | Derivation Path Data | ?        |
-| Path[4] | byte (4) | Derivation Path Data | ?        |
+| Field   | Type     | Content              | Expected          |
+| ------- | -------- | -------------------- | ----------------- |
+| Path[0] | byte (4) | Derivation Path Data | 0x80000000 \| 44  |
+| Path[1] | byte (4) | Derivation Path Data | 0x80000000 \| 434 |
+| Path[2] | byte (4) | Derivation Path Data | ?                 |
+| Path[3] | byte (4) | Derivation Path Data | ?                 |
+| Path[4] | byte (4) | Derivation Path Data | ?                 |
 
 ##### Other Chunks/Packets
 
