@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2019 - 2023 Zondax AG
+ *  (c) 2019 - 2024 Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -107,6 +107,7 @@ parser_error_t _readAccountVoteStandard(parser_context_t* c, pd_AccountVoteStand
 parser_error_t _readCall(parser_context_t* c, pd_Call_t* v);
 parser_error_t _readClassOf(parser_context_t* c, pd_ClassOf_t* v);
 parser_error_t _readCompactPerBill(parser_context_t* c, pd_CompactPerBill_t* v);
+parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v);
 parser_error_t _readKusamaOrigins(parser_context_t* c, pd_KusamaOrigins_t* v);
 parser_error_t _readMultiSignature(parser_context_t* c, pd_MultiSignature_t* v);
 parser_error_t _readMultiSigner(parser_context_t* c, pd_MultiSigner_t* v);
@@ -114,7 +115,6 @@ parser_error_t _readOptionu8_array_20(parser_context_t* c, pd_Optionu8_array_20_
 parser_error_t _readParachainsOrigin(parser_context_t* c, pd_ParachainsOrigin_t* v);
 parser_error_t _readPercent(parser_context_t* c, pd_Percent_t* v);
 parser_error_t _readPerquintill(parser_context_t* c, pd_Perquintill_t* v);
-parser_error_t _readPreimageHash(parser_context_t* c, pd_PreimageHash_t* v);
 parser_error_t _readProxyType(parser_context_t* c, pd_ProxyType_t* v);
 parser_error_t _readSystemOrigin(parser_context_t* c, pd_SystemOrigin_t* v);
 parser_error_t _readTimepoint(parser_context_t* c, pd_Timepoint_t* v);
@@ -156,12 +156,11 @@ parser_error_t _readConviction(parser_context_t* c, pd_Conviction_t* v);
 parser_error_t _readDispatchTimeBlockNumber(parser_context_t* c, pd_DispatchTimeBlockNumber_t* v);
 parser_error_t _readEraIndex(parser_context_t* c, pd_EraIndex_t* v);
 parser_error_t _readEthereumAddress(parser_context_t* c, pd_EthereumAddress_t* v);
-parser_error_t _readHash(parser_context_t* c, pd_Hash_t* v);
 parser_error_t _readKeys(parser_context_t* c, pd_Keys_t* v);
 parser_error_t _readOptionAccountId(parser_context_t* c, pd_OptionAccountId_t* v);
 parser_error_t _readOptionClassOf(parser_context_t* c, pd_OptionClassOf_t* v);
+parser_error_t _readOptionHash(parser_context_t* c, pd_OptionHash_t* v);
 parser_error_t _readOptionPerquintill(parser_context_t* c, pd_OptionPerquintill_t* v);
-parser_error_t _readOptionPreimageHash(parser_context_t* c, pd_OptionPreimageHash_t* v);
 parser_error_t _readOptionProxyType(parser_context_t* c, pd_OptionProxyType_t* v);
 parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v);
 parser_error_t _readPollIndexOf(parser_context_t* c, pd_PollIndexOf_t* v);
@@ -172,8 +171,10 @@ parser_error_t _readReferendumIndex(parser_context_t* c, pd_ReferendumIndex_t* v
 parser_error_t _readRegistrarIndex(parser_context_t* c, pd_RegistrarIndex_t* v);
 parser_error_t _readRoundIndex(parser_context_t* c, pd_RoundIndex_t* v);
 parser_error_t _readSessionIndex(parser_context_t* c, pd_SessionIndex_t* v);
+parser_error_t _readSpendIndex(parser_context_t* c, pd_SpendIndex_t* v);
 parser_error_t _readTrackIdOf(parser_context_t* c, pd_TrackIdOf_t* v);
 parser_error_t _readVecAccountId(parser_context_t* c, pd_VecAccountId_t* v);
+parser_error_t _readVecHash(parser_context_t* c, pd_VecHash_t* v);
 parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v);
 parser_error_t _readVecu8(parser_context_t* c, pd_Vecu8_t* v);
 
@@ -746,6 +747,13 @@ parser_error_t _toStringCompactPerBill(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringHash(
+    const pd_Hash_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringKusamaOrigins(
     const pd_KusamaOrigins_t* v,
     char* outValue,
@@ -790,13 +798,6 @@ parser_error_t _toStringPercent(
 
 parser_error_t _toStringPerquintill(
     const pd_Perquintill_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
-parser_error_t _toStringPreimageHash(
-    const pd_PreimageHash_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1089,13 +1090,6 @@ parser_error_t _toStringEthereumAddress(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringHash(
-    const pd_Hash_t* v,
-    char* outValue,
-    uint16_t outValueLen,
-    uint8_t pageIdx,
-    uint8_t* pageCount);
-
 parser_error_t _toStringKeys(
     const pd_Keys_t* v,
     char* outValue,
@@ -1117,15 +1111,15 @@ parser_error_t _toStringOptionClassOf(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringOptionPerquintill(
-    const pd_OptionPerquintill_t* v,
+parser_error_t _toStringOptionHash(
+    const pd_OptionHash_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount);
 
-parser_error_t _toStringOptionPreimageHash(
-    const pd_OptionPreimageHash_t* v,
+parser_error_t _toStringOptionPerquintill(
+    const pd_OptionPerquintill_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
@@ -1201,6 +1195,13 @@ parser_error_t _toStringSessionIndex(
     uint8_t pageIdx,
     uint8_t* pageCount);
 
+parser_error_t _toStringSpendIndex(
+    const pd_SpendIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
 parser_error_t _toStringTrackIdOf(
     const pd_TrackIdOf_t* v,
     char* outValue,
@@ -1210,6 +1211,13 @@ parser_error_t _toStringTrackIdOf(
 
 parser_error_t _toStringVecAccountId(
     const pd_VecAccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringVecHash(
+    const pd_VecHash_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,
