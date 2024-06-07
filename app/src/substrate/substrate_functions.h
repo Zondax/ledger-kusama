@@ -95,6 +95,7 @@ parser_error_t _readEd25519Signature(parser_context_t* c, pd_Ed25519Signature_t*
 parser_error_t _readH256(parser_context_t* c, pd_H256_t* v);
 parser_error_t _readMultiAssetV2(parser_context_t* c, pd_MultiAssetV2_t* v);
 parser_error_t _readMultiAssetV3(parser_context_t* c, pd_MultiAssetV3_t* v);
+parser_error_t _readPage(parser_context_t* c, pd_Page_t* v);
 parser_error_t _readParaId(parser_context_t* c, pd_ParaId_t* v);
 parser_error_t _readPerbill(parser_context_t* c, pd_Perbill_t* v);
 parser_error_t _readSr25519Public(parser_context_t* c, pd_Sr25519Public_t* v);
@@ -1134,6 +1135,13 @@ parser_error_t _toStringOptionProxyType(
 
 parser_error_t _toStringOptionu32(
     const pd_Optionu32_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringPage(
+    const pd_Page_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

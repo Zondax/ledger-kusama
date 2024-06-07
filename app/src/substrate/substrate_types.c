@@ -1522,7 +1522,14 @@ parser_error_t _readEthereumAddress(parser_context_t* c, pd_EthereumAddress_t* v
 }
 
 parser_error_t _readKeys(parser_context_t* c, pd_Keys_t* v) {
-    GEN_DEF_READARRAY(6 * 32 + 33)
+    GEN_DEF_READARRAY(5 * 32 + 33)
+}
+
+parser_error_t _readPage(parser_context_t* c, pd_Page_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt32(c, &v->value))
+    return parser_ok;
 }
 
 parser_error_t _readPollIndexOf(parser_context_t* c, pd_PollIndexOf_t* v)
@@ -5581,7 +5588,19 @@ parser_error_t _toStringKeys(
     uint16_t outValueLen,
     uint8_t pageIdx,
     uint8_t* pageCount) {
-    GEN_DEF_TOSTRING_ARRAY(6 * 32 + 33)
+    GEN_DEF_TOSTRING_ARRAY(5 * 32 + 33)
+}
+
+parser_error_t _toStringPage(
+    const pd_Page_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    CHECK_ERROR(_toStringu32(&v->value, outValue, outValueLen, pageIdx, pageCount))
+    return parser_ok;
 }
 
 parser_error_t _toStringPollIndexOf(

@@ -178,7 +178,7 @@ TEST(SCALE, BadTX) {
     parser_tx_t tx;
 
     err = _readTx(&ctx, &tx);
-    EXPECT_EQ(err, parser_unexpected_buffer_end) << parser_getErrorDescription(err);;
+    EXPECT_EQ(err, parser_tx_version_not_supported) << parser_getErrorDescription(err);;
 }
 
 // Parse simple SCALE-encoded transaction
