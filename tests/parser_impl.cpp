@@ -203,7 +203,9 @@ TEST(SCALE, TransferTXBadTxVersion) {
     err = _readTx(&ctx, &tx);
     EXPECT_EQ(err, parser_tx_version_not_supported) << parser_getErrorDescription(err);
 
-}// Parse simple SCALE-encoded transaction
+}
+
+// Parse simple SCALE-encoded transaction
 TEST(SCALE, TransferTXBadSpec) {
     parser_context_t ctx;
     parser_error_t err;
@@ -226,3 +228,43 @@ TEST(SCALE, TransferTXBadSpec) {
     EXPECT_EQ(err, parser_tx_version_not_supported) << parser_getErrorDescription(err);
 }
 
+
+TEST(SCALE, Mode_CheckMetadataHash) {
+    struct ModeCheckMetadataTxn
+    {
+        std::string blob;
+        parser_error_t expectedError;
+    };
+
+    const std::vector<ModeCheckMetadataTxn> testcases {
+        // Tx 25.1001000
+        {"00008048e489312da07751a0729e5803be345671beb619608e5f881bc93fec8bb30993d503ae11030003d202964928460f0019000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe", parser_ok},
+        // Tx 26.1002005
+        {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0500154a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe00", parser_ok},
+        // Tx_Ver = 26 spec = 1002006 (!= 1002005)
+        {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0500164a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe00", parser_tx_version_not_supported},
+        // Mode = Enabled | None
+       {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0501154a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe00", parser_value_out_of_range},
+        // Mode = Disabled | Opt = 1 Hash = null
+       {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0500154a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe01", parser_value_out_of_range},
+        // Mode = Disabled | Some(Hash)
+       {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0500154a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe017c728620c0fa3ccc891fa2460d8e6de89ac7e8eaedcfae5343ee2b3994f9b333", parser_tx_version_not_supported},
+        // Mode = Disabled | Opt = 0 + Hash
+       {"000080ab4caab542534676eba5a223de3fe21f358c967435131fba6a98bd0b690578a1d50391010b63ce64c10c0500154a0f001a000000b0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafeb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe007c728620c0fa3ccc891fa2460d8e6de89ac7e8eaedcfae5343ee2b3994f9b333", parser_tx_version_not_supported}
+    };
+
+    for (const auto &testcase : testcases) {
+        uint8_t buffer[500] = {0};
+        auto bufferLen = parseHexString(buffer, sizeof(buffer), testcase.blob.c_str());
+
+        parser_context_t ctx = {0};
+        parser_tx_t tx = {0};
+        parser_error_t err = parser_unexpected_error;
+
+        parser_init(&ctx, buffer, bufferLen);
+        ctx.tx_obj = &tx;
+        err = _readTx(&ctx, &tx);
+        EXPECT_EQ(err, testcase.expectedError) << parser_getErrorDescription(err);
+    }
+
+}

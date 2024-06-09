@@ -41,6 +41,9 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     CHECK_ERROR(_readCompactBalance(c, &v->tip))
     if (v->transactionVersion == SUPPORTED_TX_VERSION_CURRENT) {
         CHECK_ERROR(_readUInt8(c, &v->mode));
+        if (v->mode == 1) {
+            return parser_value_out_of_range;
+        }
     }
 
     // SignedExtensions: included_in_signed_data
@@ -53,8 +56,8 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
         uint8_t optMetadataHash = 0;
         CHECK_ERROR(_readUInt8(c, &optMetadataHash));
         // Reject the transaction if Mode=Enabled or MetadataDigest is present
-        if (v->mode == 1 || optMetadataHash == 1) {
-            return parser_unexpected_value;
+        if (optMetadataHash == 1) {
+            return parser_value_out_of_range;
         }
     }
 
