@@ -892,6 +892,10 @@ typedef struct {
 
 typedef struct {
     uint32_t value;
+} pd_Page_t;
+
+typedef struct {
+    uint32_t value;
 } pd_PoolId_t;
 
 typedef struct {

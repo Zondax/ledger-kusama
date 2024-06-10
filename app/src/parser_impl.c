@@ -35,13 +35,31 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     // Now forward parse
     CHECK_ERROR(_readCallIndex(c, &v->callIndex))
     CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, &v->method))
+    // SignedExtensions: included_in_extrinsic
     CHECK_ERROR(_readEra(c, &v->era))
     CHECK_ERROR(_readCompactIndex(c, &v->nonce))
     CHECK_ERROR(_readCompactBalance(c, &v->tip))
+    if (v->transactionVersion == SUPPORTED_TX_VERSION_CURRENT) {
+        CHECK_ERROR(_readUInt8(c, &v->mode));
+        if (v->mode == 1) {
+            return parser_value_out_of_range;
+        }
+    }
+
+    // SignedExtensions: included_in_signed_data
     CHECK_ERROR(_readUInt32(c, &v->specVersion))
     CHECK_ERROR(_readUInt32(c, &v->transactionVersion))
     CHECK_ERROR(_readHash(c, &v->genesisHash))
     CHECK_ERROR(_readHash(c, &v->blockHash))
+
+    if (v->transactionVersion == SUPPORTED_TX_VERSION_CURRENT) {
+        uint8_t optMetadataHash = 0;
+        CHECK_ERROR(_readUInt8(c, &optMetadataHash));
+        // Reject the transaction if Mode=Enabled or MetadataDigest is present
+        if (optMetadataHash == 1) {
+            return parser_value_out_of_range;
+        }
+    }
 
     if (c->offset < c->bufferLen) {
         return parser_unexpected_unparsed_bytes;
