@@ -20,10 +20,12 @@ for config in CONFIGS:
 
     artifact_dir = os.path.join('fuzz', 'corpora', f'{fuzzer}-artifacts')
     corpus_dir = os.path.join('fuzz', 'corpora', f'{fuzzer}')
-    fuzz_path = os.path.join(f'build/bin/fuzz-{fuzzer}')
+    fuzz_path = os.path.join(f'build/fuzz-{fuzzer}')
+    initial_corpus_dir = os.path.join('fuzz', 'corpora', 'initial_corpus')
 
     os.makedirs(artifact_dir, exist_ok=True)
     os.makedirs(corpus_dir, exist_ok=True)
+    os.makedirs(initial_corpus_dir, exist_ok=True)
 
     env = os.environ.copy()
     env['ASAN_OPTIONS'] = 'halt_on_error=1:print_stacktrace=1'
@@ -34,6 +36,6 @@ for config in CONFIGS:
            f'-max_len={max_len}',
            f'-mutate_depth={MUTATE_DEPTH}',
            f'-artifact_prefix={artifact_dir}/',
-           corpus_dir]
+           corpus_dir, initial_corpus_dir]
     print(' '.join(shlex.quote(c) for c in cmd))
     subprocess.call(cmd, env=env)
