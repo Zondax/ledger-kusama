@@ -36,7 +36,7 @@ cmake_policy(SET CMP0025 NEW)
 cmake_policy(SET CMP0144 NEW)
 
 set(HUNTER_STATUS_DEBUG ON)
-set(HUNTER_TLS_VERIFY OFF)
+set(HUNTER_TLS_VERIFY ON)
 
 enable_testing()
 
@@ -64,6 +64,11 @@ if(ENABLE_FUZZING)
     add_definitions(-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1)
     SET(ENABLE_SANITIZERS ON CACHE BOOL "Sanitizer automatically enabled" FORCE)
     SET(CMAKE_BUILD_TYPE Debug)
+
+    add_definitions(-DENABLE_COVERAGE=1)
+    string(APPEND CMAKE_C_FLAGS " -fprofile-arcs -ftest-coverage")
+    string(APPEND CMAKE_CXX_FLAGS " -fprofile-arcs -ftest-coverage")
+    string(APPEND CMAKE_LINKER_FLAGS " -fprofile-arcs -ftest-coverage")
 
     if (DEFINED ENV{FUZZ_LOGGING})
         add_definitions(-DFUZZING_LOGGING)
