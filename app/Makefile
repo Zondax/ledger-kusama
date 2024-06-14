@@ -26,8 +26,8 @@ include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.installer_script
 
 include $(BOLOS_SDK)/Makefile.defines
 
-# Set the default value for PRODUCTION_BUILD to 0 if not already defined
-PRODUCTION_BUILD ?= 0
+# Set the default value for PRODUCTION_BUILD to 1 if not already defined
+PRODUCTION_BUILD ?= 1
 
 DEFINES += APP_SECRET_MODE_ENABLED
 
