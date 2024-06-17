@@ -137,7 +137,7 @@ jobs:
       - name: Build NanoS
         shell: bash -l {0}
         run: |
-          make SUBSTRATE_PARSER_FULL=0
+          make SUBSTRATE_PARSER_FULL=0 PRODUCTION_BUILD=0
           mv ./app/pkg/installer_s.sh ./app/pkg/installer_nanos.sh
       - name: Set tag
         id: nanos_light
@@ -173,7 +173,7 @@ jobs:
       - name: Build NanoS XL
         shell: bash -l {0}
         run: |
-          make SUBSTRATE_PARSER_FULL=1
+          make SUBSTRATE_PARSER_FULL=1 PRODUCTION_BUILD=0
           mv ./app/pkg/installer_s.sh ./app/pkg/installer_nanos_xl.sh
       - name: Set tag
         id: nanos_xl
@@ -209,7 +209,7 @@ jobs:
       - name: Build NanoSP
         shell: bash -l {0}
         run: |
-          make SUBSTRATE_PARSER_FULL=1
+          make SUBSTRATE_PARSER_FULL=1 PRODUCTION_BUILD=0
           mv ./app/pkg/installer_s2.sh ./app/pkg/installer_nanos_plus.sh
       - name: Set tag
         id: nanosp
@@ -244,7 +244,7 @@ jobs:
 
       - name: Build Stax
         shell: bash -l {0}
-        run: make SUBSTRATE_PARSER_FULL=1
+        run: make SUBSTRATE_PARSER_FULL=1 PRODUCTION_BUILD=0
       - name: Set tag
         id: stax
         run: echo "tag_name=$(./app/pkg/installer_stax.sh version)" >> $GITHUB_OUTPUT
