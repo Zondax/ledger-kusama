@@ -12,6 +12,19 @@ _Please visit our website at [zondax.ch](https://www.zondax.ch)_
 
 ---
 
+## Notice :warning::warning:
+The new Polkadot Ledger application aims to handle all substrate-based chains without being affected by runtime upgrades, 
+providing a single application for the complete ecosystem without compromising security. 
+
+As the new app is now available, this repository has been archived. 
+
+For more references, you can visit:
+- [Polkadot Generic App Repo](https://github.com/Zondax/ledger-polkadot)
+- [Zondax Portal](https://substrate.beryx.io/new_polkadot_ledger_app)
+- [Polkadot Wiki](https://wiki.polkadot.network/docs/ledger)
+
+---
+
 This project contains the Kusama app (https://kusama.network/) for Ledger Nano S and X.
 
 - Ledger Nano S/X BOLOS app
